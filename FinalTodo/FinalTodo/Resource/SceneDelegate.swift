@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBar = TabBarController()
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = FolderColorChoicePageViewController()
+        window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
     }
 
