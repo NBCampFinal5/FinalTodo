@@ -20,6 +20,8 @@
 		084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */; };
 		084412272AD56F21005F2FA9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 084412262AD56F21005F2FA9 /* SnapKit */; };
 		08EB09312AD571CC00CCD51A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09302AD571CC00CCD51A /* Constant.swift */; };
+		08EB09342AD573A900CCD51A /* FolderColorChoicePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09332AD573A900CCD51A /* FolderColorChoicePageViewController.swift */; };
+		08EB09372AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09362AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		084412162AD569E9005F2FA9 /* SignInPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewController.swift; sourceTree = "<group>"; };
 		084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		08EB09332AD573A900CCD51A /* FolderColorChoicePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderColorChoicePageViewController.swift; sourceTree = "<group>"; };
+		08EB09362AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderColorChoiceTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,7 @@
 				084412202AD56B81005F2FA9 /* CalendarPageScene */,
 				084412212AD56B9F005F2FA9 /* RewardPageScene */,
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
+				08EB09322AD5737900CCD51A /* FolderColorChoicePageScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -167,6 +172,23 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		08EB09322AD5737900CCD51A /* FolderColorChoicePageScene */ = {
+			isa = PBXGroup;
+			children = (
+				08EB09332AD573A900CCD51A /* FolderColorChoicePageViewController.swift */,
+				08EB09352AD5750A00CCD51A /* Views */,
+			);
+			path = FolderColorChoicePageScene;
+			sourceTree = "<group>";
+		};
+		08EB09352AD5750A00CCD51A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				08EB09362AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -243,12 +265,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08EB09372AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift in Sources */,
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
+				08EB09342AD573A900CCD51A /* FolderColorChoicePageViewController.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
