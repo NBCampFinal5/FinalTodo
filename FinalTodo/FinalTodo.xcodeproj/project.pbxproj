@@ -21,7 +21,7 @@
 		084412272AD56F21005F2FA9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 084412262AD56F21005F2FA9 /* SnapKit */; };
 		08EB09312AD571CC00CCD51A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09302AD571CC00CCD51A /* Constant.swift */; };
 		08EB09342AD573A900CCD51A /* FolderColorChoicePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09332AD573A900CCD51A /* FolderColorChoicePageViewController.swift */; };
-		08EB09372AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09362AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift */; };
+		08EB09372AD5751E00CCD51A /* FolderColorChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09362AD5751E00CCD51A /* FolderColorChoiceCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +40,7 @@
 		084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08EB09332AD573A900CCD51A /* FolderColorChoicePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderColorChoicePageViewController.swift; sourceTree = "<group>"; };
-		08EB09362AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderColorChoiceTableViewCell.swift; sourceTree = "<group>"; };
+		08EB09362AD5751E00CCD51A /* FolderColorChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderColorChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +184,7 @@
 		08EB09352AD5750A00CCD51A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				08EB09362AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift */,
+				08EB09362AD5751E00CCD51A /* FolderColorChoiceCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -265,7 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08EB09372AD5751E00CCD51A /* FolderColorChoiceTableViewCell.swift in Sources */,
+				08EB09372AD5751E00CCD51A /* FolderColorChoiceCollectionViewCell.swift in Sources */,
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
