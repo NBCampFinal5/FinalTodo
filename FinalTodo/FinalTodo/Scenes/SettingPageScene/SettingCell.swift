@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 class SettingCell: UITableViewCell {
-    
 //    let identifier = #function
 //    // #function: 현재 위치에서 사용 중인 함수 또는 메서드의 이름을 나타내는 키워드
     
@@ -22,7 +21,6 @@ class SettingCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
         return label
     }()
     
@@ -71,7 +69,5 @@ class SettingCell: UITableViewCell {
     func configure(with option: SettingOption) {
         iconImageView.image = UIImage(systemName: option.icon)
         titleLabel.text = option.title
-        
-//        print(option.icon)
     }
 }

@@ -141,9 +141,9 @@
 		084412222AD56BB8005F2FA9 /* SettingPageScene */ = {
 			isa = PBXGroup;
 			children = (
-				084412142AD569CD005F2FA9 /* SettingPageViewController.swift */,
-				30E798442AD60DEB00903272 /* SettingCell.swift */,
 				30E798462AD61E0B00903272 /* SettingOption.swift */,
+				30E798442AD60DEB00903272 /* SettingCell.swift */,
+				084412142AD569CD005F2FA9 /* SettingPageViewController.swift */,
 			);
 			path = SettingPageScene;
 			sourceTree = "<group>";

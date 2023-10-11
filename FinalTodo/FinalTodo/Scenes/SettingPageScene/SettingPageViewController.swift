@@ -11,14 +11,11 @@ import UIKit
 class SettingPageViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
-        table.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
         return table
     }()
 
-    var models = [SettingOption]()
-
-//    private let settingItems1: [String] = ["알림", "테마컬러", "폰트스타일", "프로필", "로그아웃"]
-//    private let settingItems2: [String] = ["프로필", "로그아웃"]
+    var sectionData01 = [SettingOption]()
+    var sectionData02 = [SettingOption]()
 }
 
 extension SettingPageViewController {
@@ -33,7 +30,8 @@ extension SettingPageViewController {
 
 private extension SettingPageViewController {
     func setUp() {
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
+//        title = "설정"
         view.addSubview(tableView)
     }
 
@@ -41,11 +39,15 @@ private extension SettingPageViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
+        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
 
-        models = [
+        sectionData01 = [
             SettingOption(icon: "bell", title: "알림"),
             SettingOption(icon: "paintbrush", title: "테마 컬러"),
-            SettingOption(icon: "pencil", title: "폰트 스타일"),
+            SettingOption(icon: "pencil", title: "폰트 스타일")
+        ]
+
+        sectionData02 = [
             SettingOption(icon: "person.circle", title: "프로필"),
             SettingOption(icon: "arrow.right.circle", title: "로그아웃")
         ]
@@ -53,14 +55,30 @@ private extension SettingPageViewController {
 }
 
 extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return models.count
+        if section == 0 {
+            return sectionData01.count
+        } else if section == 1 {
+            return sectionData02.count
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
-        let model = models[indexPath.row]
-        cell.configure(with: model)
+
+        if indexPath.section == 0 {
+            let model = sectionData01[indexPath.row]
+            cell.configure(with: model)
+        } else if indexPath.section == 1 {
+            let model = sectionData02[indexPath.row]
+            cell.configure(with: model)
+        }
+
         return cell
     }
 
