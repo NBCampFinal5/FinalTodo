@@ -27,6 +27,7 @@
 		30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */; };
 		30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */; };
 		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
+		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorCell.swift; sourceTree = "<group>"; };
 		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
+		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			children = (
 				08EB09302AD571CC00CCD51A /* Constant.swift */,
 				30E798482AD6362D00903272 /* Extensions.swift */,
+				30E798542AD80AD500903272 /* ColorManager.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
+				30E798552AD80AD500903272 /* ColorManager.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
 			);
