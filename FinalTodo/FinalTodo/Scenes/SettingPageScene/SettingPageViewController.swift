@@ -31,7 +31,7 @@ extension SettingPageViewController {
 private extension SettingPageViewController {
     func setUp() {
         view.backgroundColor = .systemBackground
-//        title = "설정"
+        title = "설정"
         view.addSubview(tableView)
     }
 
@@ -44,7 +44,7 @@ private extension SettingPageViewController {
         sectionData01 = [
             SettingOption(icon: "bell", title: "알림"),
             SettingOption(icon: "paintbrush", title: "테마 컬러"),
-            SettingOption(icon: "pencil", title: "폰트 스타일")
+            SettingOption(icon: "lock", title: "잠금모드")
         ]
 
         sectionData02 = [
@@ -83,6 +83,28 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // present -> 상세설정 페이지
+//        let notificationVC = ThemeColorViewController
+        let themeColorVC = ThemeColorViewController()
+//        let lockVC = ThemeColorViewController
+
+        let profileVC = ProfilePageViewController()
+        let singInVC = SignInPageViewController()
+
+        if indexPath.section == 0 && indexPath.row == 0 {
+            // 알림 화면으로 이동
+//            navigationController?.pushViewController(notificationVC, animated: false)
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            // 테마컬러 화면으로 이동 ☑️
+            navigationController?.pushViewController(themeColorVC, animated: false)
+        } else if indexPath.section == 0 && indexPath.row == 2 {
+            // 잠금화면으로 이동
+//            navigationController?.pushViewController(lockVC, animated: false)
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            // 프로필 화면으로 이동 ☑️
+            navigationController?.pushViewController(profileVC, animated: false)
+        } else if indexPath.section == 1 && indexPath.row == 1 {
+            // 로그인 화면으로 이동 ☑️
+            navigationController?.pushViewController(singInVC, animated: false)
+        }
     }
 }
