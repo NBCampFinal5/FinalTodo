@@ -20,9 +20,6 @@ extension MemoViewController {
         setUp()
         setUpNavigation()
     }
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
 }
 
 private extension MemoViewController {
@@ -46,6 +43,14 @@ private extension MemoViewController {
     }
 }
 
+extension MemoViewController {
+    // MARK: - Method
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
+}
+
 extension MemoViewController: MemoViewTextViewDelegate {
     // MARK: - TextViewPlaceHolder
 
@@ -67,7 +72,7 @@ extension MemoViewController: MemoViewTextViewDelegate {
     
     // MARK: - 유동적인 높이를 가진 textView
     func textViewDidChange(textView: UITextView) {
-        let size = CGSize(width: Constant.screenWidth - (Constant.defaultPadding * 2), height: .infinity)
+        let size = CGSize(width:textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
         
         textView.constraints.forEach { (constraint) in

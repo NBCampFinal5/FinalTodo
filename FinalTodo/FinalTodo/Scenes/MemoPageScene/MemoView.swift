@@ -47,7 +47,7 @@ class MemoView: UIView {
         view.font = UIFont.systemFont(ofSize: 20)
         view.text = "메모를 입력해 주세요."
         view.textColor = .systemGray
-        view.backgroundColor = .green
+//        view.backgroundColor = .green
         return view
     }()
     
