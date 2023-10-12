@@ -41,7 +41,7 @@ private extension TabBarController {
         settingVC.tabBarItem = UITabBarItem(
             title: "Setting",
             image: UIImage(systemName: "magnifyingglass"),
-            selectedImage: UIImage(systemName: "sparkle.magnifyingglass")
+            selectedImage: UIImage(systemName: "gearshape")
         )
         
         

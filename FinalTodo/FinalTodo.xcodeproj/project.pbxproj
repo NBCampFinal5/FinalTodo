@@ -21,6 +21,14 @@
 		084412272AD56F21005F2FA9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 084412262AD56F21005F2FA9 /* SnapKit */; };
 		08EB09312AD571CC00CCD51A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09302AD571CC00CCD51A /* Constant.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
+		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
+		30E798472AD61E0B00903272 /* SettingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798462AD61E0B00903272 /* SettingOption.swift */; };
+		30E798492AD6362D00903272 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798482AD6362D00903272 /* Extensions.swift */; };
+		30E7984B2AD7E20100903272 /* ThemeColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984A2AD7E20100903272 /* ThemeColorViewController.swift */; };
+		30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */; };
+		30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */; };
+		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
+		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +47,14 @@
 		084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
+		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		30E798462AD61E0B00903272 /* SettingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOption.swift; sourceTree = "<group>"; };
+		30E798482AD6362D00903272 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		30E7984A2AD7E20100903272 /* ThemeColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorViewController.swift; sourceTree = "<group>"; };
+		30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
+		30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorCell.swift; sourceTree = "<group>"; };
+		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
+		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +106,8 @@
 				084412202AD56B81005F2FA9 /* CalendarPageScene */,
 				084412212AD56B9F005F2FA9 /* RewardPageScene */,
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
+				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
+				30E798532AD7F54C00903272 /* ProfilePageScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -138,6 +156,8 @@
 		084412222AD56BB8005F2FA9 /* SettingPageScene */ = {
 			isa = PBXGroup;
 			children = (
+				30E798462AD61E0B00903272 /* SettingOption.swift */,
+				30E798442AD60DEB00903272 /* SettingCell.swift */,
 				084412142AD569CD005F2FA9 /* SettingPageViewController.swift */,
 			);
 			path = SettingPageScene;
@@ -166,8 +186,28 @@
 			isa = PBXGroup;
 			children = (
 				08EB09302AD571CC00CCD51A /* Constant.swift */,
+				30E798482AD6362D00903272 /* Extensions.swift */,
+				30E798542AD80AD500903272 /* ColorManager.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		30E798502AD7F4B900903272 /* ThemeColorPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				30E798512AD7F51200903272 /* ThemeColorOption.swift */,
+				30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */,
+				30E7984A2AD7E20100903272 /* ThemeColorViewController.swift */,
+			);
+			path = ThemeColorPageScene;
+			sourceTree = "<group>";
+		};
+		30E798532AD7F54C00903272 /* ProfilePageScene */ = {
+			isa = PBXGroup;
+			children = (
+				30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */,
+			);
+			path = ProfilePageScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -247,14 +287,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
+				30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
+				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
+				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
+				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
+				30E7984B2AD7E20100903272 /* ThemeColorViewController.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
+				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
+				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
+				30E798552AD80AD500903272 /* ColorManager.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
 			);
