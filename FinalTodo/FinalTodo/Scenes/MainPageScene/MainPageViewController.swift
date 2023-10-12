@@ -55,7 +55,7 @@ class MainPageViewController: UIViewController {
         
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom) // 이 부분을 변경했습니다.
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             make.left.right.equalTo(view)
         }
         
@@ -65,6 +65,7 @@ class MainPageViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.allowsSelectionDuringEditing = true
         
         view.bringSubviewToFront(fab)
     }
@@ -83,6 +84,8 @@ class MainPageViewController: UIViewController {
     }
     
     @objc func editButtonTapped() {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+        navigationItem.leftBarButtonItem?.title = tableView.isEditing ? "완료" : "편집"
     }
     
     @objc func searchButtonTapped() {
@@ -144,9 +147,18 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if tableView.isEditing && indexPath.row > 2 {
+            if let folder = items[indexPath.row - 3 ] as? Folder {
+                showFolderDialog(for: folder)
+            }
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 || indexPath.row == 2 {
@@ -157,17 +169,49 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
             return 50
         }
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row > 2
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            items.remove(at: indexPath.row - 3)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return indexPath.row > 2
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedObject = items[sourceIndexPath.row - 3]
+        items.remove(at: sourceIndexPath.row - 3)
+        items.insert(movedObject, at: destinationIndexPath.row - 3)
+    }
+    
 }
 
 extension MainPageViewController {
-    func showFolderDialog() {
+    func showFolderDialog(for folder: Folder? = nil) {
         if self.presentedViewController == nil {
             let folderDialogVC = FolderDialogViewController()
             folderDialogVC.modalPresentationStyle = .custom
             folderDialogVC.transitioningDelegate = folderDialogVC
             
+            if let folder = folder {
+                folderDialogVC.initialFolder = folder
+            }
+            
             folderDialogVC.completion = { [weak self] (name, color) in
-                self?.items.append(Folder(name: name, color: color))
+                if let folderIndex = self?.items.firstIndex(where: { ($0 as? Folder)?.name == folder?.name }) {
+                    let updatedFolder = self?.items[folderIndex] as? Folder
+                    updatedFolder?.name = name
+                    updatedFolder?.color = color
+                } else {
+                    self?.items.append(Folder(name: name, color: color))
+                }
                 self?.tableView.reloadData()
             }
             
@@ -178,7 +222,13 @@ extension MainPageViewController {
     }
 }
 
-struct Folder {
+class Folder {
     var name: String
     var color: UIColor
+    
+    init(name: String, color: UIColor) {
+        self.name = name
+        self.color = color
+    }
 }
+
