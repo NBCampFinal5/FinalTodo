@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		080A4F172AD7AC9E002255EB /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080A4F162AD7AC9E002255EB /* MemoViewController.swift */; };
-		081DEF162AD7D4260004F9BD /* MemoOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081DEF152AD7D4260004F9BD /* MemoOptionCollectionViewCell.swift */; };
 		038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038847CF2AD7EF800083C420 /* PwFindViewController.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
@@ -22,7 +20,6 @@
 		084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412162AD569E9005F2FA9 /* SignInPageViewController.swift */; };
 		084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */; };
 		084412272AD56F21005F2FA9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 084412262AD56F21005F2FA9 /* SnapKit */; };
-		08D7402C2AD7B223009338FD /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D7402B2AD7B223009338FD /* MemoView.swift */; };
 		08EB09312AD571CC00CCD51A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09302AD571CC00CCD51A /* Constant.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
@@ -36,8 +33,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		080A4F162AD7AC9E002255EB /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
-		081DEF152AD7D4260004F9BD /* MemoOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoOptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		038847CF2AD7EF800083C420 /* PwFindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindViewController.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,7 +47,6 @@
 		084412142AD569CD005F2FA9 /* SettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPageViewController.swift; sourceTree = "<group>"; };
 		084412162AD569E9005F2FA9 /* SignInPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewController.swift; sourceTree = "<group>"; };
 		084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
-		08D7402B2AD7B223009338FD /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -77,14 +71,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080A4F182AD7ACB4002255EB /* MemoPageScene */ = {
-			isa = PBXGroup;
-			children = (
-				080A4F162AD7AC9E002255EB /* MemoViewController.swift */,
-				08D7402B2AD7B223009338FD /* MemoView.swift */,
-				081DEF152AD7D4260004F9BD /* MemoOptionCollectionViewCell.swift */,
-			);
-			path = MemoPageScene;
 		038847CC2AD7EEEF0083C420 /* PwFindScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,7 +117,6 @@
 				084412202AD56B81005F2FA9 /* CalendarPageScene */,
 				084412212AD56B9F005F2FA9 /* RewardPageScene */,
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
-				080A4F182AD7ACB4002255EB /* MemoPageScene */,
 				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 			);
@@ -312,7 +297,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				080A4F172AD7AC9E002255EB /* MemoViewController.swift in Sources */,
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
 				038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */,
 				30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */,
@@ -320,7 +304,6 @@
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
-				081DEF162AD7D4260004F9BD /* MemoOptionCollectionViewCell.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
 				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
@@ -333,7 +316,6 @@
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
 				30E798552AD80AD500903272 /* ColorManager.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
-				08D7402C2AD7B223009338FD /* MemoView.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
