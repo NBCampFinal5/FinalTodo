@@ -37,7 +37,7 @@ class MemoView: UIView {
         let spacing = Constant.defaultPadding
         flowLayout.minimumLineSpacing = spacing
         flowLayout.itemSize = CGSize(width: itemSize, height: itemSize)
-//        view.backgroundColor = .green
+        view.backgroundColor = .green
         return view
     }()
     

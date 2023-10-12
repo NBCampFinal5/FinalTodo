@@ -11,6 +11,14 @@ import SnapKit
 class MemoViewController: UIViewController {
     
     private let memoView = MemoView()
+    
+    private let imageAry: [UIImage?] = [
+        UIImage(systemName: "checkmark.square"),
+        UIImage(systemName: "map"),
+        UIImage(systemName: "alarm"),
+        UIImage(systemName: "tag"),
+        UIImage(systemName: "heart"),
+    ]
 }
 
 extension MemoViewController {
@@ -93,6 +101,7 @@ extension MemoViewController: MemoViewCollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
+        cell.bind(image: imageAry[indexPath.row])
         return cell
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
