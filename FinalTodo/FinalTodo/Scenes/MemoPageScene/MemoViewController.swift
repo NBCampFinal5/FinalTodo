@@ -42,6 +42,24 @@ private extension MemoViewController {
 }
 
 extension MemoViewController: MemoViewDelegate {
+    // MARK: - TextViewPlaceHolder
+
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        if textView.text == "메모를 입력해 주세요." {
+            textView.text = ""
+            textView.textColor = .black
+        }
+        return true
+    }
+    
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        if textView.text == "" {
+            textView.text = "메모를 입력해 주세요."
+            textView.textColor = .systemGray
+        }
+        return true
+    }
+    
     
     // MARK: - 유동적인 높이를 가진 textView
     func textViewDidChange(textView: UITextView) {

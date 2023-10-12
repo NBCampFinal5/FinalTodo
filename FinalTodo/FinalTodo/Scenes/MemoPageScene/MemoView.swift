@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 protocol MemoViewDelegate: UIViewController {
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool
+    func textViewShouldEndEditing(textView: UITextView) -> Bool
     func textViewDidChange(textView: UITextView)
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -31,14 +33,14 @@ class MemoView: UIView {
         let spacing = Constant.defaultPadding
         flowLayout.minimumLineSpacing = spacing
         flowLayout.itemSize = CGSize(width: itemSize, height: itemSize)
-        view.backgroundColor = .green
+//        view.backgroundColor = .green
         return view
     }()
     
     lazy var contentTextView: UITextView = {
         let view = UITextView()
         view.isScrollEnabled = false
-        view.backgroundColor = .green
+//        view.backgroundColor = .green
         return view
     }()
     
@@ -103,6 +105,15 @@ private extension MemoView {
 }
 
 extension MemoView: UITextViewDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        guard let delegate = delegate else { return true}
+        return delegate.textViewShouldBeginEditing(textView: textView)
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        guard let delegate = delegate else { return true}
+        return delegate.textViewShouldEndEditing(textView: textView)
+    }
     func textViewDidChange(_ textView: UITextView) {
         delegate?.textViewDidChange(textView: textView)
     }
