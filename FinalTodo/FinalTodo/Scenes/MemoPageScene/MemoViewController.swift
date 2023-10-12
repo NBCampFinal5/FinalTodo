@@ -15,7 +15,6 @@ class MemoViewController: UIViewController {
 
 extension MemoViewController {
     // MARK: - Life Cycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -32,21 +31,20 @@ private extension MemoViewController {
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
-            make.top.left.right.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        memoView.contentTextView.delegate = self
+        memoView.delegate = self
     }
     // MARK: - SetUpNavigation
     func setUpNavigation() {
         self.navigationItem.title = "title"
     }
-
 }
 
-extension MemoViewController: UITextViewDelegate {
+extension MemoViewController: MemoViewDelegate {
+    
     // MARK: - 유동적인 높이를 가진 textView
-    func textViewDidChange(_ textView: UITextView) {
-        
+    func textViewDidChange(textView: UITextView) {
         let size = CGSize(width: Constant.screenWidth - (Constant.defaultPadding * 2), height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
         
@@ -58,4 +56,24 @@ extension MemoViewController: UITextViewDelegate {
             }
         }
     }
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        5
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
+        return cell
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let itemSize = Constant.screenHeight * 0.05
+        let spacing = Constant.defaultPadding
+        let count: CGFloat = 5
+        let totalCellWidth = itemSize * count
+        let totalSpacingWidth = spacing * (count - 1)
+        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
+        let rightInset = leftInset
+        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+    }
 }
+
