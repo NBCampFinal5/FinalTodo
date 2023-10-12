@@ -8,8 +8,7 @@
 import UIKit
 
 class MemoOptionCollectionViewCell: UICollectionViewCell {
-    
-    static let identifier = "MemoOptionCollectionViewCell"
+    // static let identifier = "MemoOptionCollectionViewCell"
     
     private let imageView = UIImageView()
     
@@ -18,14 +17,14 @@ class MemoOptionCollectionViewCell: UICollectionViewCell {
         setUp()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(image:UIImage?) {
+    func bind(image: UIImage?) {
         imageView.image = image
     }
-    
 }
 
 private extension MemoOptionCollectionViewCell {

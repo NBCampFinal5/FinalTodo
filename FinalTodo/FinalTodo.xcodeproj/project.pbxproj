@@ -33,6 +33,9 @@
 		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
 		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
+		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
+		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
+		C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C107A2AD8275300F70A7D /* setup+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +66,8 @@
 		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
 		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
+		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
+		C75C107A2AD8275300F70A7D /* setup+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "setup+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +76,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				084412272AD56F21005F2FA9 /* SnapKit in Frameworks */,
+				C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				0844120E2AD5699F005F2FA9 /* CalendarPageViewController.swift */,
+				C75C10782AD8274200F70A7D /* DdayPageViewController.swift */,
+				C75C107A2AD8275300F70A7D /* setup+Extension.swift */,
 			);
 			path = CalendarPageScene;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 			name = FinalTodo;
 			packageProductDependencies = (
 				084412262AD56F21005F2FA9 /* SnapKit */,
+				C75C10762AD8272600F70A7D /* FSCalendar */,
 			);
 			productName = FinalTodo;
 			productReference = 084411F52AD56870005F2FA9 /* FinalTodo.app */;
@@ -287,6 +296,7 @@
 			mainGroup = 084411EC2AD56870005F2FA9;
 			packageReferences = (
 				084412252AD56F21005F2FA9 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C75C10752AD8272600F70A7D /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 084411F62AD56870005F2FA9 /* Products */;
 			projectDirPath = "";
@@ -327,7 +337,9 @@
 				08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */,
 				30E7984B2AD7E20100903272 /* ThemeColorViewController.swift in Sources */,
 				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
+				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
+				C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
@@ -404,7 +416,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -458,7 +470,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -554,6 +566,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		C75C10752AD8272600F70A7D /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -561,6 +581,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 084412252AD56F21005F2FA9 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		C75C10762AD8272600F70A7D /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C75C10752AD8272600F70A7D /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
