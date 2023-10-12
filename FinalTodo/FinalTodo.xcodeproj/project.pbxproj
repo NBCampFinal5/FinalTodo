@@ -20,8 +20,10 @@
 		084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412162AD569E9005F2FA9 /* SignInPageViewController.swift */; };
 		084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */; };
 		084412272AD56F21005F2FA9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 084412262AD56F21005F2FA9 /* SnapKit */; };
+		08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F8892AD8216A0092C6EF /* MemoViewController.swift */; };
+		08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88B2AD8218E0092C6EF /* MemoView.swift */; };
+		08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */; };
 		08EB09312AD571CC00CCD51A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EB09302AD571CC00CCD51A /* Constant.swift */; };
-		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
 		30E798472AD61E0B00903272 /* SettingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798462AD61E0B00903272 /* SettingOption.swift */; };
 		30E798492AD6362D00903272 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798482AD6362D00903272 /* Extensions.swift */; };
@@ -30,6 +32,7 @@
 		30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */; };
 		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
 		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
+		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +50,10 @@
 		084412142AD569CD005F2FA9 /* SettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPageViewController.swift; sourceTree = "<group>"; };
 		084412162AD569E9005F2FA9 /* SignInPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewController.swift; sourceTree = "<group>"; };
 		084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
+		08A4F8892AD8216A0092C6EF /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
+		08A4F88B2AD8218E0092C6EF /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
+		08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoOptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
-		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		30E798462AD61E0B00903272 /* SettingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOption.swift; sourceTree = "<group>"; };
 		30E798482AD6362D00903272 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -57,6 +62,7 @@
 		30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorCell.swift; sourceTree = "<group>"; };
 		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
 		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +125,7 @@
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
+				08A4F8882AD821410092C6EF /* MemoPageScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -191,6 +198,16 @@
 				084412032AD56871005F2FA9 /* LaunchScreen.storyboard */,
 			);
 			path = SharedView;
+			sourceTree = "<group>";
+		};
+		08A4F8882AD821410092C6EF /* MemoPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				08A4F8892AD8216A0092C6EF /* MemoViewController.swift */,
+				08A4F88B2AD8218E0092C6EF /* MemoView.swift */,
+				08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */,
+			);
+			path = MemoPageScene;
 			sourceTree = "<group>";
 		};
 		08EB092F2AD571B900CCD51A /* Helper */ = {
@@ -307,7 +324,10 @@
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
 				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
+				08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */,
 				30E7984B2AD7E20100903272 /* ThemeColorViewController.swift in Sources */,
+				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
+				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
