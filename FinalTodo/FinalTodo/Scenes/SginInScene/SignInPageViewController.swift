@@ -34,10 +34,10 @@ class SignInPageViewController: UIViewController {
     //아이디 입력바
     private lazy var loginTextField : UITextField = {
         var tf = UITextField()
-        tf.frame.size.height = 48
         tf.backgroundColor = .clear
         tf.tintColor = .white
         tf.textColor = .white
+        tf.attributedPlaceholder = NSAttributedString(string: "아이디를 입력해주세요", attributes : [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
         tf.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
@@ -65,6 +65,7 @@ class SignInPageViewController: UIViewController {
         tf.backgroundColor = .clear
         tf.tintColor = .white
         tf.textColor = .white
+        tf.attributedPlaceholder = NSAttributedString(string: "• • • • • • • •", attributes : [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
         tf.isSecureTextEntry = true //비밀번호 안보이게 해주는거
@@ -84,13 +85,7 @@ class SignInPageViewController: UIViewController {
         button.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         return button
     }()
-    //또는 레이블(인데 좀 이상한거같애서 튜터님께 질문
-    private lazy var orLable: UILabel = {
-        let label = UILabel()
-        label.text = "or"
-        label.textColor = .gray
-        return UILabel()
-    }()
+    
     //구글로그인버튼
     private lazy var googleLoginButton : UIButton = {
         let button = UIButton()
@@ -106,7 +101,7 @@ class SignInPageViewController: UIViewController {
         button.imageEdgeInsets = .init(top: 0, left: 70, bottom: 0, right: 235)
         button.contentEdgeInsets = .init(top: 5, left: 5, bottom: 5, right: 5)
         button.semanticContentAttribute = .forceLeftToRight
-    
+        
         return button
     }()
     //애플로그인버튼
@@ -137,149 +132,154 @@ class SignInPageViewController: UIViewController {
         return button
     }()
     
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setUp()
-        
+}
+    extension SignInPageViewController {
+        // MARK: - LifeCycle
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            setUp()
+        }
     }
     
     
-    func setUp() {
-        view.addSubview(loginLabel)
-        view.addSubview(loginTextLabel)
-        view.addSubview(loginTextFieldView)
-        view.addSubview(passwordTextLabel)
-        view.addSubview(passwordTextFieldView)
-        view.addSubview(loginButton)
-        view.addSubview(orLable)
-        view.addSubview(googleLoginButton)
-        view.addSubview(appleLoginButton)
-        view.addSubview(loginTextField)
-        view.addSubview(passwordTextField)
-        view.addSubview(haveAccountButton)
+    private extension SignInPageViewController {
+        // MARK: - SetUp
         
-        //맨위 로그인레이블 오토레이아웃
-        loginLabel.snp.makeConstraints { make in
-            make.top.equalTo(100)
-            make.leading.equalTo(20)
+        func setUp() {
+            setUpUserName()
+            setUpPasswordName()
+            setUpButton()
+            
         }
         
-        //로그인텍스트
-        loginTextLabel.snp.makeConstraints { make in
-            make.top.equalTo(200)
-            make.leading.equalTo(20)
-        }
-        //로그인텍스트필드뷰(네모박스
-        loginTextFieldView.snp.makeConstraints { make in
-            make.top.equalTo(230)
-            make.centerX.equalTo(view.snp.centerX)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.size.height.equalTo(50)
-        }
-        //로그인텍스트필드
-        loginTextField.snp.makeConstraints { make in
-            make.top.equalTo(230)
-            make.centerX.equalTo(loginTextFieldView.snp.left)
-            make.leading.equalTo(30)
-            make.trailing.equalTo(-30)
-            make.size.height.equalTo(50)
-        }
-        //패스워드 텍스트
-        passwordTextLabel.snp.makeConstraints { make in
-            make.top.equalTo(300)
-            make.leading.equalTo(20)
-        }
-        passwordTextFieldView.snp.makeConstraints { make in
-            make.top.equalTo(330)
-            make.centerX.equalTo(view.snp.centerX)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.size.height.equalTo(50)
-        }
-        
-        passwordTextField.snp.makeConstraints { make in
-            make.top.equalTo(330)
-            make.centerX.equalTo(loginTextFieldView.snp.left)
-            make.leading.equalTo(30)
-            make.trailing.equalTo(-30)
-            make.size.height.equalTo(50)
-        }
-        loginButton.snp.makeConstraints { make in
-            make.top.equalTo(450)
-            make.centerX.equalTo(view.snp.centerX)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.size.height.equalTo(50)
-        }
-        
-        orLable.snp.makeConstraints { make in
-            make.top.equalTo(400)
-            make.centerX.equalTo(view.snp.centerX)
-        }
-        
-        googleLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(550)
-            make.centerX.equalTo(view.snp.centerX)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.size.height.equalTo(50)
-        }
-        
-        appleLoginButton.snp.makeConstraints { make in
-            make.top.equalTo(620)
-            make.centerX.equalTo(view.snp.centerX)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.size.height.equalTo(50)
-        }
-        
-        haveAccountButton.snp.makeConstraints { make in
-            make.top.equalTo(700)
-            make.centerX.equalTo(view.snp.centerX)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.size.height.equalTo(50)
-        }
-        
-    }
-    //빈곳 누르면 키보드 내려가는 함수
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    //로그인버튼 누르면 다음화면으로 넘어가는 것 구현
-    @objc func loginButtonTapped(){
-        
-    }
-    
-    
-    
-    //로그인 버튼 색갈 바뀌는 함수
-    @objc func textFieldEditingChanged(_ textField : UITextField){
-        if textField.text?.count == 1 {
-            if textField.text?.first == " " {
-                textField.text = ""
-                return
+        func setUpUserName() {
+            view.addSubview(loginLabel)
+            //맨위 로그인레이블 오토레이아웃
+            loginLabel.snp.makeConstraints { make in
+                make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.07)
+                make.leading.equalTo(Constant.defaultPadding)
+            }
+            
+            view.addSubview(loginTextLabel)
+            //로그인텍스트
+            loginTextLabel.snp.makeConstraints { make in
+                make.top.equalTo(loginLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
+                make.leading.equalTo(Constant.defaultPadding)
+            }
+            
+            view.addSubview(loginTextFieldView)
+            //로그인텍스트필드뷰(네모박스
+            loginTextFieldView.snp.makeConstraints { make in
+                make.top.equalTo(loginTextLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
+                make.centerX.equalTo(view.snp.centerX)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+            
+            view.addSubview(loginTextField)
+            //로그인텍스트필드
+            loginTextField.snp.makeConstraints { make in
+                make.top.equalTo(loginTextLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
+                make.centerX.equalTo(loginTextFieldView.snp.left)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding + 10)
+                make.height.equalTo(Constant.screenHeight * 0.05)
             }
         }
-        guard
-            let id = loginTextField.text, !id.isEmpty,
-            let password = passwordTextField.text, !password.isEmpty
-        else {
-            loginButton.backgroundColor = #colorLiteral(red: 0.4784313725, green: 0.5048075914, blue: 1, alpha: 1)
-            loginButton.isEnabled = false
-            return
-        }
-        loginButton.backgroundColor = #colorLiteral(red: 0.3450980392, green: 0.337254902, blue: 0.8392156863, alpha: 1)
-        loginButton.isEnabled = true
         
+        
+        func setUpPasswordName() {
+            
+            view.addSubview(passwordTextLabel)
+            //패스워드 텍스트
+            passwordTextLabel.snp.makeConstraints { make in
+                make.top.equalTo(loginTextFieldView.snp.bottom).offset(Constant.screenHeight * 0.03)
+                make.leading.equalTo(Constant.defaultPadding)
+            }
+            //패스워드 텍스트 필드뷰(네모)
+            view.addSubview(passwordTextFieldView)
+            passwordTextFieldView.snp.makeConstraints { make in
+                make.top.equalTo(passwordTextLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
+                make.centerX.equalTo(view.snp.centerX)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+            //패스워드 입력하는곳
+            view.addSubview(passwordTextField)
+            passwordTextField.snp.makeConstraints { make in
+                make.top.equalTo(passwordTextLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
+                make.centerX.equalTo(loginTextFieldView.snp.left)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding + 10)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+        }
+        
+        func setUpButton() {
+            
+            view.addSubview(loginButton)
+            loginButton.snp.makeConstraints { make in
+                make.top.equalTo(passwordTextField.snp.bottom).offset(Constant.screenHeight * 0.09)
+                make.centerX.equalTo(loginTextFieldView.snp.left)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+            
+            view.addSubview(googleLoginButton)
+            googleLoginButton.snp.makeConstraints { make in
+                make.top.equalTo(loginButton.snp.bottom).offset(Constant.screenHeight * 0.1)
+                make.centerX.equalTo(view.snp.centerX)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+            view.addSubview(appleLoginButton)
+            appleLoginButton.snp.makeConstraints { make in
+                make.top.equalTo(googleLoginButton.snp.bottom).offset(Constant.screenHeight * 0.02)
+                make.centerX.equalTo(view.snp.centerX)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+            view.addSubview(haveAccountButton)
+            haveAccountButton.snp.makeConstraints { make in
+                make.top.equalTo(appleLoginButton.snp.bottom).offset(Constant.screenHeight * 0.02)
+                make.centerX.equalTo(view.snp.centerX)
+                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+                make.height.equalTo(Constant.screenHeight * 0.05)
+            }
+        }
     }
-
     
-}
-
-
+    
+    extension SignInPageViewController {
+        // MARK: - Method
+        
+        //빈곳 누르면 키보드 내려가는 함수
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
+        
+        //로그인버튼 누르면 다음화면으로 넘어가는 것 구현
+        @objc func loginButtonTapped(){
+            
+        }
+        
+        //로그인 버튼 색갈 바뀌는 함수
+        @objc func textFieldEditingChanged(_ textField : UITextField){
+            if textField.text?.count == 1 {
+                if textField.text?.first == " " {
+                    textField.text = ""
+                    return
+                }
+            }
+            guard
+                let id = loginTextField.text, !id.isEmpty,
+                let password = passwordTextField.text, !password.isEmpty
+            else {
+                loginButton.backgroundColor = #colorLiteral(red: 0.4784313725, green: 0.5048075914, blue: 1, alpha: 1)
+                loginButton.isEnabled = false
+                return
+            }
+            loginButton.backgroundColor = #colorLiteral(red: 0.3450980392, green: 0.337254902, blue: 0.8392156863, alpha: 1)
+            loginButton.isEnabled = true
+            
+        }
+    }
+    
