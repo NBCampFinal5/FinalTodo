@@ -20,6 +20,9 @@ extension MemoViewController {
         setUp()
         setUpNavigation()
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }
 
 private extension MemoViewController {
@@ -31,9 +34,11 @@ private extension MemoViewController {
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
         }
-        memoView.delegate = self
+        memoView.textViewDelegate = self
+        memoView.collectionViewDelegate = self
     }
     // MARK: - SetUpNavigation
     func setUpNavigation() {
@@ -41,7 +46,7 @@ private extension MemoViewController {
     }
 }
 
-extension MemoViewController: MemoViewDelegate {
+extension MemoViewController: MemoViewTextViewDelegate {
     // MARK: - TextViewPlaceHolder
 
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
@@ -60,7 +65,6 @@ extension MemoViewController: MemoViewDelegate {
         return true
     }
     
-    
     // MARK: - 유동적인 높이를 가진 textView
     func textViewDidChange(textView: UITextView) {
         let size = CGSize(width: Constant.screenWidth - (Constant.defaultPadding * 2), height: .infinity)
@@ -74,6 +78,9 @@ extension MemoViewController: MemoViewDelegate {
             }
         }
     }
+}
+
+extension MemoViewController: MemoViewCollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         5
     }

@@ -8,10 +8,14 @@
 import UIKit
 import SnapKit
 
-protocol MemoViewDelegate: UIViewController {
+protocol MemoViewTextViewDelegate: UIViewController {
     func textViewShouldBeginEditing(textView: UITextView) -> Bool
     func textViewShouldEndEditing(textView: UITextView) -> Bool
     func textViewDidChange(textView: UITextView)
+
+}
+
+protocol MemoViewCollectionViewDelegate: UIViewController {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
@@ -40,11 +44,16 @@ class MemoView: UIView {
     lazy var contentTextView: UITextView = {
         let view = UITextView()
         view.isScrollEnabled = false
-//        view.backgroundColor = .green
+        view.font = UIFont.systemFont(ofSize: 20)
+        view.text = "메모를 입력해 주세요."
+        view.textColor = .systemGray
+        view.backgroundColor = .green
         return view
     }()
     
-    weak var delegate: MemoViewDelegate?
+    weak var textViewDelegate: MemoViewTextViewDelegate?
+    
+    weak var collectionViewDelegate: MemoViewCollectionViewDelegate?
     
     // MARK: - init
 
@@ -71,7 +80,8 @@ private extension MemoView {
     func setUpScrollView() {
         self.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
         }
         scrollView.addSubview(scrollContentView)
         scrollContentView.snp.makeConstraints { make in
@@ -84,7 +94,7 @@ private extension MemoView {
         scrollContentView.addSubview(optionCollectionView)
         optionCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
+            make.left.right.equalToSuperview()
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
         optionCollectionView.delegate = self
@@ -97,7 +107,7 @@ private extension MemoView {
         contentTextView.snp.makeConstraints { make in
             make.top.equalTo(optionCollectionView.snp.bottom).offset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
-            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
+            make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
         contentTextView.delegate = self
@@ -106,31 +116,31 @@ private extension MemoView {
 
 extension MemoView: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        guard let delegate = delegate else { return true}
+        guard let delegate = textViewDelegate else { return true}
         return delegate.textViewShouldBeginEditing(textView: textView)
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        guard let delegate = delegate else { return true}
+        guard let delegate = textViewDelegate else { return true}
         return delegate.textViewShouldEndEditing(textView: textView)
     }
     func textViewDidChange(_ textView: UITextView) {
-        delegate?.textViewDidChange(textView: textView)
+        textViewDelegate?.textViewDidChange(textView: textView)
     }
 }
 
 extension MemoView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let delegate = delegate else { return 0}
+        guard let delegate = collectionViewDelegate else { return 0}
         return delegate.collectionView(collectionView: collectionView, numberOfItemsInSection: section)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let delegate = delegate else { return UICollectionViewCell()}
+        guard let delegate = collectionViewDelegate else { return UICollectionViewCell()}
         return delegate.collectionView(collectionView: collectionView, cellForItemAt: indexPath)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        guard let delegate = delegate else { return UIEdgeInsets()}
+        guard let delegate = collectionViewDelegate else { return UIEdgeInsets()}
         return delegate.collectionView(collectionView: collectionView, layout: collectionViewLayout, insetForSectionAt: section)
     }
     
