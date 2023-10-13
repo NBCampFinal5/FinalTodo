@@ -60,14 +60,7 @@ class CalendarPageViewController: UIViewController {
             self?.selectedDday = date
             self?.calendar.reloadData()
         }
-//        let navController = UINavigationController(rootViewController: vc)
-//        navController.modalPresentationStyle = .pageSheet
-//        if let sheetPresentationController = navController.sheetPresentationController {
-//            sheetPresentationController.prefersGrabberVisible = true
-//            sheetPresentationController.detents = [.medium()] // 화면에 중간 높이 설정
-//            sheetPresentationController.prefersScrollingExpandsWhenScrolledToEdge = false
-//        }
-//        present(navController, animated: true)
+        
     }
 
     // 오늘 버튼 터치 시 호출
