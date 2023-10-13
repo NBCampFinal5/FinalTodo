@@ -13,7 +13,7 @@ class SignUpPageViewController: UIViewController {
     private lazy var registerLabel: UILabel = {
         let label = UILabel()
         label.text = "가입하기"
-        label.textColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        label.textColor = UIColor(named: "theme01PointColor01")
         label.font = UIFont.boldSystemFont(ofSize: 30)
         return label
     }()
@@ -21,13 +21,13 @@ class SignUpPageViewController: UIViewController {
     private lazy var userNameTextLabel: UILabel = {
         let label = UILabel()
         label.text = "아이디"
-        label.textColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        label.textColor = UIColor(named: "theme01PointColor01")
         return label
     }()
     //유저네임텍스트뷰(첫번째 상자)
     private lazy var userNameTextFieldView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        view.backgroundColor = UIColor(named: "theme01PointColor01")
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         return view
@@ -36,8 +36,8 @@ class SignUpPageViewController: UIViewController {
     private lazy var userNameTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .clear
-        tf.tintColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
-        tf.textColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
+        tf.tintColor = UIColor(named: "theme01PointColor02")
+        tf.textColor = UIColor(named: "theme01PointColor02")
         tf.attributedPlaceholder = NSAttributedString(string: "아이디를 입력해주세요.", attributes : [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
@@ -49,13 +49,13 @@ class SignUpPageViewController: UIViewController {
     private lazy var passwordTextLabel: UILabel = {
         let label = UILabel()
         label.text = "비밀번호"
-        label.textColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        label.textColor = UIColor(named: "theme01PointColor01")
         return label
     }()
     //비밀번호 텍스트뷰(두번째 검은상자)
     private lazy var passwordTextFieldView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        view.backgroundColor = UIColor(named: "theme01PointColor01")
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         return view
@@ -64,8 +64,8 @@ class SignUpPageViewController: UIViewController {
     private lazy var passwordTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .clear
-        tf.tintColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
-        tf.textColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
+        tf.tintColor = UIColor(named: "theme01PointColor02")
+        tf.textColor = UIColor(named: "theme01PointColor02")
         tf.attributedPlaceholder = NSAttributedString(string: "• • • • • • • •", attributes : [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
@@ -78,13 +78,13 @@ class SignUpPageViewController: UIViewController {
     private lazy var confirmPwTextLabel: UILabel = {
         let label = UILabel()
         label.text = "비밀번호 확인"
-        label.textColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        label.textColor = UIColor(named: "theme01PointColor01")
         return label
     }()
     //비밀번호 텍스트뷰(두번째 검은상자)
     private lazy var confirmPwTextFieldView: UIView = {
         let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        view.backgroundColor = UIColor(named: "theme01PointColor01")
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = true
         return view
@@ -93,8 +93,8 @@ class SignUpPageViewController: UIViewController {
     private lazy var confirmPwTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .clear
-        tf.tintColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
-        tf.textColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
+        tf.tintColor = UIColor(named: "theme01PointColor02")
+        tf.textColor = UIColor(named: "theme01PointColor02")
         tf.attributedPlaceholder = NSAttributedString(string: "• • • • • • • •", attributes : [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
@@ -103,14 +103,14 @@ class SignUpPageViewController: UIViewController {
         tf.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return tf
     }()
-    //로그인 버튼
+    //가입하기 버튼
     private lazy var registerButton : UIButton = {
         let button = UIButton()
-        button.backgroundColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
+        button.backgroundColor = UIColor(named: "theme01PointColor03")
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.setTitle("가입하기", for: .normal)
-        button.setTitleColor(#colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1), for: .normal)
+        button.setTitleColor(UIColor(named: "theme01PointColor01"), for: .normal)
         button.isEnabled = false //버튼을 비활성화 해주는 코드(나중에 색깔 변하게 해서 활성화 시켜줄거임
         button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         return button
@@ -121,7 +121,7 @@ class SignUpPageViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .clear
         button.layer.borderWidth = 1
-        button.layer.borderColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
+        button.layer.borderColor = UIColor(named: "theme01PointColor01")?.cgColor
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.setTitle("구글로 가입하기", for: .normal)
@@ -139,7 +139,7 @@ class SignUpPageViewController: UIViewController {
         let button = UIButton()
         button.backgroundColor = .clear
         button.layer.borderWidth = 1
-        button.layer.borderColor = #colorLiteral(red: 0.2509803922, green: 0.3568627451, blue: 0.168627451, alpha: 1)
+        button.layer.borderColor = UIColor(named: "theme01PointColor01")?.cgColor
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.setTitle("애플로 가입하기", for: .normal)
@@ -155,7 +155,7 @@ class SignUpPageViewController: UIViewController {
     override func viewDidLoad() {
         //mark
         super.viewDidLoad()
-        self.view.backgroundColor = #colorLiteral(red: 0.99783355, green: 0.9879019856, blue: 0.9188477397, alpha: 1)
+        self.view.backgroundColor = UIColor(named: "theme01PointColor02")
         setUp()
         
     }
@@ -296,12 +296,12 @@ class SignUpPageViewController: UIViewController {
             let id = userNameTextField.text, !id.isEmpty,
             let password = passwordTextField.text, !password.isEmpty
         else {
-            registerButton.backgroundColor = #colorLiteral(red: 0.8750917912, green: 0.9150126576, blue: 0.7795882821, alpha: 1)
+            registerButton.backgroundColor = UIColor(named: "theme01PointColor02")
             registerButton.isEnabled = false
             return
         }
-        registerButton.backgroundColor = #colorLiteral(red: 0.252848357, green: 0.3557934165, blue: 0.1699097455, alpha: 1)
-        registerButton.setTitleColor(#colorLiteral(red: 225, green: 233, blue: 202, alpha: 1), for: .normal)
+        registerButton.backgroundColor = UIColor(named: "theme01PointColor01")
+        registerButton.setTitleColor(UIColor(named: "theme01PointColor02"), for: .normal)
         registerButton.isEnabled = true
         
     }
