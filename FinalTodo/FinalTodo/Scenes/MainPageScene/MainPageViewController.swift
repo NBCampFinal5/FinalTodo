@@ -11,70 +11,38 @@ import SnapKit
 class MainPageViewController: UIViewController {
     
     var items = [Any]()
-    var tableView: UITableView!
+    
+    var mainView: MainPageView {
+        return view as! MainPageView
+    }
+    
+    override func loadView() {
+        view = MainPageView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupUI()
+        setupDelegates()
+    }
+    
+    private func setupUI() {
         view.backgroundColor = .lightGray
-        
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.tabBarController?.tabBar.barTintColor = .white
-        self.tabBarController?.tabBar.isTranslucent = false
-        
-        setupFAB()
-        setupTableView()
         setupNavigationBar()
+        navigationController?.configureBar(color: .white)
+        tabBarController?.configureBar(color: .white)
     }
     
-    let fab: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 28
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .white
-        return button
-    }()
-    
-    private func setupFAB() {
-        view.addSubview(fab)
-        
-        fab.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: 56, height: 56))
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
-        }
-        
-        fab.addTarget(self, action: #selector(fabTapped), for: .touchUpInside)
-    }
-    
-    private func setupTableView() {
-        tableView = UITableView()
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        view.addSubview(tableView)
-        
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            make.left.right.equalTo(view)
-        }
-        
-        tableView.separatorStyle = .none
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.allowsSelectionDuringEditing = true
-        
-        view.bringSubviewToFront(fab)
+    private func setupDelegates() {
+        mainView.tableView.delegate = self
+        mainView.tableView.dataSource = self
+        mainView.fab.addTarget(self, action: #selector(fabTapped), for: .touchUpInside)
     }
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonTapped))
-        
         title = "리스트"
-        
         let searchButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonTapped))
         let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(folderButtonTapped))
         navigationItem.rightBarButtonItems = [folderButtonItem, searchButtonItem]
@@ -84,8 +52,8 @@ class MainPageViewController: UIViewController {
     }
     
     @objc func editButtonTapped() {
-        tableView.setEditing(!tableView.isEditing, animated: true)
-        navigationItem.leftBarButtonItem?.title = tableView.isEditing ? "완료" : "편집"
+        mainView.tableView.setEditing(!mainView.tableView.isEditing, animated: true)
+        navigationItem.leftBarButtonItem?.title = mainView.tableView.isEditing ? "완료" : "편집"
     }
     
     @objc func searchButtonTapped() {
@@ -93,6 +61,21 @@ class MainPageViewController: UIViewController {
     
     @objc func folderButtonTapped() {
         showFolderDialog()
+    }
+    
+}
+
+extension UINavigationController {
+    func configureBar(color: UIColor) {
+        navigationBar.barTintColor = color
+        navigationBar.isTranslucent = false
+    }
+}
+
+extension UITabBarController {
+    func configureBar(color: UIColor) {
+        tabBar.barTintColor = color
+        tabBar.isTranslucent = false
     }
 }
 
@@ -104,47 +87,15 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.configureAsSpacingCell()
         
-        cell.backgroundColor = .white
-        
-        if indexPath.row == 0 || indexPath.row == 2 {
-            cell.textLabel?.text = nil
-            cell.layer.borderWidth = 0
-            cell.backgroundColor = UIColor(white: 0.95, alpha: 1)
-            cell.selectionStyle = .none
-            cell.imageView?.image = .none
-            return cell
-        }
-        
-        cell.layer.borderColor = UIColor.gray.cgColor
-        cell.layer.borderWidth = 0.5
-        
-        if indexPath.row == 1 {
-            cell.textLabel?.text = "모든 노트"
-            cell.imageView?.image = UIImage(systemName: "note.text")
-        } else {
-            if let item = items[indexPath.row - 3] as? String {
-                cell.textLabel?.text = item
-            } else if let folder = items[indexPath.row - 3] as? Folder {
-                cell.textLabel?.text = folder.name
-            }
-        }
-        
-        if indexPath.row >= 3 && indexPath.row - 3 < items.count {
-            if let item = items[indexPath.row - 3] as? String {
-                cell.textLabel?.text = item
-            } else if let folder = items[indexPath.row - 3] as? Folder {
-                cell.textLabel?.text = folder.name
-                
-                let size = CGSize(width: 24, height: 24)
-                UIGraphicsBeginImageContextWithOptions(size, false, 0)
-                folder.color.setFill()
-                UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
-                let colorImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                cell.imageView?.image = colorImage
-            }
+        switch indexPath.row {
+        case 0, 2:
+            break
+        case 1:
+            cell.configureAsAllNotesCell()
+        default:
+            cell.configureCellWith(item: items[indexPath.row - 3])
         }
         
         return cell
@@ -152,28 +103,27 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        guard indexPath.row > 2 else { return }
         
-        if indexPath.row > 2 {
-            if let selectedFolder = items[indexPath.row - 3] as? Folder {
-                let memoListViewVC = MemoListViewController(folder: selectedFolder)
-                self.navigationController?.pushViewController(memoListViewVC, animated: true)
-            }
-        }
-        
-        if tableView.isEditing && indexPath.row > 2 {
-            if let folder = items[indexPath.row - 3 ] as? Folder {
+        let selectedItem = items[indexPath.row - 3]
+        if tableView.isEditing {
+            if let folder = selectedItem as? Folder {
                 showFolderDialog(for: folder)
+            }
+        } else {
+            if let selectedFolder = selectedItem as? Folder {
+                let memoListViewVC = MemoListViewController(folder: selectedFolder)
+                navigationController?.pushViewController(memoListViewVC, animated: true)
             }
         }
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 || indexPath.row == 2 {
+        switch indexPath.row {
+        case 0, 2:
             return 10
-        } else if indexPath.row == 1 {
-            return 50
-        } else {
+        default:
             return 50
         }
     }
@@ -183,10 +133,10 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            items.remove(at: indexPath.row - 3)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
+        guard editingStyle == .delete, indexPath.row > 2 else { return }
+        
+        items.remove(at: indexPath.row - 3)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -201,34 +151,82 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension MainPageViewController {
-    func showFolderDialog(for folder: Folder? = nil) {
-        if self.presentedViewController == nil {
-            let folderDialogVC = FolderDialogViewController()
-            folderDialogVC.modalPresentationStyle = .custom
-            folderDialogVC.transitioningDelegate = folderDialogVC
+extension UITableViewCell {
+    func configureAsSpacingCell() {
+        textLabel?.text = nil
+        layer.borderWidth = 0
+        backgroundColor = UIColor(white: 0.95, alpha: 1)
+        selectionStyle = .none
+        imageView?.image = .none
+    }
+    
+    func configureAsAllNotesCell() {
+        textLabel?.text = "모든 노트"
+        imageView?.image = UIImage(systemName: "note.text")
+        layer.borderColor = UIColor.gray.cgColor
+        layer.borderWidth = 0.5
+    }
+    
+    func configureCellWith(item: Any) {
+        layer.borderColor = UIColor.gray.cgColor
+        layer.borderWidth = 0.5
+        
+        if let itemString = item as? String {
+            textLabel?.text = itemString
+        } else if let folder = item as? Folder {
+            textLabel?.text = folder.name
             
-            if let folder = folder {
-                folderDialogVC.initialFolder = folder
-            }
+            let size = CGSize(width: 24, height: 24)
+            UIGraphicsBeginImageContextWithOptions(size, false, 0)
+            folder.color.setFill()
+            UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
+            let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
             
-            folderDialogVC.completion = { [weak self] (name, color) in
-                if let folderIndex = self?.items.firstIndex(where: { ($0 as? Folder)?.name == folder?.name }) {
-                    let updatedFolder = self?.items[folderIndex] as? Folder
-                    updatedFolder?.name = name
-                    updatedFolder?.color = color
-                } else {
-                    self?.items.append(Folder(name: name, color: color))
-                }
-                self?.tableView.reloadData()
-            }
-            
-            present(folderDialogVC, animated: true, completion: nil)
-        } else {
-            print("A view controller is already presented.")
+            imageView?.image = colorImage
         }
     }
 }
+
+extension MainPageViewController {
+    func showFolderDialog(for folder: Folder? = nil) {
+        guard self.presentedViewController == nil else {
+            print("A view controller is already presented.")
+            return
+        }
+        
+        let folderDialogVC = FolderDialogViewController()
+        folderDialogVC.modalPresentationStyle = .custom
+        folderDialogVC.transitioningDelegate = folderDialogVC
+        folderDialogVC.initialFolder = folder
+        
+        folderDialogVC.completion = { [weak self] (name, color) in
+            if let existingFolderIndex = self?.index(for: folder) {
+                self?.updateFolder(at: existingFolderIndex, with: name, color: color)
+            } else {
+                self?.addNewFolder(with: name, color: color)
+            }
+            self?.mainView.tableView.reloadData()
+        }
+        
+        present(folderDialogVC, animated: true, completion: nil)
+    }
+    
+    private func index(for folder: Folder?) -> Int? {
+        return items.firstIndex(where: { ($0 as? Folder)?.name == folder?.name })
+    }
+    
+    private func updateFolder(at index: Int, with name: String, color: UIColor) {
+        guard let folder = items[index] as? Folder else { return }
+        folder.name = name
+        folder.color = color
+    }
+    
+    private func addNewFolder(with name: String, color: UIColor) {
+        items.append(Folder(name: name, color: color))
+    }
+}
+
 
 class Folder {
     var name: String
