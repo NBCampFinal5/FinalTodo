@@ -11,6 +11,10 @@
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
 		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
+		083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98642AD8DBAA006895D2 /* AddMemoPageViewController.swift */; };
+		083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98662AD8DC08006895D2 /* PresentationController.swift */; };
+		083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */; };
+		083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986A2AD8E9EE006895D2 /* ModalTopView.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
 		084412022AD56871005F2FA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084412012AD56871005F2FA9 /* Assets.xcassets */; };
@@ -46,6 +50,10 @@
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		083C985E2AD8D7AC006895D2 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		083C98612AD8D88E006895D2 /* MemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
+		083C98642AD8DBAA006895D2 /* AddMemoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewController.swift; sourceTree = "<group>"; };
+		083C98662AD8DC08006895D2 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewModel.swift; sourceTree = "<group>"; };
+		083C986A2AD8E9EE006895D2 /* ModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTopView.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		084411FA2AD56870005F2FA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +113,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		083C98632AD8DB5F006895D2 /* AddMemoPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				083C98642AD8DBAA006895D2 /* AddMemoPageViewController.swift */,
+				083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */,
+			);
+			path = AddMemoPageScene;
+			sourceTree = "<group>";
+		};
 		084411EC2AD56870005F2FA9 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +163,7 @@
 				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 				08A4F8882AD821410092C6EF /* MemoPageScene */,
+				083C98632AD8DB5F006895D2 /* AddMemoPageScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -219,6 +237,7 @@
 			children = (
 				084412032AD56871005F2FA9 /* LaunchScreen.storyboard */,
 				08A4F88B2AD8218E0092C6EF /* MemoView.swift */,
+				083C986A2AD8E9EE006895D2 /* ModalTopView.swift */,
 				083C98602AD8D837006895D2 /* Cells */,
 			);
 			path = SharedView;
@@ -241,6 +260,7 @@
 				30E798482AD6362D00903272 /* Extensions.swift */,
 				30E798542AD80AD500903272 /* ColorManager.swift */,
 				083C985E2AD8D7AC006895D2 /* Observable.swift */,
+				083C98662AD8DC08006895D2 /* PresentationController.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -349,6 +369,7 @@
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
+				083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */,
 				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
@@ -360,6 +381,8 @@
 				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */,
+				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
+				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
@@ -369,6 +392,7 @@
 				30E798552AD80AD500903272 /* ColorManager.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
+				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
