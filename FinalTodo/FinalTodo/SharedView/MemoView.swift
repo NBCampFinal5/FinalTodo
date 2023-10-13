@@ -8,21 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol MemoViewTextViewDelegate: UIViewController {
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool
-    func textViewShouldEndEditing(textView: UITextView) -> Bool
-    func textViewDidChange(textView: UITextView)
-
-}
-
-protocol MemoViewCollectionViewDelegate: UIViewController {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
-    func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
-}
-
-
-class MemoView: UIView {
+final class MemoView: UIView {
     // MARK: - Property
     
     private let scrollView = UIScrollView()
@@ -34,10 +20,12 @@ class MemoView: UIView {
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         flowLayout.scrollDirection = .horizontal
         let itemSize = Constant.screenHeight * 0.05
-        let spacing = Constant.defaultPadding
+        let spacing = (Constant.screenWidth - (Constant.defaultPadding * 2) - (itemSize * 5)) / 5
         flowLayout.minimumLineSpacing = spacing
         flowLayout.itemSize = CGSize(width: itemSize, height: itemSize)
-        view.backgroundColor = .green
+        view.isScrollEnabled = false
+        view.backgroundColor = .clear
+        view.tintColor = ColorManager.themeArray[0].pointColor02
         return view
     }()
     
@@ -47,7 +35,10 @@ class MemoView: UIView {
         view.font = UIFont.systemFont(ofSize: 20)
         view.text = "메모를 입력해 주세요."
         view.textColor = .systemGray
-//        view.backgroundColor = .green
+        view.backgroundColor = ColorManager.themeArray[0].pointColor02
+        let inset = Constant.defaultPadding / 2
+        view.textContainerInset = .init(top: inset, left: inset, bottom: inset, right: inset)
+        view.layer.cornerRadius = inset
         return view
     }()
     
@@ -130,6 +121,7 @@ extension MemoView: UITextViewDelegate {
 }
 
 extension MemoView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let delegate = collectionViewDelegate else { return 0}
         return delegate.collectionView(collectionView: collectionView, numberOfItemsInSection: section)
@@ -139,9 +131,8 @@ extension MemoView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         guard let delegate = collectionViewDelegate else { return UICollectionViewCell()}
         return delegate.collectionView(collectionView: collectionView, cellForItemAt: indexPath)
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        guard let delegate = collectionViewDelegate else { return UIEdgeInsets()}
-        return delegate.collectionView(collectionView: collectionView, layout: collectionViewLayout, insetForSectionAt: section)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let delegate = collectionViewDelegate else { return }
+        return delegate.collectionView(collectionView: collectionView, didSelectItemAt: indexPath)
     }
-    
 }
