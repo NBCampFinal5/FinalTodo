@@ -1,8 +1,17 @@
 import UIKit
 
 class DdayPageViewController: UIViewController {
-    var pickerView: UIPickerView!
     var completion: ((Date) -> Void)?
+
+    lazy var ddayPickerView: UIPickerView = {
+        let picker = UIPickerView()
+        picker.delegate = self
+        picker.dataSource = self
+        // 현재 연도부터 10년 후까지를 표시하기 위한 범위 설정
+        let currentYear = Calendar.current.component(.year, from: Date())
+        years = Array(currentYear...(currentYear + 10))
+        return picker
+    }()
 
     // 년, 월, 일을 표시하기 위한 배열
     var years: [Int] = []
@@ -12,7 +21,8 @@ class DdayPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupPickerView()
+
+        setup()
         setupNavigationBar()
     }
 
@@ -22,28 +32,11 @@ class DdayPageViewController: UIViewController {
         navigationItem.rightBarButtonItem = doneButton
     }
 
-    // UIPickerView 설정
-    func setupPickerView() {
-        pickerView = UIPickerView()
-        pickerView.delegate = self
-        pickerView.dataSource = self
-
-        // setup
-        view.addSubview(pickerView)
-        pickerView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-
-        // 현재 연도부터 10년 후까지를 표시하기 위한 범위 설정
-        let currentYear = Calendar.current.component(.year, from: Date())
-        years = Array(currentYear...(currentYear + 10))
-    }
-
     // "완료" 버튼을 누를 시 호출
     @objc func didTappedDoneButton() {
-        let selectedYear = years[pickerView.selectedRow(inComponent: 0)]
-        let selectedMonth = months[pickerView.selectedRow(inComponent: 1)]
-        let selectedDay = days[pickerView.selectedRow(inComponent: 2)]
+        let selectedYear = years[ddayPickerView.selectedRow(inComponent: 0)]
+        let selectedMonth = months[ddayPickerView.selectedRow(inComponent: 1)]
+        let selectedDay = days[ddayPickerView.selectedRow(inComponent: 2)]
         let selectedDate = "\(selectedYear)-\(selectedMonth)-\(selectedDay)"
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"

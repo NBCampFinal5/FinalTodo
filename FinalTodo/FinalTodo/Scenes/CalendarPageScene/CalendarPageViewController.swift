@@ -3,81 +3,56 @@ import SnapKit
 import UIKit
 
 class CalendarPageViewController: UIViewController {
-    // 날짜 형식을 변환하기 위한 dateFormatter
-    let dateFormatter = DateFormatter()
     // 선택된 D-day 날짜
     var selectedDday: Date?
-
-    // 오늘 날짜로 돌아오는 버튼
-    lazy var todayButton: UIButton = {
-        let button = UIButton(type: .system)
-        let configuration = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
-        let image = UIImage(systemName: "arrow.clockwise", withConfiguration: configuration)
-        button.setImage(image, for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].backgroundColor
-        button.tintColor = .white
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(didTappedTodayButton), for: .touchUpInside)
-        return button
-    }()
-
-    // FSCalendar 캘린더 생성
-    lazy var calendar: FSCalendar = {
-        let calendar = FSCalendar()
-        calendar.scrollEnabled = true
-        calendar.scrollDirection = .vertical
-        calendar.allowsMultipleSelection = true
-        calendar.swipeToChooseGesture.isEnabled = true
-        calendar.appearance.weekdayTextColor = .black
-        calendar.appearance.headerTitleColor = .black
-        calendar.dataSource = self
-        calendar.delegate = self
-        return calendar
-    }()
+    var calendarView: CalendarPageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorManager.themeArray[0].pointColor01
-        dateFormatter.dateFormat = "yyyy-MM-dd"
 
-        setup()
+        calendarView = CalendarPageView(frame: view.bounds)
+        view.addSubview(calendarView)
+
+        calendarView.calendar.delegate = self
+        calendarView.calendar.dataSource = self
+
+        calendarView.todayButton.addTarget(self, action: #selector(didTapTodayButton), for: .touchUpInside)
+
         setupNavigationBar()
     }
 
     // 네비게이션 바 설정
     private func setupNavigationBar() {
-        let ddayButton = UIBarButtonItem(title: "D-day", style: .plain, target: self, action: #selector(didTappedDdayButton))
+        let ddayButton = UIBarButtonItem(title: "D-day", style: .plain, target: self, action: #selector(didTapDdayButton))
         navigationItem.rightBarButtonItem = ddayButton
         ddayButton.tintColor = .black
         navigationController?.navigationBar.barTintColor = view.backgroundColor
     }
 
     // D-day 버튼 터치 시 호출
-    @objc func didTappedDdayButton() {
+    @objc func didTapDdayButton() {
         let vc = DdayPageViewController()
         vc.completion = { [weak self] date in
             self?.selectedDday = date
-            self?.calendar.reloadData()
+            self?.calendarView.calendar.reloadData()
         }
-        
     }
 
     // 오늘 버튼 터치 시 호출
-    @objc func didTappedTodayButton() {
-        calendar.setCurrentPage(Date(), animated: true)
+    @objc func didTapTodayButton() {
+        calendarView.calendar.setCurrentPage(Date(), animated: true)
     }
 }
 
 extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance {
     // 날짜 선택 시 호출
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print(dateFormatter.string(from: date) + " 선택됨")
+        print(calendarView.dateFormatter.string(from: date) + " 선택됨")
     }
 
     // 날짜 선택 해제 시 호출
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print(dateFormatter.string(from: date) + " 해제됨")
+        print(calendarView.dateFormatter.string(from: date) + " 해제됨")
     }
 
     // 특정 날짜에 표시될 서브타이틀을 결정 ("D-day", "오늘")
@@ -107,7 +82,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
             }
         }
         // 현재 날짜에 "오늘" 이라는 문구 나타냄
-        if dateFormatter.string(from: date) == dateFormatter.string(from: Date()) {
+        if calendarView.dateFormatter.string(from: date) == calendarView.dateFormatter.string(from: Date()) {
             return "오늘"
         }
         return nil
@@ -124,7 +99,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 오늘 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         if date == Date().startOfDay {
-            return ColorManager.themeArray[0].backgroundColor // 오늘 날짜 배경색
+            return ColorManager.themeArray[0].pointColor01 // 오늘 날짜 배경색
         }
         return nil
     }
