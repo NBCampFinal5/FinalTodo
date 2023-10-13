@@ -25,6 +25,13 @@ class SettingCell: UITableViewCell {
         return imageView
     }()
     
+    private let cellSwitch: UISwitch = {
+        let switchControl = UISwitch()
+        switchControl.isHidden = true
+        switchControl.addTarget(self, action: #selector(didTappedSwitch), for: .valueChanged)
+        return switchControl
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
@@ -39,6 +46,7 @@ class SettingCell: UITableViewCell {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(chevronImageView)
+        contentView.addSubview(cellSwitch) // 성준 - 셀 스위치
         
         iconImageView.snp.makeConstraints { make in
             make.left.equalTo(contentView).offset(Constant.defaultPadding)
@@ -57,10 +65,29 @@ class SettingCell: UITableViewCell {
             make.centerY.equalTo(contentView)
             make.width.height.equalTo(Constant.screenWidth / 15)
         }
+        
+        // 성준 - 셀 스위치 레이아웃
+        cellSwitch.snp.makeConstraints { make in
+            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
+            make.centerY.equalTo(contentView)
+        }
     }
     
     func configure(with option: SettingOption) {
         iconImageView.image = UIImage(systemName: option.icon)
         titleLabel.text = option.title
+        
+        // 성준 - 푸시 알림 셀 스위치만 따로 설정
+        if option.title == "푸시 알림" {
+            chevronImageView.isHidden = true
+            cellSwitch.isHidden = false
+        } else {
+            chevronImageView.isHidden = false
+            cellSwitch.isHidden = true
+        }
+    }
+    // 성준 - 스위치 on / off 시 설정
+    @objc private func didTappedSwitch(sender: UISwitch) {
+        print("스위치 \(sender.isOn ? "ON" : "OFF")")
     }
 }
