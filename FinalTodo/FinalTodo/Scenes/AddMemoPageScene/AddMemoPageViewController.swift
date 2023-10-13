@@ -1,75 +1,94 @@
 //
-//  MemoViewController.swift
+//  AddMemoPageViewController.swift
 //  FinalTodo
 //
-//  Created by SeoJunYoung on 2023/10/12.
+//  Created by SeoJunYoung on 10/13/23.
 //
 
 import UIKit
 import SnapKit
 
-final class MemoViewController: UIViewController {
-    
+class AddMemoPageViewController: UIViewController {
+
+    private let topView = ModalTopView(title: "메모 추가하기")
     private let memoView = MemoView()
-    private let viewModel = MemoViewModel()
+    private let viewModel = AddMemoPageViewModel()
+
 }
 
-extension MemoViewController {
-    // MARK: - Life Cycle
+extension AddMemoPageViewController {
+    // MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = ColorManager.themeArray[0].pointColor01
         setUp()
-        setUpNavigation()
     }
+    
+
 }
 
-private extension MemoViewController {
-    // MARK: - SetUp
+private extension AddMemoPageViewController {
+    // MARK: - setUp
+    
     func setUp() {
-        self.view.backgroundColor = ColorManager.themeArray[0].pointColor01
+        setUpTopView()
         setUpMemoView()
+    }
+    
+    func setUpTopView() {
+        view.addSubview(topView)
+        topView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+        }
+        topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
     }
     
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(topView.snp.bottom).offset(Constant.defaultPadding)
+            make.left.right.bottom.equalToSuperview()
         }
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
     }
-    // MARK: - SetUpNavigation
-    func setUpNavigation() {
-        self.navigationItem.title = "title"
-    }
+
 }
 
-extension MemoViewController {
+extension AddMemoPageViewController {
     // MARK: - Method
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
+    
+    @objc func didTappedBackButton() {
+        self.dismiss(animated: true)
     }
 
 }
 
-extension MemoViewController: UITextViewDelegate {
+extension AddMemoPageViewController: UITextViewDelegate {
     // MARK: - TextViewPlaceHolder
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
             textView.textColor = .black
         }
         return true
+        
+        
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        
         if textView.text == "" {
             textView.text = "메모를 입력해 주세요."
             textView.textColor = .systemGray
         }
         return true
+        
+        
     }
     
     // MARK: - 유동적인 높이를 가진 textView
@@ -87,7 +106,7 @@ extension MemoViewController: UITextViewDelegate {
     }
 }
 
-extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.optionImageAry.count
@@ -102,16 +121,15 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-//        let yourVC = FTOPViewController(data: viewModel.features[indexPath.row])
-        let vc = AddMemoPageViewController()
+        let vc = LocateSettingViewController()
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
 }
 
-extension MemoViewController: UIViewControllerTransitioningDelegate {
+extension AddMemoPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
     }
 }
