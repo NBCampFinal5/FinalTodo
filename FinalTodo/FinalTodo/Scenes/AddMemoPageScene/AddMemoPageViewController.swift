@@ -11,18 +11,6 @@ import SnapKit
 class AddMemoPageViewController: UIViewController {
 
     private let topView = ModalTopView(title: "메모 추가하기")
-    lazy var titleTextView: UITextView = {
-        let view = UITextView()
-        view.isScrollEnabled = false
-        view.font = UIFont.systemFont(ofSize: 20)
-        view.text = "제목을 입력해 주세요."
-        view.textColor = .systemGray
-        view.backgroundColor = ColorManager.themeArray[0].pointColor02
-        let inset = Constant.defaultPadding / 2
-        view.textContainerInset = .init(top: inset, left: inset, bottom: inset, right: inset)
-        view.layer.cornerRadius = inset
-        return view
-    }()
     private let memoView = MemoView()
     private let viewModel = AddMemoPageViewModel()
 
@@ -45,7 +33,6 @@ private extension AddMemoPageViewController {
     
     func setUp() {
         setUpTopView()
-        setUpTitleTextField()
         setUpMemoView()
     }
     
@@ -57,19 +44,10 @@ private extension AddMemoPageViewController {
         topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
     }
     
-    func setUpTitleTextField() {
-        view.addSubview(titleTextView)
-        titleTextView.snp.makeConstraints { make in
-            make.top.equalTo(topView.snp.bottom).offset(Constant.defaultPadding)
-            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
-        }
-        titleTextView.delegate = self
-    }
-    
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextView.snp.bottom).offset(Constant.defaultPadding)
+            make.top.equalTo(topView.snp.bottom).offset(Constant.defaultPadding)
             make.left.right.bottom.equalToSuperview()
         }
         memoView.contentTextView.delegate = self
@@ -92,39 +70,25 @@ extension AddMemoPageViewController: UITextViewDelegate {
     // MARK: - TextViewPlaceHolder
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        switch textView {
-        case titleTextView:
-            if textView.text == "제목을 입력해 주세요." {
-                textView.text = ""
-                textView.textColor = .black
-            }
-            return true
-        default:
-            if textView.text == "메모를 입력해 주세요." {
-                textView.text = ""
-                textView.textColor = .black
-            }
-            return true
+        
+        if textView.text == "메모를 입력해 주세요." {
+            textView.text = ""
+            textView.textColor = .black
         }
-
+        return true
+        
+        
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        switch textView {
-        case titleTextView:
-            if textView.text == "" {
-                textView.text = "제목을 입력해 주세요."
-                textView.textColor = .systemGray
-            }
-            return true
-        default:
-            if textView.text == "" {
-                textView.text = "메모를 입력해 주세요."
-                textView.textColor = .systemGray
-            }
-            return true
+        
+        if textView.text == "" {
+            textView.text = "메모를 입력해 주세요."
+            textView.textColor = .systemGray
         }
-
+        return true
+        
+        
     }
     
     // MARK: - 유동적인 높이를 가진 textView

@@ -35,10 +35,10 @@ final class MemoView: UIView {
         view.font = UIFont.systemFont(ofSize: 20)
         view.text = "메모를 입력해 주세요."
         view.textColor = .systemGray
-        view.backgroundColor = ColorManager.themeArray[0].pointColor02
-        let inset = Constant.defaultPadding / 2
-        view.textContainerInset = .init(top: inset, left: inset, bottom: inset, right: inset)
-        view.layer.cornerRadius = inset
+        view.backgroundColor = .clear
+//        let inset = Constant.defaultPadding / 2
+//        view.textContainerInset = .init(top: inset, left: inset, bottom: inset, right: inset)
+//        view.layer.cornerRadius = inset
         return view
     }()
     
@@ -78,8 +78,7 @@ private extension MemoView {
         self.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.top.equalTo(optionCollectionView.snp.bottom).offset(Constant.defaultPadding)
-            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
-            make.bottom.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
         }
         scrollView.addSubview(scrollContentView)
         scrollContentView.snp.makeConstraints { make in
@@ -91,8 +90,9 @@ private extension MemoView {
     func setUpContentTextView() {
         scrollContentView.addSubview(contentTextView)
         contentTextView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
+            make.top.bottom.equalToSuperview()
         }
     }
 }
