@@ -20,7 +20,7 @@ final class MemoView: UIView {
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         flowLayout.scrollDirection = .horizontal
         let itemSize = Constant.screenHeight * 0.05
-        let spacing = (Constant.screenWidth - (Constant.defaultPadding * 2) - (itemSize * 5)) / 5
+        let spacing = (Constant.screenWidth - (Constant.defaultPadding * 2) - (itemSize * 5)) / 4
         flowLayout.minimumLineSpacing = spacing
         flowLayout.itemSize = CGSize(width: itemSize, height: itemSize)
         view.isScrollEnabled = false
@@ -42,10 +42,6 @@ final class MemoView: UIView {
         return view
     }()
     
-    weak var textViewDelegate: MemoViewTextViewDelegate?
-    
-    weak var collectionViewDelegate: MemoViewCollectionViewDelegate?
-    
     // MARK: - init
 
     override init(frame: CGRect) {
@@ -63,16 +59,27 @@ private extension MemoView {
     // MARK: - SetUp
 
     func setUp() {
-        setUpScrollView()
         setUpOptionCollectionView()
+        setUpScrollView()
         setUpContentTextView()
+    }
+    
+    func setUpOptionCollectionView() {
+        self.addSubview(optionCollectionView)
+        optionCollectionView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+        optionCollectionView.register(MemoOptionCollectionViewCell.self, forCellWithReuseIdentifier: MemoOptionCollectionViewCell.identifier)
     }
     
     func setUpScrollView() {
         self.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalTo(optionCollectionView.snp.bottom).offset(Constant.defaultPadding)
             make.left.right.equalToSuperview().inset(Constant.defaultPadding)
+            make.bottom.equalToSuperview()
         }
         scrollView.addSubview(scrollContentView)
         scrollContentView.snp.makeConstraints { make in
@@ -81,58 +88,11 @@ private extension MemoView {
         
     }
     
-    func setUpOptionCollectionView() {
-        scrollContentView.addSubview(optionCollectionView)
-        optionCollectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.right.equalToSuperview()
-            make.height.equalTo(Constant.screenHeight * 0.05)
-        }
-        optionCollectionView.delegate = self
-        optionCollectionView.dataSource = self
-        optionCollectionView.register(MemoOptionCollectionViewCell.self, forCellWithReuseIdentifier: MemoOptionCollectionViewCell.identifier)
-    }
-    
     func setUpContentTextView() {
         scrollContentView.addSubview(contentTextView)
         contentTextView.snp.makeConstraints { make in
-            make.top.equalTo(optionCollectionView.snp.bottom).offset(Constant.defaultPadding)
+            make.edges.equalToSuperview()
             make.height.equalTo(Constant.screenHeight * 0.05)
-            make.left.right.equalToSuperview()
-            make.bottom.equalToSuperview()
         }
-        contentTextView.delegate = self
-    }
-}
-
-extension MemoView: UITextViewDelegate {
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        guard let delegate = textViewDelegate else { return true}
-        return delegate.textViewShouldBeginEditing(textView: textView)
-    }
-    
-    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        guard let delegate = textViewDelegate else { return true}
-        return delegate.textViewShouldEndEditing(textView: textView)
-    }
-    func textViewDidChange(_ textView: UITextView) {
-        textViewDelegate?.textViewDidChange(textView: textView)
-    }
-}
-
-extension MemoView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let delegate = collectionViewDelegate else { return 0}
-        return delegate.collectionView(collectionView: collectionView, numberOfItemsInSection: section)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let delegate = collectionViewDelegate else { return UICollectionViewCell()}
-        return delegate.collectionView(collectionView: collectionView, cellForItemAt: indexPath)
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let delegate = collectionViewDelegate else { return }
-        return delegate.collectionView(collectionView: collectionView, didSelectItemAt: indexPath)
     }
 }

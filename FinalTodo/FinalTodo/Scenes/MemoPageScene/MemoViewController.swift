@@ -33,11 +33,11 @@ private extension MemoViewController {
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        memoView.textViewDelegate = self
-        memoView.collectionViewDelegate = self
+        memoView.contentTextView.delegate = self
+        memoView.optionCollectionView.delegate = self
+        memoView.optionCollectionView.dataSource = self
     }
     // MARK: - SetUpNavigation
     func setUpNavigation() {
@@ -53,10 +53,10 @@ extension MemoViewController {
 
 }
 
-extension MemoViewController: MemoViewTextViewDelegate {
+extension MemoViewController: UITextViewDelegate {
     // MARK: - TextViewPlaceHolder
 
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
             textView.textColor = .black
@@ -64,7 +64,7 @@ extension MemoViewController: MemoViewTextViewDelegate {
         return true
     }
     
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         if textView.text == "" {
             textView.text = "메모를 입력해 주세요."
             textView.textColor = .systemGray
@@ -73,7 +73,7 @@ extension MemoViewController: MemoViewTextViewDelegate {
     }
     
     // MARK: - 유동적인 높이를 가진 textView
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         let size = CGSize(width:textView.frame.width, height: .infinity)
         let estimatedSize = textView.sizeThatFits(size)
         
@@ -87,20 +87,31 @@ extension MemoViewController: MemoViewTextViewDelegate {
     }
 }
 
-extension MemoViewController: MemoViewCollectionViewDelegate {
+extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.optionImageAry.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
         cell.bind(image: viewModel.optionImageAry[indexPath.row])
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
+//        let yourVC = FTOPViewController(data: viewModel.features[indexPath.row])
+        let vc = AddMemoPageViewController()
+        vc.modalPresentationStyle = .custom
+        vc.transitioningDelegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension MemoViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }

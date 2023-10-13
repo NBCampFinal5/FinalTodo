@@ -13,6 +13,7 @@
 		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
 		083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98642AD8DBAA006895D2 /* AddMemoPageViewController.swift */; };
 		083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98662AD8DC08006895D2 /* PresentationController.swift */; };
+		083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
 		084412022AD56871005F2FA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084412012AD56871005F2FA9 /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		083C98612AD8D88E006895D2 /* MemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
 		083C98642AD8DBAA006895D2 /* AddMemoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewController.swift; sourceTree = "<group>"; };
 		083C98662AD8DC08006895D2 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewModel.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		084411FA2AD56870005F2FA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				083C98642AD8DBAA006895D2 /* AddMemoPageViewController.swift */,
+				083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */,
 			);
 			path = AddMemoPageScene;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
+				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
