@@ -10,6 +10,7 @@ import SnapKit
 
 class AddMemoPageViewController: UIViewController {
 
+    private let topView = ModalTopView(title: "메모 추가하기")
     lazy var titleTextView: UITextView = {
         let view = UITextView()
         view.isScrollEnabled = false
@@ -43,14 +44,23 @@ private extension AddMemoPageViewController {
     // MARK: - setUp
     
     func setUp() {
+        setUpTopView()
         setUpTitleTextField()
         setUpMemoView()
+    }
+    
+    func setUpTopView() {
+        view.addSubview(topView)
+        topView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+        }
     }
     
     func setUpTitleTextField() {
         view.addSubview(titleTextView)
         titleTextView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview().inset(Constant.defaultPadding)
+            make.top.equalTo(topView.snp.bottom).offset(Constant.defaultPadding)
+            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
         }
         titleTextView.delegate = self
     }
