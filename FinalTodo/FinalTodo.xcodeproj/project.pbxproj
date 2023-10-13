@@ -10,6 +10,7 @@
 		038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038847CF2AD7EF800083C420 /* PwFindViewController.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
+		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
 		084412022AD56871005F2FA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084412012AD56871005F2FA9 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 		038847CF2AD7EF800083C420 /* PwFindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindViewController.swift; sourceTree = "<group>"; };
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		083C985E2AD8D7AC006895D2 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		083C98612AD8D88E006895D2 /* MemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		084411FA2AD56870005F2FA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,14 @@
 				038847CF2AD7EF800083C420 /* PwFindViewController.swift */,
 			);
 			path = PwFindScene;
+			sourceTree = "<group>";
+		};
+		083C98602AD8D837006895D2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		084411EC2AD56870005F2FA9 = {
@@ -208,6 +218,8 @@
 			isa = PBXGroup;
 			children = (
 				084412032AD56871005F2FA9 /* LaunchScreen.storyboard */,
+				08A4F88B2AD8218E0092C6EF /* MemoView.swift */,
+				083C98602AD8D837006895D2 /* Cells */,
 			);
 			path = SharedView;
 			sourceTree = "<group>";
@@ -216,8 +228,7 @@
 			isa = PBXGroup;
 			children = (
 				08A4F8892AD8216A0092C6EF /* MemoViewController.swift */,
-				08A4F88B2AD8218E0092C6EF /* MemoView.swift */,
-				08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */,
+				083C98612AD8D88E006895D2 /* MemoViewModel.swift */,
 			);
 			path = MemoPageScene;
 			sourceTree = "<group>";
@@ -338,6 +349,7 @@
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
+				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
 				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
