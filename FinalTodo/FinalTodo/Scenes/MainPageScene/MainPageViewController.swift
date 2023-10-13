@@ -152,6 +152,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if indexPath.row > 2 {
+            if let selectedFolder = items[indexPath.row - 3] as? Folder {
+                let memoListViewVC = MemoListViewController(folder: selectedFolder)
+                self.navigationController?.pushViewController(memoListViewVC, animated: true)
+            }
+        }
+        
         if tableView.isEditing && indexPath.row > 2 {
             if let folder = items[indexPath.row - 3 ] as? Folder {
                 showFolderDialog(for: folder)
