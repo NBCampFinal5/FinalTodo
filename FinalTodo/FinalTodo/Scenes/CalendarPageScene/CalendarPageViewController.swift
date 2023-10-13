@@ -14,7 +14,7 @@ class CalendarPageViewController: UIViewController {
         let configuration = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
         let image = UIImage(systemName: "arrow.clockwise", withConfiguration: configuration)
         button.setImage(image, for: .normal)
-        button.backgroundColor = .white
+        button.backgroundColor = ColorManager.themeArray[0].backgroundColor
         button.tintColor = .white
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
@@ -38,7 +38,7 @@ class CalendarPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = ColorManager.themeArray[0].pointColor01
         dateFormatter.dateFormat = "yyyy-MM-dd"
 
         setup()
@@ -129,17 +129,17 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     }
 
     // 오늘 날짜 배경색 설정
-//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-//        if date == Date().startOfDay {
-//            return UIColor(hex: "405B2B") // 오늘 날짜 배경색
-//        }
-//        return nil
-//    }
-//
-//    // 선택 날짜 배경색 설정
-//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-//        return UIColor(hex: "C8D2B3") // 선택된 날짜 배경색
-//    }
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        if date == Date().startOfDay {
+            return ColorManager.themeArray[0].backgroundColor // 오늘 날짜 배경색
+        }
+        return nil
+    }
+
+    // 선택 날짜 배경색 설정
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+        return ColorManager.themeArray[0].pointColor02 // 선택된 날짜 배경색
+    }
 }
 
 // Date 객체의 확장을 통해 특정 날짜의 시작 시간을 가져오는 기능

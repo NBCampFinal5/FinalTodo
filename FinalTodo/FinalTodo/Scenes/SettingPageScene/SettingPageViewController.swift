@@ -1,10 +1,3 @@
-//
-//  SettingPageViewController.swift
-//  FinalTodo
-//
-//  Created by SeoJunYoung on 2023/10/10.
-//
-
 import SnapKit
 import UIKit
 
@@ -83,16 +76,19 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true) // 성준 - 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
+
 //        let notificationVC = ThemeColorViewController
         let themeColorVC = ThemeColorViewController()
 //        let lockVC = ThemeColorViewController
 
         let profileVC = ProfilePageViewController()
         let singInVC = SignInPageViewController()
+        let notifyVC = NotifyViewController() // 성준
 
         if indexPath.section == 0 && indexPath.row == 0 {
             // 알림 화면으로 이동
-//            navigationController?.pushViewController(notificationVC, animated: false)
+            navigationController?.pushViewController(notifyVC, animated: true) // 성준
         } else if indexPath.section == 0 && indexPath.row == 1 {
             // 테마컬러 화면으로 이동 ☑️
             navigationController?.pushViewController(themeColorVC, animated: false)
