@@ -15,6 +15,7 @@
 		083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98662AD8DC08006895D2 /* PresentationController.swift */; };
 		083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */; };
 		083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986A2AD8E9EE006895D2 /* ModalTopView.swift */; };
+		083C986E2AD90129006895D2 /* LocateSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986D2AD90129006895D2 /* LocateSettingViewController.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
 		084412022AD56871005F2FA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084412012AD56871005F2FA9 /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 		083C98662AD8DC08006895D2 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewModel.swift; sourceTree = "<group>"; };
 		083C986A2AD8E9EE006895D2 /* ModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTopView.swift; sourceTree = "<group>"; };
+		083C986D2AD90129006895D2 /* LocateSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocateSettingViewController.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		084411FA2AD56870005F2FA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,14 @@
 			path = AddMemoPageScene;
 			sourceTree = "<group>";
 		};
+		083C986C2AD90103006895D2 /* LocateSettingScene */ = {
+			isa = PBXGroup;
+			children = (
+				083C986D2AD90129006895D2 /* LocateSettingViewController.swift */,
+			);
+			path = LocateSettingScene;
+			sourceTree = "<group>";
+		};
 		084411EC2AD56870005F2FA9 = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +174,7 @@
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 				08A4F8882AD821410092C6EF /* MemoPageScene */,
 				083C98632AD8DB5F006895D2 /* AddMemoPageScene */,
+				083C986C2AD90103006895D2 /* LocateSettingScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -381,6 +392,7 @@
 				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */,
+				083C986E2AD90129006895D2 /* LocateSettingViewController.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
 				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
