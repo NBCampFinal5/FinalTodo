@@ -8,17 +8,10 @@
 import UIKit
 import SnapKit
 
-class MemoViewController: UIViewController {
+final class MemoViewController: UIViewController {
     
     private let memoView = MemoView()
-    
-    private let imageAry: [UIImage?] = [
-        UIImage(systemName: "checkmark.square"),
-        UIImage(systemName: "map"),
-        UIImage(systemName: "alarm"),
-        UIImage(systemName: "tag"),
-        UIImage(systemName: "heart"),
-    ]
+    private let viewModel = MemoViewModel()
 }
 
 extension MemoViewController {
@@ -33,6 +26,7 @@ extension MemoViewController {
 private extension MemoViewController {
     // MARK: - SetUp
     func setUp() {
+        self.view.backgroundColor = ColorManager.themeArray[0].pointColor01
         setUpMemoView()
     }
     
@@ -94,24 +88,19 @@ extension MemoViewController: MemoViewTextViewDelegate {
 }
 
 extension MemoViewController: MemoViewCollectionViewDelegate {
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        5
+        viewModel.optionImageAry.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
-        cell.bind(image: imageAry[indexPath.row])
+        cell.bind(image: viewModel.optionImageAry[indexPath.row])
         return cell
     }
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let itemSize = Constant.screenHeight * 0.05
-        let spacing = Constant.defaultPadding
-        let count: CGFloat = 5
-        let totalCellWidth = itemSize * count
-        let totalSpacingWidth = spacing * (count - 1)
-        let leftInset = (collectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-        let rightInset = leftInset
-        return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
 }

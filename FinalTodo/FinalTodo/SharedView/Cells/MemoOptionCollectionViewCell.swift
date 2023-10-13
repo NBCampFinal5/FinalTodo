@@ -7,8 +7,7 @@
 
 import UIKit
 
-class MemoOptionCollectionViewCell: UICollectionViewCell {
-    // static let identifier = "MemoOptionCollectionViewCell"
+final class MemoOptionCollectionViewCell: UICollectionViewCell {
     
     private let imageView = UIImageView()
     
