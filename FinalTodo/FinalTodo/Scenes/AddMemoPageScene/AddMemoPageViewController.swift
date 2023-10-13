@@ -54,6 +54,7 @@ private extension AddMemoPageViewController {
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
+        topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
     }
     
     func setUpTitleTextField() {
@@ -74,6 +75,15 @@ private extension AddMemoPageViewController {
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
+    }
+
+}
+
+extension AddMemoPageViewController {
+    // MARK: - Method
+    
+    @objc func didTappedBackButton() {
+        self.dismiss(animated: true)
     }
 
 }

@@ -10,12 +10,17 @@ import SnapKit
 
 class ModalTopView: UIView {
     
-    private let titleLabel = UILabel()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
+        return label
+    }()
     
-    private let backButton: UIButton = {
+    lazy var backButton: UIButton = {
         let button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.05, weight: .light)
-        let image = UIImage(systemName: "xmark.circle.fill", withConfiguration: imageConfig)
+//        let imageConfig = UIImage.SymbolConfiguration(pointSize: Constant.screenHeight * 0.05, weight: .light)
+//        let image = UIImage(systemName: "xmark.circle.fill", withConfiguration: imageConfig)
+        let image = UIImage(systemName: "xmark.circle.fill")
         button.setImage(image, for: .normal)
         button.tintColor = ColorManager.themeArray[0].pointColor02
         button.imageView?.contentMode = .scaleAspectFit
@@ -50,7 +55,7 @@ private extension ModalTopView {
     func setUpBackButton() {
         self.addSubview(backButton)
         backButton.snp.makeConstraints { make in
-            make.height.width.equalTo(Constant.screenHeight * 0.05)
+//            make.height.width.equalTo(Constant.screenHeight * 0.0)
             make.top.right.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
