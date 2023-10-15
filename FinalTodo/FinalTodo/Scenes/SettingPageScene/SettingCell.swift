@@ -2,9 +2,14 @@ import SnapKit
 import UIKit
 
 class SettingCell: UITableViewCell {
-//    let identifier = #function
-//    // #function: 현재 위치에서 사용 중인 함수 또는 메서드의 이름을 나타내는 키워드
-    
+    // 스택뷰: 디폴트값 .horizontal
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = Constant.defaultPadding
+        stackView.alignment = .center
+        return stackView
+    }()
+
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .tertiaryLabel
@@ -16,15 +21,7 @@ class SettingCell: UITableViewCell {
         let label = UILabel()
         return label
     }()
-    
-    private let chevronImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .tertiaryLabel
-        imageView.image = UIImage(systemName: "chevron.right")
-        return imageView
-    }()
-    
+
     private let cellSwitch: UISwitch = {
         let switchControl = UISwitch()
         switchControl.isHidden = true
@@ -43,49 +40,34 @@ class SettingCell: UITableViewCell {
     }
     
     private func setUp() {
-        contentView.addSubview(iconImageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(chevronImageView)
-        contentView.addSubview(cellSwitch) // 성준 - 셀 스위치
-        
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(iconImageView)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(cellSwitch)
+         
+        stackView.snp.makeConstraints { make in
+            make.left.right.equalTo(contentView).inset(Constant.defaultPadding)
+            make.centerY.equalTo(contentView)
+        }
+         
         iconImageView.snp.makeConstraints { make in
-            make.left.equalTo(contentView).offset(Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
             make.width.height.equalTo(Constant.screenWidth / 15)
         }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(iconImageView.snp.right).offset(Constant.defaultPadding)
-            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-        }
-        
-        chevronImageView.snp.makeConstraints { make in
-            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-            make.width.height.equalTo(Constant.screenWidth / 15)
-        }
-        
-        // 성준 - 셀 스위치 레이아웃
-        cellSwitch.snp.makeConstraints { make in
-            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-        }
+
     }
     
     func configure(with option: SettingOption) {
         iconImageView.image = UIImage(systemName: option.icon)
         titleLabel.text = option.title
         
-        // 성준 - 푸시 알림 셀 스위치만 따로 설정
+        // 성준 - 푸시 알림 셀 스위치만 따로 설정, 서령 - UI 변경으로 코드 변경
         if option.title == "푸시 알림" {
-            chevronImageView.isHidden = true
             cellSwitch.isHidden = false
         } else {
-            chevronImageView.isHidden = false
             cellSwitch.isHidden = true
         }
     }
+
     // 성준 - 스위치 on / off 시 설정
     @objc private func didTappedSwitch(sender: UISwitch) {
         print("스위치 \(sender.isOn ? "ON" : "OFF")")
