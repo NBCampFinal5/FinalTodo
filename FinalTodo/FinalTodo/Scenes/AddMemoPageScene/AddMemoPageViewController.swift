@@ -13,7 +13,6 @@ class AddMemoPageViewController: UIViewController {
     private let topView = ModalTopView(title: "메모 추가하기")
     private let memoView = MemoView()
     private let viewModel = AddMemoPageViewModel()
-
 }
 
 extension AddMemoPageViewController {
@@ -24,8 +23,6 @@ extension AddMemoPageViewController {
         self.view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         setUp()
     }
-    
-
 }
 
 private extension AddMemoPageViewController {
@@ -63,7 +60,6 @@ extension AddMemoPageViewController {
     @objc func didTappedBackButton() {
         self.dismiss(animated: true)
     }
-
 }
 
 extension AddMemoPageViewController: UITextViewDelegate {
@@ -78,7 +74,6 @@ extension AddMemoPageViewController: UITextViewDelegate {
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        
         if textView.text == "" {
             textView.text = "메모를 입력해 주세요."
             textView.textColor = .systemGray
@@ -102,7 +97,7 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        let vc = NotifySettingPageViewController()
+        let vc = NotifySettingPageViewController(viewModel: viewModel)
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
