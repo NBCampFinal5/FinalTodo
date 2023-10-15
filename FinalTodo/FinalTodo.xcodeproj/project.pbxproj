@@ -40,6 +40,8 @@
 		30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */; };
 		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
 		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
+		30E798772ADBB53100903272 /* SettingOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798762ADBB53100903272 /* SettingOptionManager.swift */; };
+		30E798792ADBEAD000903272 /* ThemeColorOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798782ADBEAD000903272 /* ThemeColorOptionManager.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
@@ -81,6 +83,8 @@
 		30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorCell.swift; sourceTree = "<group>"; };
 		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
 		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		30E798762ADBB53100903272 /* SettingOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionManager.swift; sourceTree = "<group>"; };
+		30E798782ADBEAD000903272 /* ThemeColorOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOptionManager.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C75C107A2AD8275300F70A7D /* setup+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "setup+Extension.swift"; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				30E798462AD61E0B00903272 /* SettingOption.swift */,
+				30E798762ADBB53100903272 /* SettingOptionManager.swift */,
 				30E798442AD60DEB00903272 /* SettingCell.swift */,
 				084412142AD569CD005F2FA9 /* SettingPageViewController.swift */,
 			);
@@ -280,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				30E798512AD7F51200903272 /* ThemeColorOption.swift */,
+				30E798782ADBEAD000903272 /* ThemeColorOptionManager.swift */,
 				30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */,
 				30E7984A2AD7E20100903272 /* ThemeColorViewController.swift */,
 			);
@@ -382,6 +388,7 @@
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
 				083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */,
 				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
+				30E798792ADBEAD000903272 /* ThemeColorOptionManager.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
 				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
@@ -393,6 +400,7 @@
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */,
 				083C986E2AD90129006895D2 /* LocateSettingViewController.swift in Sources */,
+				30E798772ADBB53100903272 /* SettingOptionManager.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
 				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
