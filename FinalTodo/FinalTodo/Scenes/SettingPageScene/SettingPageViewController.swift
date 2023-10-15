@@ -78,7 +78,7 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true) // 성준 - 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
         
-        let notifyVC = NotifyViewController() // 성준
+        let notifyVC = NotifyPageViewController() // 성준
         let themeColorVC = ThemeColorViewController()
 //        let lockVC = ThemeColorViewController
 

@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class AddNotifyViewController: UIViewController {
+class AddNotifyPageViewController: UIViewController {
     var amPm = ["오전", "오후"]
     var hours = Array(1...12)
     let minutes = Array(0...59)
@@ -31,7 +31,7 @@ class AddNotifyViewController: UIViewController {
     }
 }
 
-extension AddNotifyViewController {
+extension AddNotifyPageViewController {
     func setup() {
         view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         title = "시간 설정"
@@ -43,7 +43,7 @@ extension AddNotifyViewController {
     }
 }
 
-extension AddNotifyViewController: UIPickerViewDataSource {
+extension AddNotifyPageViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
@@ -59,7 +59,7 @@ extension AddNotifyViewController: UIPickerViewDataSource {
     }
 }
 
-extension AddNotifyViewController: UIPickerViewDelegate {
+extension AddNotifyPageViewController: UIPickerViewDelegate {
     // 각 컴포넌트와 행에 표시될 내용 설정
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
