@@ -9,27 +9,24 @@ import SnapKit
 import UIKit
 
 class SettingCell: UITableViewCell {
-//    let identifier = #function
-//    // #function: 현재 위치에서 사용 중인 함수 또는 메서드의 이름을 나타내는 키워드
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = Constant.defaultPadding
+        stackView.alignment = .fill
+        return stackView
+    }()
     
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .tertiaryLabel
+        imageView.tintColor = ColorManager.themeArray[0].backgroundColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = ColorManager.themeArray[0].backgroundColor
         return label
-    }()
-    
-    private let chevronImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .tertiaryLabel
-        imageView.image = UIImage(systemName: "chevron.right")
-        return imageView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -43,25 +40,16 @@ class SettingCell: UITableViewCell {
     }
     
     private func setUp() {
-        contentView.addSubview(iconImageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(chevronImageView)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(iconImageView)
+        stackView.addArrangedSubview(titleLabel)
+        
+        stackView.snp.makeConstraints { make in
+            make.left.right.equalTo(contentView).inset(Constant.defaultPadding)
+            make.centerY.equalTo(contentView)
+        }
         
         iconImageView.snp.makeConstraints { make in
-            make.left.equalTo(contentView).offset(Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-            make.width.height.equalTo(Constant.screenWidth / 15)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(iconImageView.snp.right).offset(Constant.defaultPadding)
-            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-        }
-        
-        chevronImageView.snp.makeConstraints { make in
-            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
             make.width.height.equalTo(Constant.screenWidth / 15)
         }
     }
