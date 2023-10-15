@@ -9,7 +9,13 @@ import UIKit
 
 final class MemoOptionCollectionViewCell: UICollectionViewCell {
     
-    private let imageView = UIImageView()
+    private let categoryLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = ColorManager.themeArray[0].pointColor01
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        return label
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
@@ -21,15 +27,17 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func bind(image: UIImage?) {
-        imageView.image = image
+    func bind(title: String) {
+        categoryLabel.text = title
     }
 }
 
 private extension MemoOptionCollectionViewCell {
     func setUp() {
-        contentView.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
+        contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
+        contentView.layer.cornerRadius = 8
+        contentView.addSubview(categoryLabel)
+        categoryLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
