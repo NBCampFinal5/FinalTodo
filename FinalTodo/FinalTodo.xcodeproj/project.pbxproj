@@ -45,9 +45,9 @@
 		C735C0442AD8E15A00AA7663 /* NotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0432AD8E15A00AA7663 /* NotifyViewController.swift */; };
 		C735C0462AD8E16D00AA7663 /* AddNotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyViewController.swift */; };
 		C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */; };
+		C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* DdayPageModel.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
-		C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C107A2AD8275300F70A7D /* setup+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,8 +90,8 @@
 		C735C0432AD8E15A00AA7663 /* NotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyViewController.swift; sourceTree = "<group>"; };
 		C735C0452AD8E16D00AA7663 /* AddNotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyViewController.swift; sourceTree = "<group>"; };
 		C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
+		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
-		C75C107A2AD8275300F70A7D /* setup+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "setup+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				0844120C2AD5692E005F2FA9 /* TabBarController.swift */,
-				038847CC2AD7EEEF0083C420 /* PwFindScene */,
 				0844121E2AD56B61005F2FA9 /* SignUpScene */,
 				0844121D2AD56B4D005F2FA9 /* SginInScene */,
 				0844121F2AD56B71005F2FA9 /* MainPageScene */,
@@ -217,10 +216,10 @@
 		084412202AD56B81005F2FA9 /* CalendarPageScene */ = {
 			isa = PBXGroup;
 			children = (
+				038847CC2AD7EEEF0083C420 /* PwFindScene */,
 				0844120E2AD5699F005F2FA9 /* CalendarPageViewController.swift */,
 				C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */,
-				C75C10782AD8274200F70A7D /* DdayPageViewController.swift */,
-				C75C107A2AD8275300F70A7D /* setup+Extension.swift */,
+				C747DE282ADBBE9C0044499E /* DdayPageScene */,
 			);
 			path = CalendarPageScene;
 			sourceTree = "<group>";
@@ -309,9 +308,34 @@
 			isa = PBXGroup;
 			children = (
 				C735C0432AD8E15A00AA7663 /* NotifyViewController.swift */,
-				C735C0452AD8E16D00AA7663 /* AddNotifyViewController.swift */,
+				C747DE252ADBB7630044499E /* AddNotifyScene */,
+				C747DE292ADBBEB30044499E /* AddMessageView */,
 			);
 			path = NotifyScene;
+			sourceTree = "<group>";
+		};
+		C747DE252ADBB7630044499E /* AddNotifyScene */ = {
+			isa = PBXGroup;
+			children = (
+				C735C0452AD8E16D00AA7663 /* AddNotifyViewController.swift */,
+			);
+			path = AddNotifyScene;
+			sourceTree = "<group>";
+		};
+		C747DE282ADBBE9C0044499E /* DdayPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				C75C10782AD8274200F70A7D /* DdayPageViewController.swift */,
+				C747DE262ADBBCE90044499E /* DdayPageModel.swift */,
+			);
+			path = DdayPageScene;
+			sourceTree = "<group>";
+		};
+		C747DE292ADBBEB30044499E /* AddMessageView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddMessageView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,6 +429,7 @@
 				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
+				C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */,
 				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
 				08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */,
 				C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */,
@@ -414,7 +439,6 @@
 				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
 				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
-				C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyViewController.swift in Sources */,
 				083C986E2AD90129006895D2 /* LocateSettingViewController.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,

@@ -1,10 +1,3 @@
-//
-//  PresentationController.swift
-//  FinalTodo
-//
-//  Created by SeoJunYoung on 10/13/23.
-//
-
 import UIKit
 
 final class PresentationController: UIPresentationController {
@@ -57,5 +50,3 @@ final class PresentationController: UIPresentationController {
         self.presentedViewController.dismiss(animated: true, completion: nil)
     }
 }
-
-

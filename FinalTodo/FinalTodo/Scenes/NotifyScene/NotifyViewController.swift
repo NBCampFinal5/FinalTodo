@@ -1,4 +1,5 @@
 import UIKit
+import SnapKit
 
 class NotifyViewController: UIViewController {
     private let tableView: UITableView = {
@@ -51,5 +52,19 @@ extension NotifyViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 1 { 
+            let vc = AddNotifyViewController()
+            let navController = UINavigationController(rootViewController: vc)
+            navController.modalPresentationStyle = .custom
+            navController.transitioningDelegate = self
+
+            present(navController, animated: true, completion: nil)
+        }
+    }
+}
+
+extension NotifyViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
     }
 }
