@@ -102,16 +102,16 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             navigationController?.pushViewController(notifyVC, animated: true) // 성준
         } else if indexPath.section == 0 && indexPath.row == 1 {
             // 테마컬러 화면으로 이동 ☑️
-            navigationController?.pushViewController(themeColorVC, animated: false)
+            navigationController?.pushViewController(themeColorVC, animated: true)
         } else if indexPath.section == 0 && indexPath.row == 2 {
             // 잠금화면으로 이동
-//            navigationController?.pushViewController(lockVC, animated: false)
+//            navigationController?.pushViewController(lockVC, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 0 {
             // 프로필 화면으로 이동 ☑️
-            navigationController?.pushViewController(profileVC, animated: false)
+            navigationController?.pushViewController(profileVC, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 1 {
             // 로그인 화면으로 이동 ☑️
-            navigationController?.pushViewController(singInVC, animated: false)
+            navigationController?.pushViewController(singInVC, animated: true)
         }
     }
 }
