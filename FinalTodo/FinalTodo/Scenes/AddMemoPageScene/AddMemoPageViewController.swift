@@ -21,7 +21,7 @@ extension AddMemoPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = ColorManager.themeArray[0].pointColor01
+        self.view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         setUp()
     }
     
@@ -70,14 +70,11 @@ extension AddMemoPageViewController: UITextViewDelegate {
     // MARK: - TextViewPlaceHolder
 
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
             textView.textColor = .black
         }
         return true
-        
-        
     }
     
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
@@ -87,22 +84,6 @@ extension AddMemoPageViewController: UITextViewDelegate {
             textView.textColor = .systemGray
         }
         return true
-        
-        
-    }
-    
-    // MARK: - 유동적인 높이를 가진 textView
-    func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width:textView.frame.width, height: .infinity)
-        let estimatedSize = textView.sizeThatFits(size)
-        
-        textView.constraints.forEach { (constraint) in
-            if estimatedSize.height > Constant.screenHeight * 0.05 {
-                if constraint.firstAttribute == .height {
-                    constraint.constant = estimatedSize.height
-                }
-            }
-        }
     }
 }
 
@@ -115,16 +96,32 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
-        cell.bind(image: viewModel.optionImageAry[indexPath.row])
+        cell.bind(title: viewModel.optionImageAry[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        let vc = LocateSettingViewController()
+        let vc = NotifySettingPageViewController()
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension AddMemoPageViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let leadingTrailingInset: CGFloat = 10
+        let cellHeight: CGFloat = Constant.screenHeight * 0.03
+        
+        let category = viewModel.optionImageAry[indexPath.row]
+        let size: CGSize = .init(width: collectionView.frame.width - 10, height: cellHeight)
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
+        
+        let estimatedFrame = category.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let cellWidth: CGFloat = estimatedFrame.width + (leadingTrailingInset * 2)
+        
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 

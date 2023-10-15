@@ -11,6 +11,7 @@ import SnapKit
 final class MemoViewController: UIViewController {
     
     private let memoView = MemoView()
+    private let isPinButton = UIButton()
     private let viewModel = MemoViewModel()
 }
 
@@ -20,13 +21,14 @@ extension MemoViewController {
         super.viewDidLoad()
         setUp()
         setUpNavigation()
+        bind()
     }
 }
 
 private extension MemoViewController {
     // MARK: - SetUp
     func setUp() {
-        self.view.backgroundColor = ColorManager.themeArray[0].pointColor01
+        self.view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         setUpMemoView()
     }
     
@@ -41,7 +43,14 @@ private extension MemoViewController {
     }
     // MARK: - SetUpNavigation
     func setUpNavigation() {
-        self.navigationItem.title = "title"
+        self.navigationItem.title = "2022년 10월 15일 @@시 @@분"
+        
+        isPinButton.setImage(UIImage(systemName: "pin"), for: .normal)
+        isPinButton.tintColor = ColorManager.themeArray[0].pointColor02
+        isPinButton.addTarget(self, action: #selector(didTapPinButton), for: .touchUpInside)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: isPinButton)
+
     }
 }
 
@@ -50,7 +59,22 @@ extension MemoViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-
+    @objc func didTapPinButton() {
+        viewModel.isPin.value.toggle()
+    }    
+    
+    func bind() {
+        viewModel.isPin.bind { [weak self] toggle in
+            guard let self = self else { return }
+            if toggle {
+                isPinButton.setImage(UIImage(systemName: "pin.fill"), for: .normal)
+                isPinButton.tintColor = ColorManager.themeArray[0].pointColor01
+            } else {
+                isPinButton.setImage(UIImage(systemName: "pin"), for: .normal)
+                isPinButton.tintColor = ColorManager.themeArray[0].pointColor02
+            }
+        }
+    }
 }
 
 extension MemoViewController: UITextViewDelegate {
@@ -71,20 +95,6 @@ extension MemoViewController: UITextViewDelegate {
         }
         return true
     }
-    
-    // MARK: - 유동적인 높이를 가진 textView
-    func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width:textView.frame.width, height: .infinity)
-        let estimatedSize = textView.sizeThatFits(size)
-        
-        textView.constraints.forEach { (constraint) in
-            if estimatedSize.height > Constant.screenHeight * 0.05 {
-                if constraint.firstAttribute == .height {
-                    constraint.constant = estimatedSize.height
-                }
-            }
-        }
-    }
 }
 
 extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -96,17 +106,33 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
-        cell.bind(image: viewModel.optionImageAry[indexPath.row])
+        cell.bind(title: viewModel.optionImageAry[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-//        let yourVC = FTOPViewController(data: viewModel.features[indexPath.row])
         let vc = AddMemoPageViewController()
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension MemoViewController: UICollectionViewDelegateFlowLayout {
+    // MARK: - 유동적인 Cell넓이 설정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let leadingTrailingInset: CGFloat = 10
+        let cellHeight: CGFloat = Constant.screenHeight * 0.03
+        
+        let category = viewModel.optionImageAry[indexPath.row]
+        let size: CGSize = .init(width: collectionView.frame.width - 10, height: cellHeight)
+        let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
+        
+        let estimatedFrame = category.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let cellWidth: CGFloat = estimatedFrame.width + (leadingTrailingInset * 2)
+        
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 

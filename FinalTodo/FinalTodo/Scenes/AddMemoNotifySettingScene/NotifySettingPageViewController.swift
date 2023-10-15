@@ -8,10 +8,10 @@
 import UIKit
 import MapKit
 
-class LocateSettingViewController: UIViewController {
+class NotifySettingPageViewController: UIViewController {
 
     
-    private let topView = ModalTopView(title: "위치 설정하기")
+    private let topView = ModalTopView(title: "알림 설정")
     
     let mapView: MKMapView = {
         let view = MKMapView()
@@ -25,11 +25,11 @@ class LocateSettingViewController: UIViewController {
     }
 }
 
-private extension LocateSettingViewController {
+private extension NotifySettingPageViewController {
     // MARK: - SetUp
 
     func setUp() {
-        view.backgroundColor = ColorManager.themeArray[0].pointColor01
+        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         setUpTopView()
         setUpMapView()
     }
