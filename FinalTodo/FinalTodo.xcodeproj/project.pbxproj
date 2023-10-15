@@ -41,6 +41,7 @@
 		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
 		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
 		30E798832ADC122400903272 /* ThemeColorOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798822ADC122400903272 /* ThemeColorOptionManager.swift */; };
+		30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7987E2ADC074900903272 /* SettingOptionManager.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */; };
 		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
@@ -88,6 +89,7 @@
 		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
 		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		30E798822ADC122400903272 /* ThemeColorOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOptionManager.swift; sourceTree = "<group>"; };
+		30E7987E2ADC074900903272 /* SettingOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionManager.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				30E798462AD61E0B00903272 /* SettingOption.swift */,
+				30E7987E2ADC074900903272 /* SettingOptionManager.swift */,
 				30E798442AD60DEB00903272 /* SettingCell.swift */,
 				084412142AD569CD005F2FA9 /* SettingPageViewController.swift */,
 			);
@@ -437,6 +440,7 @@
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
+				30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
