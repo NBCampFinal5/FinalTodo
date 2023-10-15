@@ -40,12 +40,13 @@
 		30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */; };
 		30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798512AD7F51200903272 /* ThemeColorOption.swift */; };
 		30E798552AD80AD500903272 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798542AD80AD500903272 /* ColorManager.swift */; };
+		30E798832ADC122400903272 /* ThemeColorOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798822ADC122400903272 /* ThemeColorOptionManager.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */; };
+		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
 		C735C0442AD8E15A00AA7663 /* NotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0432AD8E15A00AA7663 /* NotifyViewController.swift */; };
 		C735C0462AD8E16D00AA7663 /* AddNotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyViewController.swift */; };
 		C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */; };
-		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
 		C75C107B2AD8275300F70A7D /* setup+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C107A2AD8275300F70A7D /* setup+Extension.swift */; };
@@ -86,12 +87,13 @@
 		30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorCell.swift; sourceTree = "<group>"; };
 		30E798512AD7F51200903272 /* ThemeColorOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOption.swift; sourceTree = "<group>"; };
 		30E798542AD80AD500903272 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		30E798822ADC122400903272 /* ThemeColorOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColorOptionManager.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
+		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
 		C735C0432AD8E15A00AA7663 /* NotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyViewController.swift; sourceTree = "<group>"; };
 		C735C0452AD8E16D00AA7663 /* AddNotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyViewController.swift; sourceTree = "<group>"; };
 		C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
-		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C75C107A2AD8275300F70A7D /* setup+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "setup+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -296,6 +298,7 @@
 				30E798512AD7F51200903272 /* ThemeColorOption.swift */,
 				30E7984E2AD7E7F300903272 /* ThemeColorCell.swift */,
 				30E7984A2AD7E20100903272 /* ThemeColorViewController.swift */,
+				30E798822ADC122400903272 /* ThemeColorOptionManager.swift */,
 			);
 			path = ThemeColorPageScene;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
 				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
+				30E798832ADC122400903272 /* ThemeColorOptionManager.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
