@@ -2,6 +2,7 @@ import SnapKit
 import UIKit
 
 class NotifyPageViewController: UIViewController {
+
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         return table
@@ -45,8 +46,8 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         let model = notifyOptions[indexPath.row]
         cell.configure(with: model)
-
         cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+
         return cell
     }
 
@@ -75,3 +76,4 @@ extension NotifyPageViewController: UIViewControllerTransitioningDelegate {
         return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
     }
 }
+

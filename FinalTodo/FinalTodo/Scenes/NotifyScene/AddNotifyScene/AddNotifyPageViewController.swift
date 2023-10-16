@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class AddNotifyPageViewController: UIViewController {
     var amPm = ["오전", "오후"]
@@ -60,7 +60,6 @@ extension AddNotifyPageViewController: UIPickerViewDataSource {
 }
 
 extension AddNotifyPageViewController: UIPickerViewDelegate {
-    // 각 컴포넌트와 행에 표시될 내용 설정
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
         case 0: return amPm[row]
