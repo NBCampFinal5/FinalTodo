@@ -48,6 +48,15 @@ class MemoListViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(backButtonTapped))
         titleLabel.text = "모든메모"
         navigationItem.titleView = titleLabel
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.shadowImage = UIImage()
+            navigationBar.setBackgroundImage(UIImage(), for: .default)
+            
+            let borderBottom = CALayer()
+            borderBottom.backgroundColor = UIColor.gray.cgColor
+            borderBottom.frame = CGRect(x: 0, y: navigationBar.frame.size.height, width: navigationBar.frame.size.width, height: 0.5)
+            navigationBar.layer.addSublayer(borderBottom)
+        }
     }
     
     @objc private func backButtonTapped() {
@@ -73,6 +82,7 @@ extension MemoListViewController: UITableViewDataSource {
         cell.dateLabel.text = DateFormatter.localizedString(from: memo.date, dateStyle: .short, timeStyle: .short)
         cell.folderNameLabel.text = memo.folderName
         cell.folderColorView.backgroundColor = memo.folderColor
+        cell.backgroundColor = ColorManager.themeArray[0].backgroundColor
         
         return cell
     }
@@ -103,6 +113,11 @@ class MemoCell: UITableViewCell {
     let folderNameLabel = UILabel()
     let folderColorView = UIView()
     let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
+    let separatorLine: UIView = {
+        let line = UIView()
+        line.backgroundColor = .gray
+        return line
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -121,36 +136,47 @@ class MemoCell: UITableViewCell {
         addSubview(folderNameLabel)
         addSubview(folderColorView)
         addSubview(arrowImageView)
+        addSubview(separatorLine)
         
         folderColorView.layer.cornerRadius = 10
         arrowImageView.tintColor = .gray
+        dateLabel.textColor = .lightGray
+        dateLabel.font = UIFont.systemFont(ofSize: 14)
+        folderNameLabel.textColor = .lightGray
+        folderNameLabel.font = UIFont.systemFont(ofSize: 14)
+        arrowImageView.tintColor = ColorManager.themeArray[0].pointColor01
     }
     
     func setupConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(10)
+            make.top.left.equalToSuperview().offset(16)
         }
         
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.left.equalTo(titleLabel)
         }
         
         folderColorView.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom).offset(5)
+            make.top.equalTo(dateLabel.snp.bottom).offset(8)
             make.left.equalTo(titleLabel)
             make.size.equalTo(CGSize(width: 20, height: 20))
         }
         
         folderNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(folderColorView)
-            make.left.equalTo(folderColorView.snp.right).offset(5)
+            make.left.equalTo(folderColorView.snp.right).offset(8)
         }
         
         arrowImageView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalToSuperview().offset(-10)
             make.size.equalTo(CGSize(width: 20, height: 20))
+        }
+        
+        separatorLine.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(0.5)
         }
     }
     
