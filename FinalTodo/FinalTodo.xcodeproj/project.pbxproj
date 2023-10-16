@@ -56,6 +56,7 @@
 		C747DE302ADBDB640044499E /* AddMessagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE2F2ADBDB640044499E /* AddMessagePageViewController.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
+		C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CC48B2ADD2C060085C048 /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +110,7 @@
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C747DE2F2ADBDB640044499E /* AddMessagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMessagePageViewController.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
+		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				C747DE2F2ADBDB640044499E /* AddMessagePageViewController.swift */,
+				C77CC48B2ADD2C060085C048 /* Notifications.swift */,
 			);
 			path = AddMessageView;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 			files = (
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
 				083C985D2AD8D728006895D2 /* Protocol.swift in Sources */,
+				C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */,
 				038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */,
 				30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,

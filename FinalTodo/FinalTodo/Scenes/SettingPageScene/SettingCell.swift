@@ -1,7 +1,13 @@
 import SnapKit
 import UIKit
 
+protocol SettingCellDelegate: AnyObject {
+    func didChangeSwitchState(_ cell: SettingCell, isOn: Bool)
+}
+
 class SettingCell: UITableViewCell {
+    weak var delegate: SettingCellDelegate? // 성준 - 델리게이트 프로퍼티 추가
+
     // 스택뷰: 디폴트값 .horizontal
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -52,7 +58,7 @@ class SettingCell: UITableViewCell {
         stackView.addArrangedSubview(iconImageView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(cellSwitch)
-        contentView.addSubview(timeLabel) // 성준 - 시간 표시 라벨
+//       contentView.addSubview(timeLabel) // 성준 - 시간 표시 라벨
 
         stackView.snp.makeConstraints { make in
             make.left.right.equalTo(contentView).inset(Constant.defaultPadding)
@@ -90,6 +96,7 @@ class SettingCell: UITableViewCell {
 
     // 성준 - 스위치 on / off 시 설정
     @objc private func didTappedSwitch(sender: UISwitch) {
+        delegate?.didChangeSwitchState(self, isOn: sender.isOn)
         print("스위치 \(sender.isOn ? "ON" : "OFF")")
     }
 }
