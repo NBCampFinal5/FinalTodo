@@ -24,13 +24,13 @@ class MemoListView: UIView {
     
     private func setupUI() {
         tableView = UITableView()
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        tableView.backgroundColor = ColorManager.themeArray[0].backgroundColor
         tableView.separatorStyle = .none
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
         self.addSubview(tableView)
         
         fab = UIButton(type: .custom)
-        fab.backgroundColor = .systemBlue
+        fab.backgroundColor = ColorManager.themeArray[0].pointColor01
         fab.layer.cornerRadius = 28
         fab.setImage(UIImage(systemName: "plus"), for: .normal)
         fab.tintColor = .white
@@ -38,15 +38,16 @@ class MemoListView: UIView {
     }
     
     private func setupConstraints() {
-        tableView.snp.makeConstraints { (make) in
-            make.top.left.right.equalToSuperview()
-            make.bottom.equalTo(self.fab.snp.top).offset(-16)
-        }
-        
         fab.snp.makeConstraints { (make) in
             make.size.equalTo(CGSize(width: 56, height: 56))
-            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            make.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing).offset(-16)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-16)
+        }
+        
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalTo(self)
         }
     }
     
