@@ -12,7 +12,7 @@ class MainPageView: UIView {
     
     var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        tableView.backgroundColor = ColorManager.themeArray[0].backgroundColor
         tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.allowsSelectionDuringEditing = true
@@ -21,7 +21,7 @@ class MainPageView: UIView {
     
     let fab: UIButton = {
         let button = UIButton(type: .custom)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = ColorManager.themeArray[0].pointColor01
         button.layer.cornerRadius = 28
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .white
