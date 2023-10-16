@@ -31,16 +31,16 @@ class CalendarPageViewController: UIViewController {
 
     // D-day 버튼 터치 시 호출
     @objc func didTapDdayButton() {
-//        let vc = DdayPageViewController()
-//        vc.completion = { [weak self] date in
-//            self?.selectedDdays.append(date)
-//            self?.calendarView.calendar.reloadData()
-//        }
-//        let navController = UINavigationController(rootViewController: vc)
-//        navController.modalPresentationStyle = .custom
-//        navController.transitioningDelegate = self
-//
-//        present(navController, animated: true, completion: nil)
+        let vc = DdayPageViewController()
+        vc.completion = { [weak self] date in
+            self?.selectedDdays.append(date)
+            self?.calendarView.calendar.reloadData()
+        }
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .custom
+        navController.transitioningDelegate = self
+
+        present(navController, animated: true, completion: nil)
     }
 
     // 오늘 버튼 터치 시 호출
@@ -62,7 +62,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
 
     // 특정 날짜에 표시될 서브타이틀을 결정 ("D-day", "오늘")
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
-        for dday in selectedDdays { 
+        for dday in selectedDdays {
             // 현재 날짜와 D-day 날짜 간의 차이 계산
             let difference = Calendar.current.dateComponents([.day], from: Date().startOfDay, to: dday)
             // daysDifference는 두 날짜 간의 차이 일수
