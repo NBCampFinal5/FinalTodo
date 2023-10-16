@@ -16,7 +16,7 @@ class SettingCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         return label
@@ -41,46 +41,45 @@ class SettingCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUp()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setUp()
     }
-    
+
     private func setUp() {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(iconImageView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(cellSwitch)
         contentView.addSubview(timeLabel) // 성준 - 시간 표시 라벨
-      
+
         stackView.snp.makeConstraints { make in
             make.left.right.equalTo(contentView).inset(Constant.defaultPadding)
             make.centerY.equalTo(contentView)
         }
-         
+
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(Constant.screenWidth / 15)
         }
-        
+
         // 성준 - 셀 스위치 레이아웃
         cellSwitch.snp.makeConstraints { make in
             make.right.equalTo(contentView).offset(-Constant.defaultPadding)
             make.centerY.equalTo(contentView)
         }
-        
-        // 성준 - 시간표시 라벨 레이아웃
-        timeLabel.snp.makeConstraints { make in
-            make.right.equalTo(chevronImageView.snp.left).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-        }
 
+        // 성준 - 시간표시 라벨 레이아웃
+//        timeLabel.snp.makeConstraints { make in
+//            make.right.equalTo(chevronImageView.snp.left).offset(-Constant.defaultPadding)
+//            make.centerY.equalTo(contentView)
+//        }
     }
-    
+
     func configure(with option: SettingOption) {
         iconImageView.image = UIImage(systemName: option.icon)
         titleLabel.text = option.title
-        
+
         // 성준 - 푸시 알림 셀 스위치만 따로 설정, 서령 - UI 변경으로 코드 변경
         if option.title == "푸시 알림" {
             cellSwitch.isHidden = false
@@ -93,5 +92,4 @@ class SettingCell: UITableViewCell {
     @objc private func didTappedSwitch(sender: UISwitch) {
         print("스위치 \(sender.isOn ? "ON" : "OFF")")
     }
-
 }
