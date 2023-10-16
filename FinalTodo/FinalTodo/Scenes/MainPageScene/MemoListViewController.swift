@@ -8,25 +8,15 @@
 import UIKit
 import SnapKit
 
-class MemoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+class MemoListViewController: UIViewController {
     
     var memos: [Memo] = [
         Memo(title: "첫 번째 메모", date: Date(), folderName: "개인", folderColor: .red),
         Memo(title: "두 번째 메모", date: Date(), folderName: "업무", folderColor: .blue),
     ]
     
-    var tableView = UITableView()
+    var memoListView: MemoListView!
     let titleLabel = UILabel()
-    let fab: UIButton = {
-        let button = UIButton(type: .custom)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 28
-        button.setImage(UIImage(systemName: "plus"), for: .normal)
-        button.tintColor = .white
-        return button
-    }()
-    
     var folder: Folder!
     
     init(folder: Folder) {
@@ -41,59 +31,34 @@ class MemoListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.delegate = self
-        
+        setupMemoListView()
         setupNavigationBar()
-        setupTableView()
-        setupFAB()
     }
     
-    func setupNavigationBar() {
+    private func setupMemoListView() {
+        memoListView = MemoListView()
+        view.addSubview(memoListView)
+        memoListView.frame = view.bounds
+        memoListView.tableView.delegate = self
+        memoListView.tableView.dataSource = self
+        memoListView.fab.addTarget(self, action: #selector(fabTapped), for: .touchUpInside)
+    }
+    
+    private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(backButtonTapped))
         titleLabel.text = "모든메모"
         navigationItem.titleView = titleLabel
     }
     
-    private func setupTableView() {
-        tableView = UITableView()
-        tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        view.addSubview(tableView)
-        
-        tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-            make.left.right.equalTo(view)
-        }
-        
-        tableView.separatorStyle = .none
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
-        tableView.allowsSelectionDuringEditing = true
-        
-        view.bringSubviewToFront(fab)
-    }
-    
-    private func setupFAB() {
-        view.addSubview(fab)
-        
-        fab.snp.makeConstraints { (make) in
-            make.size.equalTo(CGSize(width: 56, height: 56))
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-16)
-        }
-        
-        fab.addTarget(self, action: #selector(fabTapped), for: .touchUpInside)
-    }
-    
-    @objc func backButtonTapped() {
+    @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func fabTapped() {
+    @objc private func fabTapped() {
     }
+}
+
+extension MemoListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return memos.count
@@ -111,6 +76,9 @@ class MemoListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return cell
     }
+}
+
+extension MemoListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -125,8 +93,8 @@ class MemoListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-    
 }
+
 
 class MemoCell: UITableViewCell {
     
