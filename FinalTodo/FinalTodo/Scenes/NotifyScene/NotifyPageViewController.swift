@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 
 class NotifyPageViewController: UIViewController {
-
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         return table
@@ -47,6 +46,7 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
         let model = notifyOptions[indexPath.row]
         cell.configure(with: model)
         cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        cell.delegate = self
 
         return cell
     }
@@ -71,9 +71,18 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension NotifyPageViewController: SettingCellDelegate {
+    func didChangeSwitchState(_ cell: SettingCell, isOn: Bool) {
+        if isOn {
+            Notifications.shared.scheduleNotification(title: "메모 확인", body: "메모를 확인하세요!")
+        } else {
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        }
+    }
+}
+
 extension NotifyPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
     }
 }
-
