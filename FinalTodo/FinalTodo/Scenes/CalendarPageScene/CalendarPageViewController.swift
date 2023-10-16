@@ -4,7 +4,7 @@ import UIKit
 
 class CalendarPageViewController: UIViewController {
     // 선택된 D-day 날짜
-    var selectedDday: Date?
+    var selectedDdays: [Date] = []
     var calendarView: CalendarPageView!
 
     override func viewDidLoad() {
@@ -33,9 +33,14 @@ class CalendarPageViewController: UIViewController {
     @objc func didTapDdayButton() {
         let vc = DdayPageViewController()
         vc.completion = { [weak self] date in
-            self?.selectedDday = date
+            self?.selectedDdays.append(date)
             self?.calendarView.calendar.reloadData()
         }
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .custom
+        navController.transitioningDelegate = self
+
+        present(navController, animated: true, completion: nil)
     }
 
     // 오늘 버튼 터치 시 호출
@@ -57,7 +62,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
 
     // 특정 날짜에 표시될 서브타이틀을 결정 ("D-day", "오늘")
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
-        if let dday = selectedDday {
+        for dday in selectedDdays {
             // 현재 날짜와 D-day 날짜 간의 차이 계산
             let difference = Calendar.current.dateComponents([.day], from: Date().startOfDay, to: dday)
             // daysDifference는 두 날짜 간의 차이 일수
@@ -115,5 +120,11 @@ extension Date {
     // 해당 날짜의 시작 시간을 반환
     var startOfDay: Date {
         return Calendar.current.startOfDay(for: self)
+    }
+}
+
+extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
     }
 }
