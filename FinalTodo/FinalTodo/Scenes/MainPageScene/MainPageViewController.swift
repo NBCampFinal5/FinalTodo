@@ -28,10 +28,10 @@ class MainPageViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .lightGray
         setupNavigationBar()
-        navigationController?.configureBar(color: .white)
-        tabBarController?.configureBar(color: .white)
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
+        changeStatusBarBgColor(bgColor: ColorManager.themeArray[0].backgroundColor!)
     }
     
     private func setupDelegates() {
@@ -46,6 +46,7 @@ class MainPageViewController: UIViewController {
         let searchButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonTapped))
         let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(folderButtonTapped))
         navigationItem.rightBarButtonItems = [folderButtonItem, searchButtonItem]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: ColorManager.themeArray[0].pointColor01 ?? .black]
     }
     
     @objc func fabTapped() {
@@ -66,16 +67,16 @@ class MainPageViewController: UIViewController {
 }
 
 extension UINavigationController {
-    func configureBar(color: UIColor) {
-        navigationBar.barTintColor = color
-        navigationBar.isTranslucent = false
+    func configureBar() {
+        navigationBar.tintColor = ColorManager.themeArray[0].pointColor01
+        navigationBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
     }
 }
 
 extension UITabBarController {
-    func configureBar(color: UIColor) {
-        tabBar.barTintColor = color
-        tabBar.isTranslucent = false
+    func configureBar() {
+        tabBar.tintColor = ColorManager.themeArray[0].pointColor01
+        tabBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
     }
 }
 
@@ -155,21 +156,27 @@ extension UITableViewCell {
     func configureAsSpacingCell() {
         textLabel?.text = nil
         layer.borderWidth = 0
-        backgroundColor = UIColor(white: 0.95, alpha: 1)
+        backgroundColor = ColorManager.themeArray[0].backgroundColor
         selectionStyle = .none
         imageView?.image = .none
     }
     
     func configureAsAllNotesCell() {
         textLabel?.text = "모든 노트"
-        imageView?.image = UIImage(systemName: "note.text")
-        layer.borderColor = UIColor.gray.cgColor
+        textLabel?.textColor = ColorManager.themeArray[0].pointColor01
+        let templateImage = UIImage(systemName: "note.text")?.withRenderingMode(.alwaysTemplate)
+        imageView?.image = templateImage
+        imageView?.tintColor = ColorManager.themeArray[0].pointColor01
+        layer.borderColor = ColorManager.themeArray[0].pointColor01?.cgColor
         layer.borderWidth = 0.5
+        backgroundColor = ColorManager.themeArray[0].pointColor02
     }
     
     func configureCellWith(item: Any) {
         layer.borderColor = UIColor.gray.cgColor
         layer.borderWidth = 0.5
+        backgroundColor = ColorManager.themeArray[0].pointColor02
+        textLabel?.textColor = ColorManager.themeArray[0].pointColor01
         
         if let itemString = item as? String {
             textLabel?.text = itemString
@@ -224,6 +231,21 @@ extension MainPageViewController {
     
     private func addNewFolder(with name: String, color: UIColor) {
         items.append(Folder(name: name, color: color))
+    }
+    
+    func changeStatusBarBgColor(bgColor: UIColor?) {
+        if #available(iOS 13.0, *) {
+            let window = UIApplication.shared.windows.first
+            let statusBarManager = window?.windowScene?.statusBarManager
+            
+            let statusBarView = UIView(frame: statusBarManager?.statusBarFrame ?? .zero)
+            statusBarView.backgroundColor = bgColor
+            
+            window?.addSubview(statusBarView)
+        } else {
+            let statusBarView = UIApplication.shared.value(forKey: "statusBar") as? UIView
+            statusBarView?.backgroundColor = bgColor
+        }
     }
 }
 
