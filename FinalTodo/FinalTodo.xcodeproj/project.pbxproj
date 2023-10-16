@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		037668AF2ADD101A008BED0A /* PwFindPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */; };
+
+		037668B12ADD1266008BED0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B02ADD1266008BED0A /* LoginView.swift */; };
 		038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038847CF2AD7EF800083C420 /* PwFindViewController.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
@@ -57,6 +58,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+
+		037668B02ADD1266008BED0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindPageViewController.swift; sourceTree = "<group>"; };
 		038847CF2AD7EF800083C420 /* PwFindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindViewController.swift; sourceTree = "<group>"; };
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -283,6 +286,7 @@
 				08A4F88B2AD8218E0092C6EF /* MemoView.swift */,
 				083C986A2AD8E9EE006895D2 /* ModalTopView.swift */,
 				08749B172ADBEE8D00822AE7 /* NotifySettingItemView.swift */,
+				037668B02ADD1266008BED0A /* LoginView.swift */,
 				083C98602AD8D837006895D2 /* Cells */,
 			);
 			path = SharedView;
@@ -450,6 +454,7 @@
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
+				037668B12ADD1266008BED0A /* LoginView.swift in Sources */,
 				C735C0442AD8E15A00AA7663 /* NotifyPageViewController.swift in Sources */,
 				083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */,
 				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
