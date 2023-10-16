@@ -8,11 +8,11 @@
 import UIKit
 
 class AddMemoPageViewModel {
-    let optionImageAry: [UIImage?] = [
-        UIImage(systemName: "checkmark.square"),
-        UIImage(systemName: "map"),
-        UIImage(systemName: "alarm"),
-        UIImage(systemName: "tag"),
-        UIImage(systemName: "heart"),
+    let optionImageAry: [String] = [
+        "날짜 설정",
+        "알림 설정"
     ]
+    
+    var timeState: Observable<Bool> = Observable(false)
+    var locateState: Observable<Bool> = Observable(false)
 }
