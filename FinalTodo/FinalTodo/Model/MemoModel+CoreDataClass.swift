@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(MemoModel)
-public class MemoModel: NSManagedObject {
-
-}
+public class MemoModel: NSManagedObject {}
