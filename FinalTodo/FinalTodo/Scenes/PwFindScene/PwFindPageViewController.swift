@@ -142,30 +142,30 @@ private extension LoginView {
     //오토레이아웃
     
     func setupInputName(){
-        self.addSubview(findPwLabel)
+        view.addSubview(findPwLabel)
         //맨위 큰레이블 오토레이아웃
         findPwLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.07)
             make.leading.equalTo(Constant.defaultPadding)
         }
         
-        self.addSubview(idLabel)
+        view.addSubview(idLabel)
         //작은레이블 오토레이아웃
         idLabel.snp.makeConstraints { make in
             make.top.equalTo(pwFindLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
             make.leading.equalTo(Constant.defaultPadding)
         }
         
-        self.addSubview(idTextFieldView)
+        view.addSubview(idTextFieldView)
         //필드뷰(네모박스)오토레이아웃
         commandTextFieldView.snp.makeConstraints { make in
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
-            make.centerX.equalTo(self.snp.centerX)
+            make.centerX.equalTo(view.snp.centerX)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
         
-        self.addSubview(idTextField)
+        view.addSubview(idTextField)
         //텍스트필드 오토레이아웃
         inputTextField.snp.makeConstraints { make in
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
@@ -177,16 +177,16 @@ private extension LoginView {
     }
     func setupPhoneNumber(){
         
-        self.addSubview(idTextFieldView)
+        view.addSubview(idTextFieldView)
         //필드뷰(네모박스)오토레이아웃
         commandTextFieldView.snp.makeConstraints { make in
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
-            make.centerX.equalTo(self.snp.centerX)
+            make.centerX.equalTo(view.snp.centerX)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
         
-        self.addSubview(idTextField)
+        view.addSubview(idTextField)
         //텍스트필드 오토레이아웃
         inputTextField.snp.makeConstraints { make in
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
@@ -196,7 +196,7 @@ private extension LoginView {
         }
     }
     func setupEnterNumber(){
-        self.addSubview(sendMsButton)
+        view.addSubview(sendMsButton)
         anyButton.snp.makeConstraints { make in
             make.top.equalTo(inputTextField.snp.bottom).offset(Constant.screenHeight * 0.09)
             make.centerX.equalTo(inputTextField.snp.left)
