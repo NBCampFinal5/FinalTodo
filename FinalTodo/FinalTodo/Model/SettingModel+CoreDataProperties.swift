@@ -6,16 +6,21 @@
 //
 //
 
-import CoreData
 import Foundation
+import CoreData
 
-public extension SettingModel {
-    @nonobjc class func fetchRequest() -> NSFetchRequest<SettingModel> {
+
+extension SettingModel {
+
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<SettingModel> {
         return NSFetchRequest<SettingModel>(entityName: "SettingModel")
     }
 
-    @NSManaged var color: String
-    @NSManaged var font: String
+    @NSManaged public var color: String?
+    @NSManaged public var font: String?
+
 }
 
-extension SettingModel: Identifiable {}
+extension SettingModel : Identifiable {
+
+}

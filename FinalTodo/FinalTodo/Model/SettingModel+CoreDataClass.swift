@@ -6,8 +6,10 @@
 //
 //
 
-import CoreData
 import Foundation
+import CoreData
 
 @objc(SettingModel)
-public class SettingModel: NSManagedObject {}
+public class SettingModel: NSManagedObject {
+
+}

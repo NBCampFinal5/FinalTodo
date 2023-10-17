@@ -4,6 +4,7 @@
         <attribute name="color" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <relationship name="memo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MemoModel" inverseName="folder" inverseEntity="MemoModel"/>
     </entity>
     <entity name="MemoModel" representedClassName="MemoModel" syncable="YES">
         <attribute name="content" attributeType="String"/>
@@ -13,6 +14,7 @@
         <attribute name="locationNotifySetting" optional="YES" attributeType="String"/>
         <attribute name="timeNotifySetting" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FolderModel" inverseName="memo" inverseEntity="FolderModel"/>
     </entity>
     <entity name="SettingModel" representedClassName="SettingModel" syncable="YES">
         <attribute name="color" attributeType="String"/>

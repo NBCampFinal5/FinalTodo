@@ -6,8 +6,10 @@
 //
 //
 
-import CoreData
 import Foundation
+import CoreData
 
 @objc(FolderModel)
-public class FolderModel: NSManagedObject {}
+public class FolderModel: NSManagedObject {
+
+}

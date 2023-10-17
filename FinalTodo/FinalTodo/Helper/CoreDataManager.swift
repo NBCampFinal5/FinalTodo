@@ -11,143 +11,160 @@ import UIKit
 final class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
-    
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    lazy var context = appDelegate?.persistentContainer.viewContext
-    
-    let memoEntityName: String = "MemoModel"
-    let settingEntityName: String = "SettingModel"
-    let folderEntityName: String = "FolderModel"
-    
-    // MARK: - Memo CRUD
 
-    func createMemo(fileID: String, title: String, date: String, content: String, isPin: Bool, locationNotifySetting: String?, timeNotifySetting: String?) {
-        if let context = context, let entity = NSEntityDescription.entity(forEntityName: memoEntityName, in: context) {
-            let memo = NSManagedObject(entity: entity, insertInto: context) as! MemoModel
-            
-            memo.fileID = fileID
-            memo.title = title
-            memo.date = date
-            memo.content = content
-            memo.isPin = isPin
-            memo.locationNotifySetting = locationNotifySetting
-            memo.timeNotifySetting = timeNotifySetting
-            
-            saveContext()
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    private lazy var context = appDelegate?.persistentContainer.viewContext
+
+    private let memoEntityName: String = "MemoModel"
+    private let settingEntityName: String = "SettingModel"
+    private let folderEntityName: String = "FolderModel"
+
+    // MARK: - Helper Methods
+
+    private func saveContext() {
+        do {
+            try context?.save()
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
         }
     }
-    
-    func getMemos() -> [MemoModel] {
-        if let context = context {
-            let request = NSFetchRequest<MemoModel>(entityName: memoEntityName)
-            do {
-                return try context.fetch(request)
-            } catch {
-                print("Memo 조회 실패: \(error.localizedDescription)")
-            }
+}
+
+// 폴더데이터 CRUD
+extension CoreDataManager {
+    func createFolder(id: String, title: String, color: String) {
+        guard let context = context,
+              let entity = NSEntityDescription.entity(forEntityName: "FolderModel", in: context),
+              let folder = NSManagedObject(entity: entity, insertInto: context) as? FolderModel
+        else {
+            return
         }
-        return []
+        folder.id = id
+        folder.title = title
+        folder.color = color
+        saveContext()
     }
-    
-    func updateMemo(memo: MemoModel, newTitle: String, newContent: String, newIsPin: Bool, newLocationNotifySetting: String?, newTimeNotifySetting: String?) {
-        memo.title = newTitle
+
+    func fetchFolders() -> [FolderModel] {
+        guard let context = context else {
+            return []
+        }
+        let fetchRequest = NSFetchRequest<FolderModel>(entityName: "FolderModel")
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch folders: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    func updateFolder(_ folder: FolderModel, newTitle: String, newColor: String) {
+        folder.title = newTitle
+        folder.color = newColor
+        saveContext()
+    }
+
+    func deleteFolder(_ folder: FolderModel) {
+        guard let context = context else {
+            return
+        }
+        context.delete(folder)
+        saveContext()
+    }
+}
+
+// 메모데이터 CRUD
+extension CoreDataManager {
+    func createMemo(content: String, date: String, fileID: String, isPin: Bool, locationNotifySetting: String, timeNotifySetting: String, title: String, folder: FolderModel) {
+        guard let context = context,
+              let entity = NSEntityDescription.entity(forEntityName: "MemoModel", in: context),
+              let memo = NSManagedObject(entity: entity, insertInto: context) as? MemoModel
+        else {
+            return
+        }
+        memo.content = content
+        memo.date = date
+        memo.fileID = fileID
+        memo.isPin = isPin
+        memo.locationNotifySetting = locationNotifySetting
+        memo.timeNotifySetting = timeNotifySetting
+        memo.title = title
+        memo.folder = folder
+        saveContext()
+    }
+
+    func fetchMemos() -> [MemoModel] {
+        guard let context = context else {
+            return []
+        }
+        let fetchRequest = NSFetchRequest<MemoModel>(entityName: "MemoModel")
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch memos: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    func updateMemo(_ memo: MemoModel, newContent: String, newDate: String, newFileID: String, newIsPin: Bool, newLocationNotifySetting: String, newTimeNotifySetting: String, newTitle: String, newFolder: FolderModel) {
         memo.content = newContent
+        memo.date = newDate
+        memo.fileID = newFileID
         memo.isPin = newIsPin
         memo.locationNotifySetting = newLocationNotifySetting
         memo.timeNotifySetting = newTimeNotifySetting
+        memo.title = newTitle
+        memo.folder = newFolder
         saveContext()
     }
-    
-    func deleteMemo(memo: MemoModel) {
-        if let context = context {
-            context.delete(memo)
-            saveContext()
-        }
-    }
-    
-    // MARK: - Setting CRUD
 
+    func deleteMemo(_ memo: MemoModel) {
+        guard let context = context else {
+            return
+        }
+        context.delete(memo)
+        saveContext()
+    }
+}
+
+// 세팅데이터 CRUD
+extension CoreDataManager {
     func createSetting(color: String, font: String) {
-        if let context = context, let entity = NSEntityDescription.entity(forEntityName: settingEntityName, in: context), let setting = NSManagedObject(entity: entity, insertInto: context) as? SettingModel {
-            setting.color = color
-            setting.font = font
-            saveContext()
+        guard let context = context,
+              let entity = NSEntityDescription.entity(forEntityName: "SettingModel", in: context),
+              let setting = NSManagedObject(entity: entity, insertInto: context) as? SettingModel
+        else {
+            return
+        }
+        setting.color = color
+        setting.font = font
+        saveContext()
+    }
+
+    func fetchSettings() -> [SettingModel] {
+        guard let context = context else {
+            return []
+        }
+        let fetchRequest = NSFetchRequest<SettingModel>(entityName: "SettingModel")
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            print("Failed to fetch settings: \(error.localizedDescription)")
+            return []
         }
     }
-    
-    func getSettings() -> [SettingModel] {
-        if let context = context {
-            let request = NSFetchRequest<SettingModel>(entityName: settingEntityName)
-            do {
-                return try context.fetch(request)
-            } catch {
-                print("설정 조회 실패: \(error.localizedDescription)")
-            }
-        }
-        return []
-    }
-    
-    func updateSetting(setting: SettingModel, newColor: String, newFont: String) {
+
+    func updateSetting(_ setting: SettingModel, newColor: String, newFont: String) {
         setting.color = newColor
         setting.font = newFont
         saveContext()
     }
 
-    func deleteSetting(setting: SettingModel) {
-        if let context = context {
-            context.delete(setting)
-            saveContext()
+    func deleteSetting(_ setting: SettingModel) {
+        guard let context = context else {
+            return
         }
-    }
-    
-    // MARK: - Folder CRUD
-
-    func createFolder(title: String, color: String) {
-        if let context = context, let entity = NSEntityDescription.entity(forEntityName: folderEntityName, in: context), let folder = NSManagedObject(entity: entity, insertInto: context) as? FolderModel {
-            folder.title = title
-            folder.color = color
-            saveContext()
-        }
-    }
-    
-    func getFolders() -> [FolderModel] {
-        if let context = context {
-            let request = NSFetchRequest<FolderModel>(entityName: folderEntityName)
-            do {
-                return try context.fetch(request)
-            } catch {
-                print("폴더 조회 실패: \(error.localizedDescription)")
-            }
-        }
-        return []
-    }
-    
-    func updateFolder(folder: FolderModel, newTitle: String, newColor: String) {
-        folder.title = newTitle
-        folder.color = newColor
+        context.delete(setting)
         saveContext()
     }
-    
-    func deleteFolder(folder: FolderModel) {
-        if let context = context {
-            context.delete(folder)
-            saveContext()
-        }
-    }
-    
-    private func saveContext() {
-        if let context = context {
-            if context.hasChanges {
-                do {
-                    try context.save()
-                } catch {
-                    print("컨텍스트 저장 실패: \(error.localizedDescription)")
-                }
-            }
-        }
-    }
 }
-
-// CoreDataManager.shared.사용을 원하는 메서드() -> 이렇게 사용해 주시면 됩니다! 추가 구현이 필요한 메서드 요청해 주세요.
-// 로컬에서는 아예 User 정보가 필요 없어서, 파이어베이스와 폴더, 메모, 세팅 정보만 주고 받는 방식으로 구현하였습니다.
-// NetworkManager(User Struct) <-> DataManager <-> CoreDataManager(CoreData class)

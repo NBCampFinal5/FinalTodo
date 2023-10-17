@@ -6,21 +6,27 @@
 //
 //
 
+import Foundation
 import CoreData
-import UIKit
 
-public extension MemoModel {
-    @nonobjc class func fetchRequest() -> NSFetchRequest<MemoModel> {
+
+extension MemoModel {
+
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<MemoModel> {
         return NSFetchRequest<MemoModel>(entityName: "MemoModel")
     }
 
-    @NSManaged var title: String
-    @NSManaged var content: String
-    @NSManaged var date: String
-    @NSManaged var fileID: String
-    @NSManaged var locationNotifySetting: String?
-    @NSManaged var timeNotifySetting: String?
-    @NSManaged var isPin: Bool
+    @NSManaged public var content: String?
+    @NSManaged public var date: String?
+    @NSManaged public var fileID: String?
+    @NSManaged public var isPin: Bool
+    @NSManaged public var locationNotifySetting: String?
+    @NSManaged public var timeNotifySetting: String?
+    @NSManaged public var title: String?
+    @NSManaged public var folder: FolderModel?
+
 }
 
-extension MemoModel: Identifiable {}
+extension MemoModel : Identifiable {
+
+}
