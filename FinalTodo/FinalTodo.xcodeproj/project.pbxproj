@@ -79,6 +79,7 @@
 		30445EB62ADF12B4000D26A4 /* MemoModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445EB02ADF12B4000D26A4 /* MemoModel+CoreDataProperties.swift */; };
 		30445EB72ADF12B4000D26A4 /* FolderModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445EB12ADF12B4000D26A4 /* FolderModel+CoreDataClass.swift */; };
 		30445EB82ADF12B4000D26A4 /* FolderModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445EB22ADF12B4000D26A4 /* FolderModel+CoreDataProperties.swift */; };
+		30445EBA2ADF1C81000D26A4 /* NetworkDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445EB92ADF1C80000D26A4 /* NetworkDataManager.swift */; };
 		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
 		30E798472AD61E0B00903272 /* SettingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798462AD61E0B00903272 /* SettingOption.swift */; };
 		30E798492AD6362D00903272 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798482AD6362D00903272 /* Extensions.swift */; };
@@ -146,6 +147,7 @@
 		30445EB02ADF12B4000D26A4 /* MemoModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		30445EB12ADF12B4000D26A4 /* FolderModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		30445EB22ADF12B4000D26A4 /* FolderModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		30445EB92ADF1C80000D26A4 /* NetworkDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataManager.swift; sourceTree = "<group>"; };
 		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		30E798462AD61E0B00903272 /* SettingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOption.swift; sourceTree = "<group>"; };
 		30E798482AD6362D00903272 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 				083C98662AD8DC08006895D2 /* PresentationController.swift */,
 				08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */,
 				30445E932ADF0958000D26A4 /* CoreDataManager.swift */,
+				30445EB92ADF1C80000D26A4 /* NetworkDataManager.swift */,
 				085A52BD2ADEADD20041918D /* LoginManager.swift */,
 			);
 			path = Helper;
@@ -641,6 +644,7 @@
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				30E798832ADC122400903272 /* ThemeColorOptionManager.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
+				30445EBA2ADF1C81000D26A4 /* NetworkDataManager.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
