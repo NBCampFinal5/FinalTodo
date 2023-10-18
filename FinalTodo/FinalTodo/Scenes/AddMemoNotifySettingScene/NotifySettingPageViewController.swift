@@ -5,12 +5,10 @@
 //  Created by SeoJunYoung on 10/13/23.
 //
 
-import UIKit
 import MapKit
+import UIKit
 
 class NotifySettingPageViewController: UIViewController {
-
-    
     private let topView = ModalTopView(title: "알림 설정")
     private let scrollView = UIScrollView()
     private let scrollViewContainer = UIView()
@@ -21,6 +19,7 @@ class NotifySettingPageViewController: UIViewController {
         view.isHidden = true
         return view
     }()
+
     private let locateSettingCellView = NotifySettingItemView(title: "위치")
     private let locateSettingView: UIView = {
         let view = UIView()
@@ -28,11 +27,11 @@ class NotifySettingPageViewController: UIViewController {
         view.isHidden = true
         return view
     }()
+
     private let viewModel: AddMemoPageViewModel
-    
+
     private var cellHeight: CGFloat = 0
-    
-    
+
     // MARK: - init
 
     init(viewModel: AddMemoPageViewModel) {
@@ -41,11 +40,11 @@ class NotifySettingPageViewController: UIViewController {
         locateSettingCellView.stateSwitch.isOn = viewModel.locateState.value
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 extension NotifySettingPageViewController {
@@ -70,7 +69,7 @@ private extension NotifySettingPageViewController {
         setUpLocateSettingCellView()
         setUpLocateSettingView()
     }
-    
+
     func setUpTopView() {
         view.addSubview(topView)
         topView.snp.makeConstraints { make in
@@ -78,7 +77,7 @@ private extension NotifySettingPageViewController {
         }
         topView.backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
     }
-    
+
     func setUpScrollView() {
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
@@ -87,7 +86,7 @@ private extension NotifySettingPageViewController {
             make.bottom.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
-    
+
     func setUpContainerView() {
         scrollView.addSubview(scrollViewContainer)
         scrollViewContainer.snp.makeConstraints { make in
@@ -95,7 +94,7 @@ private extension NotifySettingPageViewController {
             make.width.equalTo(scrollView.snp.width)
         }
     }
-    
+
     func setUpTimeSettingCellView() {
         scrollViewContainer.addSubview(timeSettingCellView)
         timeSettingCellView.snp.makeConstraints { make in
@@ -103,7 +102,7 @@ private extension NotifySettingPageViewController {
         }
         timeSettingCellView.stateSwitch.addTarget(self, action: #selector(didTapToggle(_:)), for: .valueChanged)
     }
-    
+
     func setUptimeSettingView() {
         scrollViewContainer.addSubview(timeSettingView)
         timeSettingView.snp.makeConstraints { make in
@@ -111,7 +110,7 @@ private extension NotifySettingPageViewController {
             make.left.right.equalToSuperview()
         }
     }
-    
+
     func setUpLocateSettingCellView() {
         scrollViewContainer.addSubview(locateSettingCellView)
         locateSettingCellView.snp.makeConstraints { make in
@@ -120,7 +119,7 @@ private extension NotifySettingPageViewController {
         }
         locateSettingCellView.stateSwitch.addTarget(self, action: #selector(didTapToggle(_:)), for: .valueChanged)
     }
-    
+
     func setUpLocateSettingView() {
         scrollViewContainer.addSubview(locateSettingView)
         locateSettingView.snp.makeConstraints { make in
@@ -128,29 +127,29 @@ private extension NotifySettingPageViewController {
             make.left.right.bottom.equalToSuperview()
         }
     }
-    
 }
 
 extension NotifySettingPageViewController {
     // MARK: - Method
-    
+
     @objc func didTapBackButton() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
     }
-    
+
     @objc func didTapToggle(_ button: UISwitch) {
         switch button {
         case timeSettingCellView.stateSwitch:
             if timeSettingCellView.stateSwitch.isOn {
                 timeSettingView.isHidden.toggle()
-                self.timeSettingView.snp.remakeConstraints { make in
+                timeSettingView.snp.remakeConstraints { make in
                     make.top.equalTo(timeSettingCellView.snp.bottom)
                     make.left.right.equalToSuperview()
                     make.height.equalTo(Constant.screenWidth)
                 }
+                scheduleTimeNotification() // 알림 스케줄 메서드 호출
             } else {
-                self.timeSettingView.isHidden.toggle()
-                self.timeSettingView.snp.remakeConstraints { make in
+                timeSettingView.isHidden.toggle()
+                timeSettingView.snp.remakeConstraints { make in
                     make.top.equalTo(timeSettingCellView.snp.bottom)
                     make.left.right.equalToSuperview()
                     make.height.equalTo(0)
@@ -175,7 +174,10 @@ extension NotifySettingPageViewController {
         default:
             print("default")
         }
-
     }
 
+    // 성준 - 알림 스케줄 메서드
+    func scheduleTimeNotification() {
+        Notifications.shared.scheduleNotification(title: "시간 알림", body: "설정한 시간에 대한 알림입니다.")
+    }
 }
