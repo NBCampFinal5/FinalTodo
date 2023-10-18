@@ -11,6 +11,7 @@ import SnapKit
 class MainPageViewController: UIViewController {
     
     var items = [Any]()
+    let locationManager = LocationTrackingManager.shared
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -25,6 +26,7 @@ class MainPageViewController: UIViewController {
         
         setupUI()
         setupDelegates()
+        locationManager.startTracking()
     }
     
     private func setupUI() {
