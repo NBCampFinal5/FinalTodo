@@ -30,7 +30,7 @@ class commandLabelView: UIView {
         tf.backgroundColor = .clear
         tf.tintColor = UIColor(named: "theme01PointColor02")
         tf.textColor = UIColor(named: "theme01PointColor01")
-        tf.attributedPlaceholder = NSAttributedString(string: "틴트텍스트", attributes : [NSAttributedString.Key.foregroundColor: "theme01PointColor02"])
+       // tf.attributedPlaceholder = NSAttributedString(string: "틴트텍스트", attributes : [NSAttributedString.Key.foregroundColor: "theme01PointColor02"])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
         //tf.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
