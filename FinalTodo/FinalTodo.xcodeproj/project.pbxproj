@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		037668B32ADE56CB008BED0A /* buttonTappedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B22ADE56CB008BED0A /* buttonTappedView.swift */; };
-		037668B52ADE5CEA008BED0A /* commandLableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B42ADE5CEA008BED0A /* commandLableView.swift */; };
+		037668B72ADE6C7E008BED0A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 037668B62ADE6C7E008BED0A /* GoogleService-Info.plist */; };
+		037668B82ADEAF17008BED0A /* PwFindPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */; };
+		037668BA2ADEC5F4008BED0A /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B92ADEC5F4008BED0A /* InputFieldView.swift */; };
 		038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038847CF2AD7EF800083C420 /* PwFindViewController.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
@@ -107,7 +109,8 @@
 /* Begin PBXFileReference section */
 		037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindPageViewController.swift; sourceTree = "<group>"; };
 		037668B22ADE56CB008BED0A /* buttonTappedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = buttonTappedView.swift; sourceTree = "<group>"; };
-		037668B42ADE5CEA008BED0A /* commandLableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commandLableView.swift; sourceTree = "<group>"; };
+		037668B62ADE6C7E008BED0A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		037668B92ADEC5F4008BED0A /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
 		038847CF2AD7EF800083C420 /* PwFindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindViewController.swift; sourceTree = "<group>"; };
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		083C985E2AD8D7AC006895D2 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
@@ -618,6 +621,8 @@
 				083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */,
 				30445E832ADF07B7000D26A4 /* LocalDataModel.xcdatamodeld in Sources */,
 				6906BAA32ADD06860088FE6E /* MemoListView.swift in Sources */,
+				037668B82ADEAF17008BED0A /* PwFindPageViewController.swift in Sources */,
+				037668BA2ADEC5F4008BED0A /* InputFieldView.swift in Sources */,
 				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
 				30E798522AD7F51200903272 /* ThemeColorOption.swift in Sources */,
@@ -651,7 +656,6 @@
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
 				30E798552AD80AD500903272 /* ColorManager.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
-				037668B52ADE5CEA008BED0A /* commandLableView.swift in Sources */,
 				C747DE302ADBDB640044499E /* AddMessagePageViewController.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
