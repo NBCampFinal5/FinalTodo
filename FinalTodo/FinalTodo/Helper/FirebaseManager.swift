@@ -16,7 +16,7 @@ struct UserData: Codable {
 }
 
 struct FirebaseManager {
-    
+    // TODO: - CRUD 
     let db = Firestore.firestore()
     let ref = Database.database().reference()
     let user = "Users"
