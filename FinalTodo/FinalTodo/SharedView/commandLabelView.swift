@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class commandLableView: UIView {
+class commandLabelView: UIView {
     
     //작은 레이블, 입력필드 위에 설명할수 있는 무언가 적을 수 있는 레이블
     private lazy var commandLabel: UILabel = {
@@ -48,14 +48,14 @@ class commandLableView: UIView {
     }
     
 }
-private extension commandLableView {
+private extension commandLabelView {
     func setup(){
-        setupLableName()
+        setupLabelName()
         setupTextField()
     }
     //오토레이아웃
     
-    func setupLableName(){
+    func setupLabelName(){
         self.addSubview(commandLabel)
         //맨위 레이블 오토레이아웃
         commandLabel.snp.makeConstraints { make in
