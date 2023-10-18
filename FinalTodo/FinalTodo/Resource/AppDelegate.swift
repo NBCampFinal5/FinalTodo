@@ -13,6 +13,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool { UNUserNotificationCenter.current().delegate = self
 
+        // 권한 요청 코드 추가
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]) { granted, _ in
+            if granted {
+                print("알림 권한 허용됨!")
+            } else {
+                print("알림 권한 거부됨!")
+            }
+        }
+
         FirebaseApp.configure()
         return true
     }
@@ -63,6 +73,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
     {
-        completionHandler([.alert, .sound, .badge]) // 원하는 알림 옵션을 선택합니다.
+        completionHandler([.banner, .sound, .badge]) // 원하는 알림 옵션을 선택합니다.
     }
 }
