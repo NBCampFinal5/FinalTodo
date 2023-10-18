@@ -15,16 +15,15 @@ class PwFindPageViewController: UIViewController {
         let label = UILabel()
         label.text = "비밀번호 찾기"
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        
         return label
     }()
     
     
-    let idLabel = commandLabelView() //아이디
-    let callNumber = commandLabelView() //전화번호
-    let requestButton = buttonTappedView() //인증번호받기
-    let inputLabel = commandLabelView() //인증번호입력
-    let findPwButton = buttonTappedView() //패스워드 찾기
+    let idLabel = commandLabelView(title: "아이디") //아이디
+    let callNumber = commandLabelView(title: "휴대전화 번호") //전화번호
+    let requestButton = buttonTappedView(title: "인증번호 받기") //인증번호받기
+    let inputLabel = commandLabelView(title: "인증번호 입력") //인증번호입력
+    let findPwButton = buttonTappedView(title: "비밀번호 찾기") //패스워드 찾기
     
     
     override func viewDidLoad() {
@@ -34,9 +33,9 @@ class PwFindPageViewController: UIViewController {
     }
 }
 
-private extension LoginView {
+private extension PwFindPageViewController {
+    // MARK: - setup
     func setup(){
-        // MARK: - setup
         setupInputName()
         setupPhoneNumber()
         setupEnterNumber()
@@ -63,7 +62,7 @@ private extension LoginView {
         
         view.addSubview(callNumber)
         //필드뷰(네모박스)오토레이아웃
-        commandTextFieldView.snp.makeConstraints { make in
+        callNumber.snp.makeConstraints { make in
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
             make.centerX.equalTo(view.snp.centerX)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
@@ -72,7 +71,7 @@ private extension LoginView {
         
         view.addSubview(requestButton)
         //텍스트필드 오토레이아웃
-        inputTextField.snp.makeConstraints { make in
+        requestButton.snp.makeConstraints { make in
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
             make.centerX.equalTo(idLabel.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding + 10)
@@ -82,18 +81,16 @@ private extension LoginView {
     
     func setupEnterNumber(){
         view.addSubview(inputLabel)
-        anyButton.snp.makeConstraints { make in
+        inputLabel.snp.makeConstraints { make in
             make.top.equalTo(requestButton.snp.bottom).offset(Constant.screenHeight * 0.09)
-            make.centerX.equalTo(inputTextField.snp.left)
+            make.centerX.equalTo(requestButton.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
-    
-    func setupEnterNumber(){
         view.addSubview(findPwButton)
-        anyButton.snp.makeConstraints { make in
+        findPwButton.snp.makeConstraints { make in
             make.top.equalTo(inputLabel.snp.bottom).offset(Constant.screenHeight * 0.09)
-            make.centerX.equalTo(inputTextField.snp.left)
+            make.centerX.equalTo(requestButton.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }

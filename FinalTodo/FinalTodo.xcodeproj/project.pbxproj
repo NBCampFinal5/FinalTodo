@@ -10,6 +10,7 @@
 		037668B32ADE56CB008BED0A /* buttonTappedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B22ADE56CB008BED0A /* buttonTappedView.swift */; };
 		037668B52ADE5CEA008BED0A /* commandLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B42ADE5CEA008BED0A /* commandLabelView.swift */; };
 		038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038847CF2AD7EF800083C420 /* PwFindViewController.swift */; };
+		039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
 		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
@@ -602,6 +603,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
+				039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */,
 				30445EB82ADF12B4000D26A4 /* FolderModel+CoreDataProperties.swift in Sources */,
 				083C985D2AD8D728006895D2 /* Protocol.swift in Sources */,
 				C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */,
