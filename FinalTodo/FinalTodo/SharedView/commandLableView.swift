@@ -59,7 +59,7 @@ private extension commandLableView {
         self.addSubview(commandLabel)
         //맨위 레이블 오토레이아웃
         commandLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(Constant.screenHeight * 0.07)
+            make.top.equalToSuperview()
             make.leading.equalTo(Constant.defaultPadding)
         }
         
