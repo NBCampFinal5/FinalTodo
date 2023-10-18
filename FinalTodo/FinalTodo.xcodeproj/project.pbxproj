@@ -12,6 +12,7 @@
 		038847D02AD7EF800083C420 /* PwFindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038847CF2AD7EF800083C420 /* PwFindViewController.swift */; };
 		039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */; };
 		081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383902AE004620055FDA2 /* LockScreenViewController.swift */; };
+		081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
 		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
@@ -113,6 +114,7 @@
 		037668B42ADE5CEA008BED0A /* commandLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = commandLabelView.swift; sourceTree = "<group>"; };
 		038847CF2AD7EF800083C420 /* PwFindViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindViewController.swift; sourceTree = "<group>"; };
 		081383902AE004620055FDA2 /* LockScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewController.swift; sourceTree = "<group>"; };
+		081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenNumCollectionViewCell.swift; sourceTree = "<group>"; };
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		083C985E2AD8D7AC006895D2 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		083C98612AD8D88E006895D2 /* MemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				081383902AE004620055FDA2 /* LockScreenViewController.swift */,
+				081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */,
 			);
 			path = LockScreenScene;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
+				081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */,
 				30E798552AD80AD500903272 /* ColorManager.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
 				037668B52ADE5CEA008BED0A /* commandLabelView.swift in Sources */,
