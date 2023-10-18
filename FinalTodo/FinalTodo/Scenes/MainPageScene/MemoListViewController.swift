@@ -63,7 +63,11 @@ class MemoListViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc private func fabTapped() {
+    @objc func fabTapped() {
+        let addMemoVC = AddMemoPageViewController()
+        addMemoVC.transitioningDelegate = self
+        addMemoVC.modalPresentationStyle = .custom
+        self.present(addMemoVC, animated: true, completion: nil)
     }
 }
 
@@ -102,6 +106,12 @@ extension MemoListViewController: UITableViewDelegate {
         }
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+extension MemoListViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }
 
