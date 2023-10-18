@@ -15,7 +15,6 @@ class PwFindPageViewController: UIViewController {
         let label = UILabel()
         label.text = "비밀번호 찾기"
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        
         return label
     }()
     
@@ -34,9 +33,9 @@ class PwFindPageViewController: UIViewController {
     }
 }
 
-private extension LoginView {
+private extension PwFindPageViewController {
+    // MARK: - setup
     func setup(){
-        // MARK: - setup
         setupInputName()
         setupPhoneNumber()
         setupEnterNumber()
@@ -88,8 +87,6 @@ private extension LoginView {
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
-    
-    func setupEnterNumber(){
         view.addSubview(findPwButton)
         anyButton.snp.makeConstraints { make in
             make.top.equalTo(inputLabel.snp.bottom).offset(Constant.screenHeight * 0.09)
