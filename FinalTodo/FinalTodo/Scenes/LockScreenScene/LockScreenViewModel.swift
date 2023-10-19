@@ -20,6 +20,8 @@ class LockScreenViewModel {
     }
     let lockScreenPassword = "123456"
     
+    let failCount: Observable<Int> = Observable(0)
+    
     let userInPutPassword: Observable<String> = Observable("")
     
     let passwordCollectionviewSpacing = Constant.defaultPadding
@@ -46,4 +48,8 @@ class LockScreenViewModel {
         width: (Constant.screenWidth - (Constant.defaultPadding * 6) - (numPadCollectionviewSpacing * 2)) / 3,
         height: (Constant.screenWidth - (Constant.defaultPadding * 6) - (numPadCollectionviewSpacing * 2)) / 3
     )
+    
+    deinit {
+        print("LockScreenViewModel deinit")
+    }
 }
