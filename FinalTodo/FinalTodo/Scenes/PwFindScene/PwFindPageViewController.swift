@@ -19,11 +19,11 @@ class PwFindPageViewController: UIViewController {
     }()
     
     
-    let idLabel = commandLabelView(title: "아이디") //아이디
-    let callNumber = commandLabelView(title: "휴대전화 번호") //전화번호
-    let requestButton = buttonTappedView(title: "인증번호 받기") //인증번호받기
-    let inputLabel = commandLabelView(title: "인증번호 입력") //인증번호입력
-    let findPwButton = buttonTappedView(title: "비밀번호 찾기") //패스워드 찾기
+    let idLabel = CommandLabelView(title: "아이디") //아이디
+    let callNumber = CommandLabelView(title: "휴대전화 번호") //전화번호
+    let requestButton = ButtonTappedView(title: "인증번호 받기") //인증번호받기
+    let inputLabel = CommandLabelView(title: "인증번호 입력") //인증번호입력
+    let findPwButton = ButtonTappedView(title: "비밀번호 찾기") //패스워드 찾기
     
     
     override func viewDidLoad() {
