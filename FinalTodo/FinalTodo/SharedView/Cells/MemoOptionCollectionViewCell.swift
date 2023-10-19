@@ -8,7 +8,6 @@
 import UIKit
 
 final class MemoOptionCollectionViewCell: UICollectionViewCell {
-    
     private let categoryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -30,9 +29,14 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
     func bind(title: String) {
         categoryLabel.text = title
     }
+    
+    // 성준 - 배경색 변경 메소드 추가
+    func changeBackgroundColor(to color: UIColor) {
+        contentView.backgroundColor = color
+    }
 }
 
-private extension MemoOptionCollectionViewCell {
+extension MemoOptionCollectionViewCell {
     func setUp() {
         contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
         contentView.layer.cornerRadius = 8

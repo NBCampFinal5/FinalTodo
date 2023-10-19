@@ -1,10 +1,3 @@
-//
-//  AddMemoPageViewModel.swift
-//  FinalTodo
-//
-//  Created by SeoJunYoung on 10/13/23.
-//
-
 import UIKit
 
 class AddMemoPageViewModel {
@@ -14,6 +7,7 @@ class AddMemoPageViewModel {
         "위치 설정"
     ]
     
+    var selectedDate: Date?
     var timeState: Observable<Bool> = Observable(false)
     var locateState: Observable<Bool> = Observable(false)
 }
