@@ -15,9 +15,9 @@ final class CoreDataManager {
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private lazy var context = appDelegate?.persistentContainer.viewContext
 
-    private let memoEntityName: String = "MemoModel"
-    private let settingEntityName: String = "SettingModel"
-    private let folderEntityName: String = "FolderModel"
+//    private let userEntityName: String = "UsersModel"
+//    private let memoEntityName: String = "MemosModel"
+//    private let folderEntityName: String = "FoldersModel"
 
     // MARK: - Helper Methods
 
@@ -30,141 +30,153 @@ final class CoreDataManager {
     }
 }
 
-// 폴더데이터 CRUD
 extension CoreDataManager {
-    func createFolder(id: String, title: String, color: String) {
-        guard let context = context,
-              let entity = NSEntityDescription.entity(forEntityName: "FolderModel", in: context),
-              let folder = NSManagedObject(entity: entity, insertInto: context) as? FolderModel
-        else {
-            return
-        }
-        folder.id = id
-        folder.title = title
-        folder.color = color
-        saveContext()
-    }
+    // MARK: - User CRUD
 
-    func fetchFolders() -> [FolderModel] {
-        guard let context = context else {
-            return []
-        }
-        let fetchRequest = NSFetchRequest<FolderModel>(entityName: "FolderModel")
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch folders: \(error.localizedDescription)")
-            return []
+    func createUser(id: String, nickName: String, rewardPoint: Int64, themeColor: Int64, completion: @escaping (UsersModel?) -> Void) {
+        context?.perform {
+            let newUser = UsersModel(context: self.context!)
+            newUser.id = id
+            newUser.nickName = nickName
+            newUser.rewardPoint = rewardPoint
+            newUser.themeColor = themeColor
+
+            self.saveContext()
+            completion(newUser)
         }
     }
 
-    func updateFolder(_ folder: FolderModel, newTitle: String, newColor: String) {
-        folder.title = newTitle
-        folder.color = newColor
-        saveContext()
-    }
+    func fetchUser(byID id: String, completion: @escaping (UsersModel?) -> Void) {
+        context?.perform {
+            let fetchRequest: NSFetchRequest<UsersModel> = UsersModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
 
-    func deleteFolder(_ folder: FolderModel) {
-        guard let context = context else {
-            return
-        }
-        context.delete(folder)
-        saveContext()
-    }
-}
-
-// 메모데이터 CRUD
-extension CoreDataManager {
-    func createMemo(content: String, date: String, fileID: String, isPin: Bool, locationNotifySetting: String, timeNotifySetting: String, title: String, folder: FolderModel) {
-        guard let context = context,
-              let entity = NSEntityDescription.entity(forEntityName: "MemoModel", in: context),
-              let memo = NSManagedObject(entity: entity, insertInto: context) as? MemoModel
-        else {
-            return
-        }
-        memo.content = content
-        memo.date = date
-        memo.fileID = fileID
-        memo.isPin = isPin
-        memo.locationNotifySetting = locationNotifySetting
-        memo.timeNotifySetting = timeNotifySetting
-        memo.title = title
-        memo.folder = folder
-        saveContext()
-    }
-
-    func fetchMemos() -> [MemoModel] {
-        guard let context = context else {
-            return []
-        }
-        let fetchRequest = NSFetchRequest<MemoModel>(entityName: "MemoModel")
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch memos: \(error.localizedDescription)")
-            return []
+            do {
+                let users = try self.context?.fetch(fetchRequest)
+                completion(users?.first)
+            } catch {
+                completion(nil)
+            }
         }
     }
 
-    func updateMemo(_ memo: MemoModel, newContent: String, newDate: String, newFileID: String, newIsPin: Bool, newLocationNotifySetting: String, newTimeNotifySetting: String, newTitle: String, newFolder: FolderModel) {
-        memo.content = newContent
-        memo.date = newDate
-        memo.fileID = newFileID
-        memo.isPin = newIsPin
-        memo.locationNotifySetting = newLocationNotifySetting
-        memo.timeNotifySetting = newTimeNotifySetting
-        memo.title = newTitle
-        memo.folder = newFolder
-        saveContext()
-    }
+    func updateUser(user: UsersModel, nickName: String, rewardPoint: Int64, themeColor: Int64, completion: @escaping (UsersModel?) -> Void) {
+        context?.perform {
+            user.nickName = nickName
+            user.rewardPoint = rewardPoint
+            user.themeColor = themeColor
 
-    func deleteMemo(_ memo: MemoModel) {
-        guard let context = context else {
-            return
-        }
-        context.delete(memo)
-        saveContext()
-    }
-}
-
-// 세팅데이터 CRUD
-extension CoreDataManager {
-    func createSetting(color: String, font: String) {
-        guard let context = context,
-              let entity = NSEntityDescription.entity(forEntityName: "SettingModel", in: context),
-              let setting = NSManagedObject(entity: entity, insertInto: context) as? SettingModel
-        else {
-            return
-        }
-        setting.color = color
-        setting.font = font
-        saveContext()
-    }
-
-    func fetchSettings() -> [SettingModel] {
-        guard let context = context else {
-            return []
-        }
-        let fetchRequest = NSFetchRequest<SettingModel>(entityName: "SettingModel")
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch settings: \(error.localizedDescription)")
-            return []
+            self.saveContext()
+            completion(user)
         }
     }
 
-    func updateSetting(_ setting: SettingModel, newColor: String, newFont: String) {
-        setting.color = newColor
-        setting.font = newFont
-        saveContext()
+    func deleteUser(user: UsersModel, completion: @escaping (Bool) -> Void) {
+        context?.perform {
+            self.context?.delete(user)
+            self.saveContext()
+            completion(true)
+        }
     }
 
-    func deleteSetting(_ setting: SettingModel) {
-        guard let context = context else {
-            return
+    // MARK: - Folder CRUD
+
+    func createFolder(id: String, title: String, color: Int64, completion: @escaping (FoldersModel?) -> Void) {
+        context?.perform {
+            let newFolder = FoldersModel(context: self.context!)
+            newFolder.id = id
+            newFolder.title = title
+            newFolder.color = color
+
+            self.saveContext()
+            completion(newFolder)
         }
-        context.delete(setting)
-        saveContext()
+    }
+
+    func fetchFolder(byID id: String, completion: @escaping (FoldersModel?) -> Void) {
+        context?.perform {
+            let fetchRequest: NSFetchRequest<FoldersModel> = FoldersModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+            do {
+                let folders = try self.context?.fetch(fetchRequest)
+                completion(folders?.first)
+            } catch {
+                completion(nil)
+            }
+        }
+    }
+
+    func updateFolder(folder: FoldersModel, title: String, color: Int64, completion: @escaping (FoldersModel?) -> Void) {
+        context?.perform {
+            folder.title = title
+            folder.color = color
+
+            self.saveContext()
+            completion(folder)
+        }
+    }
+
+    func deleteFolder(folder: FoldersModel, completion: @escaping (Bool) -> Void) {
+        context?.perform {
+            self.context?.delete(folder)
+            self.saveContext()
+            completion(true)
+        }
+    }
+
+    // MARK: - Memo CRUD
+
+    func createMemo(title: String, date: String, content: String, isPin: Bool, fileId: String, locationNotifySetting: String?, timeNotifySetting: String?, completion: @escaping (MemosModel?) -> Void) {
+        context?.perform {
+            let newMemo = MemosModel(context: self.context!)
+            newMemo.title = title
+            newMemo.date = date
+            newMemo.content = content
+            newMemo.isPin = isPin
+            newMemo.fileId = fileId
+            newMemo.locationNotifySetting = locationNotifySetting
+            newMemo.timeNotifySetting = timeNotifySetting
+
+            self.saveContext()
+            completion(newMemo)
+        }
+    }
+
+    func fetchMemo(byFileId FileId: String, completion: @escaping ([MemosModel]?) -> Void) {
+        context?.perform {
+            let fetchRequest: NSFetchRequest<MemosModel> = MemosModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "fileId == %@", FileId)
+
+            do {
+                let memos = try self.context?.fetch(fetchRequest)
+                completion(memos)
+            } catch {
+                completion(nil)
+            }
+        }
+    }
+
+    func updateMemo(memo: MemosModel, title: String, date: String, content: String, isPin: Bool, fileId: String, locationNotifySetting: String?, timeNotifySetting: String?, completion: @escaping (MemosModel?) -> Void) {
+        context?.perform {
+            memo.title = title
+            memo.date = date
+            memo.content = content
+            memo.isPin = isPin
+            memo.fileId = fileId
+            memo.locationNotifySetting = locationNotifySetting
+            memo.timeNotifySetting = timeNotifySetting
+
+            self.saveContext()
+            completion(memo)
+        }
+    }
+
+    func deleteMemo(memo: MemosModel, completion: @escaping (Bool) -> Void) {
+        context?.perform {
+            self.context?.delete(memo)
+            self.saveContext()
+            completion(true)
+        }
     }
 }
