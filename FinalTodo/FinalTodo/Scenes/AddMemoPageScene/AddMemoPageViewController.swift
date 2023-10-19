@@ -106,7 +106,6 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 2:
             let locationSettingVC = LocationSettingPageViewController()
-
             vc = locationSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         default:
             break
