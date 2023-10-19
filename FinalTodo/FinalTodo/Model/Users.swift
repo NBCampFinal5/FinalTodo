@@ -11,19 +11,19 @@ struct Users: Codable {
     let id: String
     let nickName: String
     let folders: [Folders]
-    let memoDatas: [Memos]
+    let memos: [Memos]
     let rewardPoint: Int
-    let settingValue: SettingValues
+    let themeColor: Int
 }
 
 struct Folders: Codable {
     let id: String
-    let name: String
+    let title: String
     let color: String
 }
 
 struct Memos: Codable {
-    let Fileid: String
+    let fileId: String
     let title: String
     let date: String
     let content: String
@@ -32,7 +32,3 @@ struct Memos: Codable {
     let timeNotifySetting: String?
 }
 
-struct SettingValues: Codable {
-    let color: String
-    let font: String
-}
