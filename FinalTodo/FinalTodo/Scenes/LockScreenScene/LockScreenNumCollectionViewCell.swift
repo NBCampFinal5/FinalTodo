@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class LockScreenNumCollectionViewCell: UICollectionViewCell {
     
@@ -14,7 +15,7 @@ class LockScreenNumCollectionViewCell: UICollectionViewCell {
         label.font = .preferredFont(forTextStyle: .title1)
         label.text = "test"
         label.textAlignment = .center
-        label.textColor = ColorManager.themeArray[0].backgroundColor
+        label.textColor = ColorManager.themeArray[0].pointColor01
         return label
     }()
     
@@ -28,11 +29,20 @@ class LockScreenNumCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func bind(title: String) {
+        label.text = title
+    }
+    
+    func getTitle() -> String {
+        guard let text = label.text else {return ""}
+        return text
+    }
 }
 
 private extension LockScreenNumCollectionViewCell {
     func setUp() {
-        contentView.backgroundColor = ColorManager.themeArray[0].pointColor01
+        contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
         let spacing = Constant.defaultPadding * 2
         let width = (Constant.screenWidth - (Constant.defaultPadding * 6) - (spacing * 2)) / 3
         contentView.layer.cornerRadius = width / 2
