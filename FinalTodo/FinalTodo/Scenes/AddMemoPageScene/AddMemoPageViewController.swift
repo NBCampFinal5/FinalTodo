@@ -97,11 +97,25 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        let vc = NotifySettingPageViewController(viewModel: viewModel)
+
+        var vc: UIViewController
+
+        switch indexPath.row {
+        case 0:
+            vc = NotifySettingPageViewController(viewModel: viewModel)
+        case 1:
+            vc = NotifySettingPageViewController(viewModel: viewModel)
+        case 2:
+            vc = LocationSettingPageViewController()
+        default:
+            vc = NotifySettingPageViewController(viewModel: viewModel)
+        }
+
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         self.present(vc, animated: true, completion: nil)
     }
+
 }
 
 extension AddMemoPageViewController: UICollectionViewDelegateFlowLayout {
