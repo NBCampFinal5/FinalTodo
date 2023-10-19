@@ -41,7 +41,7 @@ private extension ButtonTappedView {
     func setupButton(){
         self.addSubview(anyButton)
         anyButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(Constant.screenHeight * 0.09)
+            make.top.equalToSuperview()
             make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
