@@ -34,6 +34,8 @@ class LockScreenViewController: UIViewController {
         view.backgroundColor = .clear
         return view
     }()
+    
+    private let viewModel = LockScreenViewModel()
 }
 
 extension LockScreenViewController {
