@@ -122,13 +122,15 @@ extension DateSettingPageViewController {
 
     // datePickerView에 현재 날짜 표시
     private func setPickerToCurrentDate() {
-        let currentDate = Date()
-        let calendar = Calendar.current
+        let currentDate = Date() // 현재 날짜 및 시간을 가져옴
+        let calendar = Calendar.current // 현재 캘린더 정보를 가져옴
 
+        // 현재 년도,월,일을 가져옴
         let currentYear = calendar.component(.year, from: currentDate)
         let currentMonth = calendar.component(.month, from: currentDate)
         let currentDay = calendar.component(.day, from: currentDate)
 
+        // 피커 뷰에 년도,월,일을 설정
         datePickerView.selectRow(years.firstIndex(of: currentYear) ?? 0, inComponent: 0, animated: false)
         datePickerView.selectRow(months.firstIndex(of: currentMonth) ?? 0, inComponent: 1, animated: false)
         datePickerView.selectRow(days.firstIndex(of: currentDay) ?? 0, inComponent: 2, animated: false)
@@ -141,20 +143,22 @@ extension DateSettingPageViewController {
 
     // 설정완료 버튼 동작
     @objc func didTapDoneButton() {
+        // UIPickerView에서 선택된 년, 월, 일 값을 가져옴
         let selectedYear = years[datePickerView.selectedRow(inComponent: 0)]
         let selectedMonth = months[datePickerView.selectedRow(inComponent: 1)]
         let selectedDay = days[datePickerView.selectedRow(inComponent: 2)]
 
         let calendar = Calendar.current
+        // 선택된 년, 월, 일을 기반으로 실제 날짜 객체를 생성합니다.
         if let selectedDate = calendar.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: selectedDay)) {
             viewModel.tempDate = selectedDate
         }
 
-        // tempDate의 값을 selectedDate에 저장하고 tempDate을 nil로 설정
+        // 임시로 저장된 날짜(tempDate)를 최종 선택된 날짜 (selectedDate)에 저장하고 tempDate를 초기화
         viewModel.selectedDate = viewModel.tempDate
         viewModel.tempDate = nil
 
-        // 여기서 delegate 메서드를 호출합니다.
+        // 델리게이트 메서드를 호출하여 날짜 설정이 완료되었음을 알림
         delegate?.didCompleteDateSetting(date: viewModel.selectedDate!)
 
         dismiss(animated: true, completion: nil)
@@ -162,10 +166,12 @@ extension DateSettingPageViewController {
 
     // 설정초기화 버튼 동작
     @objc func didTapResetButton() {
-        // 현재 날짜를 viewModel.tempDate 및 viewModel.selectedDate에 저장
+        // 현재 날짜를 가져와서 임시 날짜(tempDate) 및 최종 선택된 날짜(selectedDate)에 저장
         let currentDate = Date()
         viewModel.tempDate = currentDate
         viewModel.selectedDate = currentDate
+        
+        // 델리게이트 메서드를 호출하여 날짜 설정이 초기화되었음을 알립
         delegate?.didResetDateSetting()
         dismiss(animated: true, completion: nil)
     }
