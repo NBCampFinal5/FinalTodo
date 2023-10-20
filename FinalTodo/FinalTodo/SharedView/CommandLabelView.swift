@@ -37,9 +37,10 @@ class CommandLabelView: UIView {
     }()
     
     
-    init(title: String) {
+    init(title: String, placeholder: String) {
         super.init(frame: CGRect.zero)
         self.commandLabel.text = title
+        self.inputTextField.placeholder = placeholder
         setup()
     }
     required init?(coder: NSCoder) {
