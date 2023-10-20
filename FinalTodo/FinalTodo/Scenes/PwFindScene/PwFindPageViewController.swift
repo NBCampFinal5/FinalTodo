@@ -19,11 +19,11 @@ class PwFindPageViewController: UIViewController {
     }()
     
     
-    let idLabel = commandLabelView(title: "아이디") //아이디
-    let callNumber = commandLabelView(title: "휴대전화 번호") //전화번호
-    let requestButton = buttonTappedView(title: "인증번호 받기") //인증번호받기
-    let inputLabel = commandLabelView(title: "인증번호 입력") //인증번호입력
-    let findPwButton = buttonTappedView(title: "비밀번호 찾기") //패스워드 찾기
+    let idLabel = CommandLabelView(title: "아이디") //아이디
+    let callNumber = CommandLabelView(title: "휴대전화 번호") //전화번호
+    let requestButton = ButtonTappedView(title: "인증번호 받기") //인증번호받기
+    let inputLabel = CommandLabelView(title: "인증번호 입력") //인증번호입력
+    let findPwButton = ButtonTappedView(title: "비밀번호 찾기") //패스워드 찾기
     
     
     override func viewDidLoad() {
@@ -36,6 +36,7 @@ class PwFindPageViewController: UIViewController {
 private extension PwFindPageViewController {
     // MARK: - setup
     func setup(){
+        view.backgroundColor = UIColor(named: "theme01PointColor02")
         setupInputName()
         setupPhoneNumber()
         setupEnterNumber()
@@ -51,36 +52,39 @@ private extension PwFindPageViewController {
         }
         
         view.addSubview(idLabel)
-        //작은레이블 오토레이아웃
+        //아이디박스
         idLabel.snp.makeConstraints { make in
             make.top.equalTo(findPwLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.leading.equalTo(Constant.defaultPadding)
+            make.centerX.equalTo(view.snp.centerX)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
         
     }
     func setupPhoneNumber(){
         
         view.addSubview(callNumber)
-        //필드뷰(네모박스)오토레이아웃
+        //전화번호 박스
         callNumber.snp.makeConstraints { make in
-            make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
+            make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
             make.centerX.equalTo(view.snp.centerX)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
         
         view.addSubview(requestButton)
-        //텍스트필드 오토레이아웃
+        //인증번호버튼
         requestButton.snp.makeConstraints { make in
-            make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
+            make.top.equalTo(callNumber.snp.bottom).offset(Constant.screenHeight * 0.05)
             make.centerX.equalTo(idLabel.snp.left)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding + 10)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
     }
     
     func setupEnterNumber(){
         view.addSubview(inputLabel)
+        //인증번호적기 박스
         inputLabel.snp.makeConstraints { make in
             make.top.equalTo(requestButton.snp.bottom).offset(Constant.screenHeight * 0.09)
             make.centerX.equalTo(requestButton.snp.left)
@@ -88,8 +92,9 @@ private extension PwFindPageViewController {
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
         view.addSubview(findPwButton)
+        //비밀번호찾기버튼
         findPwButton.snp.makeConstraints { make in
-            make.top.equalTo(inputLabel.snp.bottom).offset(Constant.screenHeight * 0.09)
+            make.top.equalTo(inputLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
             make.centerX.equalTo(requestButton.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
