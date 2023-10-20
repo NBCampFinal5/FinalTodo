@@ -28,6 +28,7 @@ extension SettingPageViewController {
 private extension SettingPageViewController {
     func setUp() {
         title = "설정"
+        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         view.addSubview(tableView)
         settingOptionManager.makeSettingOptions() // 데이터 만들기
         settingOptionData = settingOptionManager.getSettingOptions() // 데이터매니저에서 데이터 받아오기!
@@ -39,7 +40,7 @@ private extension SettingPageViewController {
         tableView.dataSource = self // 테이블뷰 구성 구현 대리자로 해당 뷰컨트롤러 설정
         tableView.frame = view.bounds // 화면을 꽉 채우기 위해 오토레이아웃 대신 설정
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier) // 셀 등록 필수
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = ColorManager.themeArray[0].backgroundColor
         tableView.rowHeight = Constant.screenWidth / 10
     }
 }
@@ -75,14 +76,10 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             cell.configure(with: model)
         }
 
-        cell.backgroundColor = .systemGroupedBackground
-        
+        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+
         // 셀 악세사리타입 설정
-        if indexPath.section == 0 && indexPath.row == 0 {
-            cell.accessoryType = .none
-        } else {
-            cell.accessoryType = .disclosureIndicator
-        }
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }

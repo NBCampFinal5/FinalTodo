@@ -1,8 +1,6 @@
 import SnapKit
 import UIKit
 
-
-
 class SettingCell: UITableViewCell {
     weak var delegate: SettingCellDelegate? // 성준 - 델리게이트 프로퍼티 추가
 
@@ -83,13 +81,7 @@ class SettingCell: UITableViewCell {
     func configure(with option: SettingOption) {
         iconImageView.image = UIImage(systemName: option.icon)
         titleLabel.text = option.title
-
-        // 성준 - 푸시 알림 셀 스위치만 따로 설정, 서령 - UI 변경으로 코드 변경
-        if option.title == "푸시 알림" {
-            cellSwitch.isHidden = false
-        } else {
-            cellSwitch.isHidden = true
-        }
+        cellSwitch.isHidden = !option.showSwitch
     }
 
     // 성준 - 스위치 on / off 시 설정

@@ -1,9 +1,6 @@
 import SnapKit
 import UIKit
 
-// MARK: - 디자인 패턴 적용
-
-
 class NotifyPageViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
@@ -11,9 +8,9 @@ class NotifyPageViewController: UIViewController {
     }()
 
     var notifyOptions = [
-        SettingOption(icon: "bell", title: "푸시 알림"),
-        SettingOption(icon: "clock", title: "시간"),
-        SettingOption(icon: "message", title: "메세지")
+        SettingOption(icon: "bell", title: "푸시 알림", showSwitch: true),
+        SettingOption(icon: "clock", title: "시간", showSwitch: false),
+        // SettingOption(icon: "message", title: "메세지", showSwitch: false)
     ]
 
     override func viewDidLoad() {
@@ -63,13 +60,6 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
             navController.transitioningDelegate = self
 
             present(navController, animated: true, completion: nil)
-        } else if indexPath.row == 2 { // "메세지" 셀이 선택됐을때
-//            let vc = AddMessagePageViewController()
-//            let navController = UINavigationController(rootViewController: vc)
-//            navController.modalPresentationStyle = .custom
-//            navController.transitioningDelegate = self
-//
-//            present(navController, animated: true, completion: nil)
         }
     }
 }
