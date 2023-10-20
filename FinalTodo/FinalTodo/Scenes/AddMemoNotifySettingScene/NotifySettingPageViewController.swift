@@ -27,7 +27,6 @@ class NotifySettingPageViewController: UIViewController {
         self.initialTime = initialTime ?? viewModel.selectedTime
 
         super.init(nibName: nil, bundle: nil)
-
     }
 
     @available(*, unavailable)
@@ -69,7 +68,6 @@ extension NotifySettingPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        // canceledTime이 있으면 그 시간으로 설정, 없으면 초기 시간 또는 현재 시간으로 설정
         initialTime = viewModel.selectedTime
         setPickerToSelectedTime()
     }
@@ -124,8 +122,8 @@ private extension NotifySettingPageViewController {
 
     // 현재 시간을 피커 뷰에 설정하는 함수
     private func setPickerToCurrentTime() {
-        let currentDate = Date() // 현재 날짜 및 시간을 가져옴
-        let calendar = Calendar.current  // 현재 캘린더 정보를 가져옴
+        let currentDate = Date()  // 현재 날짜 및 시간을 가져옴
+        let calendar = Calendar.current // 현재 캘린더 정보를 가져옴
 
         let currentHour = calendar.component(.hour, from: currentDate) // 현재 시간을 가져옴 (24시간 형식)
         let currentMinute = calendar.component(.minute, from: currentDate) // 현재 분을 가져옴
@@ -141,7 +139,6 @@ private extension NotifySettingPageViewController {
         timePickerView.selectRow(currentHourIn12HourFormat - 1, inComponent: 1, animated: false)
         timePickerView.selectRow(currentMinute, inComponent: 2, animated: false)
     }
-    
     // 초기 설정된 시간 또는 현재 시간을 피커 뷰에 설정하는 함수
     private func setPickerToSelectedTime() {
         let targetTime: Date = initialTime ?? Date() // 초기 시간이 설정되어 있으면 사용, 아니면 현재 시간을 사용
@@ -178,13 +175,14 @@ extension NotifySettingPageViewController {
         if timePickerView.selectedRow(inComponent: 0) == 0 { // 오전인 경우
             // 선택된 시간 값을 hour 변수에 저장 (+1은 선택된 인덱스를 시간 값으로 변환하기 위해)
             hour = timePickerView.selectedRow(inComponent: 1) + 1
-        } else { // // 오후인 경우
+
+        } else { // 오후인 경우
             // 선택된 시간 값에 13를 더하여 hour 변수에 저장 (오후 시간으로 계산)
             hour = timePickerView.selectedRow(inComponent: 1) + 13
         }
+        
         // 선택된 분 값을 minute 변수에 저장
         let minute = timePickerView.selectedRow(inComponent: 2)
-        
         // 선택된 시간과 분으로 DateComponents 객체 생성
         let selectedTimeComponents = DateComponents(hour: hour, minute: minute)
         if let selectedTime = Calendar.current.date(from: selectedTimeComponents) {

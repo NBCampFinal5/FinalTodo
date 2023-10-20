@@ -19,12 +19,16 @@ class PwFindPageViewController: UIViewController {
     }()
     
     
-    let idLabel = CommandLabelView(title: "아이디") //아이디
-    let callNumber = CommandLabelView(title: "휴대전화 번호") //전화번호
-    let requestButton = ButtonTappedView(title: "인증번호 받기") //인증번호받기
-    let inputLabel = CommandLabelView(title: "인증번호 입력") //인증번호입력
-    let findPwButton = ButtonTappedView(title: "비밀번호 찾기") //패스워드 찾기
+
     
+
+    let idLabel = CommandLabelView(title: "아이디", placeholder: "아이디를 입력해주세요.") //아이디
+    let callNumber = CommandLabelView(title: "휴대전화 번호", placeholder: "010-0000-0000") //전화번호
+    let requestButton = ButtonTappedView(title: "인증번호 받기") //인증번호받기
+    let inputLabel = CommandLabelView(title: "인증번호 입력", placeholder: "인증번호를 입력해주세요.") //인증번호입력
+    let findPwButton = ButtonTappedView(title: "비밀번호 찾기") //패스워드 찾기
+
+
     
     override func viewDidLoad() {
         // MARK: - LifeCycle
@@ -102,4 +106,5 @@ private extension PwFindPageViewController {
         
     }
 }
+
 

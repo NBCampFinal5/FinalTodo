@@ -160,7 +160,6 @@ extension DateSettingPageViewController {
 
         // 델리게이트 메서드를 호출하여 날짜 설정이 완료되었음을 알림
         delegate?.didCompleteDateSetting(date: viewModel.selectedDate!)
-
         dismiss(animated: true, completion: nil)
     }
 
@@ -170,7 +169,7 @@ extension DateSettingPageViewController {
         let currentDate = Date()
         viewModel.tempDate = currentDate
         viewModel.selectedDate = currentDate
-        
+
         // 델리게이트 메서드를 호출하여 날짜 설정이 초기화되었음을 알립
         delegate?.didResetDateSetting()
         dismiss(animated: true, completion: nil)
