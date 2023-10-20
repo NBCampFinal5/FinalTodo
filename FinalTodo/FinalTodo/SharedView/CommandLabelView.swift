@@ -8,12 +8,11 @@
 import UIKit
 import SnapKit
 
-class commandLabelView: UIView {
+class CommandLabelView: UIView {
     
     //작은 레이블, 입력필드 위에 설명할수 있는 무언가 적을 수 있는 레이블
     private lazy var commandLabel: UILabel = {
         let label = UILabel()
-        label.text = "아무거나 적기"
         return label
     }()
     //텍스트뷰
@@ -28,7 +27,7 @@ class commandLabelView: UIView {
     private lazy var inputTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .clear
-        tf.tintColor = UIColor(named: "theme01PointColor02")
+        tf.tintColor = UIColor(named: "theme01PointColor01")
         tf.textColor = UIColor(named: "theme01PointColor01")
        // tf.attributedPlaceholder = NSAttributedString(string: "틴트텍스트", attributes : [NSAttributedString.Key.foregroundColor: "theme01PointColor02"])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
@@ -38,9 +37,10 @@ class commandLabelView: UIView {
     }()
     
     
-    init(title: String) {
+    init(title: String, placeholder: String) {
         super.init(frame: CGRect.zero)
-        commandLabel.text = "title"
+        self.commandLabel.text = title
+        self.inputTextField.placeholder = placeholder
         setup()
     }
     required init?(coder: NSCoder) {
@@ -48,7 +48,7 @@ class commandLabelView: UIView {
     }
     
 }
-private extension commandLabelView {
+private extension CommandLabelView {
     func setup(){
         setupLabelName()
         setupTextField()
