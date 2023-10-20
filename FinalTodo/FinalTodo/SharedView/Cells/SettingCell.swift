@@ -1,9 +1,7 @@
 import SnapKit
 import UIKit
 
-protocol SettingCellDelegate: AnyObject {
-    func didChangeSwitchState(_ cell: SettingCell, isOn: Bool)
-}
+
 
 class SettingCell: UITableViewCell {
     weak var delegate: SettingCellDelegate? // 성준 - 델리게이트 프로퍼티 추가

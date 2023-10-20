@@ -8,6 +8,11 @@
 import UIKit
 import SnapKit
 
+// TODO: - Font -> 지정 폰트로 변경
+// TODO: - 공용뷰로 작업.
+// TODO: - AutoLayout은 상수 x 화면 비율로 계산
+// TODO: - 들여쓰기
+
 class PwFindPageViewController: UIViewController {
     
     //맨위에 설명할수있는 글자 아무거나 ex) 로그인,,비밀번호찾기.. 등등

@@ -2,6 +2,10 @@ import FSCalendar
 import SnapKit
 import UIKit
 
+
+// MARK: - view 선언방식 이유가 필요할 듯
+
+
 class CalendarPageViewController: UIViewController {
     // 선택된 D-day 날짜
     var selectedDdays: [Date] = []
@@ -112,14 +116,6 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 선택 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
         return ColorManager.themeArray[0].pointColor02 // 선택된 날짜 배경색
-    }
-}
-
-// Date 객체의 확장을 통해 특정 날짜의 시작 시간을 가져오는 기능
-extension Date {
-    // 해당 날짜의 시작 시간을 반환
-    var startOfDay: Date {
-        return Calendar.current.startOfDay(for: self)
     }
 }
 

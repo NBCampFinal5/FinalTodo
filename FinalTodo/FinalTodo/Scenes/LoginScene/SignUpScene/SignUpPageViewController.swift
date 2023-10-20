@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 //회원가입 페이지
+// TODO: - Font -> 지정 폰트로 변경
+// TODO: - 공용뷰로 작업.
+// TODO: - AutoLayout은 상수 x 화면 비율로 계산
+
 class SignUpPageViewController: UIViewController {
     //맨위에 굵은글자
     private lazy var registerLabel: UILabel = {

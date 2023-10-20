@@ -7,6 +7,12 @@
 
 import UIKit
 import SnapKit
+
+// TODO: - Font -> 지정 폰트로 변경
+// TODO: - 공용뷰로 작업.
+// TODO: - AutoLayout은 상수 x 화면 비율로 계산
+// TODO: - 들여쓰기
+
 //로그인페이지
 class SignInPageViewController: UIViewController {
     //맨위에 로그인 굵은글자

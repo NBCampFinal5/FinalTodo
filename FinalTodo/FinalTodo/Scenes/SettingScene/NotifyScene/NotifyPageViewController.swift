@@ -1,6 +1,9 @@
 import SnapKit
 import UIKit
 
+// MARK: - 디자인 패턴 적용
+
+
 class NotifyPageViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
@@ -61,12 +64,12 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
             present(navController, animated: true, completion: nil)
         } else if indexPath.row == 2 { // "메세지" 셀이 선택됐을때
-            let vc = AddMessagePageViewController()
-            let navController = UINavigationController(rootViewController: vc)
-            navController.modalPresentationStyle = .custom
-            navController.transitioningDelegate = self
-
-            present(navController, animated: true, completion: nil)
+//            let vc = AddMessagePageViewController()
+//            let navController = UINavigationController(rootViewController: vc)
+//            navController.modalPresentationStyle = .custom
+//            navController.transitioningDelegate = self
+//
+//            present(navController, animated: true, completion: nil)
         }
     }
 }

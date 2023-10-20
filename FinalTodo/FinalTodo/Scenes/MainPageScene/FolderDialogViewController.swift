@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+// TODO: - manager 위치 디자인 패턴
+// TODO: - 공용 폰트 적용
+// TODO: - Offset inset Constant.defaultPadding값으로 통일하기
+
 class FolderDialogViewController: UIViewController, UIColorPickerViewControllerDelegate {
     
     var titleLabel: UILabel!
