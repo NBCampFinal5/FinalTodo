@@ -1,11 +1,6 @@
 import MapKit
 import UIKit
 
-protocol NotifySettingDelegate: AnyObject {
-    func didCompleteNotifySetting() // 알림 설정 완료시 호출될 메서드
-    func didResetNotifySetting() // 알림 설정 초기화시 호출될 메서드
-}
-
 class NotifySettingPageViewController: UIViewController {
     weak var delegate: NotifySettingDelegate?
     var initialTime: Date? // 초기 설정된 시간 또는 사용자가 마지막으로 설정한 시간을 저장하기 위한 변수
