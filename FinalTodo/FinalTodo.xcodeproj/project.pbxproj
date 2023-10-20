@@ -81,7 +81,7 @@
 		301B397A2AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39742AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift */; };
 		301B397B2AE14A8A00B19313 /* MemosModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39752AE14A8A00B19313 /* MemosModel+CoreDataClass.swift */; };
 		301B397C2AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39762AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift */; };
-		30445E802ADF06BB000D26A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30445E7F2ADF06BB000D26A4 /* GoogleService-Info.plist */; };
+		301B397E2AE23F4A00B19313 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 301B397D2AE23F4A00B19313 /* GoogleService-Info.plist */; };
 		30445E862ADF0809000D26A4 /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445E852ADF0809000D26A4 /* Users.swift */; };
 		30445E942ADF0958000D26A4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445E932ADF0958000D26A4 /* CoreDataManager.swift */; };
 		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
@@ -104,7 +104,6 @@
 		C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */; };
 		C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */; };
 		C73BC4362AE14F8100E0302A /* DateSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */; };
-		C73BC43A2AE151A200E0302A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C73BC4392AE151A200E0302A /* GoogleService-Info.plist */; };
 		C73BC43C2AE1648700E0302A /* LocationSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73BC43B2AE1648700E0302A /* LocationSettingPageViewController.swift */; };
 		C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* DdayPageModel.swift */; };
 		C747DE302ADBDB640044499E /* AddMessagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE2F2ADBDB640044499E /* AddMessagePageViewController.swift */; };
@@ -157,7 +156,7 @@
 		301B39742AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsersModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		301B39752AE14A8A00B19313 /* MemosModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemosModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		301B39762AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemosModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		30445E7F2ADF06BB000D26A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		301B397D2AE23F4A00B19313 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30445E852ADF0809000D26A4 /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		30445E932ADF0958000D26A4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -180,7 +179,6 @@
 		C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyPageViewController.swift; sourceTree = "<group>"; };
 		C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
 		C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSettingPageViewController.swift; sourceTree = "<group>"; };
-		C73BC4392AE151A200E0302A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C73BC43B2AE1648700E0302A /* LocationSettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingPageViewController.swift; sourceTree = "<group>"; };
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C747DE2F2ADBDB640044499E /* AddMessagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMessagePageViewController.swift; sourceTree = "<group>"; };
@@ -401,7 +399,7 @@
 				084412062AD56871005F2FA9 /* Info.plist */,
 				084411F82AD56870005F2FA9 /* AppDelegate.swift */,
 				084411FA2AD56870005F2FA9 /* SceneDelegate.swift */,
-				C73BC4392AE151A200E0302A /* GoogleService-Info.plist */,
+				301B397D2AE23F4A00B19313 /* GoogleService-Info.plist */,
 				084412012AD56871005F2FA9 /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -618,8 +616,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				084412052AD56871005F2FA9 /* LaunchScreen.storyboard in Resources */,
+				301B397E2AE23F4A00B19313 /* GoogleService-Info.plist in Resources */,
 				084412022AD56871005F2FA9 /* Assets.xcassets in Resources */,
-				C73BC43A2AE151A200E0302A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,7 +630,6 @@
 			files = (
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
 				039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */,
-				30445EB82ADF12B4000D26A4 /* FolderModel+CoreDataProperties.swift in Sources */,
 				69EBADC02AE0EF920009CB21 /* MapKitManager.swift in Sources */,
 				083C985D2AD8D728006895D2 /* Protocol.swift in Sources */,
 				301B39772AE14A8A00B19313 /* FoldersModel+CoreDataClass.swift in Sources */,
@@ -682,7 +679,6 @@
 				301B39792AE14A8A00B19313 /* UsersModel+CoreDataClass.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				301B397C2AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift in Sources */,
-				30445EBA2ADF1C81000D26A4 /* NetworkDataManager.swift in Sources */,
 				081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,

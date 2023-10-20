@@ -74,6 +74,7 @@ extension CoreDataManager {
         }
     }
 
+    // 해당 유저 수정
     func updateUser(user: UsersModel, nickName: String, rewardPoint: Int64, themeColor: Int64, completion: @escaping (UsersModel?) -> Void) {
         if let context = context {
             context.perform {
@@ -90,6 +91,36 @@ extension CoreDataManager {
         }
     }
 
+    // 아이디에 해당하는 유저 수정
+    func updateUser(byID id: String, nickName: String, rewardPoint: Int64, themeColor: Int64, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            print("Context is nil, failed to update user.")
+            completion(false)
+            return
+        }
+
+        context.perform {
+            let fetchRequest: NSFetchRequest<UsersModel> = UsersModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+            do {
+                if let user = try context.fetch(fetchRequest).first {
+                    user.nickName = nickName
+                    user.rewardPoint = rewardPoint
+                    user.themeColor = themeColor
+                    self.saveContext()
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } catch {
+                print("Failed to update user: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+
+    // 해당 유저 삭제
     func deleteUser(user: UsersModel, completion: @escaping (Bool) -> Void) {
         if let context = context {
             context.perform {
@@ -100,6 +131,33 @@ extension CoreDataManager {
         } else {
             print("Context is nil, failed to delete user.")
             completion(false)
+        }
+    }
+
+    // 아이디에 해당하는 유저 삭제
+    func deleteUser(byID id: String, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            print("Context is nil, failed to delete user.")
+            completion(false)
+            return
+        }
+
+        context.perform {
+            let fetchRequest: NSFetchRequest<UsersModel> = UsersModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+            do {
+                if let users = try context.fetch(fetchRequest).first {
+                    context.delete(users)
+                    self.saveContext()
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } catch {
+                print("Failed to delete user: \(error.localizedDescription)")
+                completion(false)
+            }
         }
     }
 
@@ -158,12 +216,71 @@ extension CoreDataManager {
         }
     }
 
-    // 폴더 삭제
+    // 아이디에 해당하는 폴더 수정
+    func updateFolder(byID id: String, title: String, color: Int64, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            print("Context is nil, failed to update folder.")
+            completion(false)
+            return
+        }
+
+        context.perform {
+            // Fetch Folder by ID
+            let fetchRequest: NSFetchRequest<FoldersModel> = FoldersModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+            do {
+                if let folder = try context.fetch(fetchRequest).first {
+                    // If a folder with the given ID exists, update the folder
+                    folder.title = title
+                    folder.color = color
+                    // Save changes
+                    self.saveContext()
+                    completion(true)
+                } else {
+                    // No folder with the given ID found
+                    completion(false)
+                }
+            } catch {
+                print("Failed to update folder: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+
+    // 해당 폴더 삭제
     func deleteFolder(folder: FoldersModel, completion: @escaping (Bool) -> Void) {
         context?.perform {
             self.context?.delete(folder)
             self.saveContext()
             completion(true)
+        }
+    }
+
+    // 폴더 아이디에 맞는 폴더 삭제
+    func deleteFolder(byID id: String, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            print("Context is nil, failed to delete folder.")
+            completion(false)
+            return
+        }
+
+        context.perform {
+            let fetchRequest: NSFetchRequest<FoldersModel> = FoldersModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+
+            do {
+                if let folders = try context.fetch(fetchRequest).first {
+                    context.delete(folders)
+                    self.saveContext()
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } catch {
+                print("Failed to delete folder: \(error.localizedDescription)")
+                completion(false)
+            }
         }
     }
 
@@ -217,12 +334,105 @@ extension CoreDataManager {
         }
     }
 
+    // 날짜에 해당하는 메모 수정
+    func updateMemo(byDate date: String, title: String, content: String, isPin: Bool, fileId: String, locationNotifySetting: String?, timeNotifySetting: String?, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            print("Context is nil, failed to update memo.")
+            completion(false)
+            return
+        }
+
+        context.perform {
+            // Fetch Memo by Date
+            let fetchRequest: NSFetchRequest<MemosModel> = MemosModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "date == %@", date)
+
+            do {
+                if let memo = try context.fetch(fetchRequest).first {
+                    // If a memo with the given date exists, update the memo
+                    memo.title = title
+                    memo.content = content
+                    memo.isPin = isPin
+                    memo.fileId = fileId
+                    memo.locationNotifySetting = locationNotifySetting
+                    memo.timeNotifySetting = timeNotifySetting
+                    // Save changes
+                    self.saveContext()
+                    completion(true)
+                } else {
+                    // No memo with the given date found
+                    completion(false)
+                }
+            } catch {
+                print("Failed to update memo: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+
     // 메모 삭제
     func deleteMemo(memo: MemosModel, completion: @escaping (Bool) -> Void) {
         context?.perform {
             self.context?.delete(memo)
             self.saveContext()
             completion(true)
+        }
+    }
+
+    // 날짜 값에 해당하는 메모 삭제
+    func deleteMemo(byDate date: String, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            print("Context is nil, failed to delete memo.")
+            completion(false)
+            return
+        }
+
+        context.perform {
+            let fetchRequest: NSFetchRequest<MemosModel> = MemosModel.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "date == %@", date)
+
+            do {
+                if let memos = try context.fetch(fetchRequest).first {
+                    context.delete(memos)
+                    self.saveContext()
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } catch {
+                print("Failed to delete memo: \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+
+    // 코어데이터 데이터 초기화
+    func resetCoreData() {
+        if let context = context {
+            context.perform {
+                let userFetchRequest: NSFetchRequest<UsersModel> = UsersModel.fetchRequest()
+                if let users = try? context.fetch(userFetchRequest) {
+                    for user in users {
+                        context.delete(user)
+                    }
+                }
+
+                let folderFetchRequest: NSFetchRequest<FoldersModel> = FoldersModel.fetchRequest()
+                if let folders = try? context.fetch(folderFetchRequest) {
+                    for folder in folders {
+                        context.delete(folder)
+                    }
+                }
+
+                let memoFetchRequest: NSFetchRequest<MemosModel> = MemosModel.fetchRequest()
+                if let memos = try? context.fetch(memoFetchRequest) {
+                    for memo in memos {
+                        context.delete(memo)
+                    }
+                }
+
+                self.saveContext()
+            }
         }
     }
 }
