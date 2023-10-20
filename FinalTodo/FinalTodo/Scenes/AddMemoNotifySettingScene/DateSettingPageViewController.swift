@@ -2,6 +2,7 @@ import UIKit
 
 protocol DateSettingDelegate: AnyObject {
     func didCompleteDateSetting(date: Date) // 날짜 설정이 완료될 때 호출될 메서드를 정의
+    func didResetDateSetting()
 }
 
 class DateSettingPageViewController: UIViewController {
@@ -11,6 +12,18 @@ class DateSettingPageViewController: UIViewController {
     var initialDate: Date?
 
     private let topView = ModalTopView(title: "날짜 설정")
+    private let viewModel: AddMemoPageViewModel
+
+    init(viewModel: AddMemoPageViewModel, initialDate: Date? = nil) {
+        self.viewModel = viewModel
+        self.initialDate = initialDate
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // 년도, 월, 일을 위한 배열
     var years: [Int] = Array(1995...2033)
@@ -35,14 +48,14 @@ class DateSettingPageViewController: UIViewController {
         return button
     }()
 
-    // 설정 취소 버튼
-    lazy var cancelButton: UIButton = {
+    // 설정 초기화 버튼
+    lazy var resetButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("설정취소", for: .normal)
+        button.setTitle("설정초기화", for: .normal)
         button.backgroundColor = ColorManager.themeArray[0].pointColor02
         button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return button
     }()
 }
@@ -98,8 +111,8 @@ extension DateSettingPageViewController {
             make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
 
-        view.addSubview(cancelButton)
-        cancelButton.snp.makeConstraints { make in
+        view.addSubview(resetButton)
+        resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(doneButton.snp.bottom).offset(10)
             make.width.equalTo(UIScreen.main.bounds.width * 0.8)
@@ -134,13 +147,26 @@ extension DateSettingPageViewController {
 
         let calendar = Calendar.current
         if let selectedDate = calendar.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: selectedDay)) {
-            delegate?.didCompleteDateSetting(date: selectedDate)
+            viewModel.tempDate = selectedDate
         }
+
+        // tempDate의 값을 selectedDate에 저장하고 tempDate을 nil로 설정
+        viewModel.selectedDate = viewModel.tempDate
+        viewModel.tempDate = nil
+
+        // 여기서 delegate 메서드를 호출합니다.
+        delegate?.didCompleteDateSetting(date: viewModel.selectedDate!)
+
         dismiss(animated: true, completion: nil)
     }
 
-    // 설정취소 버튼 동작
-    @objc func didTapCancelButton() {
+    // 설정초기화 버튼 동작
+    @objc func didTapResetButton() {
+        // 현재 날짜를 viewModel.tempDate 및 viewModel.selectedDate에 저장
+        let currentDate = Date()
+        viewModel.tempDate = currentDate
+        viewModel.selectedDate = currentDate
+        delegate?.didResetDateSetting()
         dismiss(animated: true, completion: nil)
     }
 

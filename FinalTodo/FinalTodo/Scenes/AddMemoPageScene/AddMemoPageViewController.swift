@@ -92,7 +92,7 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
 
         switch indexPath.row {
         case 0:
-            let dateSettingVC = DateSettingPageViewController()
+            let dateSettingVC = DateSettingPageViewController(viewModel: viewModel)
             // 현재 뷰 컨트롤러를 delegate로 설정하여, 날짜 설정 완료 시 콜백을 받을 수 있게 함
             dateSettingVC.delegate = self
             // viewModel에 저장된 선택된 날짜가 있다면, 해당 날짜를 뷰 컨트롤러의 초기 날짜로 설정
@@ -101,7 +101,7 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             }
             vc = dateSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 1:
-            let notifySettingVC = NotifySettingPageViewController(viewModel: viewModel)
+            let notifySettingVC = NotifySettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime)
             notifySettingVC.delegate = self
             vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 2:
@@ -139,24 +139,38 @@ extension AddMemoPageViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+extension AddMemoPageViewController {
+    func changeCellBackground(at row: Int, to color: UIColor) {
+        let indexPath = IndexPath(row: row, section: 0)
+        if let cell = memoView.optionCollectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
+            cell.changeBackgroundColor(to: color)
+        } else {
+            // 셀이 화면에 보이지 않는 경우 collectionView를 다시 로드하여 UI 업데이트
+            memoView.optionCollectionView.reloadData()
+        }
+    }
+}
+
 extension AddMemoPageViewController: DateSettingDelegate {
     func didCompleteDateSetting(date: Date) {
         // 선택된 날짜를 viewModel의 selectedDate에 저장
         viewModel.selectedDate = date
-        // 첫 번째 셀(날짜 설정)에 대한 IndexPath를 생성
-        let indexPath = IndexPath(row: 0, section: 0)
-        // 해당 IndexPath의 셀을 가져와서 배경색을 변경
-        if let cell = memoView.optionCollectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
-            cell.changeBackgroundColor(to: .systemYellow)
-        }
+        // 첫 번째 셀(날짜 설정)에 대한 배경색을 변경
+        changeCellBackground(at: 0, to: .systemYellow)
+    }
+
+    func didResetDateSetting() {
+        changeCellBackground(at: 0, to: ColorManager.themeArray[0].pointColor02!)
     }
 }
 
 extension AddMemoPageViewController: NotifySettingDelegate {
     func didCompleteNotifySetting() {
-        let indexPath = IndexPath(row: 1, section: 0)
-        if let cell = memoView.optionCollectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
-            cell.changeBackgroundColor(to: .systemYellow)
-        }
+        // 두 번째 셀(시간 설정)에 대한 배경색을 변경
+        changeCellBackground(at: 1, to: .systemYellow)
+    }
+
+    func didResetNotifySetting() {
+        changeCellBackground(at: 1, to: ColorManager.themeArray[0].pointColor02!)
     }
 }
