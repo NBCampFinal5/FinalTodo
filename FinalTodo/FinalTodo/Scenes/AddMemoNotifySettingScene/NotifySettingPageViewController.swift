@@ -139,7 +139,6 @@ private extension NotifySettingPageViewController {
         timePickerView.selectRow(currentHourIn12HourFormat - 1, inComponent: 1, animated: false)
         timePickerView.selectRow(currentMinute, inComponent: 2, animated: false)
     }
-
     // 초기 설정된 시간 또는 현재 시간을 피커 뷰에 설정하는 함수
     private func setPickerToSelectedTime() {
         let targetTime: Date = initialTime ?? Date() // 초기 시간이 설정되어 있으면 사용, 아니면 현재 시간을 사용
@@ -171,13 +170,12 @@ extension NotifySettingPageViewController {
 
     // 설정완료 버튼 동작 메서드
     @objc func didTappedDoneButton() {
-        // 시간 값을 저장할 변수 초기화
-        let hour: Int
-        
+        let hour: Int // 시간 값을 저장할 변수 초기화
         // 첫 번째 컴포넌트(AM/PM)의 선택된 값이 0 (즉, 오전)인 경우
         if timePickerView.selectedRow(inComponent: 0) == 0 { // 오전인 경우
             // 선택된 시간 값을 hour 변수에 저장 (+1은 선택된 인덱스를 시간 값으로 변환하기 위해)
             hour = timePickerView.selectedRow(inComponent: 1) + 1
+
         } else { // 오후인 경우
             // 선택된 시간 값에 13를 더하여 hour 변수에 저장 (오후 시간으로 계산)
             hour = timePickerView.selectedRow(inComponent: 1) + 13
@@ -206,6 +204,7 @@ extension NotifySettingPageViewController {
         let currentTime = Date()
         viewModel.tempTime = currentTime
         viewModel.selectedTime = currentTime
+        
         // 델리게이트 메서드 호출하여 알림 설정 초기화 알림
         delegate?.didResetNotifySetting()
         dismiss(animated: true, completion: nil)

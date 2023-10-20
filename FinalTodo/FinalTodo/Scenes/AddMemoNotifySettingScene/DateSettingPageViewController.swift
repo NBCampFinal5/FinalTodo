@@ -122,13 +122,15 @@ extension DateSettingPageViewController {
 
     // datePickerView에 현재 날짜 표시
     private func setPickerToCurrentDate() {
-        let currentDate = Date()
-        let calendar = Calendar.current
+        let currentDate = Date() // 현재 날짜 및 시간을 가져옴
+        let calendar = Calendar.current // 현재 캘린더 정보를 가져옴
 
+        // 현재 년도,월,일을 가져옴
         let currentYear = calendar.component(.year, from: currentDate)
         let currentMonth = calendar.component(.month, from: currentDate)
         let currentDay = calendar.component(.day, from: currentDate)
 
+        // 피커 뷰에 년도,월,일을 설정
         datePickerView.selectRow(years.firstIndex(of: currentYear) ?? 0, inComponent: 0, animated: false)
         datePickerView.selectRow(months.firstIndex(of: currentMonth) ?? 0, inComponent: 1, animated: false)
         datePickerView.selectRow(days.firstIndex(of: currentDay) ?? 0, inComponent: 2, animated: false)
