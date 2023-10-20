@@ -11,6 +11,7 @@ import SnapKit
 class MainPageViewController: UIViewController {
     
     var items = [Any]()
+    let locationManager = LocationTrackingManager.shared
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -25,6 +26,7 @@ class MainPageViewController: UIViewController {
         
         setupUI()
         setupDelegates()
+        locationManager.startTracking()
     }
     
     private func setupUI() {
@@ -50,6 +52,10 @@ class MainPageViewController: UIViewController {
     }
     
     @objc func fabTapped() {
+        let addMemoVC = AddMemoPageViewController()
+        addMemoVC.transitioningDelegate = self
+        addMemoVC.modalPresentationStyle = .custom
+        self.present(addMemoVC, animated: true, completion: nil)
     }
     
     @objc func editButtonTapped() {
@@ -246,6 +252,12 @@ extension MainPageViewController {
             let statusBarView = UIApplication.shared.value(forKey: "statusBar") as? UIView
             statusBarView?.backgroundColor = bgColor
         }
+    }
+}
+
+extension MainPageViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }
 

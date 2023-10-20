@@ -8,12 +8,11 @@
 import UIKit
 import SnapKit
 
-class commandLableView: UIView {
+class CommandLabelView: UIView {
     
     //작은 레이블, 입력필드 위에 설명할수 있는 무언가 적을 수 있는 레이블
     private lazy var commandLabel: UILabel = {
         let label = UILabel()
-        label.text = "아무거나 적기"
         return label
     }()
     //텍스트뷰
@@ -28,9 +27,9 @@ class commandLableView: UIView {
     private lazy var inputTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .clear
-        tf.tintColor = UIColor(named: "theme01PointColor02")
+        tf.tintColor = UIColor(named: "theme01PointColor01")
         tf.textColor = UIColor(named: "theme01PointColor01")
-        tf.attributedPlaceholder = NSAttributedString(string: "틴트텍스트", attributes : [NSAttributedString.Key.foregroundColor: "theme01PointColor02"])
+       // tf.attributedPlaceholder = NSAttributedString(string: "틴트텍스트", attributes : [NSAttributedString.Key.foregroundColor: "theme01PointColor02"])
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
         tf.autocorrectionType = .no //자동으로 틀린글자 잡아주는 옵션
         //tf.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
@@ -40,7 +39,7 @@ class commandLableView: UIView {
     
     init(title: String) {
         super.init(frame: CGRect.zero)
-        commandLabel.text = "title"
+        self.commandLabel.text = title
         setup()
     }
     required init?(coder: NSCoder) {
@@ -48,18 +47,18 @@ class commandLableView: UIView {
     }
     
 }
-private extension commandLableView {
+private extension CommandLabelView {
     func setup(){
-        setupLableName()
+        setupLabelName()
         setupTextField()
     }
     //오토레이아웃
     
-    func setupLableName(){
+    func setupLabelName(){
         self.addSubview(commandLabel)
         //맨위 레이블 오토레이아웃
         commandLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(Constant.screenHeight * 0.07)
+            make.top.equalToSuperview()
             make.leading.equalTo(Constant.defaultPadding)
         }
         
