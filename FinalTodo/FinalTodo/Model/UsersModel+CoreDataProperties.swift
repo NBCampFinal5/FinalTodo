@@ -14,8 +14,8 @@ public extension UsersModel {
         return NSFetchRequest<UsersModel>(entityName: "UsersModel")
     }
 
-    @NSManaged var id: String?
-    @NSManaged var nickName: String?
+    @NSManaged var id: String
+    @NSManaged var nickName: String
     @NSManaged var rewardPoint: Int64
     @NSManaged var themeColor: Int64
     @NSManaged var folder: FoldersModel?

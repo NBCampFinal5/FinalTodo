@@ -14,13 +14,13 @@ public extension MemosModel {
         return NSFetchRequest<MemosModel>(entityName: "MemosModel")
     }
 
-    @NSManaged var content: String?
-    @NSManaged var date: String?
-    @NSManaged var fileId: String?
+    @NSManaged var content: String
+    @NSManaged var date: String
+    @NSManaged var fileId: String
     @NSManaged var isPin: Bool
     @NSManaged var locationNotifySetting: String?
     @NSManaged var timeNotifySetting: String?
-    @NSManaged var title: String?
+    @NSManaged var title: String
     @NSManaged var folder: FoldersModel?
     @NSManaged var user: UsersModel?
 }

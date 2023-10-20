@@ -15,8 +15,8 @@ public extension FoldersModel {
     }
 
     @NSManaged var color: Int64
-    @NSManaged var id: String?
-    @NSManaged var title: String?
+    @NSManaged var id: String
+    @NSManaged var title: String
     @NSManaged var memo: MemosModel?
     @NSManaged var user: UsersModel?
 }
