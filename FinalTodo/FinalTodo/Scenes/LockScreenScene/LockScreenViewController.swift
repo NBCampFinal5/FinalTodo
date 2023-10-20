@@ -205,8 +205,6 @@ extension LockScreenViewController: UICollectionViewDelegate, UICollectionViewDa
             }
         }
     }
-    
-    
 }
 
 extension LockScreenViewController: UICollectionViewDelegateFlowLayout {
@@ -228,27 +226,3 @@ extension LockScreenViewController: UICollectionViewDelegateFlowLayout {
 }
 
 
-extension UINavigationController {
-    func popViewController(animated: Bool, completion:@escaping (()->())) {
-        CATransaction.setCompletionBlock(completion)
-        CATransaction.begin()
-        _ = self.popViewController(animated: animated)
-        CATransaction.commit()
-    }
-    
-    func pushViewController(_ viewController: UIViewController, animated: Bool, completion:@escaping (()->())) {
-        CATransaction.setCompletionBlock(completion)
-        CATransaction.begin()
-        self.pushViewController(viewController, animated: animated)
-        CATransaction.commit()
-    }
-}
-
-extension UIView {
-    func shake() {
-        self.transform = CGAffineTransform(translationX: 20, y: 0)
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
-            self.transform = CGAffineTransform.identity
-        }, completion: nil)
-    }
-}

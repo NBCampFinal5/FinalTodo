@@ -8,6 +8,9 @@
 import UIKit
 import SnapKit
 
+// MARK: - 파일 분리 요망
+
+
 class MemoListViewController: UIViewController {
     
     var memos: [Memo] = [

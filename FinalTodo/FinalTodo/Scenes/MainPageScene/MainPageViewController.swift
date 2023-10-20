@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+// TODO: - View를 변경하는 이유가 뭘까요?
+// TODO: - manager 위치 디자인 패턴
+// TODO: - Folder클래스 삭제 및 Folders 클래스 적용
+
 class MainPageViewController: UIViewController {
     
     var items = [Any]()

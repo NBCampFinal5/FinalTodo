@@ -7,3 +7,6 @@
 
 import UIKit
 
+protocol SettingCellDelegate: AnyObject {
+    func didChangeSwitchState(_ cell: SettingCell, isOn: Bool)
+}
