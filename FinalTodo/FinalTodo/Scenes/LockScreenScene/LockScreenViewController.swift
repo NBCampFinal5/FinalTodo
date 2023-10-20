@@ -27,6 +27,15 @@ class LockScreenViewController: UIViewController {
         return view
     }()
     
+    lazy var passwordInfoLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .red
+        label.textAlignment = .center
+        label.alpha = 0
+        return label
+    }()
+    
     lazy var numsCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let spacing = viewModel.numPadCollectionviewSpacing
@@ -62,7 +71,6 @@ extension LockScreenViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
     }
 }
@@ -74,6 +82,7 @@ private extension LockScreenViewController {
     func bind() {
         viewModel.userInPutPassword.bind { [weak self] inputData in
             guard let self = self else { return }
+            self.passwordInfoLabel.alpha = 0
             passwordCollectionView.reloadData()
             if inputData.count == viewModel.lockScreenPassword.count {
                 if inputData == viewModel.lockScreenPassword {
@@ -84,21 +93,21 @@ private extension LockScreenViewController {
                     })
                 } else {
                     print("[LockScreenViewController]: 비밀번호 불일치")
+                    passwordCollectionView.shake()
+                    showPasswordMissMatch()
                 }
             }
         }
     }
-
-    
     // MARK: - SetUp
 
     func setUp() {
         view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         view.addSubview(numsCollectionView)
-        self.navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = true
         setUpPasswordLabel()
         setUpPasswordCollectionView()
+        setUpPasswordInfoLabel()
         setUpNumsCollectionView()
     }
     
@@ -107,6 +116,14 @@ private extension LockScreenViewController {
         passwordLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constant.screenHeight * 0.15)
             make.centerX.equalToSuperview()
+        }
+    }
+    
+    func setUpPasswordInfoLabel() {
+        view.addSubview(passwordInfoLabel)
+        passwordInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(passwordCollectionView.snp.bottom).offset(Constant.defaultPadding)
+            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
     
@@ -132,10 +149,23 @@ private extension LockScreenViewController {
         numsCollectionView.dataSource = self
         numsCollectionView.register(LockScreenNumCollectionViewCell.self, forCellWithReuseIdentifier: LockScreenNumCollectionViewCell.identifier)
     }
+    
+    // MARK: - Method
+    
+    func showPasswordMissMatch() {
+        viewModel.userInPutPassword.value = ""
+        viewModel.failCount.value += 1
+        print("FailCount:",viewModel.failCount.value)
+        passwordInfoLabel.text = "비밀번호를 확인해 주세요"
+        UIView.animate(withDuration: 1) {
+            self.passwordInfoLabel.alpha = 1
+        }
+    }
 }
 
 extension LockScreenViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
+    // MARK: - extension UICollectionViewDelegate, UICollectionViewDataSource
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == passwordCollectionView {
             return viewModel.lockScreenPassword.count
@@ -181,6 +211,8 @@ extension LockScreenViewController: UICollectionViewDelegate, UICollectionViewDa
 
 extension LockScreenViewController: UICollectionViewDelegateFlowLayout {
 
+    // MARK: - extension UICollectionViewDelegateFlowLayout
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         if collectionView == passwordCollectionView {
@@ -209,5 +241,14 @@ extension UINavigationController {
         CATransaction.begin()
         self.pushViewController(viewController, animated: animated)
         CATransaction.commit()
+    }
+}
+
+extension UIView {
+    func shake() {
+        self.transform = CGAffineTransform(translationX: 20, y: 0)
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+            self.transform = CGAffineTransform.identity
+        }, completion: nil)
     }
 }
