@@ -109,12 +109,14 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             vc = locationSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         default:
             break
+          
         }
 
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
         present(vc, animated: true, completion: nil)
     }
+
 }
 
 extension AddMemoPageViewController: UICollectionViewDelegateFlowLayout {
