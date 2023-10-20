@@ -1,10 +1,5 @@
 import UIKit
 
-protocol DateSettingDelegate: AnyObject {
-    func didCompleteDateSetting(date: Date) // 날짜 설정이 완료될 때 호출될 메서드를 정의
-    func didResetDateSetting()
-}
-
 class DateSettingPageViewController: UIViewController {
     // 날짜 설정이 완료될 때 알림을 받기 위한 delegate
     weak var delegate: DateSettingDelegate?
