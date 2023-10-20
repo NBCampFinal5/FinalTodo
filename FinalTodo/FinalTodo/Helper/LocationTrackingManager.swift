@@ -43,7 +43,7 @@ class LocationTrackingManager: NSObject, CLLocationManagerDelegate {
     
     private func scheduleLocationUpdates() {
         locationUpdateTimer?.invalidate()
-        locationUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
+        locationUpdateTimer = Timer.scheduledTimer(withTimeInterval: 600, repeats: true) { [weak self] _ in
             self?.locationManager.startUpdatingLocation()
         }
     }
