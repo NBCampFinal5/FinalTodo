@@ -33,8 +33,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[SceneDelegate]:",#function)
-        guard let rootViewController = window?.rootViewController else { return }
-        window?.rootViewController = LockScreenViewController(rootViewController: rootViewController)
+        let manager = UserDefaultsManager()
+        if manager.getLockIsOn() {
+            guard let rootViewController = window?.rootViewController else { return }
+            window?.rootViewController = LockScreenViewController(rootViewController: rootViewController)
+        }
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
