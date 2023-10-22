@@ -67,7 +67,7 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
 extension NotifyPageViewController: SettingCellDelegate {
     func didChangeSwitchState(_ cell: SettingCell, isOn: Bool) {
         if isOn {
-            Notifications.shared.scheduleNotification(title: "메모 확인", body: "메모를 확인하세요!")
+            Notifications.shared.scheduleNotification(title: "메모 확인", body: "메모를 확인하세요!", timeInterval: 1.0)
         } else {
             UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         }

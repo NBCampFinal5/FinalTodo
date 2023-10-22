@@ -1,4 +1,5 @@
 import UIKit
+import UserNotifications
 
 class DateSettingPageViewController: UIViewController {
     // 날짜 설정이 완료될 때 알림을 받기 위한 delegate
@@ -143,16 +144,24 @@ extension DateSettingPageViewController {
         let selectedMonth = months[datePickerView.selectedRow(inComponent: 1)]
         let selectedDay = days[datePickerView.selectedRow(inComponent: 2)]
 
-        let calendar = Calendar.current
-        // 선택된 년, 월, 일을 기반으로 실제 날짜 객체를 생성합니다.
-        if let selectedDate = calendar.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: selectedDay)) {
-            viewModel.tempDate = selectedDate
+        if viewModel.selectedTime == nil { // 시간 설정이 완료되지 않았다면
+            // 선택한 날짜의 오전 9시로 시간 설정
+            let calendar = Calendar.current
+            // 선택된 년, 월, 일을 기반으로 실제 날짜 객체를 생성 - 선택한 날짜 오전 9시에 알림이 울리도록 설정
+            if var selectedDate = viewModel.tempDate {
+                selectedDate = calendar.date(bySettingHour: 9, minute: 0, second: 0, of: selectedDate)!
+                viewModel.tempDate = selectedDate
+            }
         }
-
         // 임시로 저장된 날짜(tempDate)를 최종 선택된 날짜 (selectedDate)에 저장하고 tempDate를 초기화
         viewModel.selectedDate = viewModel.tempDate
         viewModel.tempDate = nil
 
+        let identifier = UUID().uuidString
+        viewModel.notificationIdentifier = identifier
+        if let notificationDate = viewModel.selectedDate {
+            Notifications.shared.scheduleNotificationAtDate(title: "날짜 알림", body: "알림을 확인해주세요", date: notificationDate, identifier: identifier)
+        }
         // 델리게이트 메서드를 호출하여 날짜 설정이 완료되었음을 알림
         delegate?.didCompleteDateSetting(date: viewModel.selectedDate!)
         dismiss(animated: true, completion: nil)
@@ -165,6 +174,10 @@ extension DateSettingPageViewController {
         viewModel.tempDate = currentDate
         viewModel.selectedDate = currentDate
 
+        if let identifier = viewModel.notificationIdentifier {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+            viewModel.notificationIdentifier = nil
+        }
         // 델리게이트 메서드를 호출하여 날짜 설정이 초기화되었음을 알립
         delegate?.didResetDateSetting()
         dismiss(animated: true, completion: nil)

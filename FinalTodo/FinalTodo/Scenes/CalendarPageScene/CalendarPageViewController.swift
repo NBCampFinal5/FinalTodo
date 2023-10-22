@@ -2,9 +2,7 @@ import FSCalendar
 import SnapKit
 import UIKit
 
-
 // MARK: - view 선언방식 이유가 필요할 듯
-
 
 class CalendarPageViewController: UIViewController {
     // 선택된 D-day 날짜
@@ -13,7 +11,6 @@ class CalendarPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         calendarView = CalendarPageView(frame: view.bounds)
         view.addSubview(calendarView)
 
@@ -28,9 +25,11 @@ class CalendarPageViewController: UIViewController {
     // 네비게이션 바 설정
     private func setupNavigationBar() {
         let ddayButton = UIBarButtonItem(title: "D-day", style: .plain, target: self, action: #selector(didTapDdayButton))
+        title = "캘린더"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorManager.themeArray[0].pointColor01 ?? .black]
         navigationItem.rightBarButtonItem = ddayButton
-        ddayButton.tintColor = .black
-        navigationController?.navigationBar.barTintColor = view.backgroundColor
+        navigationController?.navigationBar.tintColor = ColorManager.themeArray[0].pointColor01
+        navigationController?.navigationBar.barTintColor = ColorManager.themeArray[0].backgroundColor
     }
 
     // D-day 버튼 터치 시 호출

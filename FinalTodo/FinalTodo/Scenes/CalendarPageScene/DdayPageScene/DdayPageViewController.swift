@@ -20,13 +20,13 @@ class DdayPageViewController: UIViewController {
     }
 
     func setupNavigationBar() {
-        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(didTappedDoneButton))
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(didTapDoneButton))
         doneButton.tintColor = .black
         navigationItem.rightBarButtonItem = doneButton
     }
 
     // "완료" 버튼을 누를 시 호출
-    @objc func didTappedDoneButton() {
+    @objc func didTapDoneButton() {
         let selectedYear = dateModel.years[ddayPickerView.selectedRow(inComponent: 0)]
         let selectedMonth = dateModel.months[ddayPickerView.selectedRow(inComponent: 1)]
         let selectedDay = dateModel.days[ddayPickerView.selectedRow(inComponent: 2)]
