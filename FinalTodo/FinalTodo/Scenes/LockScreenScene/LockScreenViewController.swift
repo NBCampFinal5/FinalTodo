@@ -48,8 +48,8 @@ class LockScreenViewController: UIViewController {
     
     private let viewModel: LockScreenViewModel
     
-    init(rootViewController: UIViewController, targetViewController: UIViewController) {
-        self.viewModel = LockScreenViewModel(rootViewController: rootViewController, targetViewController: targetViewController)
+    init(rootViewController: UIViewController) {
+        self.viewModel = LockScreenViewModel(rootViewController: rootViewController)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -69,10 +69,6 @@ extension LockScreenViewController {
         setUp()
         bind()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.tabBarController?.tabBar.isHidden = false
-    }
 }
 
 private extension LockScreenViewController {
@@ -87,10 +83,8 @@ private extension LockScreenViewController {
             if inputData.count == viewModel.lockScreenPassword.count {
                 if inputData == viewModel.lockScreenPassword {
                     print("[LockScreenViewController]: 비밀번호 일치")
-                    self.navigationController?.popViewController(animated: false, completion: {
-                        let vc = self.viewModel.targetViewController
-                        self.viewModel.rootViewController.navigationController?.pushViewController(vc, animated: true)
-                    })
+                    let rootView = viewModel.rootViewController
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
                 } else {
                     print("[LockScreenViewController]: 비밀번호 불일치")
                     passwordCollectionView.shake()
@@ -104,7 +98,6 @@ private extension LockScreenViewController {
     func setUp() {
         view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         view.addSubview(numsCollectionView)
-        self.tabBarController?.tabBar.isHidden = true
         setUpPasswordLabel()
         setUpPasswordCollectionView()
         setUpPasswordInfoLabel()

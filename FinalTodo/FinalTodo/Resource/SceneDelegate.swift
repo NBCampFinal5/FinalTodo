@@ -19,13 +19,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
 
-    func sceneDidDisconnect(_ scene: UIScene) {}
+    func sceneDidDisconnect(_ scene: UIScene) {
+        print("[SceneDelegate]:",#function)
+    }
 
-    func sceneDidBecomeActive(_ scene: UIScene) {}
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        print("[SceneDelegate]:",#function)
+    }
 
-    func sceneWillResignActive(_ scene: UIScene) {}
+    func sceneWillResignActive(_ scene: UIScene) {
+        print("[SceneDelegate]:",#function)
+    }
 
-    func sceneWillEnterForeground(_ scene: UIScene) {}
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        print("[SceneDelegate]:",#function)
+        guard let rootViewController = window?.rootViewController else { return }
+        window?.rootViewController = LockScreenViewController(rootViewController: rootViewController)
+    }
 
-    func sceneDidEnterBackground(_ scene: UIScene) {}
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        print("[SceneDelegate]:",#function)
+    }
+    
+
 }
+
+extension SceneDelegate {
+    // MARK: - RootViewChangeMethod
+
+    func changeRootVC(viewController: UIViewController, animated: Bool) {
+        guard let window = self.window else { return }
+        window.rootViewController = viewController
+        UIView.transition(with: window, duration: 0.5, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+    }
+}
+
