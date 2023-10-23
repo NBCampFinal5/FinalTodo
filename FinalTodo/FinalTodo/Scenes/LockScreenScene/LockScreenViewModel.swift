@@ -10,13 +10,9 @@ import UIKit
 
 class LockScreenViewModel {
     
-//    init(rootViewController: UIViewController) {
-//        self.rootViewController = rootViewController
-//    }
-//    
-    init(rootViewController: UIViewController, targetViewController: UIViewController) {
+
+    init(rootViewController: UIViewController) {
         self.rootViewController = rootViewController
-        self.targetViewController = targetViewController
     }
     let lockScreenPassword = "123456"
     
@@ -32,8 +28,6 @@ class LockScreenViewModel {
     )
     
     let rootViewController: UIViewController
-    
-    let targetViewController: UIViewController
     
     let numPadComposition = [
         "1", "2", "3",
