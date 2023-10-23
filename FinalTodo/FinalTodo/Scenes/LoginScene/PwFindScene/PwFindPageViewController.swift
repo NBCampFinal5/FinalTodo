@@ -19,18 +19,17 @@ class PwFindPageViewController: UIViewController {
     private lazy var findPwLabel: UILabel = {
         let label = UILabel()
         label.text = "비밀번호 찾기"
-        label.font = UIFont.boldSystemFont(ofSize: 30)
+        let customFont = UIFont.boldSystemFont(ofSize: 30)
+        label.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: customFont)
+        label.textColor = UIColor(named: "theme01PointColor01")
         return label
     }()
-    
-    
 
-    
 
-    let idLabel = CommandLabelView(title: "아이디", placeholder: "아이디를 입력해주세요.") //아이디
-    let callNumber = CommandLabelView(title: "휴대전화 번호", placeholder: "010-0000-0000") //전화번호
+    let idLabel = CommandLabelView(title: "아이디", placeholder: "아이디", isSecureTextEntry: false) //아이디
+    let callNumber = CommandLabelView(title: "휴대전화 번호", placeholder: "전화번호", isSecureTextEntry: false) //전화번호
     let requestButton = ButtonTappedView(title: "인증번호 받기") //인증번호받기
-    let inputLabel = CommandLabelView(title: "인증번호 입력", placeholder: "인증번호를 입력해주세요.") //인증번호입력
+    let inputLabel = CommandLabelView(title: "인증번호 입력", placeholder: "인증번호", isSecureTextEntry: false) //인증번호입력
     let findPwButton = ButtonTappedView(title: "비밀번호 찾기") //패스워드 찾기
 
 
@@ -64,8 +63,6 @@ private extension PwFindPageViewController {
         //아이디박스
         idLabel.snp.makeConstraints { make in
             make.top.equalTo(findPwLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.centerX.equalTo(view.snp.centerX)
-            make.height.equalTo(Constant.screenHeight * 0.05)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
         
@@ -78,16 +75,15 @@ private extension PwFindPageViewController {
             make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
             make.centerX.equalTo(view.snp.centerX)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.05)
+            
         }
         
         view.addSubview(requestButton)
         //인증번호버튼
         requestButton.snp.makeConstraints { make in
             make.top.equalTo(callNumber.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.centerX.equalTo(idLabel.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.05)
+            
         }
     }
     
@@ -96,17 +92,13 @@ private extension PwFindPageViewController {
         //인증번호적기 박스
         inputLabel.snp.makeConstraints { make in
             make.top.equalTo(requestButton.snp.bottom).offset(Constant.screenHeight * 0.09)
-            make.centerX.equalTo(requestButton.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.05)
         }
         view.addSubview(findPwButton)
         //비밀번호찾기버튼
         findPwButton.snp.makeConstraints { make in
             make.top.equalTo(inputLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.centerX.equalTo(requestButton.snp.left)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.05)
         }
         
     }
