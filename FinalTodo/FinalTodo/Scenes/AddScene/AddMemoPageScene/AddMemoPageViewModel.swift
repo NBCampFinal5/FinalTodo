@@ -2,8 +2,8 @@ import UIKit
 
 class AddMemoPageViewModel {
     let optionImageAry: [String] = [
-        "날짜 알림",
-        "시간 알림",
+        "날짜 및 시간알림",
+//        "시간 알림",
         "위치 설정"
     ]
 
