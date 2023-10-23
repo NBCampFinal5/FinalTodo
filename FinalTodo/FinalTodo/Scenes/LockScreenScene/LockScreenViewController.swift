@@ -50,7 +50,6 @@ extension LockScreenViewController {
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
                 } else {
                     print("[LockScreenViewController]: 비밀번호 불일치")
-                    lockScreenView.passwordCollectionView.shake()
                     showPasswordMissMatch(type: .mismatch)
                 }
             }

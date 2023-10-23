@@ -37,7 +37,7 @@ class LockScreenView: UIView {
     lazy var numsCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let spacing = Constant.defaultPadding
-        flowLayout.minimumLineSpacing = spacing / 2
+        flowLayout.minimumLineSpacing = spacing
         
         let width = (Constant.screenWidth - (Constant.defaultPadding * 6) - (spacing * 4)) / 3
         flowLayout.itemSize = .init(width: width, height: width)

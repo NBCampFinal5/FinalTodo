@@ -39,7 +39,6 @@ extension LockPasswordSettingViewController {
                         self.navigationController?.popViewController(animated: true)
                     } else {
                         showPasswordMissMatch(type: .different)
-                        lockScreenView.passwordCollectionView.shake()
                     }
                 }
             }

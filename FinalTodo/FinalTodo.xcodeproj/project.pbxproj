@@ -18,6 +18,7 @@
 		083975FE2AE650930042517E /* LockPasswordChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */; };
 		083976022AE659650042517E /* LockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083976012AE659650042517E /* LockController.swift */; };
 		083976042AE661C40042517E /* LockPasswordSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083976032AE661C40042517E /* LockPasswordSettingViewModel.swift */; };
+		083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083976052AE6BE6E0042517E /* LockPasswordChangeViewModel.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
 		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
@@ -129,6 +130,7 @@
 		083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordChangeViewController.swift; sourceTree = "<group>"; };
 		083976012AE659650042517E /* LockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockController.swift; sourceTree = "<group>"; };
 		083976032AE661C40042517E /* LockPasswordSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordSettingViewModel.swift; sourceTree = "<group>"; };
+		083976052AE6BE6E0042517E /* LockPasswordChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordChangeViewModel.swift; sourceTree = "<group>"; };
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		083C985E2AD8D7AC006895D2 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		083C98612AD8D88E006895D2 /* MemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */,
+				083976052AE6BE6E0042517E /* LockPasswordChangeViewModel.swift */,
 			);
 			path = LockPasswordChangeScene;
 			sourceTree = "<group>";
@@ -761,6 +764,7 @@
 				301B39782AE14A8A00B19313 /* FoldersModel+CoreDataProperties.swift in Sources */,
 				0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
+				083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */,
 				30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
