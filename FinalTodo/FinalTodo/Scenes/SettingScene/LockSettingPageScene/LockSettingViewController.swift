@@ -46,13 +46,26 @@ private extension LockSettingViewController {
         viewModel.isLock.bind { [weak self] toggle in
             guard let self = self else { return }
             viewModel.userDefaultManager.setLockIsOn(toggle: toggle)
+            tableViewReloadData()
         }
     }
+    // MARK: - Method
+    
+    func tableViewReloadData() {
+        UIView.transition(with: settingTableView, duration: 0.35, options: .transitionCrossDissolve, animations: {
+            self.settingTableView.reloadData()
+        })
+    }
+
 }
 
 extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.cellDatas.count
+        if viewModel.isLock.value {
+            return viewModel.cellDatas.count
+        } else {
+            return viewModel.cellDatas.count - 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,6 +81,9 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension LockSettingViewController: SettingCellDelegate {
     func didChangeSwitchState(_ cell: SettingCell, isOn: Bool) {
+        if viewModel.userDefaultManager.getPassword().isEmpty {
+            print("empty!!")
+        }
         viewModel.isLock.value = isOn
     }
 }

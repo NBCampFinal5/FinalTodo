@@ -10,11 +10,13 @@ import UIKit
 
 class LockScreenViewModel {
     
-
+    let userDefaultsManager = UserDefaultsManager()
+    
     init(rootViewController: UIViewController) {
         self.rootViewController = rootViewController
     }
-    let lockScreenPassword = "123456"
+//    lazy var lockScreenPassword = userDefaultsManager.getPassword()
+    lazy var lockScreenPassword = "1234"
     
     let failCount: Observable<Int> = Observable(0)
     
