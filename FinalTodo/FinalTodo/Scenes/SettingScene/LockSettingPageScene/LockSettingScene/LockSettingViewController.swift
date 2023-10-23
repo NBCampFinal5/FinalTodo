@@ -77,13 +77,17 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
         cell.delegate = self
         return cell
     }
+    
+    
 }
 
 extension LockSettingViewController: SettingCellDelegate {
     func didChangeSwitchState(_ cell: SettingCell, isOn: Bool) {
-        if viewModel.userDefaultManager.getPassword().isEmpty {
-            print("empty!!")
+        if viewModel.userDefaultManager.getPassword().isEmpty && isOn {
+            self.navigationController?.pushViewController(LockPasswordSettingViewController(), animated: true)
+            viewModel.isLock.value = isOn
+        } else {
+            viewModel.isLock.value = isOn
         }
-        viewModel.isLock.value = isOn
     }
 }
