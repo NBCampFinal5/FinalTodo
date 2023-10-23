@@ -82,6 +82,7 @@ class SettingCell: UITableViewCell {
         iconImageView.image = UIImage(systemName: option.icon)
         titleLabel.text = option.title
         cellSwitch.isHidden = !option.showSwitch
+        cellSwitch.isOn = option.isOn
     }
 
     // 성준 - 스위치 on / off 시 설정

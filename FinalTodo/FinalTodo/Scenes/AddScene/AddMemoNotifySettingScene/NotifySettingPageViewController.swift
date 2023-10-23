@@ -11,7 +11,7 @@ class NotifySettingPageViewController: UIViewController {
     var hours = Array(1...12)
     let minutes = Array(0...59)
 
-    private let topView = ModalTopView(title: "알림 설정")
+    private let topView = ModalTopView(title: "시간 알림")
     private let viewModel: AddMemoPageViewModel
     private var cellHeight: CGFloat = 0
 
@@ -56,6 +56,13 @@ class NotifySettingPageViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return button
     }()
+
+    lazy var infoButton: UIButton = {
+        let button = UIButton(type: .infoLight)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
+        return button
+    }()
 }
 
 extension NotifySettingPageViewController {
@@ -78,15 +85,21 @@ private extension NotifySettingPageViewController {
         setUpTopView()
         setUpPickerView()
         setUpDoneButton()
-        setUpCancelButton()
+        setUpResetButton()
     }
 
     func setUpTopView() {
         view.addSubview(topView)
+        view.addSubview(infoButton)
+
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
         topView.backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+
+        infoButton.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
+        }
     }
 
     func setUpPickerView() {
@@ -107,7 +120,7 @@ private extension NotifySettingPageViewController {
         }
     }
 
-    func setUpCancelButton() {
+    func setUpResetButton() {
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -152,6 +165,12 @@ private extension NotifySettingPageViewController {
         timePickerView.selectRow(currentHourIn12HourFormat - 1, inComponent: 1, animated: false)
         timePickerView.selectRow(currentMinute, inComponent: 2, animated: false)
     }
+
+    @objc func didTapDateTooltip() {
+        let alertController = UIAlertController(title: "알림 설정", message: "시간알림만 설정시 매일 해당 시간에 알림이 옵니다.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alertController, animated: true)
+    }
 }
 
 extension NotifySettingPageViewController {
@@ -177,7 +196,7 @@ extension NotifySettingPageViewController {
         let minute = timePickerView.selectedRow(inComponent: 2)
 
         if viewModel.selectedDate == nil { // 날짜 설정이 완료되지 않았다면
-            let currentDate = Date()
+            // let currentDate = Date()
             // 선택된 시간과 분으로 DateComponents 객체 생성
             var selectedTimeComponents = DateComponents(hour: hour, minute: minute)
             selectedTimeComponents.day = Calendar.current.component(.day, from: Date())
@@ -195,7 +214,7 @@ extension NotifySettingPageViewController {
         let identifier = UUID().uuidString
         viewModel.notificationIdentifier = identifier
         if let notificationTime = viewModel.selectedTime {
-            Notifications.shared.scheduleNotificationAtDate(title: "시간 알림", body: "알림을 확인해주세요", date: notificationTime, identifier: identifier)
+            Notifications.shared.scheduleNotificationAtDate(title: "시간 알림", body: "알림을 확인해주세요", date: notificationTime, identifier: identifier, soundEnabled: true, vibrationEnabled: true)
         }
 
         // 델리게이트 메서드 호출하여 알림 설정 완료 알림
@@ -250,6 +269,6 @@ extension NotifySettingPageViewController: UIPickerViewDelegate {
 
 extension NotifySettingPageViewController: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.alert, .sound]) // 알림을 표시하고 소리를 재생합니다.
+        completionHandler([.banner, .sound]) // 알림을 표시하고 소리를 재생합니다.
     }
 }

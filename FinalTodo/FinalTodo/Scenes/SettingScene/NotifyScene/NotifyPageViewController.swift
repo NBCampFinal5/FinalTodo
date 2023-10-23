@@ -8,9 +8,9 @@ class NotifyPageViewController: UIViewController {
     }()
 
     var notifyOptions = [
-        SettingOption(icon: "bell", title: "푸시 알림", showSwitch: true),
-        SettingOption(icon: "clock", title: "시간", showSwitch: false),
-        // SettingOption(icon: "message", title: "메세지", showSwitch: false)
+        SettingOption(icon: "bell", title: "앱 실행 중 알림", showSwitch: true, isOn: NotifySettingManager.shared.isNotificationEnabled),
+        SettingOption(icon: "bell", title: "앱 실행 중 사운드", showSwitch: true, isOn: NotifySettingManager.shared.isSoundEnabled),
+        SettingOption(icon: "bell", title: "앱 실행 중 진동", showSwitch: true, isOn: NotifySettingManager.shared.isVibrationEnabled),
     ]
 
     override func viewDidLoad() {
@@ -66,10 +66,17 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension NotifyPageViewController: SettingCellDelegate {
     func didChangeSwitchState(_ cell: SettingCell, isOn: Bool) {
-        if isOn {
-            Notifications.shared.scheduleNotification(title: "메모 확인", body: "메모를 확인하세요!", timeInterval: 1.0)
-        } else {
-            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+
+        switch indexPath.row {
+        case 0: // 앱 실행 중 알림
+            NotifySettingManager.shared.isNotificationEnabled = isOn
+        case 1: // 앱 실행 중 사운드
+            NotifySettingManager.shared.isSoundEnabled = isOn
+        case 2: // 앱 실행 중 진동
+            NotifySettingManager.shared.isVibrationEnabled = isOn
+        default:
+            break
         }
     }
 }
