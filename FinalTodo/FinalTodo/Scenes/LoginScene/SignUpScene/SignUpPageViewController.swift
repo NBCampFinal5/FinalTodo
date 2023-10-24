@@ -117,13 +117,13 @@ extension SignUpPageViewController {
             let confirmPw = confirmPwBar.inputTextField.text, !confirmPw.isEmpty
         else {
             // 하나라도 비어 있는 경우 버튼을 비활성화합니다.
-            registerButton.isEnabled = false
+            registerButton.setButtonEnabled(false)
             registerButton.backgroundColor = UIColor(named: "disabledColor")
             return
         }
         
         // 모든 텍스트 필드에 내용이 있는 경우 버튼을 활성화합니다.
-        registerButton.isEnabled = true
+        registerButton.setButtonEnabled(true)
         registerButton.changeButtonColor(color: UIColor(named: "theme01PointColor01"))
     }
 }

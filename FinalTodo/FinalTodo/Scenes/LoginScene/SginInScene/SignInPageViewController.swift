@@ -38,6 +38,8 @@ extension SignInPageViewController {
         passwordBar.delegate = self
         loginButton.delegate = self
         self.view.backgroundColor = .white
+        haveAccountButton.changeButtonColor(color: .white)
+        haveAccountButton.changeTitleColor(color: .black)
         setUp()
     }
 }
@@ -106,11 +108,7 @@ extension SignInPageViewController {
         self.view.endEditing(true)
     }
     
-    //로그인버튼 누르면 다음화면으로 넘어가는 것 구현
-    @objc func didTapButton(){
-        
-    }
-    
+  
     //로그인 버튼 색갈 바뀌는 함수
     @objc func textFieldEditingChanged(_ textField : UITextField){
         if textField.text?.count == 1 {
@@ -124,12 +122,19 @@ extension SignInPageViewController {
             let password = passwordBar.inputTextField.text, !password.isEmpty
         else {
             loginButton.backgroundColor = UIColor(named: "disabledColor")
-            loginButton.isEnabled = false
+            loginButton.setButtonEnabled(false)
             return
         }
         loginButton.changeButtonColor(color: UIColor(named: "theme01PointColor01"))
-        loginButton.isEnabled = true
+        loginButton.setButtonEnabled(true)
         
     }
+    //로그인버튼 누르면 다음화면으로 넘어가는 것 구현
+    @objc func didTapButton(){
+        let mainPageVC = TabBarController()
+        self.navigationController?.pushViewController(mainPageVC, animated: true)
+
+    }
+    
 }
 
