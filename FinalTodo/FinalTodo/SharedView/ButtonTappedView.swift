@@ -10,7 +10,7 @@ import UIKit
 
 class ButtonTappedView: UIView {
     // 버튼
-    private lazy var anyButton: UIButton = {
+    lazy var anyButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "theme01PointColor01")
         button.layer.cornerRadius = 5
