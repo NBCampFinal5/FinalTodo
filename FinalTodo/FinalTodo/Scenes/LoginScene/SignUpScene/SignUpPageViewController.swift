@@ -13,6 +13,8 @@ import SnapKit
 // TODO: - AutoLayout은 상수 x 화면 비율로 계산
 
 class SignUpPageViewController: UIViewController, ButtonTappedViewDelegate, CommandLabelDelegate {
+
+    
     
     
     //맨위에 굵은글자
@@ -103,7 +105,7 @@ extension SignUpPageViewController {
     }
     
     //가입버튼 누르면 다음화면으로 넘어가는 것 구현
-    func didTapButton() {
+    func didTapButton(button: UIButton) {
         let nextViewController = SignInPageViewController()
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
