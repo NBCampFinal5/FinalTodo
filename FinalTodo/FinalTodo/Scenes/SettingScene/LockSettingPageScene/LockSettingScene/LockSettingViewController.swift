@@ -60,6 +60,7 @@ private extension LockSettingViewController {
 }
 
 extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewModel.isLock.value {
             return viewModel.cellDatas.count
@@ -78,6 +79,12 @@ extension LockSettingViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 1 {
+            let vc = LockPasswordChangeViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
 }
 

@@ -24,6 +24,7 @@ extension LockPasswordSettingViewController {
 }
 
 extension LockPasswordSettingViewController {
+    // MARK: - Bind
     override func bind() {
         userInPutPassword.bind { [weak self] inputData in
             guard let self = self else { return }
@@ -39,7 +40,6 @@ extension LockPasswordSettingViewController {
                         self.navigationController?.popViewController(animated: true)
                     } else {
                         showPasswordMissMatch(type: .different)
-                        lockScreenView.passwordCollectionView.shake()
                     }
                 }
             }
