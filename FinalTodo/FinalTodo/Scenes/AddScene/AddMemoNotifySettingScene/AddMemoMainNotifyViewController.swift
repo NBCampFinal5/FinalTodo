@@ -24,14 +24,17 @@ class AddMemoMainNotifyViewController: UIViewController {
         return button
     }()
 
-    lazy var reserveButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("예약완료", for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
-        return button
+    lazy var reserveButton: ButtonTappedView = {
+        let buttonView = ButtonTappedView(title: "예약완료")
+        buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+        return buttonView
+//        let button = UIButton(type: .system)
+//        button.setTitle("예약완료", for: .normal)
+//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+//        return button
     }()
 
     override func viewDidLoad() {

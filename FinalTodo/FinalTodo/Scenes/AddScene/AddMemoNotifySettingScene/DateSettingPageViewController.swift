@@ -35,25 +35,31 @@ class DateSettingPageViewController: UIViewController {
     }()
 
     // 설정 완료 버튼
-    lazy var doneButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("설정완료", for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-        return button
+    lazy var doneButton: ButtonTappedView = {
+        let buttonView = ButtonTappedView(title: "설정완료")
+        buttonView.anyButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        return buttonView
+//        let button = UIButton(type: .custom)
+//        button.setTitle("설정완료", for: .normal)
+//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+//        return button
     }()
 
     // 설정 초기화 버튼
-    lazy var resetButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("설정초기화", for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        return button
+    lazy var resetButton: ButtonTappedView = {
+        let buttonView = ButtonTappedView(title: "설정초기화")
+        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+        return buttonView
+//        let button = UIButton(type: .custom)
+//        button.setTitle("설정초기화", for: .normal)
+//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+//        return button
     }()
 
 //    lazy var infoButton: UIButton = {
@@ -90,7 +96,7 @@ extension DateSettingPageViewController {
 
     private func setUpTopView() {
         view.addSubview(topView)
-        //view.addSubview(infoButton)
+        // view.addSubview(infoButton)
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()

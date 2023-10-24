@@ -54,7 +54,7 @@ class SettingCell: UITableViewCell {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(iconImageView)
         stackView.addArrangedSubview(titleLabel)
-        // stackView.addArrangedSubview(cellSwitch)
+        stackView.addArrangedSubview(cellSwitch)
         contentView.addSubview(detailLabel)
         setupConstraints()
     }
@@ -68,11 +68,11 @@ class SettingCell: UITableViewCell {
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(Constant.screenWidth / 15)
         }
-//
-//        cellSwitch.snp.makeConstraints { make in
-//            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-//            make.centerY.equalTo(contentView)
-//        }
+
+        cellSwitch.snp.makeConstraints { make in
+            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
+            make.centerY.equalTo(contentView)
+        }
 
         detailLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
