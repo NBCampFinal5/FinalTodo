@@ -17,7 +17,7 @@ class ButtonTappedView: UIView {
         button.backgroundColor = UIColor(named: "theme01PointColor03")
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
-        //button.isEnabled = false //버튼을 비활성화 해주는 코드(나중에 색깔 변하게 해서 활성화 시켜줄거임
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
@@ -50,27 +50,23 @@ private extension ButtonTappedView {
 
 
 extension ButtonTappedView {
-
-    @objc func buttonTapped() {
-            // 버튼이 탭되었을 때 실행할 코드
-            if anyButton.isEnabled {
-                // 버튼이 활성화되어 있을 때 실행할 동작
-            } else {
-                // 버튼이 비활성화되어 있을 때 실행할 동작
-            }
-        }
     
-    var isEnabled: Bool {
-        get {
-            return anyButton.isEnabled
-        }
-        set {
-            anyButton.isEnabled = newValue
-        }}
+    @objc func buttonTapped() {
+           delegate?.didTapButton()
+       }
+       
+       func setButtonEnabled(_ enabled: Bool) {
+           anyButton.isEnabled = enabled
+       }
     
     func changeButtonColor (color: UIColor?) {
         anyButton.backgroundColor = color
     }
+    
+    func changeTitleColor (color: UIColor?) {
+        anyButton.setTitleColor(color, for: .normal)
+    }
+    
 }
 
 
