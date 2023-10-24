@@ -1,4 +1,5 @@
 import UIKit
+import UserNotifications
 
 class DateSettingPageViewController: UIViewController {
     // 날짜 설정이 완료될 때 알림을 받기 위한 delegate
@@ -6,7 +7,7 @@ class DateSettingPageViewController: UIViewController {
     // 이전에 선택된 날짜 (있는 경우)를 저장하기 위한 변수
     var initialDate: Date?
 
-    private let topView = ModalTopView(title: "날짜 설정")
+    private let topView = ModalTopView(title: "날짜 알림")
     private let viewModel: AddMemoPageViewModel
 
     init(viewModel: AddMemoPageViewModel, initialDate: Date? = nil) {
@@ -53,6 +54,13 @@ class DateSettingPageViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return button
     }()
+
+    lazy var infoButton: UIButton = {
+        let button = UIButton(type: .infoLight)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
+        return button
+    }()
 }
 
 extension DateSettingPageViewController {
@@ -81,10 +89,16 @@ extension DateSettingPageViewController {
 
     private func setUpTopView() {
         view.addSubview(topView)
+        view.addSubview(infoButton)
+
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
         topView.backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+
+        infoButton.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
+        }
     }
 
     private func setUpDatePickerView() {
@@ -143,9 +157,23 @@ extension DateSettingPageViewController {
         let selectedMonth = months[datePickerView.selectedRow(inComponent: 1)]
         let selectedDay = days[datePickerView.selectedRow(inComponent: 2)]
 
+        // 선택한 날짜를 Calendar를 사용하여 Date 객체로 변환
         let calendar = Calendar.current
-        // 선택된 년, 월, 일을 기반으로 실제 날짜 객체를 생성합니다.
-        if let selectedDate = calendar.date(from: DateComponents(year: selectedYear, month: selectedMonth, day: selectedDay)) {
+        var components = DateComponents()
+        components.year = selectedYear
+        components.month = selectedMonth
+        components.day = selectedDay
+        if viewModel.selectedTime == nil { // 시간 설정이 완료되지 않았다면
+            components.hour = 9 // 오전 9시로 설정
+            components.minute = 0
+        } else {
+            // 이미 설정된 시간이 있는 경우 해당 시간을 사용
+            components.hour = calendar.component(.hour, from: viewModel.selectedTime!)
+            components.minute = calendar.component(.minute, from: viewModel.selectedTime!)
+        }
+
+        // 선택된 날짜 및 시간을 viewModel.tempDate에 저장
+        if let selectedDate = calendar.date(from: components) {
             viewModel.tempDate = selectedDate
         }
 
@@ -153,8 +181,14 @@ extension DateSettingPageViewController {
         viewModel.selectedDate = viewModel.tempDate
         viewModel.tempDate = nil
 
-        // 델리게이트 메서드를 호출하여 날짜 설정이 완료되었음을 알림
-        delegate?.didCompleteDateSetting(date: viewModel.selectedDate!)
+        let identifier = UUID().uuidString
+        viewModel.notificationIdentifier = identifier
+        if let notificationDate = viewModel.selectedDate {
+            Notifications.shared.scheduleNotificationAtDate(title: "날짜 알림", body: "알림을 확인해주세요", date: notificationDate, identifier: identifier, soundEnabled: true, vibrationEnabled: true)
+
+            // 델리게이트 메서드를 호출하여 날짜 설정이 완료되었음을 알림
+            delegate?.didCompleteDateSetting(date: notificationDate)
+        }
         dismiss(animated: true, completion: nil)
     }
 
@@ -165,6 +199,10 @@ extension DateSettingPageViewController {
         viewModel.tempDate = currentDate
         viewModel.selectedDate = currentDate
 
+        if let identifier = viewModel.notificationIdentifier {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+            viewModel.notificationIdentifier = nil
+        }
         // 델리게이트 메서드를 호출하여 날짜 설정이 초기화되었음을 알립
         delegate?.didResetDateSetting()
         dismiss(animated: true, completion: nil)
@@ -184,6 +222,12 @@ extension DateSettingPageViewController {
         datePickerView.selectRow(years.firstIndex(of: year) ?? 0, inComponent: 0, animated: false)
         datePickerView.selectRow(months.firstIndex(of: month) ?? 0, inComponent: 1, animated: false)
         datePickerView.selectRow(days.firstIndex(of: day) ?? 0, inComponent: 2, animated: false)
+    }
+
+    @objc func didTapDateTooltip() {
+        let alertController = UIAlertController(title: "알림 설정", message: "날짜알림만 설정시 오전 9시에 알림이 옵니다.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alertController, animated: true)
     }
 }
 

@@ -8,13 +8,13 @@ class SettingOptionManager {
     func makeSettingOptions() {
         SettingOptions = [
             [
-                SettingOption(icon: "bell", title: "푸시 알림", showSwitch: false),
-                SettingOption(icon: "paintbrush", title: "테마 컬러", showSwitch: false),
-                SettingOption(icon: "lock", title: "잠금모드", showSwitch: false)
+                SettingOption(icon: "bell", title: "푸시 알림", showSwitch: false, isOn: false),
+                SettingOption(icon: "paintbrush", title: "테마 컬러", showSwitch: false, isOn: false),
+                SettingOption(icon: "lock", title: "잠금모드", showSwitch: false, isOn: false)
             ],
             [
-                SettingOption(icon: "person.circle", title: "프로필", showSwitch: false),
-                SettingOption(icon: "arrow.right.circle", title: "로그아웃", showSwitch: false)
+                SettingOption(icon: "person.circle", title: "프로필", showSwitch: false, isOn: false),
+                SettingOption(icon: "arrow.right.circle", title: "로그아웃", showSwitch: false, isOn: false)
             ]
         ]
     }

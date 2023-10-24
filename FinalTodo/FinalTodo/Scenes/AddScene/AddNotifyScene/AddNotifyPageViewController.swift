@@ -21,12 +21,12 @@ class AddNotifyPageViewController: UIViewController {
     }
 
     func setupNavigationBar() {
-        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(didTappedDoneButton))
+        let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(didTapDoneButton))
         doneButton.tintColor = .black
         navigationItem.rightBarButtonItem = doneButton
     }
 
-    @objc func didTappedDoneButton() {
+    @objc func didTapDoneButton() {
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
