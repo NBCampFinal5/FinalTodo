@@ -116,7 +116,7 @@ private extension ProfilePageViewController {
 }
 
 extension ProfilePageViewController: ButtonTappedViewDelegate {
-    func didTapButton() {
+    func didTapButton(button: UIButton) {
         print("🟢didTapButton🟢")
         viewModel.nickNameLabelUserInput = nickNameLabel.inputTextField.text ?? ""
         viewModel.passwordLabelUserInput = passwordLabel.inputTextField.text ?? ""

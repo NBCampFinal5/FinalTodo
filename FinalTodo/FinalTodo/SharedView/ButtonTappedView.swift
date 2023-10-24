@@ -18,7 +18,7 @@ class ButtonTappedView: UIView {
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -51,8 +51,8 @@ private extension ButtonTappedView {
 
 extension ButtonTappedView {
     
-    @objc func buttonTapped() {
-           delegate?.didTapButton()
+    @objc func buttonTapped(_ button: UIButton) {
+           delegate?.didTapButton(button: button)
        }
        
        func setButtonEnabled(_ enabled: Bool) {
