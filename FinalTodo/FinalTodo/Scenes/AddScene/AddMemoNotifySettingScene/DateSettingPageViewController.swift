@@ -126,6 +126,9 @@ extension DateSettingPageViewController {
             make.width.equalTo(UIScreen.main.bounds.width * 0.8)
             make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
+        doneButton.anyButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
@@ -133,6 +136,9 @@ extension DateSettingPageViewController {
             make.top.equalTo(doneButton.snp.bottom).offset(10)
             make.width.equalTo(UIScreen.main.bounds.width * 0.8)
             make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+        }
+        resetButton.anyButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
 
