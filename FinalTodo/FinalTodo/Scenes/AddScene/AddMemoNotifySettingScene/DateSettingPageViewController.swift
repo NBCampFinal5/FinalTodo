@@ -1,3 +1,4 @@
+import SnapKit
 import UIKit
 import UserNotifications
 
@@ -7,8 +8,8 @@ class DateSettingPageViewController: UIViewController {
     // 이전에 선택된 날짜 (있는 경우)를 저장하기 위한 변수
     var initialDate: Date?
 
-    private let topView = ModalTopView(title: "날짜 알림")
-    private let viewModel: AddMemoPageViewModel
+    let topView = ModalTopView(title: "날짜 알림")
+    let viewModel: AddMemoPageViewModel
 
     init(viewModel: AddMemoPageViewModel, initialDate: Date? = nil) {
         self.viewModel = viewModel
