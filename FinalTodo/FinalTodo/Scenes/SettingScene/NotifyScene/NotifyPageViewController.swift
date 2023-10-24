@@ -2,9 +2,12 @@ import SnapKit
 import UIKit
 
 class NotifyPageViewController: UIViewController {
-    private let tableView: UITableView = {
-        let table = UITableView(frame: .zero, style: .insetGrouped)
-        return table
+     lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+         tableView.delegate = self
+         tableView.dataSource = self
+         
+        return tableView
     }()
 
     var notifyOptions = [

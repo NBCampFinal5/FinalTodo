@@ -25,7 +25,7 @@
 		083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98662AD8DC08006895D2 /* PresentationController.swift */; };
 		083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */; };
 		083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986A2AD8E9EE006895D2 /* ModalTopView.swift */; };
-		083C986E2AD90129006895D2 /* NotifySettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986D2AD90129006895D2 /* NotifySettingPageViewController.swift */; };
+		083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986D2AD90129006895D2 /* TimeSettingPageViewController.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
 		084412022AD56871005F2FA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084412012AD56871005F2FA9 /* Assets.xcassets */; };
@@ -118,6 +118,7 @@
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
 		C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CC48B2ADD2C060085C048 /* Notifications.swift */; };
+		C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,7 +140,7 @@
 		083C98662AD8DC08006895D2 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewModel.swift; sourceTree = "<group>"; };
 		083C986A2AD8E9EE006895D2 /* ModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTopView.swift; sourceTree = "<group>"; };
-		083C986D2AD90129006895D2 /* NotifySettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifySettingPageViewController.swift; sourceTree = "<group>"; };
+		083C986D2AD90129006895D2 /* TimeSettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingPageViewController.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		084411FA2AD56870005F2FA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +201,7 @@
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoMainNotifyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,8 +316,9 @@
 		083C986C2AD90103006895D2 /* AddMemoNotifySettingScene */ = {
 			isa = PBXGroup;
 			children = (
+				C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */,
 				C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */,
-				083C986D2AD90129006895D2 /* NotifySettingPageViewController.swift */,
+				083C986D2AD90129006895D2 /* TimeSettingPageViewController.swift */,
 				69EBADC12AE0F29C0009CB21 /* LocationSettingViewController.swift */,
 			);
 			path = AddMemoNotifySettingScene;
@@ -717,6 +720,7 @@
 				037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
+				C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
 				C735C0442AD8E15A00AA7663 /* NotifyPageViewController.swift in Sources */,
@@ -746,7 +750,7 @@
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
-				083C986E2AD90129006895D2 /* NotifySettingPageViewController.swift in Sources */,
+				083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */,
 				6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */,
 				08487F8F2AE54A2D009AE6CB /* LockSettingViewModel.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,

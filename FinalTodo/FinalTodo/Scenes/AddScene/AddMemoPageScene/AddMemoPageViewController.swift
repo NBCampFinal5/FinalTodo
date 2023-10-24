@@ -12,7 +12,7 @@ extension AddMemoPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         setUp()
     }
 }
@@ -91,22 +91,23 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
         var vc: UIViewController!
 
         switch indexPath.row {
-        case 0:
-            let dateSettingVC = DateSettingPageViewController(viewModel: viewModel)
-            // 현재 뷰 컨트롤러를 delegate로 설정하여, 날짜 설정 완료 시 콜백을 받을 수 있게 함
-            dateSettingVC.delegate = self
-            // viewModel에 저장된 선택된 날짜가 있다면, 해당 날짜를 뷰 컨트롤러의 초기 날짜로 설정
-            if let selectedDate = viewModel.selectedDate {
-                dateSettingVC.initialDate = selectedDate
-            }
-            vc = dateSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
-        case 1:
-            let notifySettingVC = NotifySettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime)
-            notifySettingVC.delegate = self
-            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
-        case 2:
-            let locationSettingVC = LocationSettingPageViewController()
-            vc = locationSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
+        case 0: // "날짜 및 시간알림" 셀 선택 시
+            vc = AddMemoMainNotifyViewController()
+//        case 0:
+//            let dateSettingVC = DateSettingPageViewController(viewModel: viewModel)
+//            // 현재 뷰 컨트롤러를 delegate로 설정하여, 날짜 설정 완료 시 콜백을 받을 수 있게 함
+//            dateSettingVC.delegate = self
+//            // viewModel에 저장된 선택된 날짜가 있다면, 해당 날짜를 뷰 컨트롤러의 초기 날짜로 설정
+//            if let selectedDate = viewModel.selectedDate {
+//                dateSettingVC.initialDate = selectedDate
+//            }
+//            vc = dateSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
+//        case 1:
+//            let notifySettingVC = NotifySettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime)
+//            notifySettingVC.delegate = self
+//            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
+        case 1: // 위치 설정을 선택한 경우
+            vc = LocationSettingPageViewController() // 임시 변수 vc에 해당하는 뷰 컨트롤러
         default:
             break
         }
@@ -135,7 +136,7 @@ extension AddMemoPageViewController: UICollectionViewDelegateFlowLayout {
 
 extension AddMemoPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.7)
     }
 }
 
