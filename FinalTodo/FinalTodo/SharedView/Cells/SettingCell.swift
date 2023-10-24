@@ -25,7 +25,7 @@ class SettingCell: UITableViewCell {
     }()
 
     // 성준 - 셀 스위치
-    private let cellSwitch: UISwitch = {
+    let cellSwitch: UISwitch = {
         let switchControl = UISwitch()
         switchControl.isHidden = true
         switchControl.addTarget(self, action: #selector(didTappedSwitch), for: .valueChanged)
