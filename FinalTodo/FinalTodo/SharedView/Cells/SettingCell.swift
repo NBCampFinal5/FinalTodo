@@ -28,14 +28,15 @@ class SettingCell: UITableViewCell {
     private let cellSwitch: UISwitch = {
         let switchControl = UISwitch()
         switchControl.isHidden = true
-        switchControl.addTarget(self, action: #selector(didTappedSwitch), for: .valueChanged)
+        switchControl.addTarget(self, action: #selector(didTapSwitch), for: .valueChanged)
         return switchControl
     }()
 
-    // 성준 - 시간 표시 라벨
-    private let timeLabel: UILabel = {
+    // 날짜, 시간 표시 라벨
+    private lazy var detailLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
+        label.textAlignment = .right
         return label
     }()
 
@@ -53,9 +54,12 @@ class SettingCell: UITableViewCell {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(iconImageView)
         stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(cellSwitch)
-//       contentView.addSubview(timeLabel) // 성준 - 시간 표시 라벨
+        // stackView.addArrangedSubview(cellSwitch)
+        contentView.addSubview(detailLabel)
+        setupConstraints()
+    }
 
+    private func setupConstraints() {
         stackView.snp.makeConstraints { make in
             make.left.right.equalTo(contentView).inset(Constant.defaultPadding)
             make.centerY.equalTo(contentView)
@@ -64,18 +68,16 @@ class SettingCell: UITableViewCell {
         iconImageView.snp.makeConstraints { make in
             make.width.height.equalTo(Constant.screenWidth / 15)
         }
-
-        // 성준 - 셀 스위치 레이아웃
-        cellSwitch.snp.makeConstraints { make in
-            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
-            make.centerY.equalTo(contentView)
-        }
-
-        // 성준 - 시간표시 라벨 레이아웃
-//        timeLabel.snp.makeConstraints { make in
-//            make.right.equalTo(chevronImageView.snp.left).offset(-Constant.defaultPadding)
+//
+//        cellSwitch.snp.makeConstraints { make in
+//            make.right.equalTo(contentView).offset(-Constant.defaultPadding)
 //            make.centerY.equalTo(contentView)
 //        }
+
+        detailLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(10)
+        }
     }
 
     func configure(with option: SettingOption) {
@@ -83,10 +85,11 @@ class SettingCell: UITableViewCell {
         titleLabel.text = option.title
         cellSwitch.isHidden = !option.showSwitch
         cellSwitch.isOn = option.isOn
+        detailLabel.text = option.detailText
     }
 
     // 성준 - 스위치 on / off 시 설정
-    @objc private func didTappedSwitch(sender: UISwitch) {
+    @objc private func didTapSwitch(sender: UISwitch) {
         delegate?.didChangeSwitchState(self, isOn: sender.isOn)
         print("스위치 \(sender.isOn ? "ON" : "OFF")")
     }

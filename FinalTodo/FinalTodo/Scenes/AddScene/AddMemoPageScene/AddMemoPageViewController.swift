@@ -12,7 +12,7 @@ extension AddMemoPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         setUp()
     }
 }

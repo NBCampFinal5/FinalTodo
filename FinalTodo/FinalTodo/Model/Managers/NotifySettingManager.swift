@@ -7,7 +7,7 @@ class NotifySettingManager {
     
     private let userDefaults = UserDefaults.standard
     
-    // 앱 실행 중 알림 설정. UserDefaults에서 해당 키의 값을 가져오거나 저장합니다.
+    // 앱 실행 중 알림 설정. UserDefaults에서 해당 키의 값을 가져오거나 저장
     var isNotificationEnabled: Bool {
         get {
             // "isNotificationEnabled" 키의 값을 반환. 값이 없으면 false를 반환

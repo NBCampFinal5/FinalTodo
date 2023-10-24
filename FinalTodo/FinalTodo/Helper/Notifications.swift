@@ -20,11 +20,11 @@ class Notifications {
     // 선택한 시간 후에 알림을 예약하는 함수
     func scheduleNotification(title: String, body: String, timeInterval: TimeInterval, soundEnabled: Bool, vibrationEnabled: Bool) {
         if !NotifySettingManager.shared.isNotificationEnabled { return } // 알림이 꺼져있다면 함수 종료
-        // 알림의 내용을 설정합니다.
+        // 알림의 내용을 설정
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
-        // 사운드가 활성화된 경우 기본 사운드를 설정합니다.
+        // 사운드가 활성화된 경우 기본 사운드를 설정
         if soundEnabled {
             content.sound = UNNotificationSound.default
         }

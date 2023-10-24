@@ -24,12 +24,43 @@ class AddMemoMainNotifyViewController: UIViewController {
         return button
     }()
 
+    lazy var reserveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("예약완료", for: .normal)
+        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         setUpTopView()
         setUpTableView()
+        setUpReserveButton()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // 날짜와 시간을 갱신
+        if let date = viewModel.selectedDate {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            settingOptionData[0][0].detailText = formatter.string(from: date)
+        }
+
+        if let time = viewModel.selectedTime {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            settingOptionData[0][1].detailText = formatter.string(from: time)
+        }
+
+        // 테이블 뷰를 새로고침하여 변경 사항을 반영
+        tableView.reloadData()
     }
 
     private func setUpTableView() {
@@ -37,7 +68,7 @@ class AddMemoMainNotifyViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
-        tableView.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        tableView.backgroundColor = .systemBackground
         tableView.rowHeight = Constant.screenWidth / 10
 
         tableView.snp.makeConstraints { make in
@@ -60,14 +91,52 @@ class AddMemoMainNotifyViewController: UIViewController {
         }
     }
 
+    private func setUpReserveButton() {
+        view.addSubview(reserveButton)
+        reserveButton.snp.makeConstraints { make in
+//            make.left.right.equalToSuperview().inset(20)
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(50)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+        }
+    }
+
     @objc func didTapBackButton() {
         dismiss(animated: true)
     }
 
     @objc func didTapDateTooltip() {
-        let alertController = UIAlertController(title: "알림 설정", message: "날짜알림만 설정시 오전 9시에 알림이 옵니다.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "알림 설정", message: "날짜와 시간을 모두 설정해야 알림이 예약됩니다.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "확인", style: .default))
         present(alertController, animated: true)
+    }
+
+    @objc func didTapReserveButton() {
+        // 날짜와 시간이 모두 설정되어 있을 경우 알림 예약 로직
+        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
+            let calendar = Calendar.current
+            let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+
+            var combinedComponents = DateComponents()
+            combinedComponents.year = dateComponents.year
+            combinedComponents.month = dateComponents.month
+            combinedComponents.day = dateComponents.day
+            combinedComponents.hour = timeComponents.hour
+            combinedComponents.minute = timeComponents.minute
+
+            if let combinedDate = calendar.date(from: combinedComponents) {
+                Notifications.shared.scheduleNotificationAtDate(title: "날짜 및 시간 알림", body: "알림을 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
+                print("예약된 알림 시간: \(combinedDate)")
+                dismiss(animated: true)
+            }
+        } else {
+            // 날짜나 시간 중 하나라도 설정되지 않았을 경우 경고 표시
+            let alertController = UIAlertController(title: "경고", message: "날짜와 시간을 모두 설정해주셍", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "확인", style: .default))
+            present(alertController, animated: true)
+        }
     }
 }
 
@@ -94,9 +163,9 @@ extension AddMemoMainNotifyViewController: UITableViewDelegate, UITableViewDataS
 
         var vc: UIViewController!
         if indexPath.row == 0 {
-            vc = DateSettingPageViewController(viewModel: viewModel) // "날짜" 셀 선택 시
+            vc = DateSettingPageViewController(viewModel: viewModel, initialDate: viewModel.selectedDate) // "날짜" 셀 선택 시
         } else {
-            vc = NotifySettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime) // "시간" 셀 선택 시
+            vc = TimeSettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime) // "시간" 셀 선택 시
         }
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
@@ -104,9 +173,18 @@ extension AddMemoMainNotifyViewController: UITableViewDelegate, UITableViewDataS
     }
 }
 
-
 extension AddMemoMainNotifyViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
+    }
+}
+
+extension AddMemoMainNotifyViewController: DateSettingDelegate {
+    func didCompleteDateSetting(date: Date) {
+        //
+    }
+
+    func didResetDateSetting() {
+        //
     }
 }
