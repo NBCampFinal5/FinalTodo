@@ -27,7 +27,7 @@ struct FirebaseManager {
 //            rewardPoint: 0,
 //            settingValue: SettingValues(color: "yellow", font: "testFont")
 //        )
-        let userData = User(id: "test", nickName: "tset", folders: [], memos: [], rewardPoint: 0, themeColor: 0)
+        let userData = UserData(id: "test", nickName: "tset", folders: [], memos: [], rewardPoint: 0, themeColor: 0)
         
         do {
             let data = try Firestore.Encoder().encode(userData)
@@ -37,14 +37,14 @@ struct FirebaseManager {
         }
     }
     
-    func fetchUserData(email: String, completion: @escaping (User) -> Void) {
+    func fetchUserData(email: String, completion: @escaping (UserData) -> Void) {
         db.collection(users).document(email).getDocument { data, error in
             if error != nil {
                 print("[FirebaseManager][\(#function)]: \(String(describing: error?.localizedDescription))")
             } else {
                 guard let data = data?.data() else { return }
                 do {
-                    var safeData = try Firestore.Decoder().decode(User.self, from: data)
+                    var safeData = try Firestore.Decoder().decode(UserData.self, from: data)
                     completion(safeData)
                 } catch {
                     print("[FirebaseManager][\(#function)]: DecodingFail")

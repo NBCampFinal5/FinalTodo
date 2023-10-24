@@ -7,23 +7,24 @@
 
 import UIKit
 
-struct User: Codable {
+struct UserData: Codable {
     let id: String
     let nickName: String
-    let folders: [Folders]
-    let memos: [Memos]
+    let folders: [FolderData]
+    let memos: [MemoData]
     let rewardPoint: Int
     let themeColor: Int
 }
 
-struct Folders: Codable {
+struct FolderData: Codable {
     let id: String
     let title: String
     let color: String
 }
 
-struct Memos: Codable {
-    let fileId: String
+struct MemoData: Codable {
+    let folderId: String
+    let memoId: String
     let title: String
     let date: String
     let content: String

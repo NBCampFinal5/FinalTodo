@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="MemoModel" representedClassName="MemoModel" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="folderId" optional="YES" attributeType="String"/>
+        <attribute name="isPin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="locationNotifySetting" optional="YES" attributeType="String"/>
+        <attribute name="memoId" optional="YES" attributeType="String"/>
+        <attribute name="timeNotifySetting" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
+</model>
