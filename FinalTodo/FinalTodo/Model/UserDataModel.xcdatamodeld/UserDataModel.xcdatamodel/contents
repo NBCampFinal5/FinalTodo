@@ -4,7 +4,7 @@
         <attribute name="color" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MemosModel" inverseName="folder" inverseEntity="MemosModel"/>
+        <relationship name="memo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MemosModel" inverseName="folder" inverseEntity="MemosModel"/>
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UsersModel" inverseName="folder" inverseEntity="UsersModel"/>
     </entity>
     <entity name="MemosModel" representedClassName="MemosModel" syncable="YES">
@@ -23,7 +23,7 @@
         <attribute name="nickName" optional="YES" attributeType="String"/>
         <attribute name="rewardPoint" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="themeColor" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FoldersModel" inverseName="user" inverseEntity="FoldersModel"/>
-        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MemosModel" inverseName="user" inverseEntity="MemosModel"/>
+        <relationship name="folder" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FoldersModel" inverseName="user" inverseEntity="FoldersModel"/>
+        <relationship name="memo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MemosModel" inverseName="user" inverseEntity="MemosModel"/>
     </entity>
 </model>

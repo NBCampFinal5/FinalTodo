@@ -21,8 +21,8 @@ public extension MemosModel {
     @NSManaged var locationNotifySetting: String?
     @NSManaged var timeNotifySetting: String?
     @NSManaged var title: String
-    @NSManaged var folder: FoldersModel?
-    @NSManaged var user: UsersModel?
+    @NSManaged var folder: FoldersModel
+    @NSManaged var user: UsersModel
 }
 
 extension MemosModel: Identifiable {}
