@@ -20,3 +20,11 @@ protocol DateSettingDelegate: AnyObject {
     func didCompleteDateSetting(date: Date) // 날짜 설정이 완료될 때 호출될 메서드를 정의
     func didResetDateSetting()
 }
+
+protocol ButtonTappedViewDelegate: AnyObject {
+    func didTapButton()
+}
+
+protocol CommandLabelDelegate: AnyObject {
+    func textFieldEditingChanged(_ textField: UITextField)
+}

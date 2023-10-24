@@ -12,6 +12,12 @@
 		039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */; };
 		081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383902AE004620055FDA2 /* LockScreenViewController.swift */; };
 		081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */; };
+		083975F62AE647540042517E /* LockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975F52AE647540042517E /* LockScreenView.swift */; };
+		083975FC2AE650830042517E /* LockPasswordSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975FB2AE650830042517E /* LockPasswordSettingViewController.swift */; };
+		083975FE2AE650930042517E /* LockPasswordChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */; };
+		083976022AE659650042517E /* LockController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083976012AE659650042517E /* LockController.swift */; };
+		083976042AE661C40042517E /* LockPasswordSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083976032AE661C40042517E /* LockPasswordSettingViewModel.swift */; };
+		083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083976052AE6BE6E0042517E /* LockPasswordChangeViewModel.swift */; };
 		083C985D2AD8D728006895D2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985C2AD8D728006895D2 /* Protocol.swift */; };
 		083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C985E2AD8D7AC006895D2 /* Observable.swift */; };
 		083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98612AD8D88E006895D2 /* MemoViewModel.swift */; };
@@ -32,6 +38,9 @@
 		084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412162AD569E9005F2FA9 /* SignInPageViewController.swift */; };
 		084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */; };
 		084412272AD56F21005F2FA9 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 084412262AD56F21005F2FA9 /* SnapKit */; };
+		08487F8F2AE54A2D009AE6CB /* LockSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F8E2AE54A2D009AE6CB /* LockSettingViewModel.swift */; };
+		08487F912AE54A39009AE6CB /* LockSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F902AE54A39009AE6CB /* LockSettingViewController.swift */; };
+		08487F952AE558BA009AE6CB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */; };
 		085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085A52BD2ADEADD20041918D /* LoginManager.swift */; };
 		0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */; };
 		0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */; };
@@ -79,6 +88,8 @@
 		301B397A2AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39742AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift */; };
 		301B397B2AE14A8A00B19313 /* MemosModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39752AE14A8A00B19313 /* MemosModel+CoreDataClass.swift */; };
 		301B397C2AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39762AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift */; };
+		301B39882AE7B5E000B19313 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 301B39872AE7B5E000B19313 /* GoogleService-Info.plist */; };
+		301B398A2AE7B60800B19313 /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */; };
 		30445E862ADF0809000D26A4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445E852ADF0809000D26A4 /* User.swift */; };
 		30445E942ADF0958000D26A4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445E932ADF0958000D26A4 /* CoreDataManager.swift */; };
 		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
@@ -103,7 +114,6 @@
 		C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */; };
 		C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */; };
 		C73BC4362AE14F8100E0302A /* DateSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */; };
-		C742CFE82AE2E7FF00646B8C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C742CFE72AE2E7FF00646B8C /* GoogleService-Info.plist */; };
 		C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* DdayPageModel.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
@@ -117,6 +127,12 @@
 		037668B42ADE5CEA008BED0A /* CommandLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLabelView.swift; sourceTree = "<group>"; };
 		081383902AE004620055FDA2 /* LockScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewController.swift; sourceTree = "<group>"; };
 		081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenNumCollectionViewCell.swift; sourceTree = "<group>"; };
+		083975F52AE647540042517E /* LockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenView.swift; sourceTree = "<group>"; };
+		083975FB2AE650830042517E /* LockPasswordSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordSettingViewController.swift; sourceTree = "<group>"; };
+		083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordChangeViewController.swift; sourceTree = "<group>"; };
+		083976012AE659650042517E /* LockController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockController.swift; sourceTree = "<group>"; };
+		083976032AE661C40042517E /* LockPasswordSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordSettingViewModel.swift; sourceTree = "<group>"; };
+		083976052AE6BE6E0042517E /* LockPasswordChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordChangeViewModel.swift; sourceTree = "<group>"; };
 		083C985C2AD8D728006895D2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		083C985E2AD8D7AC006895D2 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		083C98612AD8D88E006895D2 /* MemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
@@ -138,6 +154,9 @@
 		084412142AD569CD005F2FA9 /* SettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPageViewController.swift; sourceTree = "<group>"; };
 		084412162AD569E9005F2FA9 /* SignInPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewController.swift; sourceTree = "<group>"; };
 		084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewController.swift; sourceTree = "<group>"; };
+		08487F8E2AE54A2D009AE6CB /* LockSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingViewModel.swift; sourceTree = "<group>"; };
+		08487F902AE54A39009AE6CB /* LockSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingViewController.swift; sourceTree = "<group>"; };
+		08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		085A52BD2ADEADD20041918D /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewModel.swift; sourceTree = "<group>"; };
 		0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenPasswordCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -153,6 +172,8 @@
 		301B39742AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsersModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		301B39752AE14A8A00B19313 /* MemosModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemosModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		301B39762AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemosModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		301B39872AE7B5E000B19313 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
 		30445E852ADF0809000D26A4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		30445E932ADF0958000D26A4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -177,7 +198,6 @@
 		C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyPageViewController.swift; sourceTree = "<group>"; };
 		C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
 		C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSettingPageViewController.swift; sourceTree = "<group>"; };
-		C742CFE72AE2E7FF00646B8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -244,6 +264,33 @@
 				081383902AE004620055FDA2 /* LockScreenViewController.swift */,
 			);
 			path = LockScreenScene;
+			sourceTree = "<group>";
+		};
+		083975F72AE650320042517E /* LockSettingScene */ = {
+			isa = PBXGroup;
+			children = (
+				08487F8E2AE54A2D009AE6CB /* LockSettingViewModel.swift */,
+				08487F902AE54A39009AE6CB /* LockSettingViewController.swift */,
+			);
+			path = LockSettingScene;
+			sourceTree = "<group>";
+		};
+		083975F82AE650470042517E /* LockPasswordSettingScene */ = {
+			isa = PBXGroup;
+			children = (
+				083975FB2AE650830042517E /* LockPasswordSettingViewController.swift */,
+				083976032AE661C40042517E /* LockPasswordSettingViewModel.swift */,
+			);
+			path = LockPasswordSettingScene;
+			sourceTree = "<group>";
+		};
+		083975F92AE650510042517E /* LockPasswordChangeScene */ = {
+			isa = PBXGroup;
+			children = (
+				083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */,
+				083976052AE6BE6E0042517E /* LockPasswordChangeViewModel.swift */,
+			);
+			path = LockPasswordChangeScene;
 			sourceTree = "<group>";
 		};
 		083C98602AD8D837006895D2 /* Cells */ = {
@@ -382,7 +429,7 @@
 				084412062AD56871005F2FA9 /* Info.plist */,
 				084411F82AD56870005F2FA9 /* AppDelegate.swift */,
 				084411FA2AD56870005F2FA9 /* SceneDelegate.swift */,
-				C742CFE72AE2E7FF00646B8C /* GoogleService-Info.plist */,
+				301B39872AE7B5E000B19313 /* GoogleService-Info.plist */,
 				084412012AD56871005F2FA9 /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -396,9 +443,20 @@
 				083C986A2AD8E9EE006895D2 /* ModalTopView.swift */,
 				037668B22ADE56CB008BED0A /* ButtonTappedView.swift */,
 				037668B42ADE5CEA008BED0A /* CommandLabelView.swift */,
+				083975F52AE647540042517E /* LockScreenView.swift */,
 				083C98602AD8D837006895D2 /* Cells */,
 			);
 			path = SharedView;
+			sourceTree = "<group>";
+		};
+		08487F8D2AE54A15009AE6CB /* LockSettingPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				083975F82AE650470042517E /* LockPasswordSettingScene */,
+				083975F92AE650510042517E /* LockPasswordChangeScene */,
+				083975F72AE650320042517E /* LockSettingScene */,
+			);
+			path = LockSettingPageScene;
 			sourceTree = "<group>";
 		};
 		08A4F8882AD821410092C6EF /* MemoPageScene */ = {
@@ -420,6 +478,8 @@
 				083C98662AD8DC08006895D2 /* PresentationController.swift */,
 				0844120C2AD5692E005F2FA9 /* TabBarController.swift */,
 				C77CC48B2ADD2C060085C048 /* Notifications.swift */,
+				08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */,
+				083976012AE659650042517E /* LockController.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -455,6 +515,7 @@
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
+				08487F8D2AE54A15009AE6CB /* LockSettingPageScene */,
 			);
 			path = SettingScene;
 			sourceTree = "<group>";
@@ -501,6 +562,7 @@
 			isa = PBXGroup;
 			children = (
 				30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */,
+				301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */,
 			);
 			path = ProfilePageScene;
 			sourceTree = "<group>";
@@ -629,8 +691,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				084412052AD56871005F2FA9 /* LaunchScreen.storyboard in Resources */,
+				301B39882AE7B5E000B19313 /* GoogleService-Info.plist in Resources */,
 				084412022AD56871005F2FA9 /* Assets.xcassets in Resources */,
-				C742CFE82AE2E7FF00646B8C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,9 +709,12 @@
 				69EBADC02AE0EF920009CB21 /* MapKitManager.swift in Sources */,
 				083C985D2AD8D728006895D2 /* Protocol.swift in Sources */,
 				301B39772AE14A8A00B19313 /* FoldersModel+CoreDataClass.swift in Sources */,
+				083975FC2AE650830042517E /* LockPasswordSettingViewController.swift in Sources */,
 				C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */,
 				C71E4BF52AE663FB00DC46F7 /* NotifySettingManager.swift in Sources */,
+				301B398A2AE7B60800B19313 /* ProfilePageViewModel.swift in Sources */,
 				30445E942ADF0958000D26A4 /* CoreDataManager.swift in Sources */,
+				083976042AE661C40042517E /* LockPasswordSettingViewModel.swift in Sources */,
 				085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */,
 				30E7984F2AD7E7F300903272 /* ThemeColorCell.swift in Sources */,
 				037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */,
@@ -669,7 +734,11 @@
 				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
 				08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */,
 				C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */,
+				08487F952AE558BA009AE6CB /* UserDefaultsManager.swift in Sources */,
 				301B396E2AE134C200B19313 /* UserDataModel.xcdatamodeld in Sources */,
+				083975F62AE647540042517E /* LockScreenView.swift in Sources */,
+				083976022AE659650042517E /* LockController.swift in Sources */,
+				083975FE2AE650930042517E /* LockPasswordChangeViewController.swift in Sources */,
 				08F8F4802ADE5FFF0067D3E4 /* FirebaseManager.swift in Sources */,
 				C73BC4362AE14F8100E0302A /* DateSettingPageViewController.swift in Sources */,
 				6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */,
@@ -683,12 +752,14 @@
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
 				083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */,
 				6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */,
+				08487F8F2AE54A2D009AE6CB /* LockSettingViewModel.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
 				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				301B397B2AE14A8A00B19313 /* MemosModel+CoreDataClass.swift in Sources */,
 				30E798832ADC122400903272 /* ThemeColorOptionManager.swift in Sources */,
 				301B397A2AE14A8A00B19313 /* UsersModel+CoreDataProperties.swift in Sources */,
+				08487F912AE54A39009AE6CB /* LockSettingViewController.swift in Sources */,
 				301B39792AE14A8A00B19313 /* UsersModel+CoreDataClass.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				301B397C2AE14A8A00B19313 /* MemosModel+CoreDataProperties.swift in Sources */,
@@ -705,6 +776,7 @@
 				301B39782AE14A8A00B19313 /* FoldersModel+CoreDataProperties.swift in Sources */,
 				0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
+				083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */,
 				30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,10 +15,10 @@ class MapKitManager: NSObject, MKMapViewDelegate, UISearchBarDelegate, CLLocatio
     private var locationManager = CLLocationManager()
     private let regionDelta: Double = 0.05
     
-    init(frame: CGRect) {
-        mapView = MKMapView(frame: frame)
+    init(with mapView: MKMapView) {
+        self.mapView = mapView
         super.init()
-        mapView.delegate = self
+        self.mapView.delegate = self
     }
     
     func moveToLocation(latitude: Double, longitude: Double) {
@@ -39,6 +39,17 @@ class MapKitManager: NSObject, MKMapViewDelegate, UISearchBarDelegate, CLLocatio
             }
             
             completion(response.boundingRegion.center)
+        }
+    }
+    
+    func getAddressFrom(coordinate: CLLocationCoordinate2D, completion: @escaping (String?) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) { placemarks, error in
+            guard let placemark = placemarks?.first, error == nil else {
+                completion(nil)
+                return
+            }
+            completion(placemark.name)
         }
     }
 }

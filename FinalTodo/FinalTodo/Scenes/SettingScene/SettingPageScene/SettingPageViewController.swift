@@ -101,7 +101,8 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             navigationController?.pushViewController(themeColorVC, animated: true)
         } else if indexPath.section == 0 && indexPath.row == 2 {
             // 잠금화면으로 이동
-//            navigationController?.pushViewController(lockVC, animated: true)
+            let lockVC = LockSettingViewController()
+            navigationController?.pushViewController(lockVC, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 0 {
             // 프로필 화면으로 이동 ☑️
             navigationController?.pushViewController(profileVC, animated: true)

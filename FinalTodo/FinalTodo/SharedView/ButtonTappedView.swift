@@ -9,13 +9,16 @@ import SnapKit
 import UIKit
 
 class ButtonTappedView: UIView {
+    weak var delegate: ButtonTappedViewDelegate?
+
     // 버튼
     lazy var anyButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(named: "theme01PointColor01")
+        button.backgroundColor = UIColor(named: "theme01PointColor03")
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
-        button.isEnabled = false // 버튼을 비활성화 해주는 코드(나중에 색깔 변하게 해서 활성화 시켜줄거임
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -35,16 +38,36 @@ private extension ButtonTappedView {
     func setup() {
         setupButton()
     }
-
-    // 오토레이아웃
-
-    func setupButton() {
-        addSubview(anyButton)
+  
+    //오토레이아웃
+    func setupButton(){
+        self.addSubview(anyButton)
         anyButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.centerX.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
+            make.bottom.equalToSuperview()
         }
     }
+}
+
+
+extension ButtonTappedView {
+    
+    @objc func buttonTapped() {
+           delegate?.didTapButton()
+       }
+       
+       func setButtonEnabled(_ enabled: Bool) {
+           anyButton.isEnabled = enabled
+       }
+    
+    func changeButtonColor (color: UIColor?) {
+        anyButton.backgroundColor = color
+    }
+    
+    func changeTitleColor (color: UIColor?) {
+        anyButton.setTitleColor(color, for: .normal)
+    }
+    
 }
