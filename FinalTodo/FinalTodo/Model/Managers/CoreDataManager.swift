@@ -220,7 +220,7 @@ extension CoreDataManager {
             
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
-                if let fetchedFolderDatas = try context.fetch(request) as? [MemoModel] {
+                if let fetchedFolderDatas = try context.fetch(request) as? [FolderModel] {
                     
                     // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
                     if let targetFolder = fetchedFolderDatas.first {
