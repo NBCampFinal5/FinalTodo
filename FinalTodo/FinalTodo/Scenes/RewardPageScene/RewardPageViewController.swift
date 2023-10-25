@@ -12,22 +12,14 @@ class RewardPageViewController: UIViewController {
     
     
     private var score = 0
-    
-    
-    let giniName: UILabel = {
-        let label = UILabel()
-        label.text = "기니피그"
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 24)
-        return label
-    }()
-    
+    //버튼들
     lazy var plusButton:UIButton = {
         let button = UIButton()
         button.setTitle("+1", for: .normal)
         button.setTitleColor(UIColor(named: "theme01PointColor03"), for: .normal)
         button.addTarget(self, action: #selector(increaseScore), for: .touchUpInside)
-        button.backgroundColor = .yellow
+        button.backgroundColor = .gray
+        button.layer.cornerRadius = 10
         return button
     }()
     lazy var minusButton:UIButton = {
@@ -35,25 +27,34 @@ class RewardPageViewController: UIViewController {
         button.setTitle("-1", for: .normal)
         button.setTitleColor(UIColor(named: "theme01PointColor03"), for: .normal)
         button.addTarget(self, action: #selector(diminishScore), for: .touchUpInside)
-        button.backgroundColor = .green
+        button.backgroundColor = .gray
+        button.layer.cornerRadius = 10
         return button
     }()
     
     lazy var manualButton:UIButton = {
         let button = UIButton()
-        button.backgroundColor = .lightGray
-        button.setTitle("!", for: .normal)
+        let image = UIImage(named: "question")
+        button.backgroundColor = .clear
+        button.setImage(image, for: .normal)
         button.addTarget(self, action: #selector(showPopup), for: .touchUpInside)
         return button
     }()
     
-    
+    //이미지뷰
     let giniimageView: UIImageView = {
         let ImageView = UIImageView()
         ImageView.image = UIImage(named: "gini1")
         return ImageView
     }()
     
+    let rewardView: UIImageView = {
+        let ImageView = UIImageView()
+        ImageView.image = UIImage(named: "reward2")
+        return ImageView
+    }()
+    
+    //레이블
     let scoreLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
@@ -62,7 +63,13 @@ class RewardPageViewController: UIViewController {
         return label
     }()
     
-    
+    lazy var giniName: UILabel = {
+        let label = UILabel()
+        label.text = "기니피그"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 24)
+        return label
+    }()
     
     
     
@@ -87,9 +94,10 @@ private extension RewardPageViewController{
         giniimageView.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
             make.centerY.equalTo(view.snp.centerY)
-            make.width.height.equalTo(200)
-            
+            make.width.equalTo(view.snp.width).multipliedBy(0.5)
+            make.height.equalTo(view.snp.height).multipliedBy(0.25)
         }
+        
     }
     func setupButton(){
         
@@ -97,24 +105,24 @@ private extension RewardPageViewController{
         plusButton.snp.makeConstraints { make in
             make.top.equalTo(giniimageView.snp.bottom).offset(Constant.screenHeight * 0.01)
             make.centerX.equalToSuperview().offset(Constant.screenWidth * 0.3)
-            make.width.equalTo(50)
-            make.height.equalTo(50)
+            make.width.equalTo(view.snp.width).multipliedBy(0.1)
+            make.height.equalTo(view.snp.height).multipliedBy(0.05)
         }
         
         view.addSubview(minusButton)
         minusButton.snp.makeConstraints { make in
             make.top.equalTo(plusButton.snp.bottom).offset(Constant.screenHeight * 0.01)
             make.centerX.equalToSuperview().offset(Constant.screenWidth * 0.3)
-            make.width.equalTo(50)
-            make.height.equalTo(50)
+            make.width.equalTo(view.snp.width).multipliedBy(0.1)
+            make.height.equalTo(view.snp.height).multipliedBy(0.05)
         }
         
         view.addSubview(manualButton)
         manualButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.1) // 아래에서부터 떨어진 위치 조정
+            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.15) // 아래에서부터 떨어진 위치 조정
             make.leading.equalToSuperview().offset(Constant.screenWidth * 0.1) // 왼쪽에서부터 떨어진 위치 조정
-            make.width.equalTo(30)
-            make.height.equalTo(30)
+            make.width.equalTo(view.snp.width).multipliedBy(0.1)
+            make.height.equalTo(view.snp.height).multipliedBy(0.07)
         }
     }
     func setuplabel(){
@@ -124,13 +132,19 @@ private extension RewardPageViewController{
             make.top.equalToSuperview().offset(Constant.screenHeight * 0.1) // 상단에 간격 추가
             make.centerX.equalToSuperview()
         }
-
+        view.addSubview(rewardView)
+        rewardView.snp.makeConstraints { make in
+            make.top.equalTo(giniName.snp.bottom).offset(Constant.screenHeight * 0.01) // 아래에서부터 떨어진 위치 조정
+            make.leading.equalToSuperview().offset(Constant.screenWidth * 0.01) // 왼쪽에서부터의 위치 조정
+            make.width.equalTo(view.snp.width).multipliedBy(0.1)
+            make.height.equalTo(view.snp.height).multipliedBy(0.05)
+        }
         view.addSubview(scoreLabel)
         scoreLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(plusButton.snp.top)
-            make.centerX.equalToSuperview().offset(Constant.screenWidth * 0.3)
-            make.width.equalTo(50)
-            make.height.equalTo(50)
+            make.top.equalTo(giniName.snp.bottom).offset(Constant.screenHeight * 0.01)
+            make.leading.equalTo(rewardView.snp.trailing)
+            make.width.equalTo(view.snp.width).multipliedBy(0.1)
+            make.height.equalTo(view.snp.height).multipliedBy(0.05)
         }
     }
 }
@@ -138,15 +152,28 @@ private extension RewardPageViewController{
 extension RewardPageViewController {
     
     @objc func increaseScore() {
-        // 버튼을 누를 때 호출되는 함수
         score += 1
-        scoreLabel.text = "\(score)"
-        if score >= 10 {
-            giniimageView.image = UIImage(named: "gini2")
-            UIView.animate(withDuration: 0.5, animations: {
-                self.giniimageView.transform = CGAffineTransform(scaleX: 2, y: 2) // 이미지 확대
-            })
-        }
+            scoreLabel.text = "\(score)"
+            
+            switch score {
+            case 10:
+                giniimageView.image = UIImage(named: "gini2")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1) // 이미지 확대
+                })
+            case 20:
+                giniimageView.image = UIImage(named: "gini3")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.4)
+                })
+            case 30:
+                giniimageView.image = UIImage(named: "gini4")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.21, y: 1.41)
+                })
+            default:
+                break // 다른 점수에 대한 특별한 조치 없음
+            }
     }
     @objc func diminishScore() {
         // 버튼을 누를 때 호출되는 함수
@@ -154,11 +181,29 @@ extension RewardPageViewController {
             score -= 1
             scoreLabel.text = "\(score)"
             
-            if score < 10 {
+            switch score {
+            case 9:
                 giniimageView.image = UIImage(named: "gini1")
                 UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = .identity // 이미지 원래 크기로
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0) // 이미지 확대
                 })
+            case 10:
+                giniimageView.image = UIImage(named: "gini2")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1) // 이미지 확대
+                })
+            case 20:
+                giniimageView.image = UIImage(named: "gini3")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.4)
+                })
+            case 30:
+                giniimageView.image = UIImage(named: "gini4")
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.21, y: 1.41)
+                })
+            default:
+                break // 다른 점수에 대한 특별한 조치 없음
             }
         }
     }
