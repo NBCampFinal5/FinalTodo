@@ -23,7 +23,7 @@ struct Folders: Codable {
 }
 
 struct Memos: Codable {
-    let fileId: String
+    let folderId: String
     let title: String
     let date: String
     let content: String
@@ -31,4 +31,3 @@ struct Memos: Codable {
     let locationNotifySetting: String?
     let timeNotifySetting: String?
 }
-
