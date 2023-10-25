@@ -22,7 +22,7 @@ protocol DateSettingDelegate: AnyObject {
 }
 
 protocol ButtonTappedViewDelegate: AnyObject {
-    func didTapButton()
+    func didTapButton(button: UIButton)
 }
 
 protocol CommandLabelDelegate: AnyObject {

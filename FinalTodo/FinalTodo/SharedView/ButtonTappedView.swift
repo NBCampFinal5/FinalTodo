@@ -5,37 +5,40 @@
 //  Created by t2023-m0087 on 10/16/23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class ButtonTappedView: UIView {
     weak var delegate: ButtonTappedViewDelegate?
-    
-    //버튼
-    private lazy var anyButton : UIButton = {
+
+    // 버튼
+    lazy var anyButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "theme01PointColor03")
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         return button
     }()
-    
+
     init(title: String) {
         super.init(frame: CGRect.zero)
-        self.anyButton.setTitle(title, for: .normal)
+        anyButton.setTitle(title, for: .normal)
         setup()
     }
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
+
 private extension ButtonTappedView {
-    func setup(){
+    func setup() {
         setupButton()
     }
+  
     //오토레이아웃
     func setupButton(){
         self.addSubview(anyButton)
@@ -51,8 +54,8 @@ private extension ButtonTappedView {
 
 extension ButtonTappedView {
     
-    @objc func buttonTapped() {
-           delegate?.didTapButton()
+    @objc func buttonTapped(_ button: UIButton) {
+           delegate?.didTapButton(button: button)
        }
        
        func setButtonEnabled(_ enabled: Bool) {
@@ -68,6 +71,3 @@ extension ButtonTappedView {
     }
     
 }
-
-
-

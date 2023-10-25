@@ -14,7 +14,8 @@ import SnapKit
 // TODO: - 들여쓰기
 
 //로그인페이지
-class SignInPageViewController: UIViewController, ButtonTappedViewDelegate, CommandLabelDelegate{
+class SignInPageViewController: UIViewController, CommandLabelDelegate{
+    
     //맨위에 로그인 굵은글자
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
@@ -23,11 +24,12 @@ class SignInPageViewController: UIViewController, ButtonTappedViewDelegate, Comm
         label.textColor = UIColor(named: "theme01PointColor01")
         return label
     }()
-    let loginBar = CommandLabelView(title: "아이디", placeholder: "아이디를 입력해주세요. ", isSecureTextEntry: false)
-    let passwordBar = CommandLabelView(title: "비밀번호", placeholder: "• • • • • • • •", isSecureTextEntry: true)
+    let loginBar = CommandLabelView(title: "아이디", placeholder: "아이디를 입력해주세요.", isSecureTextEntry: false)
+    let passwordBar = CommandLabelView(title: "비밀번호", placeholder: "비밀번호를 입력해주세요.", isSecureTextEntry: true)
     let loginButton = ButtonTappedView(title: "로그인")
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
     
+//    private let viewModel = SignInPageViewModel()
     
 }
 extension SignInPageViewController {
@@ -37,6 +39,7 @@ extension SignInPageViewController {
         loginBar.delegate = self
         passwordBar.delegate = self
         loginButton.delegate = self
+        haveAccountButton.delegate = self
         self.view.backgroundColor = .white
         haveAccountButton.changeButtonColor(color: .white)
         haveAccountButton.changeTitleColor(color: .black)
@@ -131,10 +134,25 @@ extension SignInPageViewController {
     }
     //로그인버튼 누르면 다음화면으로 넘어가는 것 구현
     @objc func didTapButton(){
-        let mainPageVC = TabBarController()
-        self.navigationController?.pushViewController(mainPageVC, animated: true)
+
 
     }
     
 }
 
+extension SignInPageViewController: ButtonTappedViewDelegate {
+    
+    func didTapButton(button: UIButton) {
+//        guard let email = loginBar.inputTextField.text else { return }
+//        guard let password = passwordBar.inputTextField.text else { return }
+//        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
+//            if loginResult.isSuccess {
+//                let rootView = TabBarController()
+//                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
+//            } else {
+//                print("LoginFail")
+//            }
+//        }
+    }
+    
+}
