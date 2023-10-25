@@ -5,6 +5,14 @@ class AddMemoPageViewController: UIViewController {
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
+
+    lazy var savebutton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("저장", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
+        return button
+    }()
 }
 
 extension AddMemoPageViewController {
@@ -30,6 +38,13 @@ private extension AddMemoPageViewController {
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
+        // 성준 - 완료 버튼 추가
+        view.addSubview(savebutton)
+        savebutton.snp.makeConstraints { make in
+            make.centerY.equalTo(topView.snp.centerY)
+            make.left.equalTo(topView.snp.left).offset(15)
+        }
+
         topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
     }
 
@@ -49,6 +64,10 @@ extension AddMemoPageViewController {
     // MARK: - Method
 
     @objc func didTappedBackButton() {
+        dismiss(animated: true)
+    }
+
+    @objc func didTapSaveButton() {
         dismiss(animated: true)
     }
 }

@@ -120,6 +120,6 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
 
 extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
+        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
     }
 }
