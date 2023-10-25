@@ -14,7 +14,7 @@ public extension FolderModel {
         return NSFetchRequest<FolderModel>(entityName: "FolderModel")
     }
 
-    @NSManaged var color: Int64
+    @NSManaged var color: String?
     @NSManaged var id: String?
     @NSManaged var title: String?
 }

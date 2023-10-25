@@ -16,8 +16,24 @@ public extension UserModel {
 
     @NSManaged var id: String?
     @NSManaged var nickName: String?
-    @NSManaged var rewardPoint: Int64
-    @NSManaged var themeColor: Int64
+    @NSManaged var rewardPoint: Int32
+    @NSManaged var themeColor: String?
+    @NSManaged var rewardName: String?
 }
 
 extension UserModel: Identifiable {}
+
+extension UserModel {
+    func getValue() -> UserData {
+        var userData = UserData(
+            id: self.id ?? "",
+            nickName: self.nickName ?? "",
+            folders: [],
+            memos: [],
+            rewardPoint: self.rewardPoint,
+            rewardName: self.rewardName ?? "",
+            themeColor: self.themeColor ?? ""
+        )
+        return userData
+    }
+}

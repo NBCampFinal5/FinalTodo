@@ -8,7 +8,12 @@
 import CoreData
 import UIKit
 
-final class CoreDataManager {
+// class를 쓰는 이유? struct? -> class
+// 메서드 파라미터와 리턴값 변경
+// 싱글턴패턴을 쓰는 이유? -> class
+// 현재 유저데이터모델 타입을 우리의 유저모델 타입으로 변환하는 방법???????????
+
+class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
 
@@ -27,39 +32,29 @@ extension CoreDataManager {
     // MARK: 유저 CRUD
 
     // 유저 - CREATE
-    func saveUserForCoreData(id: String, nickName: String, rewardPoint: Int64, themeColor: Int64, completion: @escaping () -> Void) {
+    func createUser(user: UserData, completion: @escaping () -> Void) {
         if let context = context {
             if let entity = NSEntityDescription.entity(forEntityName: userModelName, in: context) {
                 if let newUser = NSManagedObject(entity: entity, insertInto: context) as? UserModel {
-                    newUser.id = id
-                    newUser.nickName = nickName
-                    newUser.rewardPoint = rewardPoint
-                    newUser.themeColor = themeColor
+                    newUser.id = user.id
+                    newUser.nickName = user.nickName
+                    newUser.rewardPoint = user.rewardPoint
+                    newUser.themeColor = user.themeColor
+                    newUser.rewardName = user.rewardName
 
-                    if context.hasChanges {
-                        do {
-                            try context.save()
-                            completion()
-                        } catch {
-                            print("::코어데이터:: 유저 만들기 실패!")
-                            completion()
-                        }
-                    }
+                    self.appDelegate?.saveContext()
                 }
             }
         }
-
         completion()
     }
 
     // 유저 - READ
-    func getUserListFromCoreData() -> [UserModel] {
+    func getUser() -> UserData {
         var userList: [UserModel] = []
 
         if let context = context {
             let request = NSFetchRequest<UserModel>(entityName: userModelName)
-            let idOrder = NSSortDescriptor(key: "id", ascending: true)
-            request.sortDescriptors = [idOrder]
 
             do {
                 userList = try context.fetch(request)
@@ -67,23 +62,55 @@ extension CoreDataManager {
                 print("::코어데이터:: 유저 가져오기 실패!")
             }
         }
-        return userList
+        let errorData = UserData(id: "error", nickName: "error", folders: [], memos: [], rewardPoint: 0, rewardName: "error", themeColor: "error")
+        guard let firstUser = userList.first else { return errorData }
+        let safeData = firstUser.getValue()
+
+        return safeData
     }
 
     // 유저 - Update
-    func updateUserFromCoreData(newUser: UserModel, completion: @escaping () -> Void) {
+
+    // MARK: - [Update] [MemoCRUD]
+
+    func updateUser(targetId: String, newUser: UserData, completion: @escaping () -> Void) {
+        // 임시저장소 있는지 확인
         if let context = context {
-            if context.hasChanges {
-                do {
-                    try context.save()
-                    completion()
-                } catch {
-                    print("::코어데이터:: 유저 업데이트 실패!")
-                    completion()
+            // 요청서
+            let request = NSFetchRequest<NSManagedObject>(entityName: self.userModelName)
+            // 단서 / 찾기 위한 조건 설정
+            request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
+
+            do {
+                // 요청서를 통해서 데이터 가져오기
+                if let fetchedUserDatas = try context.fetch(request) as? [UserModel] {
+                    // 배열의 첫번째
+                    if var targetUser = fetchedUserDatas.first {
+                        // 실제 데이터 재할당
+                        self.appDelegate?.saveContext()
+                    }
                 }
+                completion()
+            } catch {
+                print("CoreDataManager:", #function, ":Fail")
+                completion()
             }
         }
     }
+
+//    func updateUser(newUser: UserModel, completion: @escaping () -> Void) {
+//        if let context = context {
+//            if context.hasChanges {
+//                do {
+//                    try context.save()
+//                    completion()
+//                } catch {
+//                    print("::코어데이터:: 유저 업데이트 실패!")
+//                    completion()
+//                }
+//            }
+//        }
+//    }
 
     // 유저 - Delete
     func deleteUserFromCoreData(data: UserModel, completion: @escaping () -> Void) {
@@ -105,7 +132,7 @@ extension CoreDataManager {
     // MARK: 폴더 CRUD
 
     // 폴더 - CREATE
-    func saveFolderForCoreData(id: String, title: String, color: Int64, completion: @escaping () -> Void) {
+    func saveFolderForCoreData(id: String, title: String, color: String, completion: @escaping () -> Void) {
         if let context = context {
             if let entity = NSEntityDescription.entity(forEntityName: folderModelName, in: context) {
                 if let newFolder = NSManagedObject(entity: entity, insertInto: context) as? FolderModel {
@@ -182,12 +209,11 @@ extension CoreDataManager {
     // MARK: 메모 CRUD
 
     // 메모 - CREATE
-    func saveMemoForCoreData(folderId: String?, title: String?, content: String?, date: String?, isPin: Bool, locationNotifySetting: String?, timeNotifySetting: String?, completion: @escaping () -> Void) {
+    func saveMemoForCoreData(folderId: String?, content: String?, date: String?, isPin: Bool, locationNotifySetting: String?, timeNotifySetting: String?, completion: @escaping () -> Void) {
         if let context = context {
             if let entity = NSEntityDescription.entity(forEntityName: memoModelName, in: context) {
                 if let newMemo = NSManagedObject(entity: entity, insertInto: context) as? MemoModel {
                     newMemo.folderId = folderId
-                    newMemo.title = title
                     newMemo.content = content
                     newMemo.date = date
                     newMemo.isPin = isPin

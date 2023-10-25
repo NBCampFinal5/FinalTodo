@@ -20,7 +20,7 @@ public extension MemoModel {
     @NSManaged var isPin: Bool
     @NSManaged var locationNotifySetting: String?
     @NSManaged var timeNotifySetting: String?
-    @NSManaged var title: String?
+    @NSManaged var id: String?
 }
 
 extension MemoModel: Identifiable {}
