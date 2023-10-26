@@ -173,10 +173,7 @@ extension DateSettingPageViewController {
         if let time = viewModel.selectedTime {
             components.hour = calendar.component(.hour, from: time)
             components.minute = calendar.component(.minute, from: time)
-        } else {
-            components.hour = 9
-            components.minute = 0
-        }
+        } 
         if let selectedDate = calendar.date(from: components) {
             viewModel.selectedDate = selectedDate
             print("설정된 날짜: \(selectedDate)")
