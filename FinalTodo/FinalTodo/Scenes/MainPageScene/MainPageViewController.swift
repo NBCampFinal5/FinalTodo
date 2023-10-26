@@ -68,8 +68,17 @@ class MainPageViewController: UIViewController {
     }
     
     @objc func searchButtonTapped() {
+        let searchVC = SearchViewController()
+        searchVC.allMemos = getAllMemos()
+        let navigationController = UINavigationController(rootViewController: searchVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true, completion: nil)
     }
     
+    func getAllMemos() -> [Memo] {
+        return items.compactMap { $0 as? Memo }
+    }
+
     @objc func folderButtonTapped() {
         showFolderDialog()
     }
