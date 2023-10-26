@@ -29,7 +29,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate{
     let loginButton = ButtonTappedView(title: "로그인")
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
     
-//    private let viewModel = SignInPageViewModel()
+    //private let viewModel = SignInPageViewModel()
     
 }
 extension SignInPageViewController {
@@ -111,7 +111,7 @@ extension SignInPageViewController {
         self.view.endEditing(true)
     }
     
-  
+    
     //로그인 버튼 색갈 바뀌는 함수
     @objc func textFieldEditingChanged(_ textField : UITextField){
         if textField.text?.count == 1 {
@@ -134,8 +134,8 @@ extension SignInPageViewController {
     }
     //로그인버튼 누르면 다음화면으로 넘어가는 것 구현
     @objc func didTapButton(){
-
-
+        
+        
     }
     
 }
@@ -143,16 +143,16 @@ extension SignInPageViewController {
 extension SignInPageViewController: ButtonTappedViewDelegate {
     
     func didTapButton(button: UIButton) {
-//        guard let email = loginBar.inputTextField.text else { return }
-//        guard let password = passwordBar.inputTextField.text else { return }
-//        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
-//            if loginResult.isSuccess {
-//                let rootView = TabBarController()
-//                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
-//            } else {
-//                print("LoginFail")
-//            }
-//        }
+        //        guard let email = loginBar.inputTextField.text else { return }
+        //        guard let password = passwordBar.inputTextField.text else { return }
+        //        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
+        //            if loginResult.isSuccess {
+        //                let rootView = TabBarController()
+        //                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
+        //            } else {
+        //                print("LoginFail")
+        //            }
+        //        }
     }
     
 }
