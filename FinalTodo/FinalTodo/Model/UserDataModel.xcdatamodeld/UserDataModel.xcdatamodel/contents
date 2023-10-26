@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="FoldersModel" representedClassName="FoldersModel" syncable="YES">
-        <attribute name="color" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="FolderModel" representedClassName="FolderModel" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MemosModel" inverseName="folder" inverseEntity="MemosModel"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UsersModel" inverseName="folder" inverseEntity="UsersModel"/>
     </entity>
-    <entity name="MemosModel" representedClassName="MemosModel" syncable="YES">
+    <entity name="MemoModel" representedClassName="MemoModel" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="date" optional="YES" attributeType="String"/>
-        <attribute name="fileId" optional="YES" attributeType="String"/>
+        <attribute name="folderId" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="isPin" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="locationNotifySetting" optional="YES" attributeType="String"/>
         <attribute name="timeNotifySetting" optional="YES" attributeType="String"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FoldersModel" inverseName="memo" inverseEntity="FoldersModel"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UsersModel" inverseName="memo" inverseEntity="UsersModel"/>
     </entity>
-    <entity name="UsersModel" representedClassName="UsersModel" syncable="YES">
+    <entity name="UserModel" representedClassName="UserModel" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="nickName" optional="YES" attributeType="String"/>
-        <attribute name="rewardPoint" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="themeColor" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FoldersModel" inverseName="user" inverseEntity="FoldersModel"/>
-        <relationship name="memo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MemosModel" inverseName="user" inverseEntity="MemosModel"/>
+        <attribute name="rewardName" optional="YES" attributeType="String"/>
+        <attribute name="rewardPoint" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="themeColor" optional="YES" attributeType="String"/>
     </entity>
 </model>

@@ -5,30 +5,31 @@
 //  Created by SR on 2023/10/18.
 //
 
+import CoreData
 import UIKit
 
-struct User: Codable {
+struct UserData: Codable {
     let id: String
     let nickName: String
-    let folders: [Folders]
-    let memos: [Memos]
-    let rewardPoint: Int
-    let themeColor: Int
+    let folders: [FolderData]
+    let memos: [MemoData]
+    let rewardPoint: Int32
+    let rewardName: String
+    let themeColor: String
 }
 
-struct Folders: Codable {
+struct FolderData: Codable {
     let id: String
     let title: String
     let color: String
 }
 
-struct Memos: Codable {
-    let fileId: String
-    let title: String
+struct MemoData: Codable {
+    let id: String
+    let folderId: String
     let date: String
     let content: String
     let isPin: Bool
     let locationNotifySetting: String?
     let timeNotifySetting: String?
 }
-
