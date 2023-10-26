@@ -82,7 +82,6 @@
 		08F8F47E2ADE5E9D0067D3E4 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 08F8F47D2ADE5E9D0067D3E4 /* FirebaseAppCheck */; };
 		08F8F4802ADE5FFF0067D3E4 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */; };
 		301B396E2AE134C200B19313 /* UserDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 301B39662AE134C200B19313 /* UserDataModel.xcdatamodeld */; };
-		301B39882AE7B5E000B19313 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 301B39872AE7B5E000B19313 /* GoogleService-Info.plist */; };
 		301B398A2AE7B60800B19313 /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */; };
 		301B39DE2AE93B9E00B19313 /* MemoModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39D82AE93B9D00B19313 /* MemoModel+CoreDataClass.swift */; };
 		301B39DF2AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39D92AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift */; };
@@ -168,7 +167,6 @@
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		301B39672AE134C200B19313 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
-		301B39872AE7B5E000B19313 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
 		301B39D82AE93B9D00B19313 /* MemoModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		301B39D92AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -391,10 +389,9 @@
 		0844121F2AD56B71005F2FA9 /* MainPageScene */ = {
 			isa = PBXGroup;
 			children = (
-				084412102AD569AA005F2FA9 /* MainPageViewController.swift */,
+				084EA3022AEA7F75003031C0 /* MainPageViewScene */,
 				6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */,
 				6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */,
-				6906BAA02AD91DBC0088FE6E /* MainPageView.swift */,
 				6906BAA22ADD06860088FE6E /* MemoListView.swift */,
 				69EBADC92AE912680009CB21 /* SearchViewController.swift */,
 			);
@@ -462,6 +459,15 @@
 				083975F72AE650320042517E /* LockSettingScene */,
 			);
 			path = LockSettingPageScene;
+			sourceTree = "<group>";
+		};
+		084EA3022AEA7F75003031C0 /* MainPageViewScene */ = {
+			isa = PBXGroup;
+			children = (
+				084412102AD569AA005F2FA9 /* MainPageViewController.swift */,
+				6906BAA02AD91DBC0088FE6E /* MainPageView.swift */,
+			);
+			path = MainPageViewScene;
 			sourceTree = "<group>";
 		};
 		08A4F8882AD821410092C6EF /* MemoPageScene */ = {
