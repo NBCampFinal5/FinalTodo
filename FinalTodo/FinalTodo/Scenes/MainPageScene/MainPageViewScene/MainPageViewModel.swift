@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+class MainPageViewModel {
+    let coredataManager = CoreDataManager.shared
+    
+}

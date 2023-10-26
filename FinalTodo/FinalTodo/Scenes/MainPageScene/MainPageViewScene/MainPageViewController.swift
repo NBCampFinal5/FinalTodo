@@ -16,6 +16,7 @@ class MainPageViewController: UIViewController {
     
     var items = [Any]()
     let locationManager = LocationTrackingManager.shared
+    let viewModel = MainPageViewModel()
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -31,6 +32,16 @@ class MainPageViewController: UIViewController {
         setupUI()
         setupDelegates()
         locationManager.startTracking()
+ 
+//        for i in 0...10 {
+//            let folder = FolderData(id: UUID().uuidString, title: "test\(i)", color: "test\(i)")
+//            viewModel.coredataManager.createFolder(newFolder: folder) {
+//                print("create")
+//            }
+//        }
+
+        print(viewModel.coredataManager.getFolders())
+        
     }
     
     private func setupUI() {
@@ -101,21 +112,30 @@ extension UITabBarController {
 
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count + 3
+        switch section {
+        case 0:
+            return 1
+        default:
+            return viewModel.coredataManager.getFolders().count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.configureAsSpacingCell()
-        
-        switch indexPath.row {
-        case 0, 2:
-            break
-        case 1:
+        switch indexPath.section {
+        case 0:
             cell.configureAsAllNotesCell()
         default:
-            cell.configureCellWith(item: items[indexPath.row - 3])
+            cell.configureCellWith(item: viewModel.coredataManager.getFolders()[indexPath.row])
         }
         
         return cell
@@ -123,51 +143,55 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard indexPath.row > 2 else { return }
         
-        let selectedItem = items[indexPath.row - 3]
-        if tableView.isEditing {
-            if let folder = selectedItem as? Folder {
+        if indexPath.section == 1 {
+            if tableView.isEditing {
+                let folder = viewModel.coredataManager.getFolders()[indexPath.row]
                 showFolderDialog(for: folder)
-            }
-        } else {
-            if let selectedFolder = selectedItem as? Folder {
-                let memoListViewVC = MemoListViewController(folder: selectedFolder)
-                navigationController?.pushViewController(memoListViewVC, animated: true)
+            } else {
+                
             }
         }
     }
     
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0, 2:
-            return 10
-        default:
-            return 50
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        switch indexPath.row {
+//        case 0, 2:
+//            return 10
+//        default:
+//            return 50
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.row > 2
+        return indexPath.section == 1
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard editingStyle == .delete, indexPath.row > 2 else { return }
         
-        items.remove(at: indexPath.row - 3)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        if indexPath.section == 1 {
+            if editingStyle == .delete {
+                let targetId = viewModel.coredataManager.getFolders()[indexPath.row].id
+                viewModel.coredataManager.deleteFolder(targetId: targetId) {
+                    print("deleteFolderID:",targetId)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }
+                
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.row > 2
+        // TODO: - 추후 구현 요망
+        return false
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedObject = items[sourceIndexPath.row - 3]
-        items.remove(at: sourceIndexPath.row - 3)
-        items.insert(movedObject, at: destinationIndexPath.row - 3)
+        // TODO: - 추후 구현 요망
     }
+
+    
     
 }
 
@@ -191,31 +215,29 @@ extension UITableViewCell {
         backgroundColor = ColorManager.themeArray[0].pointColor02
     }
     
-    func configureCellWith(item: Any) {
+    func configureCellWith(item: FolderData) {
         layer.borderColor = UIColor.gray.cgColor
         layer.borderWidth = 0.5
         backgroundColor = ColorManager.themeArray[0].pointColor02
         textLabel?.textColor = ColorManager.themeArray[0].pointColor01
         
-        if let itemString = item as? String {
-            textLabel?.text = itemString
-        } else if let folder = item as? Folder {
-            textLabel?.text = folder.name
-            
-            let size = CGSize(width: 24, height: 24)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0)
-            folder.color.setFill()
-            UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
-            let colorImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            imageView?.image = colorImage
-        }
+
+        textLabel?.text = item.title
+        
+        let size = CGSize(width: 24, height: 24)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIColor(hex: item.color).setFill()
+        UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
+        let colorImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        imageView?.image = colorImage
+        
     }
 }
 
 extension MainPageViewController {
-    func showFolderDialog(for folder: Folder? = nil) {
+    func showFolderDialog(for folder: FolderData? = nil) {
         guard self.presentedViewController == nil else {
             print("A view controller is already presented.")
             return
@@ -226,30 +248,23 @@ extension MainPageViewController {
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
         
-        folderDialogVC.completion = { [weak self] (name, color) in
-            if let existingFolderIndex = self?.index(for: folder) {
-                self?.updateFolder(at: existingFolderIndex, with: name, color: color)
+        folderDialogVC.completion = { [weak self] (title, color, id) in
+
+            if let id = id {
+                let folder = FolderData(id: id, title: title, color: color.toHexString())
+                self?.viewModel.coredataManager.updateFolder(targetId: id, newFolder: folder, completion: {
+                    print("folderUpdate")
+                })
             } else {
-                self?.addNewFolder(with: name, color: color)
+                let folder = FolderData(id: UUID().uuidString, title: title, color: color.toHexString())
+                self?.viewModel.coredataManager.createFolder(newFolder: folder, completion: {
+                    print("folderCreate")
+                })
             }
             self?.mainView.tableView.reloadData()
         }
         
         present(folderDialogVC, animated: true, completion: nil)
-    }
-    
-    private func index(for folder: Folder?) -> Int? {
-        return items.firstIndex(where: { ($0 as? Folder)?.name == folder?.name })
-    }
-    
-    private func updateFolder(at index: Int, with name: String, color: UIColor) {
-        guard let folder = items[index] as? Folder else { return }
-        folder.name = name
-        folder.color = color
-    }
-    
-    private func addNewFolder(with name: String, color: UIColor) {
-        items.append(Folder(name: name, color: color))
     }
     
     func changeStatusBarBgColor(bgColor: UIColor?) {
@@ -285,3 +300,34 @@ class Folder {
     }
 }
 
+extension UIColor {
+
+    convenience init(hex: String, alpha: CGFloat = 1.0) {
+        var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+
+        if hexFormatted.hasPrefix("#") {
+            hexFormatted = String(hexFormatted.dropFirst())
+        }
+
+        assert(hexFormatted.count == 6, "Invalid hex code used.")
+
+        var rgbValue: UInt64 = 0
+        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
+
+        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+                  alpha: alpha)
+    }
+
+    func toHexString() -> String {
+        var r:CGFloat = 0
+        var g:CGFloat = 0
+        var b:CGFloat = 0
+        var a:CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+
+        return String(format:"#%06x", rgb)
+    }
+}
