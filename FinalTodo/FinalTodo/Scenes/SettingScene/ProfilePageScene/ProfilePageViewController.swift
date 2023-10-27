@@ -8,22 +8,18 @@
 import SnapKit
 import UIKit
 
-// 과제1: 얼러트로 유저닉네임이랑 리워드닉네임 바꾼 게 바로 뷰컨트롤러에 반영이 안 되는 것
-// 과제2: 프로필페이지에서 다른 탭 눌렀다가 설정탭 돌아오면 그대로 프로필페이지인 것
-// 과제3: 계정 삭제 뒤 로그인페이지로 돌아가는 화면 전환이 모달로 된 것
-
 class ProfilePageViewController: UIViewController {
     private let viewModel = ProfilePageViewModel()
 
     lazy var userNickNameText = viewModel.userNickName {
-        didSet(newValue) {
-            userNickNameEditButton.setTitle(newValue, for: .normal)
+        didSet {
+            userNickNameEditButton.setTitle("안녕하세요, <\(userNickNameText)> 님!", for: .normal)
         }
     }
 
     lazy var rewardNickNameText = viewModel.rewardNickName {
-        didSet(newValue) {
-            rewardNickNameEditButton.setTitle(newValue, for: .normal)
+        didSet {
+            rewardNickNameEditButton.setTitle("<\(rewardNickNameText)>랑 메모 쓰러 가요!", for: .normal)
         }
     }
 
@@ -67,14 +63,10 @@ class ProfilePageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchUserData()
+        viewModel.fetchUserData {
+            print("@@")
+        }
         setUp()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        rewardImageButton.layer.cornerRadius = rewardImageButton.frame.size.width / 2
-//        rewardImageButton.clipsToBounds = true
     }
 }
 
@@ -120,7 +112,7 @@ private extension ProfilePageViewController {
         }
     }
 
-    func showEditAlert(editType: ProfilePageViewModel.EditType) {
+    func showEditAlert(editType: ProfilePageViewModel.EditType, completion: @escaping () -> Void) {
         let title: String
 
         switch editType {
@@ -144,8 +136,8 @@ private extension ProfilePageViewController {
                 case .rewardNickName:
                     self.viewModel.updateNickName(type: .rewardNickName, newName: newNickName)
                 }
-                self.viewModel.fetchUserData()
             }
+            completion()
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
@@ -157,18 +149,20 @@ private extension ProfilePageViewController {
 
     @objc
     func didTapUserNickNameEditButton(_ sender: UIButton) {
-        showEditAlert(editType: ProfilePageViewModel.EditType.userNickName)
-        sender.setTitle("안녕하세요, <\(userNickNameText)> 님!", for: .normal)
-//        sender.setNeedsLayout()
-//        sender.layoutIfNeeded()
+        showEditAlert(editType: ProfilePageViewModel.EditType.userNickName) {
+            self.viewModel.fetchUserData {
+                self.userNickNameText = self.viewModel.userNickName
+            }
+        }
     }
 
     @objc
     func didTapRewardNickNameEditButton(_ sender: UIButton) {
-        showEditAlert(editType: ProfilePageViewModel.EditType.rewardNickName)
-        sender.setTitle("<\(rewardNickNameText)>랑 메모 쓰러 가요!", for: .normal)
-//        sender.setNeedsLayout()
-//        sender.layoutIfNeeded()
+        showEditAlert(editType: ProfilePageViewModel.EditType.rewardNickName) {
+            self.viewModel.fetchUserData {
+                self.rewardNickNameText = self.viewModel.rewardNickName
+            }
+        }
     }
 
     @objc

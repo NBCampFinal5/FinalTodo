@@ -20,16 +20,22 @@ class ProfilePageViewModel {
     var rewardNickName: String = "gini"
     var giniImage: String = "gini1"
 
-    func fetchUserData() {
+    func fetchUserData(completion: @escaping () -> Void) {
         userId = manager.getUser().id
         userFolders = manager.getUser().folders
         userFoldersMemos = manager.getUser().memos
         userThemeColor = manager.getUser().themeColor
 
         userPoint = manager.getUser().rewardPoint
-        userNickName = manager.getUser().nickName // 유저 닉네임
-        rewardNickName = manager.getUser().rewardName // 리워드 닉네임
+        userNickName = manager.getUser().nickName
+        rewardNickName = manager.getUser().rewardName 
 
+        fetchGiniImage(point: userPoint)
+        print("@@ 유저 패치!")
+        completion()
+    }
+
+    private func fetchGiniImage(point: Int32) {
         if userPoint >= 30 {
             giniImage = "gini4"
         } else if userPoint >= 20 {
@@ -39,9 +45,6 @@ class ProfilePageViewModel {
         } else {
             giniImage = "gini1"
         }
-        
-        print("@@ 유저 패치! user:\(userNickName), giniName: \(rewardNickName), giniImage: \(giniImage)")
-        print("@@ 현재 패치된 유저 정보:", manager.getUser())
     }
 
     enum EditType {
