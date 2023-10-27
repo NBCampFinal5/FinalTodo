@@ -82,7 +82,6 @@
 		08F8F47E2ADE5E9D0067D3E4 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 08F8F47D2ADE5E9D0067D3E4 /* FirebaseAppCheck */; };
 		08F8F4802ADE5FFF0067D3E4 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */; };
 		301B396E2AE134C200B19313 /* UserDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 301B39662AE134C200B19313 /* UserDataModel.xcdatamodeld */; };
-		301B39882AE7B5E000B19313 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 301B39872AE7B5E000B19313 /* GoogleService-Info.plist */; };
 		301B398A2AE7B60800B19313 /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */; };
 		301B39DE2AE93B9E00B19313 /* MemoModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39D82AE93B9D00B19313 /* MemoModel+CoreDataClass.swift */; };
 		301B39DF2AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39D92AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift */; };
@@ -111,6 +110,7 @@
 		69EBADC22AE0F29C0009CB21 /* LocationSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADC12AE0F29C0009CB21 /* LocationSettingViewController.swift */; };
 		69EBADCA2AE912680009CB21 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADC92AE912680009CB21 /* SearchViewController.swift */; };
 		69EBADD02AEA11630009CB21 /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADCF2AEA11630009CB21 /* MemoTableViewCell.swift */; };
+		69EBADD42AEA4E320009CB21 /* FirebaseDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADD32AEA4E320009CB21 /* FirebaseDBManager.swift */; };
 		C71E4BF52AE663FB00DC46F7 /* NotifySettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E4BF42AE663FB00DC46F7 /* NotifySettingManager.swift */; };
 		C735C0442AD8E15A00AA7663 /* NotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0432AD8E15A00AA7663 /* NotifyPageViewController.swift */; };
 		C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */; };
@@ -168,7 +168,6 @@
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		301B39672AE134C200B19313 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
-		301B39872AE7B5E000B19313 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
 		301B39D82AE93B9D00B19313 /* MemoModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		301B39D92AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -197,6 +196,7 @@
 		69EBADC12AE0F29C0009CB21 /* LocationSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingViewController.swift; sourceTree = "<group>"; };
 		69EBADC92AE912680009CB21 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		69EBADCF2AEA11630009CB21 /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
+		69EBADD32AEA4E320009CB21 /* FirebaseDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDBManager.swift; sourceTree = "<group>"; };
 		C71E4BF42AE663FB00DC46F7 /* NotifySettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifySettingManager.swift; sourceTree = "<group>"; };
 		C735C0432AD8E15A00AA7663 /* NotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyPageViewController.swift; sourceTree = "<group>"; };
 		C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyPageViewController.swift; sourceTree = "<group>"; };
@@ -499,6 +499,7 @@
 				69EBADB32ADF75010009CB21 /* LocationTrackingManager.swift */,
 				69EBADBF2AE0EF910009CB21 /* MapKitManager.swift */,
 				C71E4BF42AE663FB00DC46F7 /* NotifySettingManager.swift */,
+				69EBADD32AEA4E320009CB21 /* FirebaseDBManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -757,6 +758,7 @@
 				69EBADCA2AE912680009CB21 /* SearchViewController.swift in Sources */,
 				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
 				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
+				69EBADD42AEA4E320009CB21 /* FirebaseDBManager.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
