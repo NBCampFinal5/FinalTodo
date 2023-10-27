@@ -13,7 +13,7 @@ import UIKit
 // TODO: - Folder클래스 삭제 및 Folders 클래스 적용
 
 class MainPageViewController: UIViewController {
-    var items = [Any]()
+    
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
     
@@ -31,13 +31,6 @@ class MainPageViewController: UIViewController {
         setupUI()
         setupDelegates()
         locationManager.startTracking()
- 
-//        for i in 0...10 {
-//            let folder = FolderData(id: UUID().uuidString, title: "test\(i)", color: "test\(i)")
-//            viewModel.coredataManager.createFolder(newFolder: folder) {
-//                print("create")
-//            }
-//        }
 
         print(viewModel.coredataManager.getFolders())
     }
@@ -78,14 +71,10 @@ class MainPageViewController: UIViewController {
     
     @objc func searchButtonTapped() {
         let searchVC = SearchViewController()
-        searchVC.allMemos = getAllMemos()
+//        searchVC.allMemos = getAllMemos()
         let navigationController = UINavigationController(rootViewController: searchVC)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true, completion: nil)
-    }
-    
-    func getAllMemos() -> [Memo] {
-        return items.compactMap { $0 as? Memo }
     }
 
     @objc func folderButtonTapped() {

@@ -19,18 +19,15 @@ class SearchViewController: UIViewController {
         formatter.dateStyle = .medium
         return formatter
     }()
-    
-    var allMemos = [
-        Memo(title: "첫 번째 메모", date: Date(), folderName: "개인", folderColor: .red, content: "ab"),
-        Memo(title: "두 번째 메모", date: Date(), folderName: "업무", folderColor: .blue, content: "abcd"),
-    ]
-    var filteredMemos: [Memo] = []
+
+    let viewModel = SearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         setupNavigationBar()
+        bind()
     }
     
     // MARK: - UI Setup
@@ -40,6 +37,12 @@ class SearchViewController: UIViewController {
         
         setupTableView()
         setupSearchBar()
+    }
+    
+    private func bind() {
+        viewModel.filterData.bind { [weak self] memos in
+            self?.tableView.reloadData()
+        }
     }
     
     private func setupTableView() {
@@ -66,13 +69,14 @@ class SearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = closeButton
     }
     
-    private func filterMemos(with searchText: String) {
-        if searchText.isEmpty {
-            filteredMemos = allMemos
-        } else {
-            filteredMemos = allMemos.filter { $0.title.range(of: searchText, options: .caseInsensitive) != nil }
-        }
-    }
+//    private func filterMemos(with searchText: String) {
+//        if searchText.isEmpty {
+////            filteredMemos = allMemos
+//            viewModel.filterData
+//        } else {
+////            filteredMemos = allMemos.filter { $0.title.range(of: searchText, options: .caseInsensitive) != nil }
+//        }
+//    }
     
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
@@ -81,30 +85,33 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filterMemos(with: searchText)
-        tableView.reloadData()
+        if searchText.isEmpty {
+            viewModel.filterData.value = viewModel.coredataManager.getMemos()
+        } else {
+            viewModel.filterData.value = viewModel.coredataManager.getMemos().filter{$0.content.contains(searchText)}
+        }
     }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredMemos.count
+        return viewModel.filterData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "memoCell", for: indexPath) as! MemoCell
-        let memo = filteredMemos[indexPath.row]
+        let memo = viewModel.filterData.value[indexPath.row]
         cell.configure(with: memo, dateFormatter: dateFormatter)
         return cell
     }
 }
 
 extension MemoCell {
-    func configure(with memo: Memo, dateFormatter: DateFormatter) {
-        titleLabel.text = memo.title
-        dateLabel.text = dateFormatter.string(from: memo.date)
-        folderNameLabel.text = memo.folderName
-        folderColorView.backgroundColor = memo.folderColor
+    func configure(with memo: MemoData, dateFormatter: DateFormatter) {
+        titleLabel.text = memo.content
+        dateLabel.text = memo.date
+        folderNameLabel.text = memo.folderId
+//        folderColorView.backgroundColor = memo.co
     }
 }
 
