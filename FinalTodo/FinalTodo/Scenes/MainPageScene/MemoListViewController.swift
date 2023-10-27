@@ -20,11 +20,11 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
     
     var memoListView: MemoListView!
     let titleLabel = UILabel()
-    var folder: Folder!
+    var folder: FolderData
     
-    init(folder: Folder) {
-        super.init(nibName: nil, bundle: nil)
+    init(folder: FolderData) {
         self.folder = folder
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)

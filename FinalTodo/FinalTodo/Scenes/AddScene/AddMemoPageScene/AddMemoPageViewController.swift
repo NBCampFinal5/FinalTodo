@@ -160,8 +160,8 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
 //            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 1: // 위치 설정을 선택한 경우
             vc = LocationSettingPageViewController()
-        case 2: // 폴더 선택
-            vc = FolderSelectPageViewController()
+//        case 2: // 폴더 선택
+//            vc = FolderSelectPageViewController()
         default:
             break
         }

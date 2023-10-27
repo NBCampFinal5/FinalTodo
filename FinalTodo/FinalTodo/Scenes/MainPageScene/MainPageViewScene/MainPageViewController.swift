@@ -5,15 +5,14 @@
 //  Created by SeoJunYoung on 2023/10/10.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 // TODO: - View를 변경하는 이유가 뭘까요?
 // TODO: - manager 위치 디자인 패턴
 // TODO: - Folder클래스 삭제 및 Folders 클래스 적용
 
 class MainPageViewController: UIViewController {
-    
     var items = [Any]()
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
@@ -41,7 +40,6 @@ class MainPageViewController: UIViewController {
 //        }
 
         print(viewModel.coredataManager.getFolders())
-        
     }
     
     private func setupUI() {
@@ -70,7 +68,7 @@ class MainPageViewController: UIViewController {
         let addMemoVC = AddMemoPageViewController()
         addMemoVC.transitioningDelegate = self
         addMemoVC.modalPresentationStyle = .custom
-        self.present(addMemoVC, animated: true, completion: nil)
+        present(addMemoVC, animated: true, completion: nil)
     }
     
     @objc func editButtonTapped() {
@@ -93,7 +91,6 @@ class MainPageViewController: UIViewController {
     @objc func folderButtonTapped() {
         showFolderDialog()
     }
-    
 }
 
 extension UINavigationController {
@@ -111,7 +108,6 @@ extension UITabBarController {
 }
 
 extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
@@ -152,17 +148,16 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             if indexPath.section == 0 {
                 let folder = FolderData(id: "allNote", title: "모든 노트", color: "")
-//                let vc = MemoLis
-            } else if indexPath.section == 1{
+                let vc = MemoListViewController(folder: folder)
+                navigationController?.pushViewController(vc, animated: true)
+            } else if indexPath.section == 1 {
                 let folder = viewModel.coredataManager.getFolders()[indexPath.row]
                 print(folder)
-//                let vc = MemoListViewController(folder: folder)
-//                navigationController?.pushViewController(vc, animated: true)
+                let vc = MemoListViewController(folder: folder)
+                navigationController?.pushViewController(vc, animated: true)
             }
         }
-        
     }
-    
     
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //        switch indexPath.row {
@@ -178,15 +173,13 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         if indexPath.section == 1 {
             if editingStyle == .delete {
                 let targetId = viewModel.coredataManager.getFolders()[indexPath.row].id
                 viewModel.coredataManager.deleteFolder(targetId: targetId) {
-                    print("deleteFolderID:",targetId)
+                    print("deleteFolderID:", targetId)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
-                
             }
         }
     }
@@ -199,9 +192,6 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // TODO: - 추후 구현 요망
     }
-
-    
-    
 }
 
 extension UITableViewCell {
@@ -230,7 +220,6 @@ extension UITableViewCell {
         backgroundColor = ColorManager.themeArray[0].pointColor02
         textLabel?.textColor = ColorManager.themeArray[0].pointColor01
         
-
         textLabel?.text = item.title
         
         let size = CGSize(width: 24, height: 24)
@@ -241,13 +230,12 @@ extension UITableViewCell {
         UIGraphicsEndImageContext()
         
         imageView?.image = colorImage
-        
     }
 }
 
 extension MainPageViewController {
     func showFolderDialog(for folder: FolderData? = nil) {
-        guard self.presentedViewController == nil else {
+        guard presentedViewController == nil else {
             print("A view controller is already presented.")
             return
         }
@@ -257,7 +245,7 @@ extension MainPageViewController {
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
         
-        folderDialogVC.completion = { [weak self] (title, color, id) in
+        folderDialogVC.completion = { [weak self] title, color, id in
 
             if let id = id {
                 let folder = FolderData(id: id, title: title, color: color.toHexString())
@@ -298,7 +286,6 @@ extension MainPageViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-
 class Folder {
     var name: String
     var color: UIColor
@@ -310,7 +297,6 @@ class Folder {
 }
 
 extension UIColor {
-
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
 
@@ -330,13 +316,13 @@ extension UIColor {
     }
 
     func toHexString() -> String {
-        var r:CGFloat = 0
-        var g:CGFloat = 0
-        var b:CGFloat = 0
-        var a:CGFloat = 0
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
-        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+        let rgb = Int(r*255)<<16 | Int(g*255)<<8 | Int(b*255)<<0
 
-        return String(format:"#%06x", rgb)
+        return String(format: "#%06x", rgb)
     }
 }
