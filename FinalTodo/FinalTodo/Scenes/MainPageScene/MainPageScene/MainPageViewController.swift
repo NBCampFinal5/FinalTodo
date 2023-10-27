@@ -16,6 +16,7 @@ class MainPageViewController: UIViewController {
     
     var items = [Any]()
     let locationManager = LocationTrackingManager.shared
+    let coredataManager = CoreDataManager.shared
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -200,7 +201,6 @@ extension UITableViewCell {
             textLabel?.text = itemString
         } else if let folder = item as? Folder {
             textLabel?.text = folder.name
-            
             let size = CGSize(width: 24, height: 24)
             UIGraphicsBeginImageContextWithOptions(size, false, 0)
             folder.color.setFill()

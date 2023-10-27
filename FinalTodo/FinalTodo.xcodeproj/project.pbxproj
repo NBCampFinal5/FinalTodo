@@ -41,6 +41,7 @@
 		08487F8F2AE54A2D009AE6CB /* LockSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F8E2AE54A2D009AE6CB /* LockSettingViewModel.swift */; };
 		08487F912AE54A39009AE6CB /* LockSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F902AE54A39009AE6CB /* LockSettingViewController.swift */; };
 		08487F952AE558BA009AE6CB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */; };
+		084EA3042AEA7FFB003031C0 /* MainPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084EA3032AEA7FFB003031C0 /* MainPageViewModel.swift */; };
 		085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085A52BD2ADEADD20041918D /* LoginManager.swift */; };
 		0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */; };
 		0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */; };
@@ -82,7 +83,6 @@
 		08F8F47E2ADE5E9D0067D3E4 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 08F8F47D2ADE5E9D0067D3E4 /* FirebaseAppCheck */; };
 		08F8F4802ADE5FFF0067D3E4 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */; };
 		301B396E2AE134C200B19313 /* UserDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 301B39662AE134C200B19313 /* UserDataModel.xcdatamodeld */; };
-		301B39882AE7B5E000B19313 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 301B39872AE7B5E000B19313 /* GoogleService-Info.plist */; };
 		301B398A2AE7B60800B19313 /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */; };
 		301B39DE2AE93B9E00B19313 /* MemoModel+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39D82AE93B9D00B19313 /* MemoModel+CoreDataClass.swift */; };
 		301B39DF2AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301B39D92AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift */; };
@@ -159,6 +159,7 @@
 		08487F8E2AE54A2D009AE6CB /* LockSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingViewModel.swift; sourceTree = "<group>"; };
 		08487F902AE54A39009AE6CB /* LockSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingViewController.swift; sourceTree = "<group>"; };
 		08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		084EA3032AEA7FFB003031C0 /* MainPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewModel.swift; sourceTree = "<group>"; };
 		085A52BD2ADEADD20041918D /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewModel.swift; sourceTree = "<group>"; };
 		0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenPasswordCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -168,7 +169,6 @@
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		301B39672AE134C200B19313 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
-		301B39872AE7B5E000B19313 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
 		301B39D82AE93B9D00B19313 /* MemoModel+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataClass.swift"; sourceTree = "<group>"; };
 		301B39D92AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -391,10 +391,9 @@
 		0844121F2AD56B71005F2FA9 /* MainPageScene */ = {
 			isa = PBXGroup;
 			children = (
-				084412102AD569AA005F2FA9 /* MainPageViewController.swift */,
+				084EA3022AEA7F75003031C0 /* MainPageViewScene */,
 				6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */,
 				6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */,
-				6906BAA02AD91DBC0088FE6E /* MainPageView.swift */,
 				6906BAA22ADD06860088FE6E /* MemoListView.swift */,
 				69EBADC92AE912680009CB21 /* SearchViewController.swift */,
 			);
@@ -462,6 +461,16 @@
 				083975F72AE650320042517E /* LockSettingScene */,
 			);
 			path = LockSettingPageScene;
+			sourceTree = "<group>";
+		};
+		084EA3022AEA7F75003031C0 /* MainPageViewScene */ = {
+			isa = PBXGroup;
+			children = (
+				084412102AD569AA005F2FA9 /* MainPageViewController.swift */,
+				084EA3032AEA7FFB003031C0 /* MainPageViewModel.swift */,
+				6906BAA02AD91DBC0088FE6E /* MainPageView.swift */,
+			);
+			path = MainPageViewScene;
 			sourceTree = "<group>";
 		};
 		08A4F8882AD821410092C6EF /* MemoPageScene */ = {
@@ -761,6 +770,7 @@
 				0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
 				083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */,
+				084EA3042AEA7FFB003031C0 /* MainPageViewModel.swift in Sources */,
 				6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */,
 				08487F8F2AE54A2D009AE6CB /* LockSettingViewModel.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
