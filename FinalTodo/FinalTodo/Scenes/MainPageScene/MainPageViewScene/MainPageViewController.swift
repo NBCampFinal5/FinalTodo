@@ -144,14 +144,23 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == 1 {
-            if tableView.isEditing {
+        if tableView.isEditing {
+            if indexPath.section == 1 {
                 let folder = viewModel.coredataManager.getFolders()[indexPath.row]
                 showFolderDialog(for: folder)
-            } else {
-                
+            }
+        } else {
+            if indexPath.section == 0 {
+                let folder = FolderData(id: "allNote", title: "모든 노트", color: "")
+//                let vc = MemoLis
+            } else if indexPath.section == 1{
+                let folder = viewModel.coredataManager.getFolders()[indexPath.row]
+                print(folder)
+//                let vc = MemoListViewController(folder: folder)
+//                navigationController?.pushViewController(vc, animated: true)
             }
         }
+        
     }
     
     
