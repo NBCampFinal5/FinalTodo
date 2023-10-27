@@ -5,6 +5,14 @@ class AddMemoPageViewController: UIViewController {
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
+
+    lazy var savebutton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("저장", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
+        return button
+    }()
 }
 
 extension AddMemoPageViewController {
@@ -31,6 +39,12 @@ private extension AddMemoPageViewController {
             make.top.left.right.equalToSuperview()
         }
         topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
+        // 성준 - 완료 버튼 추가
+        view.addSubview(savebutton)
+        savebutton.snp.makeConstraints { make in
+            make.centerY.equalTo(topView.snp.centerY)
+            make.left.equalTo(topView.snp.left).offset(15)
+        }
     }
 
     func setUpMemoView() {
@@ -42,6 +56,37 @@ private extension AddMemoPageViewController {
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
+    }
+
+    @objc func didTapSaveButton() {
+        guard let content = memoView.contentTextView.text, !content.isEmpty else {
+            print("메모 내용이 없습니다.")
+            return
+        }
+        print("메모 내용이 존재합니다.")
+
+        // 현재 날짜를 문자열로 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        print("현재 날짜를 문자열로 변환: \(dateString)")
+
+        let newMemo = MemoData(
+            id: UUID().uuidString,
+            folderId: "FOLDER_ID",
+            date: dateString,
+            content: content,
+            isPin: false,
+            locationNotifySetting: "",
+            timeNotifySetting: ""
+        )
+        print("새로운 메모 객체 생성됨: \(newMemo)")
+
+        // CoreDataManager를 사용하여 CoreData에 저장
+        CoreDataManager.shared.createMemo(newMemo: newMemo) {
+            print("메모가 성공적으로 저장되었습니다.")
+            self.dismiss(animated: true)
+        }
     }
 }
 
@@ -107,7 +152,9 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
 //            notifySettingVC.delegate = self
 //            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 1: // 위치 설정을 선택한 경우
-            vc = LocationSettingPageViewController() // 임시 변수 vc에 해당하는 뷰 컨트롤러
+            vc = LocationSettingPageViewController()
+        case 2: // 폴더 선택
+            vc = FolderSelectPageViewController()
         default:
             break
         }

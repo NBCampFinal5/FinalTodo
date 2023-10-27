@@ -5,13 +5,14 @@
 //  Created by SR on 2023/10/18.
 //
 
-import CoreData
-import UIKit
 
 // class를 쓰는 이유? struct? -> class
 // 메서드 파라미터와 리턴값 변경
 // 싱글턴패턴을 쓰는 이유? -> class
 // 현재 유저데이터모델 타입을 우리의 유저모델 타입으로 변환하는 방법???????????
+
+import CoreData
+import UIKit
 
 class CoreDataManager {
     static let shared = CoreDataManager()

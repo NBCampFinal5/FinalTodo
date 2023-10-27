@@ -5,18 +5,18 @@
 //  Created by Jongbum Lee on 2023/10/13.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 // MARK: - 파일 분리 요망
 
-
 class MemoListViewController: UIViewController {
-    
-    var memos: [Memo] = [
-        Memo(title: "첫 번째 메모", date: Date(), folderName: "개인", folderColor: .red, content: ""),
-        Memo(title: "두 번째 메모", date: Date(), folderName: "업무", folderColor: .blue, content: ""),
-    ]
+    var memos: [MemoData] = []
+
+//    var memos: [Memo] = [
+//        Memo(title: "첫 번째 메모", date: Date(), folderName: "개인", folderColor: .red, content: ""),
+//        Memo(title: "두 번째 메모", date: Date(), folderName: "업무", folderColor: .blue, content: ""),
+//    ]
     
     var memoListView: MemoListView!
     let titleLabel = UILabel()
@@ -27,17 +27,22 @@ class MemoListViewController: UIViewController {
         self.folder = folder
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadMemos()
         setupMemoListView()
         setupNavigationBar()
     }
-    
+
+    func loadMemos() {
+        memos = CoreDataManager.shared.getMemos()
+    }
+
     private func setupMemoListView() {
         memoListView = MemoListView()
         view.addSubview(memoListView)
@@ -51,7 +56,7 @@ class MemoListViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(backButtonTapped))
         titleLabel.text = "모든메모"
         navigationItem.titleView = titleLabel
-        if let navigationBar = self.navigationController?.navigationBar {
+        if let navigationBar = navigationController?.navigationBar {
             navigationBar.shadowImage = UIImage()
             navigationBar.setBackgroundImage(UIImage(), for: .default)
             
@@ -70,46 +75,45 @@ class MemoListViewController: UIViewController {
         let addMemoVC = AddMemoPageViewController()
         addMemoVC.transitioningDelegate = self
         addMemoVC.modalPresentationStyle = .custom
-        self.present(addMemoVC, animated: true, completion: nil)
+        present(addMemoVC, animated: true, completion: nil)
     }
 }
 
 extension MemoListViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return memos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoCell", for: indexPath) as! MemoCell
-        
+            
         let memo = memos[indexPath.row]
-        
-        cell.titleLabel.text = memo.title
-        cell.dateLabel.text = DateFormatter.localizedString(from: memo.date, dateStyle: .short, timeStyle: .short)
-        cell.folderNameLabel.text = memo.folderName
-        cell.folderColorView.backgroundColor = memo.folderColor
-        cell.backgroundColor = ColorManager.themeArray[0].backgroundColor
-        
+            
+        cell.titleLabel.text = memo.content
+        cell.dateLabel.text = memo.date
+            
         return cell
     }
 }
 
 extension MemoListViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
-            self.memos.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            completion(true)
-        }
-        
-        return UISwipeActionsConfiguration(actions: [deleteAction])
-    }
+          let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { _, _, completion in
+              let memoToDelete = self.memos[indexPath.row]
+              CoreDataManager.shared.deleteMemo(targetId: memoToDelete.id) {
+                  self.memos.remove(at: indexPath.row)
+                  tableView.deleteRows(at: [indexPath], with: .fade)
+                  completion(true)
+              }
+          }
+          
+          return UISwipeActionsConfiguration(actions: [deleteAction])
+      }
+    
 }
 
 extension MemoListViewController: UIViewControllerTransitioningDelegate {
