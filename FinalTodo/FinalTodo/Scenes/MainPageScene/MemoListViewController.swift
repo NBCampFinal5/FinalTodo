@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - 파일 분리 요망
 
-class MemoListViewController: UIViewController {
+class MemoListViewController: UIViewController, AddMemoDelegate {
     var memos: [MemoData] = []
 
 //    var memos: [Memo] = [
@@ -73,9 +73,15 @@ class MemoListViewController: UIViewController {
     
     @objc func fabTapped() {
         let addMemoVC = AddMemoPageViewController()
+        addMemoVC.delegate = self // Delegate 설정
         addMemoVC.transitioningDelegate = self
         addMemoVC.modalPresentationStyle = .custom
         present(addMemoVC, animated: true, completion: nil)
+    }
+
+    func didAddMemo() {
+        loadMemos()
+        memoListView.tableView.reloadData()
     }
 }
 
@@ -102,18 +108,27 @@ extension MemoListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-          let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { _, _, completion in
-              let memoToDelete = self.memos[indexPath.row]
-              CoreDataManager.shared.deleteMemo(targetId: memoToDelete.id) {
-                  self.memos.remove(at: indexPath.row)
-                  tableView.deleteRows(at: [indexPath], with: .fade)
-                  completion(true)
-              }
-          }
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { _, _, completion in
+            let memoToDelete = self.memos[indexPath.row]
+            CoreDataManager.shared.deleteMemo(targetId: memoToDelete.id) {
+                self.memos.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                completion(true)
+            }
+        }
           
-          return UISwipeActionsConfiguration(actions: [deleteAction])
-      }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedMemo = memos[indexPath.row]
+        let editMemoVC = AddMemoPageViewController()
+        editMemoVC.delegate = self
+        editMemoVC.loadMemoData(memo: selectedMemo) // 선택한 메모 데이터 로드
+        editMemoVC.transitioningDelegate = self
+        editMemoVC.modalPresentationStyle = .custom
+        present(editMemoVC, animated: true, completion: nil)
+    }
 }
 
 extension MemoListViewController: UIViewControllerTransitioningDelegate {

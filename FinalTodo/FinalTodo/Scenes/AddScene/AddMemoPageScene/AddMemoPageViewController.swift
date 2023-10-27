@@ -1,7 +1,13 @@
 import SnapKit
 import UIKit
 
+protocol AddMemoDelegate: AnyObject {
+    func didAddMemo()
+}
+
 class AddMemoPageViewController: UIViewController {
+    weak var delegate: AddMemoDelegate?
+
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
@@ -85,6 +91,7 @@ private extension AddMemoPageViewController {
         // CoreDataManager를 사용하여 CoreData에 저장
         CoreDataManager.shared.createMemo(newMemo: newMemo) {
             print("메모가 성공적으로 저장되었습니다.")
+            self.delegate?.didAddMemo() // 먼저 delegate 메서드를 호출
             self.dismiss(animated: true)
         }
     }
@@ -220,5 +227,12 @@ extension AddMemoPageViewController: NotifySettingDelegate {
 
     func didResetNotifySetting() {
         changeCellBackground(at: 1, to: ColorManager.themeArray[0].pointColor02!)
+    }
+}
+
+extension AddMemoPageViewController {
+    func loadMemoData(memo: MemoData) {
+        memoView.contentTextView.text = memo.content
+
     }
 }
