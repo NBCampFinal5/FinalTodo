@@ -27,7 +27,7 @@ class DeleteAccountPageViewController: UIViewController {
     private let deleteAccountButton: UIButton = {
         let button = UIButton()
         button.setTitle("계정 삭제", for: .normal)
-        button.setTitleColor(.red, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         return button
     }()
 
@@ -35,7 +35,7 @@ class DeleteAccountPageViewController: UIViewController {
         let label = UILabel()
         label.text = "*주의*\n계정 삭제 시 \n폴더·메모·기니피그 데이터가 함께 삭제됩니다."
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = UIColor.systemGray
+        label.textColor = ColorManager.themeArray[0].pointColor01
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -64,7 +64,7 @@ private extension DeleteAccountPageViewController {
         view.addSubview(deleteAccountButton)
 
         giniChatLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.1)
             make.centerX.equalToSuperview()
         }
 
@@ -75,7 +75,7 @@ private extension DeleteAccountPageViewController {
         }
 
         allertLabel.snp.makeConstraints { make in
-            make.top.equalTo(giniImageView.snp.bottom)
+            make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
 
