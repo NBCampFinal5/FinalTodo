@@ -5,7 +5,6 @@
 //  Created by SR on 2023/10/18.
 //
 
-
 // class를 쓰는 이유? struct? -> class
 // 메서드 파라미터와 리턴값 변경
 // 싱글턴패턴을 쓰는 이유? -> class
@@ -30,8 +29,7 @@ class CoreDataManager {
 
 extension CoreDataManager {
     // MARK: - [UserCRUD]
-    
-    
+
     private func changeUserData(target: UserModel, newData: UserData) {
         target.id = newData.id
         target.nickName = newData.nickName
@@ -39,34 +37,36 @@ extension CoreDataManager {
         target.themeColor = newData.themeColor
         target.rewardName = newData.rewardName
     }
-    
+
     // MARK: - [Create] [UserCRUD]
+
     func createUser(newUser: UserData, completion: @escaping () -> Void) {
         if let context = context {
             if let entity = NSEntityDescription.entity(forEntityName: userModelName, in: context) {
                 if let user = NSManagedObject(entity: entity, insertInto: context) as? UserModel {
                     changeUserData(target: user, newData: newUser)
-                    self.appDelegate?.saveContext()
+                    appDelegate?.saveContext()
                 }
             }
         }
         completion()
     }
-    
+
     // MARK: - [Read] [UserCRUD]
+
     func getUser() -> UserData {
         var userList: [UserModel] = []
-        
+
         if let context = context {
             let request = NSFetchRequest<UserModel>(entityName: userModelName)
-            
+
             do {
                 userList = try context.fetch(request)
             } catch {
                 print("::코어데이터:: 유저 가져오기 실패!")
             }
         }
-        
+
         let errorData = UserData(
             id: "error",
             nickName: "error",
@@ -76,35 +76,35 @@ extension CoreDataManager {
             rewardName: "error",
             themeColor: "error"
         )
-        
+
         guard let firstUser = userList.first else {
-            print("CoreDataManager:",#function,":Fail")
-            print("CoreDataManager:","Not Found First User",":Fail")
+            print("CoreDataManager:", #function, ":Fail")
+            print("CoreDataManager:", "Not Found First User", ":Fail")
             return errorData
         }
-        
+
         let safeData = firstUser.getValue()
-        
+
         return safeData
     }
-    
+
     // MARK: - [Update] [UserCRUD]
-    
+
     func updateUser(targetId: String, newUser: UserData, completion: @escaping () -> Void) {
         // 임시저장소 있는지 확인
         if let context = context {
             // 요청서
-            let request = NSFetchRequest<NSManagedObject>(entityName: self.userModelName)
+            let request = NSFetchRequest<NSManagedObject>(entityName: userModelName)
             // 단서 / 찾기 위한 조건 설정
             request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
-            
+
             do {
                 // 요청서를 통해서 데이터 가져오기
                 if let fetchedUserDatas = try context.fetch(request) as? [UserModel] {
                     // 배열의 첫번째
                     if var targetUser = fetchedUserDatas.first {
                         changeUserData(target: targetUser, newData: newUser)
-                        self.appDelegate?.saveContext()
+                        appDelegate?.saveContext()
                     }
                 }
                 completion()
@@ -114,21 +114,20 @@ extension CoreDataManager {
             }
         }
     }
-    
+
     // MARK: - [Delete] [UserCRUD]
+
     func deleteUser(targetId: String, completion: @escaping () -> Void) {
-        
         // 임시저장소 있는지 확인
         if let context = context {
             // 요청서
-            let request = NSFetchRequest<NSManagedObject>(entityName: self.userModelName)
+            let request = NSFetchRequest<NSManagedObject>(entityName: userModelName)
             // 단서 / 찾기 위한 조건 설정
             request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
-            
+
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
                 if let fetchedUserDatas = try context.fetch(request) as? [UserModel] {
-                    
                     // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
                     if let targetUser = fetchedUserDatas.first {
                         context.delete(targetUser)
@@ -137,7 +136,7 @@ extension CoreDataManager {
                 }
                 completion()
             } catch {
-                print("CoreDataManager:",#function,":Fail")
+                print("CoreDataManager:", #function, ":Fail")
                 completion()
             }
         }
@@ -146,20 +145,21 @@ extension CoreDataManager {
 
 extension CoreDataManager {
     // MARK: - [FolderCRUD]
-    
+
     func changeFolderData(target: FolderModel, newData: FolderData) {
         target.color = newData.color
         target.title = newData.title
         target.id = newData.id
     }
-    
+
     // MARK: - [Create] [FolderCRUD]
+
     func createFolder(newFolder: FolderData, completion: @escaping () -> Void) {
         if let context = context {
             if let entity = NSEntityDescription.entity(forEntityName: folderModelName, in: context) {
                 if let folder = NSManagedObject(entity: entity, insertInto: context) as? FolderModel {
                     changeFolderData(target: folder, newData: newFolder)
-                    self.appDelegate?.saveContext()
+                    appDelegate?.saveContext()
                 }
             }
         }
@@ -167,6 +167,7 @@ extension CoreDataManager {
     }
 
     // MARK: - [Read] [FolderCRUD]
+
     func getFolders() -> [FolderData] {
         var folderList: [FolderModel] = []
 
@@ -178,17 +179,17 @@ extension CoreDataManager {
                 print("::코어데이터:: 폴더 가져오기 실패!")
             }
         }
-        let safeData = folderList.map{$0.getValue()}
+        let safeData = folderList.map { $0.getValue() }
         return safeData
     }
-    
+
     // MARK: - [Update] [FolderCRUD]
 
     func updateFolder(targetId: String, newFolder: FolderData, completion: @escaping () -> Void) {
         // 임시저장소 있는지 확인
         if let context = context {
             // 요청서
-            let request = NSFetchRequest<NSManagedObject>(entityName: self.folderModelName)
+            let request = NSFetchRequest<NSManagedObject>(entityName: folderModelName)
             // 단서 / 찾기 위한 조건 설정
             request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
 
@@ -196,9 +197,9 @@ extension CoreDataManager {
                 // 요청서를 통해서 데이터 가져오기
                 if let fetchedFolderDatas = try context.fetch(request) as? [FolderModel] {
                     // 배열의 첫번째
-                    if var targetFolder = fetchedFolderDatas.first {
+                    if let targetFolder = fetchedFolderDatas.first {
                         changeFolderData(target: targetFolder, newData: newFolder)
-                        self.appDelegate?.saveContext()
+                        appDelegate?.saveContext()
                     }
                 }
                 completion()
@@ -210,26 +211,25 @@ extension CoreDataManager {
     }
 
     // MARK: - [Delete] [FolderCRUD]
+
     func deleteFolder(targetId: String, completion: @escaping () -> Void) {
-        
         // 임시저장소 있는지 확인
         if let context = context {
             // 요청서
-            let request = NSFetchRequest<NSManagedObject>(entityName: self.folderModelName)
+            let request = NSFetchRequest<NSManagedObject>(entityName: folderModelName)
             // 단서 / 찾기 위한 조건 설정
             request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
-            
+
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
                 if let fetchedFolderDatas = try context.fetch(request) as? [FolderModel] {
-                    
                     // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
                     if let targetFolder = fetchedFolderDatas.first {
                         context.delete(targetFolder)
-                        let targetMemos = getMemos().filter{$0.folderId == targetId}.map{$0.id}
+                        let targetMemos = getMemos().filter { $0.folderId == targetId }.map { $0.id }
                         for targetMemoId in targetMemos {
                             deleteMemo(targetId: targetMemoId) {
-                                print(targetMemoId,"Delete")
+                                print(targetMemoId, "Delete")
                             }
                         }
                         appDelegate?.saveContext()
@@ -237,7 +237,7 @@ extension CoreDataManager {
                 }
                 completion()
             } catch {
-                print("CoreDataManager:",#function,":Fail")
+                print("CoreDataManager:", #function, ":Fail")
                 completion()
             }
         }
@@ -246,7 +246,7 @@ extension CoreDataManager {
 
 extension CoreDataManager {
     // MARK: - [MemoCRUD]
-    
+
     func changeMemoData(target: MemoModel, newData: MemoData) {
         target.date = newData.date
         target.content = newData.content
@@ -256,14 +256,15 @@ extension CoreDataManager {
         target.folderId = newData.folderId
         target.id = newData.id
     }
-    
+
     // MARK: - [Create] [MemoCRUD]
+
     func createMemo(newMemo: MemoData, completion: @escaping () -> Void) {
         if let context = context {
             if let entity = NSEntityDescription.entity(forEntityName: memoModelName, in: context) {
                 if let memo = NSManagedObject(entity: entity, insertInto: context) as? MemoModel {
                     changeMemoData(target: memo, newData: newMemo)
-                    self.appDelegate?.saveContext()
+                    appDelegate?.saveContext()
                 }
             }
         }
@@ -271,6 +272,7 @@ extension CoreDataManager {
     }
 
     // MARK: - [Read] [MemoCRUD]
+
     func getMemos() -> [MemoData] {
         var memoList: [MemoModel] = []
 
@@ -282,51 +284,49 @@ extension CoreDataManager {
                 print("::코어데이터:: 폴더 가져오기 실패!")
             }
         }
-        let safeData = memoList.map{$0.getValue()}
+        let safeData = memoList.map { $0.getValue() }
         return safeData
     }
-    
+
     // MARK: - [Update] [MemoCRUD]
 
-    func updateMemo(targetId: String, newMemo: MemoData, completion: @escaping () -> Void) {
-        // 임시저장소 있는지 확인
+    func updateMemo(updatedMemo: MemoData, completion: @escaping () -> Void) {
         if let context = context {
-            // 요청서
-            let request = NSFetchRequest<NSManagedObject>(entityName: self.memoModelName)
-            // 단서 / 찾기 위한 조건 설정
-            request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
+            let request = NSFetchRequest<MemoModel>(entityName: memoModelName)
+            request.predicate = NSPredicate(format: "id = %@", updatedMemo.id as CVarArg)
 
             do {
-                // 요청서를 통해서 데이터 가져오기
-                if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel] {
-                    // 배열의 첫번째
-                    if var targetMemo = fetchedMemoDatas.first {
-                        changeMemoData(target: targetMemo, newData: newMemo)
-                        self.appDelegate?.saveContext()
-                    }
+                if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel], let targetMemo = fetchedMemoDatas.first {
+                    changeMemoData(target: targetMemo, newData: updatedMemo)
+                    appDelegate?.saveContext()
+                    completion()
+                } else {
+                    print("메모를 찾는데 실패: \(updatedMemo.id)")
+                    completion()
                 }
-                completion()
             } catch {
-                print("CoreDataManager:", #function, ":Fail")
+                print("메모 업데이트 실패:", error)
                 completion()
             }
+        } else {
+            print("컨덱스트를 가져오는데 실패")
+            completion()
         }
     }
 
     // MARK: - [Delete] [MemoCRUD]
+
     func deleteMemo(targetId: String, completion: @escaping () -> Void) {
-        
         // 임시저장소 있는지 확인
         if let context = context {
             // 요청서
-            let request = NSFetchRequest<NSManagedObject>(entityName: self.memoModelName)
+            let request = NSFetchRequest<NSManagedObject>(entityName: memoModelName)
             // 단서 / 찾기 위한 조건 설정
             request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
-            
+
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
                 if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel] {
-                    
                     // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
                     if let targetMemo = fetchedMemoDatas.first {
                         context.delete(targetMemo)
@@ -335,7 +335,7 @@ extension CoreDataManager {
                 }
                 completion()
             } catch {
-                print("CoreDataManager:",#function,":Fail")
+                print("CoreDataManager:", #function, ":Fail")
                 completion()
             }
         }

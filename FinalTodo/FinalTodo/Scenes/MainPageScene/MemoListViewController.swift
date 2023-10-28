@@ -5,13 +5,13 @@
 //  Created by Jongbum Lee on 2023/10/13.
 //
 
+// MARK: - 파일 분리 요망
+
 import SnapKit
 import UIKit
 
-// MARK: - 파일 분리 요망
-
 class MemoListViewController: UIViewController, AddMemoDelegate {
-    var memos: [MemoData] = []
+    var memos: [MemoData] = [] // 메모 데이터를 저장하는 배열
 
 //    var memos: [Memo] = [
 //        Memo(title: "첫 번째 메모", date: Date(), folderName: "개인", folderColor: .red, content: ""),
@@ -20,7 +20,7 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
     
     var memoListView: MemoListView!
     let titleLabel = UILabel()
-    var folder: FolderData
+    var folder: FolderData // 메모 리스트 뷰
     
     init(folder: FolderData) {
         self.folder = folder
@@ -39,8 +39,10 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
         setupNavigationBar()
     }
 
+    // 메모 로드 메서드
     func loadMemos() {
-        memos = CoreDataManager.shared.getMemos()
+        let allMemos = CoreDataManager.shared.getMemos()
+        memos = allMemos.filter { $0.folderId == self.folder.id }
     }
 
     private func setupMemoListView() {
@@ -73,12 +75,14 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
     
     @objc func fabTapped() {
         let addMemoVC = AddMemoPageViewController()
+        addMemoVC.selectedFolderId = folder.id // 현재 폴더의 ID 설정
         addMemoVC.delegate = self // Delegate 설정
         addMemoVC.transitioningDelegate = self
         addMemoVC.modalPresentationStyle = .custom
         present(addMemoVC, animated: true, completion: nil)
     }
 
+    // 메모가 추가된 후 호출되는 메서드
     func didAddMemo() {
         loadMemos()
         memoListView.tableView.reloadData()
@@ -94,10 +98,10 @@ extension MemoListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoCell", for: indexPath) as! MemoCell
             
         let memo = memos[indexPath.row]
-            
         cell.titleLabel.text = memo.content
         cell.dateLabel.text = memo.date
-            
+        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        
         return cell
     }
 }
@@ -120,7 +124,7 @@ extension MemoListViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { tableView.deselectRow(at: indexPath, animated: true) // 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
         let selectedMemo = memos[indexPath.row]
         let editMemoVC = AddMemoPageViewController()
         editMemoVC.delegate = self

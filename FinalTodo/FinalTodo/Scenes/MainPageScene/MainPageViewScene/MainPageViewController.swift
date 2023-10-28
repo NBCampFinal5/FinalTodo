@@ -5,12 +5,12 @@
 //  Created by SeoJunYoung on 2023/10/10.
 //
 
-import SnapKit
-import UIKit
-
 // TODO: - View를 변경하는 이유가 뭘까요?
 // TODO: - manager 위치 디자인 패턴
 // TODO: - Folder클래스 삭제 및 Folders 클래스 적용
+
+import SnapKit
+import UIKit
 
 class MainPageViewController: UIViewController {
     var items = [Any]()
@@ -66,6 +66,7 @@ class MainPageViewController: UIViewController {
     
     @objc func fabTapped() {
         let addMemoVC = AddMemoPageViewController()
+        addMemoVC.selectedFolderId = "allNote" // "모든 노트" 폴더에 저장하기 위한 ID 설정
         addMemoVC.transitioningDelegate = self
         addMemoVC.modalPresentationStyle = .custom
         present(addMemoVC, animated: true, completion: nil)

@@ -120,6 +120,7 @@
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
 		C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CC48B2ADD2C060085C048 /* Notifications.swift */; };
+		C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */; };
 		C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -205,6 +206,7 @@
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderSelectPageViewController.swift; sourceTree = "<group>"; };
 		C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoMainNotifyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -325,6 +327,7 @@
 				C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */,
 				083C986D2AD90129006895D2 /* TimeSettingPageViewController.swift */,
 				69EBADC12AE0F29C0009CB21 /* LocationSettingViewController.swift */,
+				C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */,
 			);
 			path = AddMemoNotifySettingScene;
 			sourceTree = "<group>";
@@ -736,6 +739,7 @@
 				037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
+				C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */,
 				C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,

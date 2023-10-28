@@ -1,12 +1,16 @@
 import SnapKit
 import UIKit
 
+// 새 메모를 추가하거나 기존 메모를 편집할 때 호출되는 델리게이트 프로토콜
 protocol AddMemoDelegate: AnyObject {
     func didAddMemo()
 }
 
 class AddMemoPageViewController: UIViewController {
+    // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
     weak var delegate: AddMemoDelegate?
+    var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
+    var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
 
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
@@ -69,30 +73,49 @@ private extension AddMemoPageViewController {
             print("메모 내용이 없습니다.")
             return
         }
-        print("메모 내용이 존재합니다.")
 
         // 현재 날짜를 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-        print("현재 날짜를 문자열로 변환: \(dateString)")
 
-        let newMemo = MemoData(
-            id: UUID().uuidString,
-            folderId: "FOLDER_ID",
-            date: dateString,
-            content: content,
-            isPin: false,
-            locationNotifySetting: "",
-            timeNotifySetting: ""
-        )
-        print("새로운 메모 객체 생성됨: \(newMemo)")
-
-        // CoreDataManager를 사용하여 CoreData에 저장
-        CoreDataManager.shared.createMemo(newMemo: newMemo) {
-            print("메모가 성공적으로 저장되었습니다.")
-            self.delegate?.didAddMemo() // 먼저 delegate 메서드를 호출
-            self.dismiss(animated: true)
+        let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
+        
+        // 메모 수정 또는 새 메모 생성
+        if let memoId = currentMemoId {
+            // 기존 메모 업데이트 로직
+            let updatedMemo = MemoData(
+                id: memoId,
+                folderId: folderId,
+                date: dateString,
+                content: content,
+                isPin: false,
+                locationNotifySetting: "",
+                timeNotifySetting: ""
+            )
+            // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
+            CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
+                print("메모가 성공적으로 업데이트되었습니다.")
+                self.delegate?.didAddMemo()
+                self.dismiss(animated: true)
+            }
+        } else {
+            // 새로운 메모 생성 로직
+            let newMemo = MemoData(
+                id: UUID().uuidString,
+                folderId: folderId,
+                date: dateString,
+                content: content,
+                isPin: false,
+                locationNotifySetting: "",
+                timeNotifySetting: ""
+            )
+            // CoreDataManager를 사용하여 CoreData에 저장
+            CoreDataManager.shared.createMemo(newMemo: newMemo) {
+                print("메모가 성공적으로 저장되었습니다.")
+                self.delegate?.didAddMemo()
+                self.dismiss(animated: true)
+            }
         }
     }
 }
@@ -160,8 +183,10 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
 //            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 1: // 위치 설정을 선택한 경우
             vc = LocationSettingPageViewController()
-//        case 2: // 폴더 선택
-//            vc = FolderSelectPageViewController()
+        case 2: // 폴더 선택
+            let folderSelectVC = FolderSelectPageViewController()
+            folderSelectVC.delegate = self
+            vc = folderSelectVC
         default:
             break
         }
@@ -231,8 +256,18 @@ extension AddMemoPageViewController: NotifySettingDelegate {
 }
 
 extension AddMemoPageViewController {
+    // 메모 데이터를 불러와서 UI에 반영하는 메서드
     func loadMemoData(memo: MemoData) {
         memoView.contentTextView.text = memo.content
+        currentMemoId = memo.id
+        selectedFolderId = memo.folderId // 폴더 ID도 로드
+    }
+}
 
+extension AddMemoPageViewController: FolderSelectDelegate {
+    // 폴더 선택이 완료되었을 때의 콜백
+    func didSelectFolder(folderId: String) {
+        // 선택된 폴더의 ID 저장
+        selectedFolderId = folderId
     }
 }
