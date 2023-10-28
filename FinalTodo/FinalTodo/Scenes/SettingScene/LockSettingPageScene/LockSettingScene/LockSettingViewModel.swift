@@ -13,9 +13,9 @@ class LockSettingViewModel {
     
     lazy var isLock: Observable<Bool> = Observable(userDefaultManager.getLockIsOn())
     
-    let cellDatas: [SettingOption] = [
-//        SettingOption(icon: "lock", title: "잠금 설정", showSwitch: true),
-//        SettingOption(icon: "lock.rotation", title: "비밀번호 변경", showSwitch: false),
+    lazy var cellDatas: [SettingOption] = [
+        SettingOption(icon: "lock", title: "잠금 설정", showSwitch: true, isOn: userDefaultManager.getLockIsOn()),
+        SettingOption(icon: "lock.rotation", title: "비밀번호 변경", showSwitch: false, isOn: false),
     ]
     
 }

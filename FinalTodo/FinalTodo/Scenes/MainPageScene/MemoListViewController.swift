@@ -42,7 +42,11 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
     // 메모 로드 메서드
     func loadMemos() {
         let allMemos = CoreDataManager.shared.getMemos()
+        if folder.id == "allNote" {
+        memos = allMemos
+        } else {
         memos = allMemos.filter { $0.folderId == self.folder.id }
+        }
     }
 
     private func setupMemoListView() {
@@ -124,14 +128,11 @@ extension MemoListViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { tableView.deselectRow(at: indexPath, animated: true) // 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { 
+        tableView.deselectRow(at: indexPath, animated: true) // 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
         let selectedMemo = memos[indexPath.row]
-        let editMemoVC = AddMemoPageViewController()
-        editMemoVC.delegate = self
-        editMemoVC.loadMemoData(memo: selectedMemo) // 선택한 메모 데이터 로드
-        editMemoVC.transitioningDelegate = self
-        editMemoVC.modalPresentationStyle = .custom
-        present(editMemoVC, animated: true, completion: nil)
+        let editMemoVC = MemoViewController()
+        navigationController?.pushViewController(editMemoVC, animated: true)
     }
 }
 

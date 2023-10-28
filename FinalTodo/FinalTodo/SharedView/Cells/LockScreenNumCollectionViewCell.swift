@@ -15,7 +15,8 @@ class LockScreenNumCollectionViewCell: UICollectionViewCell {
         label.font = .preferredFont(forTextStyle: .title1)
         label.text = "test"
         label.textAlignment = .center
-        label.textColor = ColorManager.themeArray[0].pointColor01
+        label.textColor = .systemBackground
+        
         return label
     }()
     
@@ -42,7 +43,7 @@ class LockScreenNumCollectionViewCell: UICollectionViewCell {
 
 private extension LockScreenNumCollectionViewCell {
     func setUp() {
-        contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
+        contentView.backgroundColor = .systemGray4
         let spacing = Constant.defaultPadding * 2
         let width = (Constant.screenWidth - (Constant.defaultPadding * 6) - (spacing * 2)) / 3
         contentView.layer.cornerRadius = width / 2

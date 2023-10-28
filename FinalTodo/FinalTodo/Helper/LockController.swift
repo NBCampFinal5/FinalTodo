@@ -76,7 +76,7 @@ extension LockController {
     // MARK: - SetUp
 
     func setUp() {
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         view.addSubview(lockScreenView)
         lockScreenView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
