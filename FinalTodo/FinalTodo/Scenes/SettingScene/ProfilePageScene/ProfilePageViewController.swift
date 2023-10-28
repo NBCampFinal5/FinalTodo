@@ -9,136 +9,165 @@ import SnapKit
 import UIKit
 
 class ProfilePageViewController: UIViewController {
-    let viewModel = ProfilePageViewModel()
+    private let viewModel = ProfilePageViewModel()
 
-    lazy var idLabel: UILabel = {
-        let label = UILabel()
-        label.text = viewModel.idLabelText
-        label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
-        return label
+    lazy var userNickNameText = viewModel.userNickName {
+        didSet {
+            userNickNameEditButton.setTitle("안녕하세요, <\(userNickNameText)> 님!", for: .normal)
+        }
+    }
+
+    lazy var rewardNickNameText = viewModel.rewardNickName {
+        didSet {
+            rewardNickNameEditButton.setTitle("<\(rewardNickNameText)>랑 메모 쓰러 가요!", for: .normal)
+        }
+    }
+
+    private lazy var rewardImageButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: viewModel.giniImage), for: .normal)
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = UIColor.black.cgColor
+        button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
+        button.backgroundColor = .systemBackground
+        return button
     }()
 
-    lazy var nickNameLabel: CommandLabelView = {
-        let title = "닉네임"
-        let placeholder = viewModel.nickNameLabelPlaceholder
-        let view = CommandLabelView(title: title, placeholder: placeholder, isSecureTextEntry: false)
-        return view
+    private lazy var userNickNameEditButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("안녕하세요, <\(userNickNameText)> 님!", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
+        button.backgroundColor = .systemGray4
+        button.addTarget(self, action: #selector(didTapUserNickNameEditButton), for: .touchUpInside)
+        return button
     }()
 
-    lazy var passwordLabel: CommandLabelView = {
-        let title = "비밀번호"
-        let placeholder = viewModel.passwordLabelPlaceholder
-        let view = CommandLabelView(title: title, placeholder: placeholder, isSecureTextEntry: true)
-        return view
+    private lazy var rewardNickNameEditButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("<\(rewardNickNameText)>랑 메모 쓰러 가요!", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
+        button.backgroundColor = .systemGray4
+        button.addTarget(self, action: #selector(didTapRewardNickNameEditButton), for: .touchUpInside)
+        return button
     }()
 
-    lazy var passwordCheckLabel: CommandLabelView = {
-        let title = "비밀번호 확인"
-        let placeholder = viewModel.passwordCheckLabelPlaceholder
-        let view = CommandLabelView(title: title, placeholder: placeholder, isSecureTextEntry: true)
-        return view
-    }()
-
-    lazy var editButton: ButtonTappedView = {
-        let title = "수정"
-        let view = ButtonTappedView(title: title)
-        return view
-    }()
-
-    lazy var allertLabel: UILabel = {
-        let label = UILabel()
-        label.text = "비밀번호가 일치하지 않습니다!"
-        label.font = UIFont.preferredFont(forTextStyle: .caption1)
-        label.textColor = .red
-        label.isHidden = true
-        return label
+    private lazy var deleteAccountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("계정 삭제", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.addTarget(self, action: #selector(didTapDeleteAccountButton), for: .touchUpInside)
+        return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.fetchUserData {
+            print("@@viewDidLoad")
+        }
         setUp()
-        bind()
     }
 }
 
 private extension ProfilePageViewController {
     func setUp() {
-        view.backgroundColor = .systemBackground
         title = "프로필"
-        
-        // 프로토콜 델리게이트 패턴
-        nickNameLabel.delegate = self
-        passwordLabel.delegate = self
-        passwordCheckLabel.delegate = self
-        editButton.delegate = self
+        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
 
-        view.addSubview(idLabel)
-        view.addSubview(nickNameLabel)
-        view.addSubview(passwordLabel)
-        view.addSubview(passwordCheckLabel)
-        view.addSubview(editButton)
-        view.addSubview(allertLabel)
+        view.addSubview(rewardImageButton)
+        view.addSubview(userNickNameEditButton)
+        view.addSubview(rewardNickNameEditButton)
+        view.addSubview(deleteAccountButton)
 
-        idLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constant.screenHeight * 0.1)
+        rewardImageButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.05)
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(Constant.screenWidth * 0.3)
+        }
+
+        userNickNameEditButton.snp.makeConstraints { make in
+            make.top.equalTo(rewardImageButton.snp.bottom).offset(Constant.screenHeight * 0.07)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+
+        rewardNickNameEditButton.snp.makeConstraints { make in
+            make.top.equalTo(userNickNameEditButton.snp.bottom).offset(Constant.defaultPadding)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+
+        deleteAccountButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
             make.centerX.equalToSuperview()
         }
+    }
 
-        nickNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(idLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-        }
-
-        passwordLabel.snp.makeConstraints { make in
-            make.top.equalTo(nickNameLabel.snp.bottom).offset(Constant.screenHeight * 0.03)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-        }
-
-        passwordCheckLabel.snp.makeConstraints { make in
-            make.top.equalTo(passwordLabel.snp.bottom).offset(Constant.screenHeight * 0.03)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-        }
-
-        allertLabel.snp.makeConstraints { make in
-            make.top.equalTo(passwordCheckLabel.snp.bottom).offset(Constant.screenHeight * 0.01)
-            make.centerX.equalToSuperview()
-        }
-
-        editButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordCheckLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+    @objc
+    func didTapGiniImageButton(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+        if let tabBarController = tabBarController {
+            tabBarController.selectedIndex = 2
         }
     }
 
-    func bind() {
-        viewModel.fetchDataFromFirebase() // 파이어베이스에서 유저 정보 가져오기 함수 호출
+    func showEditAlert(editType: ProfilePageViewModel.EditType, completion: @escaping () -> Void) {
+        let title: String
+
+        switch editType {
+        case .userNickName:
+            title = "유저 닉네임 변경"
+        case .rewardNickName:
+            title = "리워드 닉네임 변경"
+        }
+
+        let alertController = UIAlertController(title: title, message: "닉네임을 입력해주세요.", preferredStyle: .alert)
+
+        alertController.addTextField { textField in
+            textField.placeholder = "새로운 닉네임"
+        }
+
+        let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
+            if let textField = alertController.textFields?.first, let newNickName = textField.text {
+                switch editType {
+                case .userNickName:
+                    self.viewModel.updateNickName(type: .userNickName, newName: newNickName)
+                case .rewardNickName:
+                    self.viewModel.updateNickName(type: .rewardNickName, newName: newNickName)
+                }
+            }
+            completion()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
     }
-}
 
-extension ProfilePageViewController: ButtonTappedViewDelegate {
-    func didTapButton(button: UIButton) {
-        print("🟢didTapButton🟢")
-        viewModel.nickNameLabelUserInput = nickNameLabel.inputTextField.text ?? ""
-        viewModel.passwordLabelUserInput = passwordLabel.inputTextField.text ?? ""
-        viewModel.passwordCheckLabelUserInput = passwordCheckLabel.inputTextField.text ?? ""
-
-        viewModel.updateUserData() // 유저데이터 업데이트 함수 호출
-    }
-}
-
-extension ProfilePageViewController: CommandLabelDelegate {
-    func textFieldEditingChanged(_ textField: UITextField) {
-        print("🟢textFieldDidEndEditing🟢")
-        if textField == passwordCheckLabel.inputTextField {
-            let newPassword = passwordLabel.inputTextField.text ?? ""
-            let newPasswordCheck = passwordCheckLabel.inputTextField.text ?? ""
-
-            // 비밀번호와 비밀번호 확인 값이 다르면 allertLabelText를 표시
-            if newPassword != newPasswordCheck {
-                allertLabel.isHidden = false
-            } else {
-                allertLabel.isHidden = true
+    @objc
+    func didTapUserNickNameEditButton(_ sender: UIButton) {
+        showEditAlert(editType: ProfilePageViewModel.EditType.userNickName) {
+            self.viewModel.fetchUserData {
+                self.userNickNameText = self.viewModel.userNickName
             }
         }
+    }
+
+    @objc
+    func didTapRewardNickNameEditButton(_ sender: UIButton) {
+        showEditAlert(editType: ProfilePageViewModel.EditType.rewardNickName) {
+            self.viewModel.fetchUserData {
+                self.rewardNickNameText = self.viewModel.rewardNickName
+            }
+        }
+    }
+
+    @objc
+    func didTapDeleteAccountButton(_ sender: UIButton) {
+        let deleteAccountPageVC = DeleteAccountPageViewController()
+        navigationController?.pushViewController(deleteAccountPageVC, animated: true)
     }
 }
