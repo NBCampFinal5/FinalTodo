@@ -11,52 +11,74 @@ import UIKit
 class ProfilePageViewController: UIViewController {
     private let viewModel = ProfilePageViewModel()
 
+    lazy var Options = [
+        SettingOption(icon: "highlighter", title: "닉네임 변경하기!", showSwitch: false, isOn: false),
+        SettingOption(icon: "highlighter", title: "리워드 네임 변경하기!", showSwitch: false, isOn: false),
+    ]
+
     lazy var userNickNameText = viewModel.userNickName {
         didSet {
-            userNickNameEditButton.setTitle("안녕하세요, <\(userNickNameText)> 님!", for: .normal)
+            nickNameLabel.text = "안녕하세요, <\(userNickNameText)> 님!"
         }
     }
 
     lazy var rewardNickNameText = viewModel.rewardNickName {
         didSet {
-            rewardNickNameEditButton.setTitle("<\(rewardNickNameText)>랑 메모 쓰러 가요!", for: .normal)
+            rewardNameLabel.text = "안녕하세요, <\(rewardNickNameText)> 님!"
         }
     }
 
     private lazy var rewardImageButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: viewModel.giniImage), for: .normal)
-        button.layer.borderWidth = 2.0
-        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1.5
+        button.layer.borderColor = ColorManager.themeArray[0].pointColor01?.cgColor
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = ColorManager.themeArray[0].backgroundColor
         return button
     }()
 
-    private lazy var userNickNameEditButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("안녕하세요, <\(userNickNameText)> 님!", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
-        button.backgroundColor = .systemGray4
-        button.addTarget(self, action: #selector(didTapUserNickNameEditButton), for: .touchUpInside)
-        return button
+    private lazy var chatView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 15
+        view.layer.borderWidth = 1.5
+        view.layer.borderColor = ColorManager.themeArray[0].pointColor01?.cgColor
+        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        return view
     }()
 
-    private lazy var rewardNickNameEditButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("<\(rewardNickNameText)>랑 메모 쓰러 가요!", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .title2)
-        button.backgroundColor = .systemGray4
-        button.addTarget(self, action: #selector(didTapRewardNickNameEditButton), for: .touchUpInside)
-        return button
+    private lazy var nickNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "안녕하세요, <\(userNickNameText)> 님!"
+        label.textAlignment = .center
+        label.textColor = .label
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var rewardNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "<\(rewardNickNameText)>랑 메모 쓰러 가요!"
+        label.textAlignment = .center
+        label.textColor = .label
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private let tableView: UITableView = {
+        let table = UITableView(frame: .zero, style: .insetGrouped)
+        table.rowHeight = Constant.screenHeight * 0.1
+        table.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        return table
     }()
 
     private lazy var deleteAccountButton: UIButton = {
         let button = UIButton()
         button.setTitle("계정 삭제", for: .normal)
-        button.setTitleColor(.red, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.addTarget(self, action: #selector(didTapDeleteAccountButton), for: .touchUpInside)
         return button
     }()
@@ -67,6 +89,9 @@ class ProfilePageViewController: UIViewController {
             print("@@viewDidLoad")
         }
         setUp()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
     }
 }
 
@@ -76,26 +101,40 @@ private extension ProfilePageViewController {
         view.backgroundColor = ColorManager.themeArray[0].backgroundColor
 
         view.addSubview(rewardImageButton)
-        view.addSubview(userNickNameEditButton)
-        view.addSubview(rewardNickNameEditButton)
+        view.addSubview(chatView)
+        chatView.addSubview(nickNameLabel)
+        chatView.addSubview(rewardNameLabel)
+
+        view.addSubview(tableView)
         view.addSubview(deleteAccountButton)
 
         rewardImageButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.05)
-            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().inset(Constant.defaultPadding)
             make.width.height.equalTo(Constant.screenWidth * 0.3)
         }
 
-        userNickNameEditButton.snp.makeConstraints { make in
-            make.top.equalTo(rewardImageButton.snp.bottom).offset(Constant.screenHeight * 0.07)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.05)
+        chatView.snp.makeConstraints { make in
+            make.centerY.equalTo(rewardImageButton.snp.centerY)
+            make.leading.equalTo(rewardImageButton.snp.trailing).offset(Constant.defaultPadding)
+            make.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenWidth * 0.3)
         }
 
-        rewardNickNameEditButton.snp.makeConstraints { make in
-            make.top.equalTo(userNickNameEditButton.snp.bottom).offset(Constant.defaultPadding)
+        nickNameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(Constant.defaultPadding)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.05)
+        }
+
+        rewardNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(nickNameLabel.snp.bottom).offset(Constant.defaultPadding)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+        }
+
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(rewardImageButton.snp.bottom).offset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenHeight * 0.3)
+            make.leading.trailing.equalToSuperview()
         }
 
         deleteAccountButton.snp.makeConstraints { make in
@@ -109,6 +148,7 @@ private extension ProfilePageViewController {
         navigationController?.popViewController(animated: true)
         if let tabBarController = tabBarController {
             tabBarController.selectedIndex = 2
+            self.tabBarController?.tabBar.isHidden = false
         }
     }
 
@@ -148,26 +188,41 @@ private extension ProfilePageViewController {
     }
 
     @objc
-    func didTapUserNickNameEditButton(_ sender: UIButton) {
-        showEditAlert(editType: ProfilePageViewModel.EditType.userNickName) {
-            self.viewModel.fetchUserData {
-                self.userNickNameText = self.viewModel.userNickName
-            }
-        }
-    }
-
-    @objc
-    func didTapRewardNickNameEditButton(_ sender: UIButton) {
-        showEditAlert(editType: ProfilePageViewModel.EditType.rewardNickName) {
-            self.viewModel.fetchUserData {
-                self.rewardNickNameText = self.viewModel.rewardNickName
-            }
-        }
-    }
-
-    @objc
     func didTapDeleteAccountButton(_ sender: UIButton) {
         let deleteAccountPageVC = DeleteAccountPageViewController()
-        navigationController?.pushViewController(deleteAccountPageVC, animated: true)
+        navigationController?.pushViewController(deleteAccountPageVC, animated: true) {}
+    }
+}
+
+extension ProfilePageViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Options.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
+        let model = Options[indexPath.row]
+        cell.configure(with: model)
+        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 0 {
+            showEditAlert(editType: ProfilePageViewModel.EditType.userNickName) {
+                self.viewModel.fetchUserData {
+                    self.userNickNameText = self.viewModel.userNickName
+                }
+            }
+
+        } else if indexPath.row == 1 {
+            showEditAlert(editType: ProfilePageViewModel.EditType.rewardNickName) {
+                self.viewModel.fetchUserData {
+                    self.rewardNickNameText = self.viewModel.rewardNickName
+                }
+            }
+        }
     }
 }
