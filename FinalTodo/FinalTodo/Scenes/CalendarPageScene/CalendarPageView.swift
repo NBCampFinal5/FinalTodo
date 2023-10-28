@@ -12,7 +12,7 @@ class CalendarPageView: UIView {
         let configuration = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
         let image = UIImage(systemName: "arrow.clockwise", withConfiguration: configuration)
         button.setImage(image, for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].pointColor01
+        button.backgroundColor = .myPointColor
         button.tintColor = .white
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
@@ -45,7 +45,7 @@ class CalendarPageView: UIView {
 
 extension CalendarPageView {
     func setup() {
-        backgroundColor = ColorManager.themeArray[0].backgroundColor
+        backgroundColor = .systemBackground
         addSubview(calendar)
         addSubview(todayButton)
 
