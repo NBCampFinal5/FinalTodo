@@ -76,7 +76,7 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor(named: "theme01PointColor03")
         
         setUp()
         setupColorPicker()
@@ -101,7 +101,7 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
             
             view.addSubview(firstColorLabel)
             firstColorLabel.snp.makeConstraints { make in
-                make.top.equalTo(themeColorLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
+                make.top.equalTo(themeColorLabel.snp.bottom).offset(Constant.screenHeight * 0.07)
                 make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             }
             
