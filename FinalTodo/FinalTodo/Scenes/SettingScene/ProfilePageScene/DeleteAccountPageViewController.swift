@@ -104,12 +104,11 @@ private extension DeleteAccountPageViewController {
     }
 
     func deleteAccount() {
-        let signInPageVC = SignInPageViewController()
-//        navigationController?.pushViewController(signInPageVC, animated: true)
-//        navigationController?.popViewController(animated: true)
-//        navigationController?.popToViewController(signInPageVC, animated: true)
-//        modalPresentationStyle = .overFullScreen
-//        present(signInPageVC, animated: true)
+        // 데이터베이스 유저 정보 삭제 로직 추가 필요
+
+        let signInVC = SignInPageViewController()
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+
         print("계정 삭제 완료")
     }
 }
