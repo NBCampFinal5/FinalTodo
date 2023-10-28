@@ -22,8 +22,8 @@ class CommandLabelView: UIView {
     lazy var inputTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = UIColor(named: "theme01PointColor03")
-        tf.tintColor = UIColor(named: "theme01PointColor01")
-        tf.textColor = UIColor(named: "theme01PointColor01")
+        tf.tintColor = .white
+        tf.textColor = .white
         tf.font = UIFont.preferredFont(forTextStyle: .headline)
         tf.layer.cornerRadius = 5
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션

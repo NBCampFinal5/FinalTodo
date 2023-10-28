@@ -29,7 +29,10 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
     let loginButton = ButtonTappedView(title: "로그인")
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
 
+
+
 //    private let viewModel = SignInPageViewModel()
+
 }
 
 extension SignInPageViewController {
@@ -107,8 +110,9 @@ extension SignInPageViewController {
         view.endEditing(true)
     }
 
-    // 로그인 버튼 색갈 바뀌는 함수
+
     @objc func textFieldEditingChanged(_ textField: UITextField) {
+
         if textField.text?.count == 1 {
             if textField.text?.first == " " {
                 textField.text = ""
@@ -127,12 +131,17 @@ extension SignInPageViewController {
         loginButton.setButtonEnabled(true)
     }
 
+
+
     // 로그인버튼 누르면 다음화면으로 넘어가는 것 구현
     @objc func didTapButton() {}
+
 }
 
 extension SignInPageViewController: ButtonTappedViewDelegate {
     func didTapButton(button: UIButton) {
+
+
 //        guard let email = loginBar.inputTextField.text else { return }
 //        guard let password = passwordBar.inputTextField.text else { return }
 //        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
@@ -147,5 +156,6 @@ extension SignInPageViewController: ButtonTappedViewDelegate {
         // 서령: 로그인 버튼 클릭 시 씬델리게이트의 루트뷰 컨트롤러 탭바로 변경
         let tabbar = TabBarController()
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: tabbar, animated: true)
+
     }
 }
