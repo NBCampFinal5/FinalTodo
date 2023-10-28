@@ -96,5 +96,6 @@ extension LockSettingViewController: SettingCellDelegate {
         } else {
             viewModel.isLock.value = isOn
         }
+        viewModel.cellDatas[0].isOn = isOn
     }
 }

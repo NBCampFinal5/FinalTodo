@@ -10,9 +10,10 @@ import SnapKit
 
 class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelegate {
     
-    private let theme1View: UIView = {
+    lazy var theme1View: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "theme01PointColor01")
+        view.backgroundColor = UIColor(hex: coredataManager.getUser().themeColor)
+        
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 10
         view.layer.borderColor = UIColor.white.cgColor
@@ -74,10 +75,12 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
         return button
     }()
     
+    private let coredataManager = CoreDataManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "theme01PointColor03")
-        
+
         setUp()
         setupColorPicker()
     
@@ -87,7 +90,7 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
         // MARK: - SetUp
         func setUp() {
             setUptheme1()
-            setUptheme2()
+//            setUptheme2()
          
         }
         
@@ -122,27 +125,27 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
         }
         
         
-        func setUptheme2() {
-            
-            view.addSubview(secondColorLabel)
-            secondColorLabel.snp.makeConstraints { make in
-                make.top.equalTo(theme1View.snp.bottom).offset(Constant.screenHeight * 0.1)
-                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            }
-            view.addSubview(theme2View)
-            theme2View.snp.makeConstraints { make in
-                make.top.equalTo(secondColorLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-                make.centerX.equalToSuperview()
-                make.height.equalTo(Constant.screenHeight * 0.1)
-                make.width.equalTo(Constant.screenHeight * 0.1)
-            }
-            
-            view.addSubview(secondColorChangeButton)
-            secondColorChangeButton.snp.makeConstraints { make in
-                make.top.equalTo(theme2View.snp.bottom).offset(Constant.screenHeight * 0.01)
-                make.centerX.equalToSuperview()
-            }
-        }
+//        func setUptheme2() {
+//            
+//            view.addSubview(secondColorLabel)
+//            secondColorLabel.snp.makeConstraints { make in
+//                make.top.equalTo(theme1View.snp.bottom).offset(Constant.screenHeight * 0.1)
+//                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+//            }
+//            view.addSubview(theme2View)
+//            theme2View.snp.makeConstraints { make in
+//                make.top.equalTo(secondColorLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
+//                make.centerX.equalToSuperview()
+//                make.height.equalTo(Constant.screenHeight * 0.1)
+//                make.width.equalTo(Constant.screenHeight * 0.1)
+//            }
+//            
+//            view.addSubview(secondColorChangeButton)
+//            secondColorChangeButton.snp.makeConstraints { make in
+//                make.top.equalTo(theme2View.snp.bottom).offset(Constant.screenHeight * 0.01)
+//                make.centerX.equalToSuperview()
+//            }
+//        }
     
     }
 
@@ -194,12 +197,30 @@ extension ColorUIViewController {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
 
         // 버튼의 태그를 사용하여 어떤 버튼을 클릭했는지 구별
-        if firstColorChangeButton.tag == 1 {
-            theme1View.backgroundColor = viewController.selectedColor
-        } else if secondColorChangeButton.tag == 2 {
-            theme2View.backgroundColor = viewController.selectedColor
-        }
+//        if firstColorChangeButton.tag == 1 {
+//            theme1View.backgroundColor = viewController.selectedColor
+//        } else if secondColorChangeButton.tag == 2 {
+//            theme2View.backgroundColor = viewController.selectedColor
+//        }
 
+        
+        let user = coredataManager.getUser()
+        
+        if user.id == "error" {
+            let alert = UIAlertController(title: "오류", message: "로그인이 필요합니다", preferredStyle: .alert)
+            let yes = UIAlertAction(title: "확인", style: .cancel)
+            alert.addAction(yes)
+            present(alert, animated: true)
+        } else {
+            let color = viewController.selectedColor.toHexString()
+            let updateUser = UserData(id: user.id, nickName: user.nickName, folders: user.folders, memos: user.memos, rewardPoint: user.rewardPoint, rewardName: user.rewardName, themeColor: color)
+            coredataManager.updateUser(targetId: user.id, newUser: updateUser) {
+                print("Update Color")
+            }
+            UIColor.myPointColor = UIColor(hex: color)
+            theme1View.backgroundColor = UIColor(hex: color)
+        }
+        
         viewController.dismiss(animated: true, completion: nil)
     }
 

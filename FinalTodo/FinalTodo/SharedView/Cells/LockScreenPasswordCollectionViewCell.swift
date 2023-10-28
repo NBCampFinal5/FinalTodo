@@ -21,9 +21,9 @@ class LockScreenPasswordCollectionViewCell: UICollectionViewCell {
     
     func bind(toggle: Bool) {
         if toggle {
-            contentView.backgroundColor = ColorManager.themeArray[0].pointColor01
+            contentView.backgroundColor = .myPointColor
         } else {
-            contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
+            contentView.backgroundColor = .systemGray4
         }
         
     }
@@ -32,6 +32,6 @@ class LockScreenPasswordCollectionViewCell: UICollectionViewCell {
 private extension LockScreenPasswordCollectionViewCell {
     func setUp() {
         contentView.layer.cornerRadius = Constant.screenWidth * 0.05 / 2
-        contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
+        contentView.backgroundColor = .systemGray4
     }
 }

@@ -10,7 +10,12 @@ import SnapKit
 
 class MainPageView: UIView {
     
-    var tableView: UITableView!
+    var tableView: UITableView = {
+        let view = UITableView(frame: .zero, style: .insetGrouped)
+        view.allowsSelectionDuringEditing = true
+        return view
+    }()
+    
     var fab: UIButton!
     
     override init(frame: CGRect) {
@@ -24,15 +29,11 @@ class MainPageView: UIView {
     }
     
     private func setupUI() {
-        tableView = UITableView()
-        tableView.backgroundColor = ColorManager.themeArray[0].backgroundColor
-        tableView.separatorStyle = .none
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.allowsSelectionDuringEditing = true
         addSubview(tableView)
         
         fab = UIButton(type: .custom)
-        fab.backgroundColor = ColorManager.themeArray[0].pointColor01
+        fab.backgroundColor = .myPointColor
         fab.layer.cornerRadius = 28
         fab.setImage(UIImage(systemName: "plus"), for: .normal)
         fab.tintColor = .white

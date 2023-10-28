@@ -39,7 +39,7 @@ class MainPageViewController: UIViewController {
         setupNavigationBar()
         navigationController?.configureBar()
         tabBarController?.configureBar()
-        changeStatusBarBgColor(bgColor: ColorManager.themeArray[0].backgroundColor!)
+        changeStatusBarBgColor(bgColor: .systemBackground)
     }
     
     private func setupDelegates() {
@@ -85,15 +85,15 @@ class MainPageViewController: UIViewController {
 
 extension UINavigationController {
     func configureBar() {
-        navigationBar.tintColor = ColorManager.themeArray[0].pointColor01
-        navigationBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        navigationBar.tintColor = .myPointColor
+//        navigationBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
     }
 }
 
 extension UITabBarController {
     func configureBar() {
-        tabBar.tintColor = ColorManager.themeArray[0].pointColor01
-        tabBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        tabBar.tintColor = .myPointColor
+//        tabBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
     }
 }
 
@@ -188,27 +188,19 @@ extension UITableViewCell {
     func configureAsSpacingCell() {
         textLabel?.text = nil
         layer.borderWidth = 0
-        backgroundColor = ColorManager.themeArray[0].backgroundColor
         selectionStyle = .none
         imageView?.image = .none
     }
     
     func configureAsAllNotesCell() {
         textLabel?.text = "모든 노트"
-        textLabel?.textColor = ColorManager.themeArray[0].pointColor01
         let templateImage = UIImage(systemName: "note.text")?.withRenderingMode(.alwaysTemplate)
         imageView?.image = templateImage
-        imageView?.tintColor = ColorManager.themeArray[0].pointColor01
-        layer.borderColor = ColorManager.themeArray[0].pointColor01?.cgColor
-        layer.borderWidth = 0.5
-        backgroundColor = ColorManager.themeArray[0].pointColor02
+        imageView?.tintColor = .myPointColor
     }
     
     func configureCellWith(item: FolderData) {
-        layer.borderColor = UIColor.gray.cgColor
-        layer.borderWidth = 0.5
-        backgroundColor = ColorManager.themeArray[0].pointColor02
-        textLabel?.textColor = ColorManager.themeArray[0].pointColor01
+        textLabel?.textColor = .label
         
         textLabel?.text = item.title
         
@@ -286,33 +278,3 @@ class Folder {
     }
 }
 
-extension UIColor {
-    convenience init(hex: String, alpha: CGFloat = 1.0) {
-        var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
-
-        if hexFormatted.hasPrefix("#") {
-            hexFormatted = String(hexFormatted.dropFirst())
-        }
-
-        assert(hexFormatted.count == 6, "Invalid hex code used.")
-
-        var rgbValue: UInt64 = 0
-        Scanner(string: hexFormatted).scanHexInt64(&rgbValue)
-
-        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-                  alpha: alpha)
-    }
-
-    func toHexString() -> String {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-        let rgb = Int(r*255)<<16 | Int(g*255)<<8 | Int(b*255)<<0
-
-        return String(format: "#%06x", rgb)
-    }
-}
