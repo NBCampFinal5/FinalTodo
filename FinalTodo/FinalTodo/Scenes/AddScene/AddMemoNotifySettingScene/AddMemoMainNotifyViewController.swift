@@ -132,14 +132,47 @@ class AddMemoMainNotifyViewController: UIViewController {
             if let combinedDate = calendar.date(from: combinedComponents) {
                 Notifications.shared.scheduleNotificationAtDate(title: "날짜 및 시간 알림", body: "알림을 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
                 print("예약된 알림 시간: \(combinedDate)")
+
+                // 토스트 메시지로 예약된 날짜와 시간 보여줌
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm"
+                showToast(message: "알림이 \(formatter.string(from: combinedDate))에 예약되었습니다.", duration: 2.0)
+
                 dismiss(animated: true)
             }
         } else {
             // 날짜나 시간 중 하나라도 설정되지 않았을 경우 경고 표시
-            let alertController = UIAlertController(title: "경고", message: "날짜와 시간을 모두 설정해주셍", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "경고", message: "날짜와 시간을 모두 설정해주세요", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "확인", style: .default))
             present(alertController, animated: true)
         }
+    }
+
+    func showToast(message: String, duration: TimeInterval = 3.0) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14)
+        toastLabel.text = message
+        toastLabel.alpha = 0.5
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        // 화면 최상단에 표시하기위함
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        window?.addSubview(toastLabel)
+        // 위치와 크기 지정
+        toastLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constant.screenWidth * 0.8)
+            make.height.equalTo(Constant.screenHeight * 0.04)
+            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
+        }
+        UIView.animate(withDuration: duration, delay: 0.3, options: .curveEaseInOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
     }
 }
 

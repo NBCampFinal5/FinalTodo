@@ -2,17 +2,13 @@ import SnapKit
 import UIKit
 
 class SettingPageViewController: UIViewController {
-    // 접근 제어(open>public>internal(default)>File-private>private), 특정 코드의 세부구현 감추고 필요한 만큼만 공개해서 정보 보호
-    // private: 선언된 중괄호{} 내부에서만 사용 가능
     private let tableView: UITableView = {
-        // tableView style 설정 1) plain 2) grouped 3) insetGrouped
         let table = UITableView(frame: .zero, style: .insetGrouped)
         return table
     }()
 
-    // ☑️ 코드리뷰 제안1: 이중배열로 변경하는 것이 더 좋을 듯! + SettingDataManager 만들어서 데이터모델 분리 필요!
-    var settingOptionData: [[SettingOption]] = [] // 이중배열로 섹션과 열에 들어갈 데이터 표시 후 빈 배열 처리
-    let settingOptionManager = SettingOptionManager() // 데이터매니저 인스턴스 생성
+    var settingOptionData: [[SettingOption]] = []
+    let settingOptionManager = SettingOptionManager()
 }
 
 extension SettingPageViewController {
@@ -23,6 +19,11 @@ extension SettingPageViewController {
         setUp()
         setUpTableView()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tabBarController?.tabBar.isHidden = false
+    }
 }
 
 private extension SettingPageViewController {
@@ -32,7 +33,6 @@ private extension SettingPageViewController {
         view.addSubview(tableView)
         settingOptionManager.makeSettingOptions() // 데이터 만들기
         settingOptionData = settingOptionManager.getSettingOptions() // 데이터매니저에서 데이터 받아오기!
-        print("settingOptionData: \(settingOptionData)")
     }
 
     func setUpTableView() {
@@ -47,38 +47,29 @@ private extension SettingPageViewController {
 
 extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(#function)
         return settingOptionData.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
         if section == 0 {
-            print("section[0] number: \(settingOptionData[0].count)")
             return settingOptionData[0].count
         } else if section == 1 {
-            print("section[1] number: \(settingOptionData[1].count)")
             return settingOptionData[1].count
         }
         return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(#function)
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         if indexPath.section == 0 {
             let model = settingOptionData[0][indexPath.row]
-            print("model[0]: \(model)")
             cell.configure(with: model)
         } else if indexPath.section == 1 {
             let model = settingOptionData[1][indexPath.row]
-            print("model[1]: \(model)")
             cell.configure(with: model)
         }
 
         cell.backgroundColor = ColorManager.themeArray[0].pointColor02
-
-        // 셀 악세사리타입 설정
         cell.accessoryType = .disclosureIndicator
 
         return cell
@@ -96,19 +87,28 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
         if indexPath.section == 0 && indexPath.row == 0 {
             // 알림 화면으로 이동
             navigationController?.pushViewController(notifyVC, animated: true) // 성준
+            tabBarController?.tabBar.isHidden = true
+
         } else if indexPath.section == 0 && indexPath.row == 1 {
-            // 테마컬러 화면으로 이동 ☑️
+            // 테마컬러 화면으로 이동
             navigationController?.pushViewController(themeColorVC, animated: true)
+            tabBarController?.tabBar.isHidden = true
+
         } else if indexPath.section == 0 && indexPath.row == 2 {
             // 잠금화면으로 이동
             let lockVC = LockSettingViewController()
             navigationController?.pushViewController(lockVC, animated: true)
+            tabBarController?.tabBar.isHidden = true
+
         } else if indexPath.section == 1 && indexPath.row == 0 {
-            // 프로필 화면으로 이동 ☑️
+            // 프로필 화면으로 이동
             navigationController?.pushViewController(profileVC, animated: true)
+            tabBarController?.tabBar.isHidden = true
+
         } else if indexPath.section == 1 && indexPath.row == 1 {
-            // 로그인 화면으로 이동 ☑️
-            navigationController?.pushViewController(singInVC, animated: true)
+            // 로그아웃 버튼 - 로그인 화면으로 이동
+            let signInVC = SignInPageViewController()
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
         }
     }
 }

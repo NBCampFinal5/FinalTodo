@@ -1,3 +1,4 @@
+import UIKit
 import UserNotifications
 
 class Notifications {
@@ -19,6 +20,10 @@ class Notifications {
 
     // 선택한 시간 후에 알림을 예약하는 함수
     func scheduleNotification(title: String, body: String, timeInterval: TimeInterval, soundEnabled: Bool, vibrationEnabled: Bool) {
+        // 앱이 포그라운드에 있을 때만 "앱 실행 중 알림" 스위치의 상태를 확인
+        if UIApplication.shared.applicationState == .active, !NotifySettingManager.shared.isNotificationEnabled {
+            return
+        }
         if !NotifySettingManager.shared.isNotificationEnabled { return } // 알림이 꺼져있다면 함수 종료
         // 알림의 내용을 설정
         let content = UNMutableNotificationContent()
@@ -41,6 +46,10 @@ class Notifications {
 
     // 선택한 날짜에 알림을 예약하는 함수
     func scheduleNotificationAtDate(title: String, body: String, date: Date, identifier: String, soundEnabled: Bool, vibrationEnabled: Bool) {
+        // 앱이 포그라운드에 있을 때만 "앱 실행 중 알림" 스위치의 상태를 확인
+        if UIApplication.shared.applicationState == .active, !NotifySettingManager.shared.isNotificationEnabled {
+            return
+        }
         if !NotifySettingManager.shared.isNotificationEnabled { return } // 알림이 꺼져있다면 함수 종료
         // 알림의 내용을 설정
         let content = UNMutableNotificationContent()
