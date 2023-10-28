@@ -28,6 +28,7 @@
 		083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */; };
 		083C986B2AD8E9EE006895D2 /* ModalTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986A2AD8E9EE006895D2 /* ModalTopView.swift */; };
 		083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C986D2AD90129006895D2 /* TimeSettingPageViewController.swift */; };
+		0843FA492AEB9B890036D8C4 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0843FA482AEB9B890036D8C4 /* SearchViewModel.swift */; };
 		084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411F82AD56870005F2FA9 /* AppDelegate.swift */; };
 		084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084411FA2AD56870005F2FA9 /* SceneDelegate.swift */; };
 		084412022AD56871005F2FA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 084412012AD56871005F2FA9 /* Assets.xcassets */; };
@@ -157,6 +158,7 @@
 		083C98682AD8DED1006895D2 /* AddMemoPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoPageViewModel.swift; sourceTree = "<group>"; };
 		083C986A2AD8E9EE006895D2 /* ModalTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTopView.swift; sourceTree = "<group>"; };
 		083C986D2AD90129006895D2 /* TimeSettingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingPageViewController.swift; sourceTree = "<group>"; };
+		0843FA482AEB9B890036D8C4 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		084411F52AD56870005F2FA9 /* FinalTodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084411F82AD56870005F2FA9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		084411FA2AD56870005F2FA9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -354,6 +356,15 @@
 			path = AddMemoNotifySettingScene;
 			sourceTree = "<group>";
 		};
+		0843FA472AEB9B6E0036D8C4 /* SearchViewScene */ = {
+			isa = PBXGroup;
+			children = (
+				69EBADC92AE912680009CB21 /* SearchViewController.swift */,
+				0843FA482AEB9B890036D8C4 /* SearchViewModel.swift */,
+			);
+			path = SearchViewScene;
+			sourceTree = "<group>";
+		};
 		084411EC2AD56870005F2FA9 = {
 			isa = PBXGroup;
 			children = (
@@ -420,7 +431,7 @@
 				6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */,
 				6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */,
 				6906BAA22ADD06860088FE6E /* MemoListView.swift */,
-				69EBADC92AE912680009CB21 /* SearchViewController.swift */,
+				0843FA472AEB9B6E0036D8C4 /* SearchViewScene */,
 			);
 			path = MainPageScene;
 			sourceTree = "<group>";
@@ -818,6 +829,7 @@
 				081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
+				0843FA492AEB9B890036D8C4 /* SearchViewModel.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,
 				081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */,
