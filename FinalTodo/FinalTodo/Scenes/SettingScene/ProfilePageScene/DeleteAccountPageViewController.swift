@@ -43,13 +43,11 @@ class DeleteAccountPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        navigationController?.navigationBar.isHidden = false
         setUp()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        navigationController?.navigationBar.isHidden = true
     }
 }
 

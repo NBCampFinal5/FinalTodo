@@ -8,7 +8,6 @@
 import SnapKit
 import UIKit
 
-// 인셋 테이블뷰로 변경 -> 닉네임(변경) 리워드네임(변경) / 인셋 테이블뷰(클릭 불가) -> [아이디.닉네임.리워드네임.리워드포인트]
 class ProfilePageViewController: UIViewController {
     private let viewModel = ProfilePageViewModel()
 
@@ -64,18 +63,10 @@ class ProfilePageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        navigationController?.navigationBar.isHidden = false
         viewModel.fetchUserData {
-            print("@@")
+            print("@@viewDidLoad")
         }
         setUp()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        navigationController?.popToRootViewController(animated: true)
     }
 }
 

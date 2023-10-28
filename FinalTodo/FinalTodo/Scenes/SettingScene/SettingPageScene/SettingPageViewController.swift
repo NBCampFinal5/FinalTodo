@@ -2,9 +2,7 @@ import SnapKit
 import UIKit
 
 class SettingPageViewController: UIViewController {
-
     private let tableView: UITableView = {
-       
         let table = UITableView(frame: .zero, style: .insetGrouped)
         return table
     }()
@@ -35,7 +33,6 @@ private extension SettingPageViewController {
         view.addSubview(tableView)
         settingOptionManager.makeSettingOptions() // 데이터 만들기
         settingOptionData = settingOptionManager.getSettingOptions() // 데이터매니저에서 데이터 받아오기!
-        print("settingOptionData: \(settingOptionData)")
     }
 
     func setUpTableView() {
@@ -50,38 +47,29 @@ private extension SettingPageViewController {
 
 extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        print(#function)
         return settingOptionData.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
         if section == 0 {
-            print("section[0] number: \(settingOptionData[0].count)")
             return settingOptionData[0].count
         } else if section == 1 {
-            print("section[1] number: \(settingOptionData[1].count)")
             return settingOptionData[1].count
         }
         return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(#function)
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         if indexPath.section == 0 {
             let model = settingOptionData[0][indexPath.row]
-            print("model[0]: \(model)")
             cell.configure(with: model)
         } else if indexPath.section == 1 {
             let model = settingOptionData[1][indexPath.row]
-            print("model[1]: \(model)")
             cell.configure(with: model)
         }
 
         cell.backgroundColor = ColorManager.themeArray[0].pointColor02
-
-        // 셀 악세사리타입 설정
         cell.accessoryType = .disclosureIndicator
 
         return cell
@@ -116,7 +104,7 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             // 프로필 화면으로 이동
             navigationController?.pushViewController(profileVC, animated: true)
             tabBarController?.tabBar.isHidden = true
-            
+
         } else if indexPath.section == 1 && indexPath.row == 1 {
             // 로그아웃 버튼 - 로그인 화면으로 이동
             let signInVC = SignInPageViewController()
