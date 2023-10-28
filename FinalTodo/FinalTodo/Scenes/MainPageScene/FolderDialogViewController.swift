@@ -20,7 +20,7 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
     var colorTitleLabel: UILabel!
     var colorNameLabel: UILabel!
     var arrowImageView: UIImageView!
-    var initialFolder: Folder?
+    var initialFolder: FolderData?
     
     var selectedColor: UIColor = .white {
         didSet {
@@ -28,7 +28,7 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
         }
     }
     
-    var completion: ((String, UIColor) -> Void)?
+    var completion: ((String, UIColor, String?) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +38,8 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
     
     func setFolder() {
         if let initialFolder = initialFolder {
-            folderNameTextField.text = initialFolder.name
-            selectedColor = initialFolder.color
+            folderNameTextField.text = initialFolder.title
+            selectedColor = UIColor(hex: initialFolder.color)
         }
     }
     
@@ -129,7 +129,7 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
     
     @objc func addFolder() {
         if let name = folderNameTextField.text, !name.isEmpty {
-            completion?(name, selectedColor)
+            completion?(name, selectedColor, initialFolder?.id)
             dismiss(animated: true, completion: nil)
         }
     }

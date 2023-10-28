@@ -5,17 +5,18 @@
 //  Created by SeoJunYoung on 2023/10/10.
 //
 
-import UIKit
-import SnapKit
-
 // TODO: - View를 변경하는 이유가 뭘까요?
 // TODO: - manager 위치 디자인 패턴
 // TODO: - Folder클래스 삭제 및 Folders 클래스 적용
+
+import UIKit
+import SnapKit
 
 class MainPageViewController: UIViewController {
     
     var items = [Any]()
     let locationManager = LocationTrackingManager.shared
+    let coredataManager = CoreDataManager.shared
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -117,7 +118,6 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             cell.configureCellWith(item: items[indexPath.row - 3])
         }
-        
         return cell
     }
     
@@ -201,7 +201,6 @@ extension UITableViewCell {
             textLabel?.text = itemString
         } else if let folder = item as? Folder {
             textLabel?.text = folder.name
-            
             let size = CGSize(width: 24, height: 24)
             UIGraphicsBeginImageContextWithOptions(size, false, 0)
             folder.color.setFill()

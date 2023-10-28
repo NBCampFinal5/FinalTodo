@@ -2,11 +2,11 @@ import SnapKit
 import UIKit
 
 class NotifyPageViewController: UIViewController {
-     lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
-         tableView.delegate = self
-         tableView.dataSource = self
-         
+        tableView.delegate = self
+        tableView.dataSource = self
+
         return tableView
     }()
 
@@ -51,6 +51,12 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = ColorManager.themeArray[0].pointColor02
         cell.delegate = self
 
+        // 앱 실행 중 알림이 꺼져있을 경우, 사운드와 진동의 스위치를 비활성화합니다.
+        if indexPath.row == 1 || indexPath.row == 2 {
+            cell.isUserInteractionEnabled = NotifySettingManager.shared.isNotificationEnabled
+            cell.contentView.alpha = NotifySettingManager.shared.isNotificationEnabled ? 1.0 : 0.5
+        }
+
         return cell
     }
 
@@ -74,6 +80,15 @@ extension NotifyPageViewController: SettingCellDelegate {
         switch indexPath.row {
         case 0: // 앱 실행 중 알림
             NotifySettingManager.shared.isNotificationEnabled = isOn
+            // 알림이 꺼져있을 경우, 사운드와 진동도 꺼짐
+            if !isOn {
+                NotifySettingManager.shared.isSoundEnabled = false
+                NotifySettingManager.shared.isVibrationEnabled = false
+            }
+            // 관련된 셀들만 업데이트합니다.
+            let soundIndexPath = IndexPath(row: 1, section: 0)
+            let vibrationIndexPath = IndexPath(row: 2, section: 0)
+            tableView.reloadRows(at: [soundIndexPath, vibrationIndexPath], with: .automatic)
         case 1: // 앱 실행 중 사운드
             NotifySettingManager.shared.isSoundEnabled = isOn
         case 2: // 앱 실행 중 진동

@@ -3,8 +3,8 @@ import UIKit
 class AddMemoPageViewModel {
     let optionImageAry: [String] = [
         "날짜 및 시간알림",
-//        "시간 알림",
-        "위치 설정"
+        "위치 설정",
+        "폴더 선택"
     ]
 
     var selectedDate: Date? // 사용자가 설정한 날짜를 저장하기 위한 속성
