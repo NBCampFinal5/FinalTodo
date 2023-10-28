@@ -43,7 +43,13 @@ class DeleteAccountPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController?.navigationBar.isHidden = false
         setUp()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+//        navigationController?.navigationBar.isHidden = true
     }
 }
 
@@ -99,8 +105,9 @@ private extension DeleteAccountPageViewController {
 
     func deleteAccount() {
         let signInPageVC = SignInPageViewController()
-        navigationController?.pushViewController(signInPageVC, animated: true)
-
+//        navigationController?.pushViewController(signInPageVC, animated: true)
+//        navigationController?.popViewController(animated: true)
+//        navigationController?.popToViewController(signInPageVC, animated: true)
 //        modalPresentationStyle = .overFullScreen
 //        present(signInPageVC, animated: true)
         print("계정 삭제 완료")

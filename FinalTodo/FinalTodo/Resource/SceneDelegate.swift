@@ -15,24 +15,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBar = TabBarController()
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
+        window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
-        print("[SceneDelegate]:",#function)
+        print("[SceneDelegate]:", #function)
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        print("[SceneDelegate]:",#function)
+        print("[SceneDelegate]:", #function)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        print("[SceneDelegate]:",#function)
+        print("[SceneDelegate]:", #function)
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        print("[SceneDelegate]:",#function)
+        print("[SceneDelegate]:", #function)
         let manager = UserDefaultsManager()
         if manager.getLockIsOn() {
             guard let rootViewController = window?.rootViewController else { return }
@@ -41,19 +41,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        print("[SceneDelegate]:",#function)
+        print("[SceneDelegate]:", #function)
     }
-    
-
 }
 
 extension SceneDelegate {
     // MARK: - RootViewChangeMethod
 
     func changeRootVC(viewController: UIViewController, animated: Bool) {
-        guard let window = self.window else { return }
+        guard let window = window else { return }
         window.rootViewController = viewController
         UIView.transition(with: window, duration: 0.5, options: [.transitionCrossDissolve], animations: nil, completion: nil)
     }
 }
-
