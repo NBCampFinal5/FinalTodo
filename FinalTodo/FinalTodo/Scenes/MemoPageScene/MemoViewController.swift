@@ -260,18 +260,18 @@ extension MemoViewController: DateSettingDelegate {
     }
 
     func didResetDateSetting() {
-        changeCellBackground(at: 0, to: ColorManager.themeArray[0].pointColor02!)
+        changeCellBackground(at: 0, to: .secondarySystemBackground)
     }
 }
 
 extension MemoViewController: NotifySettingDelegate {
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
-        changeCellBackground(at: 1, to: .systemYellow)
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
 
     func didResetNotifySetting() {
-        changeCellBackground(at: 1, to: ColorManager.themeArray[0].pointColor02!)
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
 }
 

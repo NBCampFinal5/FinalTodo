@@ -13,7 +13,6 @@ import SnapKit
 import UIKit
 
 class MainPageViewController: UIViewController {
-    
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
     
@@ -54,7 +53,7 @@ class MainPageViewController: UIViewController {
         let searchButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonTapped))
         let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(folderButtonTapped))
         navigationItem.rightBarButtonItems = [folderButtonItem, searchButtonItem]
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: ColorManager.themeArray[0].pointColor01 ?? .black]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
     }
     
     @objc func fabTapped() {
@@ -85,15 +84,13 @@ class MainPageViewController: UIViewController {
 
 extension UINavigationController {
     func configureBar() {
-        navigationBar.tintColor = .myPointColor
-//        navigationBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        navigationBar.tintColor = .secondaryLabel
     }
 }
 
 extension UITabBarController {
     func configureBar() {
-        tabBar.tintColor = .myPointColor
-//        tabBar.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        tabBar.tintColor = .secondaryLabel
     }
 }
 
@@ -277,4 +274,3 @@ class Folder {
         self.color = color
     }
 }
-

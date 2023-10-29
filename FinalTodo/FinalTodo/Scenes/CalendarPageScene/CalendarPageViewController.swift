@@ -26,10 +26,10 @@ class CalendarPageViewController: UIViewController {
     private func setupNavigationBar() {
         let ddayButton = UIBarButtonItem(title: "D-day", style: .plain, target: self, action: #selector(didTapDdayButton))
         title = "캘린더"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorManager.themeArray[0].pointColor01 ?? .black]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
         navigationItem.rightBarButtonItem = ddayButton
-        navigationController?.navigationBar.tintColor = ColorManager.themeArray[0].pointColor01
-        navigationController?.navigationBar.barTintColor = ColorManager.themeArray[0].backgroundColor
+        navigationController?.navigationBar.tintColor = .label
+        navigationController?.navigationBar.barTintColor = .systemBackground
     }
 
     // D-day 버튼 터치 시 호출
@@ -107,14 +107,14 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 오늘 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         if date == Date().startOfDay {
-            return ColorManager.themeArray[0].pointColor01 // 오늘 날짜 배경색
+            return .myPointColor // 오늘 날짜 배경색
         }
         return nil
     }
 
     // 선택 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-        return ColorManager.themeArray[0].pointColor02 // 선택된 날짜 배경색
+        return .myPointColor // 선택된 날짜 배경색
     }
 }
 

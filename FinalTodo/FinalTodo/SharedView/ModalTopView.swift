@@ -20,14 +20,14 @@ class ModalTopView: UIView {
         let button = UIButton()
         let image = UIImage(systemName: "xmark.circle.fill")
         button.setImage(image, for: .normal)
-        button.tintColor = ColorManager.themeArray[0].pointColor02
+        button.tintColor = .systemBackground
         button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
     
     private let divider: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorManager.themeArray[0].pointColor02
+        view.backgroundColor = .systemFill
         return view
     }()
 

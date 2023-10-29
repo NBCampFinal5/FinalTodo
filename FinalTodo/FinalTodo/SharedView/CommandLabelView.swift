@@ -13,7 +13,7 @@ class CommandLabelView: UIView {
     //작은 레이블, 입력필드 위에 설명할수 있는 무언가 적을 수 있는 레이블
     private lazy var commandLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "theme01PointColor01")
+        label.textColor = .label
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         return label
     }()
@@ -21,7 +21,7 @@ class CommandLabelView: UIView {
     //입력바(입력받을수있는 공간..)
     lazy var inputTextField : UITextField = {
         var tf = UITextField()
-        tf.backgroundColor = UIColor(named: "theme01PointColor03")
+        tf.backgroundColor = .secondarySystemBackground
         tf.tintColor = .white
         tf.textColor = .white
         tf.font = UIFont.preferredFont(forTextStyle: .headline)

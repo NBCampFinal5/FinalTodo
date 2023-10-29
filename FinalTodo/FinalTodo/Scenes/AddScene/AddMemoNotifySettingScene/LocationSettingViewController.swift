@@ -29,7 +29,7 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
 private extension LocationSettingPageViewController {
     // MARK: - SetUp
     func setupUI() {
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         
         configureTopView()
         configureSearchBar()
@@ -46,7 +46,7 @@ private extension LocationSettingPageViewController {
     func configureSearchBar() {
         view.addSubview(searchBar)
         searchBar.delegate = self
-        searchBar.barTintColor = ColorManager.themeArray[0].backgroundColor
+        searchBar.barTintColor = .systemBackground
         searchBar.placeholder = "위치 검색"
     }
     
@@ -60,8 +60,8 @@ private extension LocationSettingPageViewController {
         view.addSubview(confirmButton)
         confirmButton.setTitle("설정완료", for: .normal)
         confirmButton.addTarget(self, action: #selector(didTappedConfirmButton), for: .touchUpInside)
-        confirmButton.backgroundColor = ColorManager.themeArray[0].pointColor02
-        confirmButton.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+        confirmButton.backgroundColor = .secondarySystemBackground
+        confirmButton.setTitleColor(.label, for: .normal)
         confirmButton.layer.cornerRadius = 10
     }
     

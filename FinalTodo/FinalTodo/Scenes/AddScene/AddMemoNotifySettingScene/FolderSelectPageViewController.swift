@@ -62,7 +62,7 @@ extension FolderSelectPageViewController: UITableViewDelegate, UITableViewDataSo
         let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath)
         let folder = viewModel.coredataManager.getFolders()[indexPath.row]
         cell.textLabel?.text = folder.title
-        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        cell.backgroundColor = .secondarySystemBackground
         return cell
     }
 

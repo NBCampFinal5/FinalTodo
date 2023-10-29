@@ -20,7 +20,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         let label = UILabel()
         label.text = "로그인"
         label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.textColor = UIColor(named: "theme01PointColor01")
+        label.textColor = .label
         return label
     }()
 
@@ -29,10 +29,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
     let loginButton = ButtonTappedView(title: "로그인")
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
 
-
-
 //    private let viewModel = SignInPageViewModel()
-
 }
 
 extension SignInPageViewController {
@@ -45,8 +42,8 @@ extension SignInPageViewController {
         loginButton.delegate = self
         haveAccountButton.delegate = self
         view.backgroundColor = .white
-        haveAccountButton.changeButtonColor(color: .white)
-        haveAccountButton.changeTitleColor(color: .black)
+        haveAccountButton.changeButtonColor(color: .systemBackground)
+        haveAccountButton.changeTitleColor(color: .secondaryLabel)
         setUp()
     }
 }
@@ -110,9 +107,7 @@ extension SignInPageViewController {
         view.endEditing(true)
     }
 
-
     @objc func textFieldEditingChanged(_ textField: UITextField) {
-
         if textField.text?.count == 1 {
             if textField.text?.first == " " {
                 textField.text = ""
@@ -123,25 +118,20 @@ extension SignInPageViewController {
             let id = loginBar.inputTextField.text, !id.isEmpty,
             let password = passwordBar.inputTextField.text, !password.isEmpty
         else {
-            loginButton.backgroundColor = UIColor(named: "disabledColor")
+            loginButton.backgroundColor = .systemFill
             loginButton.setButtonEnabled(false)
             return
         }
-        loginButton.changeButtonColor(color: UIColor(named: "theme01PointColor01"))
+        loginButton.changeButtonColor(color: .secondarySystemFill)
         loginButton.setButtonEnabled(true)
     }
 
-
-
     // 로그인버튼 누르면 다음화면으로 넘어가는 것 구현
     @objc func didTapButton() {}
-
 }
 
 extension SignInPageViewController: ButtonTappedViewDelegate {
     func didTapButton(button: UIButton) {
-
-
 //        guard let email = loginBar.inputTextField.text else { return }
 //        guard let password = passwordBar.inputTextField.text else { return }
 //        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
@@ -156,6 +146,5 @@ extension SignInPageViewController: ButtonTappedViewDelegate {
         // 서령: 로그인 버튼 클릭 시 씬델리게이트의 루트뷰 컨트롤러 탭바로 변경
         let tabbar = TabBarController()
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: tabbar, animated: true)
-
     }
 }

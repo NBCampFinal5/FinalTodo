@@ -39,12 +39,11 @@ class DdayPageViewController: UIViewController {
         }
         navigationController?.dismiss(animated: true, completion: nil)
     }
-
 }
 
 extension DdayPageViewController {
     func setup() {
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         view.addSubview(ddayPickerView)
 
         ddayPickerView.snp.makeConstraints { make in

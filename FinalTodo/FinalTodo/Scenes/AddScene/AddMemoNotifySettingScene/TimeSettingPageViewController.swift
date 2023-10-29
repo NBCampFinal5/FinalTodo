@@ -41,8 +41,8 @@ class TimeSettingPageViewController: UIViewController {
     lazy var doneButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("설정완료", for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
         return button
@@ -51,8 +51,8 @@ class TimeSettingPageViewController: UIViewController {
     lazy var resetButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("설정초기화", for: .normal)
-        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return button
@@ -176,7 +176,7 @@ private extension TimeSettingPageViewController {
     func showToast(message: String, duration: TimeInterval = 2.0) {
         let toastLabel = UILabel()
         toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
+        toastLabel.textColor = .systemBackground
         toastLabel.textAlignment = .center
         toastLabel.font = UIFont.systemFont(ofSize: 14)
         toastLabel.text = message

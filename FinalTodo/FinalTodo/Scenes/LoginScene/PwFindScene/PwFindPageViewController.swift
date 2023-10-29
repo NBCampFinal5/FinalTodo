@@ -21,7 +21,7 @@ class PwFindPageViewController: UIViewController {
         label.text = "비밀번호 찾기"
         let customFont = UIFont.boldSystemFont(ofSize: 30)
         label.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: customFont)
-        label.textColor = UIColor(named: "theme01PointColor01")
+        label.textColor = .label
         return label
     }()
 
@@ -44,7 +44,7 @@ class PwFindPageViewController: UIViewController {
 private extension PwFindPageViewController {
     // MARK: - setup
     func setup(){
-        view.backgroundColor = UIColor(named: "theme01PointColor02")
+        view.backgroundColor = .systemBackground
         setupInputName()
         setupPhoneNumber()
         setupEnterNumber()

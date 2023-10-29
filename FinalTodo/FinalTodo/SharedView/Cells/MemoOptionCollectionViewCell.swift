@@ -11,7 +11,7 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
     private let categoryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = ColorManager.themeArray[0].pointColor01
+        label.textColor = .label
         label.font = UIFont.preferredFont(forTextStyle: .body)
         return label
     }()
@@ -38,7 +38,7 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
 
 extension MemoOptionCollectionViewCell {
     func setUp() {
-        contentView.backgroundColor = ColorManager.themeArray[0].pointColor02
+        contentView.backgroundColor = .systemBackground
         contentView.layer.cornerRadius = 8
         contentView.addSubview(categoryLabel)
         categoryLabel.snp.makeConstraints { make in
