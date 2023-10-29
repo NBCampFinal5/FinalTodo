@@ -25,13 +25,13 @@ class NotifyPageViewController: UIViewController {
 
 extension NotifyPageViewController {
     func setup() {
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         title = "알림 설정"
         view.addSubview(tableView)
     }
 
     func setupTableView() {
-        tableView.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        tableView.backgroundColor = .systemBackground
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
@@ -48,7 +48,7 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         let model = notifyOptions[indexPath.row]
         cell.configure(with: model)
-        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        cell.backgroundColor = .secondarySystemBackground
         cell.delegate = self
 
         // 앱 실행 중 알림이 꺼져있을 경우, 사운드와 진동의 스위치를 비활성화합니다.

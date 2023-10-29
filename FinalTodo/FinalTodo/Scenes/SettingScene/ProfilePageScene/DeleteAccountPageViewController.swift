@@ -35,7 +35,7 @@ class DeleteAccountPageViewController: UIViewController {
         let label = UILabel()
         label.text = "*주의*\n계정 삭제 시 \n폴더·메모·기니피그 데이터가 함께 삭제됩니다."
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = ColorManager.themeArray[0].pointColor01
+        label.textColor = .systemGray
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -54,7 +54,7 @@ class DeleteAccountPageViewController: UIViewController {
 private extension DeleteAccountPageViewController {
     func setUp() {
         title = "계정 삭제"
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
 
         deleteAccountButton.addTarget(self, action: #selector(DidTapDeleteAccountButton), for: .touchUpInside)
 
