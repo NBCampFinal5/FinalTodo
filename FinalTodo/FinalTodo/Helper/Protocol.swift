@@ -28,3 +28,8 @@ protocol ButtonTappedViewDelegate: AnyObject {
 protocol CommandLabelDelegate: AnyObject {
     func textFieldEditingChanged(_ textField: UITextField)
 }
+
+// 새 메모를 추가하거나 기존 메모를 편집할 때 호출되는 델리게이트 프로토콜
+protocol AddMemoDelegate: AnyObject {
+    func didAddMemo()
+}

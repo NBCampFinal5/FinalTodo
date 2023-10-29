@@ -1,11 +1,6 @@
 import SnapKit
 import UIKit
 
-// 새 메모를 추가하거나 기존 메모를 편집할 때 호출되는 델리게이트 프로토콜
-protocol AddMemoDelegate: AnyObject {
-    func didAddMemo()
-}
-
 class AddMemoPageViewController: UIViewController {
     // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
     weak var delegate: AddMemoDelegate?
@@ -223,7 +218,7 @@ extension AddMemoPageViewController {
     func changeCellBackground(at row: Int, to color: UIColor) {
         let indexPath = IndexPath(row: row, section: 0)
         if let cell = memoView.optionCollectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
-            cell.changeBackgroundColor(to: color)
+           // cell.changeBackgroundColor(to: color)
         } else {
             // 셀이 화면에 보이지 않는 경우 collectionView를 다시 로드하여 UI 업데이트
             memoView.optionCollectionView.reloadData()
@@ -236,7 +231,7 @@ extension AddMemoPageViewController: DateSettingDelegate {
         // 선택된 날짜를 viewModel의 selectedDate에 저장
         viewModel.selectedDate = date
         // 첫 번째 셀(날짜 설정)에 대한 배경색을 변경
-        changeCellBackground(at: 0, to: .systemYellow)
+        changeCellBackground(at: 0, to: .systemGray3)
     }
 
     func didResetDateSetting() {
@@ -247,7 +242,7 @@ extension AddMemoPageViewController: DateSettingDelegate {
 extension AddMemoPageViewController: NotifySettingDelegate {
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
-        changeCellBackground(at: 1, to: .systemYellow)
+        changeCellBackground(at: 1, to: .systemGray3)
     }
 
     func didResetNotifySetting() {
