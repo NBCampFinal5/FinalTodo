@@ -32,9 +32,9 @@ class ProfilePageViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(named: viewModel.giniImage), for: .normal)
         button.layer.borderWidth = 1.5
-        button.layer.borderColor = ColorManager.themeArray[0].pointColor01?.cgColor
+        button.layer.borderColor = UIColor.systemFill.cgColor
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
-        button.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        button.backgroundColor = .systemBackground
         return button
     }()
 
@@ -43,8 +43,8 @@ class ProfilePageViewController: UIViewController {
         view.layer.cornerRadius = 15
         view.layer.cornerRadius = 15
         view.layer.borderWidth = 1.5
-        view.layer.borderColor = ColorManager.themeArray[0].pointColor01?.cgColor
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.layer.borderColor = UIColor.systemFill.cgColor
+        view.backgroundColor = .systemBackground
         return view
     }()
 
@@ -71,7 +71,7 @@ class ProfilePageViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         table.rowHeight = Constant.screenHeight * 0.1
-        table.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        table.backgroundColor = .secondarySystemBackground
         return table
     }()
 
@@ -98,7 +98,7 @@ class ProfilePageViewController: UIViewController {
 private extension ProfilePageViewController {
     func setUp() {
         title = "프로필"
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
 
         view.addSubview(rewardImageButton)
         view.addSubview(chatView)
@@ -203,7 +203,7 @@ extension ProfilePageViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         let model = Options[indexPath.row]
         cell.configure(with: model)
-        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        cell.backgroundColor = .secondarySystemBackground
         cell.accessoryType = .disclosureIndicator
         return cell
     }

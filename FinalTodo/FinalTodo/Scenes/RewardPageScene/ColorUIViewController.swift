@@ -16,7 +16,7 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
         
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 10
-        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderColor = UIColor.systemGray.cgColor
         return view
     }()
     
@@ -79,7 +79,7 @@ class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "theme01PointColor03")
+        view.backgroundColor = .systemBackground
 
         setUp()
         setupColorPicker()

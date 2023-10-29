@@ -14,13 +14,14 @@ class SettingCell: UITableViewCell {
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .tertiaryLabel
+        imageView.tintColor = .myPointColor
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 
     private let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .label
         return label
     }()
 
@@ -35,7 +36,7 @@ class SettingCell: UITableViewCell {
     // 날짜, 시간 표시 라벨
     private lazy var detailLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = .secondaryLabel
         label.textAlignment = .right
         return label
     }()
@@ -86,6 +87,7 @@ class SettingCell: UITableViewCell {
         cellSwitch.isHidden = !option.showSwitch
         cellSwitch.isOn = option.isOn
         detailLabel.text = option.detailText
+        iconImageView.tintColor = .myPointColor
     }
 
     // 성준 - 스위치 on / off 시 설정
