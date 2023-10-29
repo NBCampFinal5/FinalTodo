@@ -34,6 +34,10 @@ private extension SettingPageViewController {
         view.addSubview(tableView)
         settingOptionManager.makeSettingOptions() // 데이터 만들기
         settingOptionData = settingOptionManager.getSettingOptions() // 데이터매니저에서 데이터 받아오기!
+        
+        if let navigationBar = self.navigationController?.navigationBar {
+            navigationBar.tintColor = .label
+        }
     }
 
     func setUpTableView() {
