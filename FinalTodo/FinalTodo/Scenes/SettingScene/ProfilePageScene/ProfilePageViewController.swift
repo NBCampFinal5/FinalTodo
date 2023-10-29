@@ -24,7 +24,7 @@ class ProfilePageViewController: UIViewController {
 
     lazy var rewardNickNameText = viewModel.rewardNickName {
         didSet {
-            rewardNameLabel.text = "안녕하세요, <\(rewardNickNameText)> 님!"
+            rewardNameLabel.text = "<\(rewardNickNameText)>랑 메모 쓰러 가요!"
         }
     }
 
