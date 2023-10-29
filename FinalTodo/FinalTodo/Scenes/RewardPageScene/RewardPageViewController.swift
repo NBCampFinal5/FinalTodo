@@ -5,34 +5,33 @@
 //  Created by SeoJunYoung on 2023/10/10.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class RewardPageViewController: UIViewController {
-    
-    
     private var score = 0
-    //버튼들
-    lazy var plusButton:UIButton = {
+    // 버튼들
+    lazy var plusButton: UIButton = {
         let button = UIButton()
         button.setTitle("+1", for: .normal)
         button.setTitleColor(UIColor(named: "theme01PointColor03"), for: .normal)
         button.addTarget(self, action: #selector(increaseScore), for: .touchUpInside)
-        button.backgroundColor = .gray
+        button.backgroundColor = .myPointColor
         button.layer.cornerRadius = 10
         return button
     }()
-    lazy var minusButton:UIButton = {
+
+    lazy var minusButton: UIButton = {
         let button = UIButton()
         button.setTitle("-1", for: .normal)
         button.setTitleColor(UIColor(named: "theme01PointColor03"), for: .normal)
         button.addTarget(self, action: #selector(diminishScore), for: .touchUpInside)
-        button.backgroundColor = .gray
+        button.backgroundColor = .myPointColor
         button.layer.cornerRadius = 10
         return button
     }()
     
-    lazy var manualButton:UIButton = {
+    lazy var manualButton: UIButton = {
         let button = UIButton()
         let image = UIImage(named: "question")
         button.backgroundColor = .clear
@@ -41,7 +40,7 @@ class RewardPageViewController: UIViewController {
         return button
     }()
     
-    //이미지뷰
+    // 이미지뷰
     let giniimageView: UIImageView = {
         let ImageView = UIImageView()
         ImageView.image = UIImage(named: "gini1")
@@ -54,7 +53,7 @@ class RewardPageViewController: UIViewController {
         return ImageView
     }()
     
-    //레이블
+    // 레이블
     let scoreLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
@@ -71,25 +70,28 @@ class RewardPageViewController: UIViewController {
         return label
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "theme01PointColor02")
+        view.backgroundColor = .systemBackground
         scoreLabel.text = "\(score)"
         setup()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        plusButton.backgroundColor = .myPointColor
+        minusButton.backgroundColor = .myPointColor
+    }
 }
 
-private extension RewardPageViewController{
+private extension RewardPageViewController {
     func setup() {
         setupImageView()
         setupButton()
         setuplabel()
     }
     
-    func setupImageView(){
-        
+    func setupImageView() {
         view.addSubview(giniimageView)
         giniimageView.snp.makeConstraints { make in
             make.centerX.equalTo(view.snp.centerX)
@@ -97,10 +99,9 @@ private extension RewardPageViewController{
             make.width.equalTo(view.snp.width).multipliedBy(0.5)
             make.height.equalTo(view.snp.height).multipliedBy(0.25)
         }
-        
     }
-    func setupButton(){
-        
+
+    func setupButton() {
         view.addSubview(plusButton)
         plusButton.snp.makeConstraints { make in
             make.top.equalTo(giniimageView.snp.bottom).offset(Constant.screenHeight * 0.01)
@@ -125,8 +126,8 @@ private extension RewardPageViewController{
             make.height.equalTo(view.snp.height).multipliedBy(0.07)
         }
     }
-    func setuplabel(){
-        
+
+    func setuplabel() {
         view.addSubview(giniName)
         giniName.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(Constant.screenHeight * 0.1) // 상단에 간격 추가
@@ -150,31 +151,31 @@ private extension RewardPageViewController{
 }
 
 extension RewardPageViewController {
-    
     @objc func increaseScore() {
         score += 1
-            scoreLabel.text = "\(score)"
+        scoreLabel.text = "\(score)"
             
-            switch score {
-            case 10:
-                giniimageView.image = UIImage(named: "gini2")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1) // 이미지 확대
-                })
-            case 20:
-                giniimageView.image = UIImage(named: "gini3")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.4)
-                })
-            case 30:
-                giniimageView.image = UIImage(named: "gini4")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.21, y: 1.41)
-                })
-            default:
-                break // 다른 점수에 대한 특별한 조치 없음
-            }
+        switch score {
+        case 10:
+            giniimageView.image = UIImage(named: "gini2")
+            UIView.animate(withDuration: 0.5, animations: {
+                self.giniimageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1) // 이미지 확대
+            })
+        case 20:
+            giniimageView.image = UIImage(named: "gini3")
+            UIView.animate(withDuration: 0.5, animations: {
+                self.giniimageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.4)
+            })
+        case 30:
+            giniimageView.image = UIImage(named: "gini4")
+            UIView.animate(withDuration: 0.5, animations: {
+                self.giniimageView.transform = CGAffineTransform(scaleX: 1.21, y: 1.41)
+            })
+        default:
+            break // 다른 점수에 대한 특별한 조치 없음
+        }
     }
+
     @objc func diminishScore() {
         // 버튼을 누를 때 호출되는 함수
         if score > 0 {
@@ -207,7 +208,6 @@ extension RewardPageViewController {
             }
         }
     }
-    
     
     @objc func showPopup() {
         let alertController = UIAlertController(title: "포인트로 기니피그를 키워보세요.", message: "매일 출석, 또는 할일을 끝내고\n포인트를 쌓아 기니피그를 키우세요!\n기니피그 이름을 지어줄래요?", preferredStyle: .alert)
@@ -245,11 +245,4 @@ extension RewardPageViewController {
 
         present(inputAlertController, animated: true, completion: nil)
     }
-
 }
-
-
-
-
-
-

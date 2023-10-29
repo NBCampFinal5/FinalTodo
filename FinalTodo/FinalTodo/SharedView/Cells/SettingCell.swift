@@ -87,6 +87,7 @@ class SettingCell: UITableViewCell {
         cellSwitch.isHidden = !option.showSwitch
         cellSwitch.isOn = option.isOn
         detailLabel.text = option.detailText
+        iconImageView.tintColor = .myPointColor
     }
 
     // 성준 - 스위치 on / off 시 설정

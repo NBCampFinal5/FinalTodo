@@ -23,6 +23,7 @@ extension SettingPageViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = false
+        tableView.reloadData()
     }
 }
 
@@ -68,7 +69,7 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             let model = settingOptionData[1][indexPath.row]
             cell.configure(with: model)
         }
-
+        
         cell.backgroundColor = .secondarySystemBackground
         cell.accessoryType = .disclosureIndicator
 
