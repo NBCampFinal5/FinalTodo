@@ -33,7 +33,7 @@ class AddNotifyPageViewController: UIViewController {
 
 extension AddNotifyPageViewController {
     func setup() {
-        view.backgroundColor = ColorManager.themeArray[0].backgroundColor
+        view.backgroundColor = .systemBackground
         title = "시간 설정"
 
         view.addSubview(timePickerView)

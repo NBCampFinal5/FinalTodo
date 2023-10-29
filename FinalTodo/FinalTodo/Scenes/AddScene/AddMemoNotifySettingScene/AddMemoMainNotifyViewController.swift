@@ -189,7 +189,7 @@ extension AddMemoMainNotifyViewController: UITableViewDelegate, UITableViewDataS
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         let model = settingOptionData[indexPath.section][indexPath.row]
         cell.configure(with: model)
-        cell.backgroundColor = ColorManager.themeArray[0].pointColor02
+        cell.backgroundColor = .secondarySystemBackground
         cell.accessoryType = .disclosureIndicator
         return cell
     }

@@ -17,7 +17,7 @@ class MemoCell: UITableViewCell {
     let arrowImageView = UIImageView(image: UIImage(systemName: "arrow.right"))
     let separatorLine: UIView = {
         let line = UIView()
-        line.backgroundColor = .gray
+        line.backgroundColor = .secondarySystemBackground
         return line
     }()
     
@@ -41,12 +41,12 @@ class MemoCell: UITableViewCell {
         addSubview(separatorLine)
         
         folderColorView.layer.cornerRadius = 10
-        arrowImageView.tintColor = .gray
-        dateLabel.textColor = .lightGray
+        arrowImageView.tintColor = .secondarySystemBackground
+        dateLabel.textColor = .secondaryLabel
         dateLabel.font = UIFont.systemFont(ofSize: 14)
-        folderNameLabel.textColor = .lightGray
+        folderNameLabel.textColor = .secondaryLabel
         folderNameLabel.font = UIFont.systemFont(ofSize: 14)
-        arrowImageView.tintColor = ColorManager.themeArray[0].pointColor01
+        arrowImageView.tintColor = .label
     }
     
     func setupConstraints() {

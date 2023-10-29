@@ -18,7 +18,7 @@ final class MemoView: UIView {
         flowLayout.minimumLineSpacing = Constant.defaultPadding
         view.isScrollEnabled = false
         view.backgroundColor = .clear
-        view.tintColor = ColorManager.themeArray[0].pointColor02
+        view.tintColor = .systemBackground
         return view
     }()
     

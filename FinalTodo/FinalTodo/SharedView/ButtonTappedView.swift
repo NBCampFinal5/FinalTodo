@@ -14,7 +14,7 @@ class ButtonTappedView: UIView {
     // 버튼
     lazy var anyButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(named: "theme01PointColor03")
+        button.backgroundColor = .label
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
@@ -38,10 +38,10 @@ private extension ButtonTappedView {
     func setup() {
         setupButton()
     }
-  
-    //오토레이아웃
-    func setupButton(){
-        self.addSubview(anyButton)
+
+    // 오토레이아웃
+    func setupButton() {
+        addSubview(anyButton)
         anyButton.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
@@ -51,23 +51,20 @@ private extension ButtonTappedView {
     }
 }
 
-
 extension ButtonTappedView {
-    
     @objc func buttonTapped(_ button: UIButton) {
-           delegate?.didTapButton(button: button)
-       }
-       
-       func setButtonEnabled(_ enabled: Bool) {
-           anyButton.isEnabled = enabled
-       }
-    
-    func changeButtonColor (color: UIColor?) {
+        delegate?.didTapButton(button: button)
+    }
+
+    func setButtonEnabled(_ enabled: Bool) {
+        anyButton.isEnabled = enabled
+    }
+
+    func changeButtonColor(color: UIColor?) {
         anyButton.backgroundColor = color
     }
-    
-    func changeTitleColor (color: UIColor?) {
+
+    func changeTitleColor(color: UIColor?) {
         anyButton.setTitleColor(color, for: .normal)
     }
-    
 }

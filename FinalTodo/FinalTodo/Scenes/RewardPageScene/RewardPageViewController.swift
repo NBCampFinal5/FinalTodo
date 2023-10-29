@@ -14,9 +14,11 @@ class RewardPageViewController: UIViewController {
     lazy var plusButton: UIButton = {
         let button = UIButton()
         button.setTitle("+1", for: .normal)
-        button.setTitleColor(UIColor(named: "theme01PointColor03"), for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.addTarget(self, action: #selector(increaseScore), for: .touchUpInside)
-        button.backgroundColor = .myPointColor
+        button.backgroundColor = .systemBackground
+        button.layer.borderColor = UIColor.myPointColor.cgColor
+        button.layer.borderWidth = 3
         button.layer.cornerRadius = 10
         return button
     }()
@@ -24,9 +26,11 @@ class RewardPageViewController: UIViewController {
     lazy var minusButton: UIButton = {
         let button = UIButton()
         button.setTitle("-1", for: .normal)
-        button.setTitleColor(UIColor(named: "theme01PointColor03"), for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.addTarget(self, action: #selector(diminishScore), for: .touchUpInside)
-        button.backgroundColor = .myPointColor
+        button.backgroundColor = .systemBackground
+        button.layer.borderColor = UIColor.myPointColor.cgColor
+        button.layer.borderWidth = 3
         button.layer.cornerRadius = 10
         return button
     }()
@@ -79,8 +83,8 @@ class RewardPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        plusButton.backgroundColor = .myPointColor
-        minusButton.backgroundColor = .myPointColor
+        plusButton.layer.borderColor = UIColor.myPointColor.cgColor
+        minusButton.layer.borderColor = UIColor.myPointColor.cgColor
     }
 }
 

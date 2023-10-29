@@ -52,7 +52,7 @@ private extension TabBarController {
 
         viewControllers = [mainVC, calendarVC, rewardVC, settingVC]
         tabBar.tintColor = .systemPink
-        tabBar.barTintColor = ColorManager.themeArray[0].backgroundColor // 탭바 배경색 설정
+        tabBar.barTintColor = .secondarySystemBackground // 탭바 배경색 설정
         tabBar.shadowImage = UIImage() // 탭바 경계선 없애기
         tabBar.backgroundImage = UIImage() // 탭바 경계선 없애기
     }
