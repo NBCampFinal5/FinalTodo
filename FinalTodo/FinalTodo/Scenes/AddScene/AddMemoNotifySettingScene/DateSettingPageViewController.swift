@@ -179,21 +179,6 @@ extension DateSettingPageViewController {
             print("설정된 날짜: \(selectedDate)")
         }
 
-        // 선택된 날짜 및 시간이 모두 있을 경우에만 알림을 예약
-//        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
-//            let combinedComponents = DateComponents(year: calendar.component(.year, from: date),
-//                                                    month: calendar.component(.month, from: date),
-//                                                    day: calendar.component(.day, from: date),
-//                                                    hour: calendar.component(.hour, from: time),
-//                                                    minute: calendar.component(.minute, from: time))
-//
-//            if let combinedDate = calendar.date(from: combinedComponents) {
-//                let identifier = UUID().uuidString
-//                viewModel.notificationIdentifier = identifier
-//                Notifications.shared.scheduleNotificationAtDate(title: "?????????", body: "알림을 확인해주세요", date: combinedDate, identifier: identifier, soundEnabled: true, vibrationEnabled: true)
-//                delegate?.didCompleteDateSetting(date: combinedDate)
-//            }
-//        }
         let formattedDate = "\(selectedYear)년 \(selectedMonth)월 \(selectedDay)일"
         showToast(message: "\(formattedDate) 설정이 완료됐습니다.")
 
