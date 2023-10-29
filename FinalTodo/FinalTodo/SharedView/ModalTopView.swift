@@ -5,11 +5,10 @@
 //  Created by SeoJunYoung on 10/13/23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class ModalTopView: UIView {
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .title2)
@@ -20,7 +19,7 @@ class ModalTopView: UIView {
         let button = UIButton()
         let image = UIImage(systemName: "xmark.circle.fill")
         button.setImage(image, for: .normal)
-        button.tintColor = .systemBackground
+        button.tintColor = .label
         button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
@@ -35,9 +34,9 @@ class ModalTopView: UIView {
         super.init(frame: CGRect.zero)
         titleLabel.text = title
         setUp()
-        
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -51,14 +50,14 @@ private extension ModalTopView {
     }
     
     func setUpBackButton() {
-        self.addSubview(backButton)
+        addSubview(backButton)
         backButton.snp.makeConstraints { make in
             make.top.right.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
     
     func setUpTitleLabel() {
-        self.addSubview(titleLabel)
+        addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalTo(backButton.snp.centerY)
@@ -66,7 +65,7 @@ private extension ModalTopView {
     }
     
     func setUpDivider() {
-        self.addSubview(divider)
+        addSubview(divider)
         divider.snp.makeConstraints { make in
             make.top.equalTo(backButton.snp.bottom).offset(Constant.defaultPadding)
             make.height.equalTo(1)

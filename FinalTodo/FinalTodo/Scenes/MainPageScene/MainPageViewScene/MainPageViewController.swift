@@ -84,13 +84,13 @@ class MainPageViewController: UIViewController {
 
 extension UINavigationController {
     func configureBar() {
-        navigationBar.tintColor = .secondaryLabel
+        navigationBar.tintColor = .label
     }
 }
 
 extension UITabBarController {
     func configureBar() {
-        tabBar.tintColor = .secondaryLabel
+        tabBar.tintColor = .label
     }
 }
 

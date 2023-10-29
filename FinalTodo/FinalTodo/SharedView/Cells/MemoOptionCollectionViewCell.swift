@@ -39,6 +39,8 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
 extension MemoOptionCollectionViewCell {
     func setUp() {
         contentView.backgroundColor = .systemBackground
+        contentView.layer.borderColor = UIColor.label.cgColor
+        contentView.layer.borderWidth = 1
         contentView.layer.cornerRadius = 8
         contentView.addSubview(categoryLabel)
         categoryLabel.snp.makeConstraints { make in
