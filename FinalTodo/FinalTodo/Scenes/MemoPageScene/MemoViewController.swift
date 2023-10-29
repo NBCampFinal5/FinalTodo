@@ -1,79 +1,163 @@
-//
-//  MemoViewController.swift
-//  FinalTodo
-//
-//  Created by SeoJunYoung on 2023/10/12.
-//
-
-import UIKit
 import SnapKit
+import UIKit
 
-final class MemoViewController: UIViewController {
-    
-    private let memoView = MemoView()
-    private let isPinButton = UIButton()
-    private let viewModel = MemoViewModel()
+// 새 메모를 추가하거나 기존 메모를 편집할 때 호출되는 델리게이트 프로토콜
+// protocol AddMemoDelegate: AnyObject {
+//    func didAddMemo()
+// }
+
+class MemoViewController: UIViewController {
+    // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
+    weak var delegate: AddMemoDelegate?
+    var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
+    var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
+
+    let memoView = MemoView()
+    let viewModel = AddMemoPageViewModel()
 }
 
 extension MemoViewController {
-    // MARK: - Life Cycle
+    // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setUp()
-        setUpNavigation()
-        bind()
     }
 }
 
 private extension MemoViewController {
-    // MARK: - SetUp
+    // MARK: - setUp
+
     func setUp() {
-        self.view.backgroundColor = ColorManager.themeArray[0].backgroundColor
         setUpMemoView()
+        setupNavigationBar()
     }
-    
+
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
+            make.left.right.bottom.equalToSuperview()
         }
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
     }
-    // MARK: - SetUpNavigation
-    func setUpNavigation() {
-        self.navigationItem.title = "2022년 10월 15일 @@시 @@분"
-        
-        isPinButton.setImage(UIImage(systemName: "pin"), for: .normal)
-        isPinButton.tintColor = ColorManager.themeArray[0].pointColor02
-        isPinButton.addTarget(self, action: #selector(didTapPinButton), for: .touchUpInside)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: isPinButton)
 
+    func setupNavigationBar() {
+        // "메모 추가하기"로 제목 설정
+        navigationItem.title = "메모 추가하기"
+
+        let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(didTapSaveButton))
+        navigationItem.rightBarButtonItem = saveButton
+
+        // "뒤로" 버튼에 대한 액션 설정
+        let backButton = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.leftBarButtonItem = backButton
     }
 }
 
 extension MemoViewController {
-    // MARK: - Method
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-    @objc func didTapPinButton() {
-        viewModel.isPin.value.toggle()
-    }    
-    
-    func bind() {
-        viewModel.isPin.bind { [weak self] toggle in
-            guard let self = self else { return }
-            if toggle {
-                isPinButton.setImage(UIImage(systemName: "pin.fill"), for: .normal)
-                isPinButton.tintColor = ColorManager.themeArray[0].pointColor01
-            } else {
-                isPinButton.setImage(UIImage(systemName: "pin"), for: .normal)
-                isPinButton.tintColor = ColorManager.themeArray[0].pointColor02
+    @objc func didTapSaveButton() {
+        guard let content = memoView.contentTextView.text, !content.isEmpty else {
+            print("메모 내용이 없습니다.")
+            return
+        }
+
+        // 현재 날짜를 문자열로 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+
+        let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
+
+        // 메모 수정 또는 새 메모 생성
+        if let memoId = currentMemoId {
+            // 기존 메모 업데이트 로직
+            let updatedMemo = MemoData(
+                id: memoId,
+                folderId: folderId,
+                date: dateString,
+                content: content,
+                isPin: false,
+                locationNotifySetting: "",
+                timeNotifySetting: ""
+            )
+            // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
+            CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
+                print("메모가 성공적으로 업데이트되었습니다.")
+                self.delegate?.didAddMemo()
+                // self.dismiss(animated: true)
+            }
+        } else {
+            // 새로운 메모 생성 로직
+            let newMemo = MemoData(
+                id: UUID().uuidString,
+                folderId: folderId,
+                date: dateString,
+                content: content,
+                isPin: false,
+                locationNotifySetting: "",
+                timeNotifySetting: ""
+            )
+            // CoreDataManager를 사용하여 CoreData에 저장
+            CoreDataManager.shared.createMemo(newMemo: newMemo) {
+                print("메모가 성공적으로 저장되었습니다.")
+                self.delegate?.didAddMemo()
+                // self.dismiss(animated: true)
             }
         }
+    }
+
+    @objc func didTapBackButton() {
+        guard let content = memoView.contentTextView.text, !content.isEmpty else {
+            print("메모 내용이 없습니다.")
+            return
+        }
+
+        // 현재 날짜를 문자열로 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+
+        let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
+
+        // 메모 수정 또는 새 메모 생성
+        if let memoId = currentMemoId {
+            // 기존 메모 업데이트 로직
+            let updatedMemo = MemoData(
+                id: memoId,
+                folderId: folderId,
+                date: dateString,
+                content: content,
+                isPin: false,
+                locationNotifySetting: "",
+                timeNotifySetting: ""
+            )
+            // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
+            CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
+                print("메모가 성공적으로 업데이트되었습니다.")
+                self.delegate?.didAddMemo()
+            }
+        } else {
+            // 새로운 메모 생성 로직
+            let newMemo = MemoData(
+                id: UUID().uuidString,
+                folderId: folderId,
+                date: dateString,
+                content: content,
+                isPin: false,
+                locationNotifySetting: "",
+                timeNotifySetting: ""
+            )
+            // CoreDataManager를 사용하여 CoreData에 저장
+            CoreDataManager.shared.createMemo(newMemo: newMemo) {
+                print("메모가 성공적으로 저장되었습니다.")
+                self.delegate?.didAddMemo()
+            }
+        }
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -87,7 +171,7 @@ extension MemoViewController: UITextViewDelegate {
         }
         return true
     }
-    
+
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         if textView.text == "" {
             textView.text = "메모를 입력해 주세요."
@@ -98,46 +182,112 @@ extension MemoViewController: UITextViewDelegate {
 }
 
 extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.optionImageAry.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
         cell.bind(title: viewModel.optionImageAry[indexPath.row])
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        let vc = AddMemoPageViewController()
+
+        // 사용자에게 보여질 뷰 컨트롤러를 저장하기 위한 임시 변수를 선언
+        var vc: UIViewController!
+
+        switch indexPath.row {
+        case 0: // "날짜 및 시간알림" 셀 선택 시
+            vc = AddMemoMainNotifyViewController()
+        case 1: // 위치 설정을 선택한 경우
+            vc = LocationSettingPageViewController()
+        case 2: // 폴더 선택
+            let folderSelectVC = FolderSelectPageViewController()
+            folderSelectVC.delegate = self
+            vc = folderSelectVC
+        default:
+            break
+        }
+
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
-        self.present(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 }
 
 extension MemoViewController: UICollectionViewDelegateFlowLayout {
-    // MARK: - 유동적인 Cell넓이 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let leadingTrailingInset: CGFloat = 10
         let cellHeight: CGFloat = Constant.screenHeight * 0.03
-        
+
         let category = viewModel.optionImageAry[indexPath.row]
         let size: CGSize = .init(width: collectionView.frame.width - 10, height: cellHeight)
         let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
-        
+
         let estimatedFrame = category.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
         let cellWidth: CGFloat = estimatedFrame.width + (leadingTrailingInset * 2)
-        
+
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 
 extension MemoViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.7)
+    }
+}
+
+extension MemoViewController {
+    func changeCellBackground(at row: Int, to color: UIColor) {
+        let indexPath = IndexPath(row: row, section: 0)
+        if let cell = memoView.optionCollectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
+            //cell.changeBackgroundColor(to: color)
+        } else {
+            // 셀이 화면에 보이지 않는 경우 collectionView를 다시 로드하여 UI 업데이트
+            memoView.optionCollectionView.reloadData()
+        }
+    }
+}
+
+extension MemoViewController: DateSettingDelegate {
+    func didCompleteDateSetting(date: Date) {
+        // 선택된 날짜를 viewModel의 selectedDate에 저장
+        viewModel.selectedDate = date
+        // 첫 번째 셀(날짜 설정)에 대한 배경색을 변경
+        changeCellBackground(at: 0, to: .systemYellow)
+    }
+
+    func didResetDateSetting() {
+        changeCellBackground(at: 0, to: ColorManager.themeArray[0].pointColor02!)
+    }
+}
+
+extension MemoViewController: NotifySettingDelegate {
+    func didCompleteNotifySetting() {
+        // 두 번째 셀(시간 설정)에 대한 배경색을 변경
+        changeCellBackground(at: 1, to: .systemYellow)
+    }
+
+    func didResetNotifySetting() {
+        changeCellBackground(at: 1, to: ColorManager.themeArray[0].pointColor02!)
+    }
+}
+
+extension MemoViewController {
+    // 메모 데이터를 불러와서 UI에 반영하는 메서드
+    func loadMemoData(memo: MemoData) {
+        memoView.contentTextView.text = memo.content
+        currentMemoId = memo.id
+        selectedFolderId = memo.folderId // 폴더 ID도 로드
+    }
+}
+
+extension MemoViewController: FolderSelectDelegate {
+    // 폴더 선택이 완료되었을 때의 콜백
+    func didSelectFolder(folderId: String) {
+        // 선택된 폴더의 ID 저장
+        selectedFolderId = folderId
     }
 }

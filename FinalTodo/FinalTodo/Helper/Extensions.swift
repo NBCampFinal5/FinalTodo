@@ -47,14 +47,14 @@ extension UIView {
 }
 
 extension UINavigationController {
-    func popViewController(animated: Bool, completion:@escaping (()->())) {
+    func popViewController(animated: Bool, completion: @escaping (() -> ())) {
         CATransaction.setCompletionBlock(completion)
         CATransaction.begin()
         _ = self.popViewController(animated: animated)
         CATransaction.commit()
     }
-    
-    func pushViewController(_ viewController: UIViewController, animated: Bool, completion:@escaping (()->())) {
+
+    func pushViewController(_ viewController: UIViewController, animated: Bool, completion: @escaping (() -> ())) {
         CATransaction.setCompletionBlock(completion)
         CATransaction.begin()
         self.pushViewController(viewController, animated: animated)
@@ -67,7 +67,6 @@ extension UIColor {
 }
 
 extension UIColor {
-    
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         if hex == "error" {
             self.init(red: 0, green: 0, blue: 0, alpha: 1)
@@ -99,5 +98,14 @@ extension UIColor {
         let rgb = Int(r*255)<<16 | Int(g*255)<<8 | Int(b*255)<<0
 
         return String(format: "#%06x", rgb)
+    }
+}
+
+// 배경색 채도에 따른 텍스트 컬러변경
+extension UIColor {
+    static func appropriateTextColor(forBackgroundColor backgroundColor: UIColor) -> UIColor {
+        var brightness: CGFloat = 0.0
+        backgroundColor.getWhite(&brightness, alpha: nil)
+        return brightness > 0.5 ? .black : .white
     }
 }
