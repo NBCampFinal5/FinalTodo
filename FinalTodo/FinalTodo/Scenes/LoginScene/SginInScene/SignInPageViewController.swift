@@ -41,20 +41,46 @@ extension SignInPageViewController {
         passwordBar.delegate = self
         loginButton.delegate = self
         haveAccountButton.delegate = self
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+        isLoginAble(state: false)
         haveAccountButton.changeButtonColor(color: .systemBackground)
         haveAccountButton.changeTitleColor(color: .secondaryLabel)
         setUp()
+        bind()
+       
     }
 }
 
 private extension SignInPageViewController {
     // MARK: - SetUp
 
+    
+    func bind() {
+        viewModel.email.bind { [weak self] email in
+            guard let self = self else { return }
+            if !viewModel.password.value.isEmpty && !email.isEmpty {
+                isLoginAble(state: true)
+            } else {
+                isLoginAble(state: false)
+            }
+        }
+        
+        viewModel.password.bind { [weak self] password in
+            guard let self = self else { return }
+            if !viewModel.email.value.isEmpty && !password.isEmpty {
+                isLoginAble(state: true)
+            } else {
+                isLoginAble(state: false)
+            }
+        }
+    }
+    
+    
     func setUp() {
         setUpUserName()
         setUpPasswordName()
         setUpButton()
+        
     }
 
     func setUpUserName() {
@@ -102,46 +128,73 @@ private extension SignInPageViewController {
 extension SignInPageViewController {
     // MARK: - Method
 
+    
+    func isLoginAble(state: Bool) {
+        UIView.animate(withDuration: 0.3) {
+            if state {
+                self.loginButton.changeTitleColor(color: .systemGray4)
+                self.loginButton.changeButtonColor(color: .secondaryLabel)
+                self.loginButton.setButtonEnabled(true)
+            } else {
+                self.loginButton.changeTitleColor(color: .label)
+                self.loginButton.changeButtonColor(color: .secondarySystemBackground)
+                self.loginButton.setButtonEnabled(false)
+            }
+        }
+    }
     // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
 
     @objc func textFieldEditingChanged(_ textField: UITextField) {
-        if textField.text?.count == 1 {
-            if textField.text?.first == " " {
+        
+        guard let text = textField.text else { return }
+        
+        if text.count == 1 {
+            if text == " " {
                 textField.text = ""
                 return
             }
         }
-        guard
-            let id = loginBar.inputTextField.text, !id.isEmpty,
-            let password = passwordBar.inputTextField.text, !password.isEmpty
-        else {
-            loginButton.backgroundColor = .systemFill
-            loginButton.setButtonEnabled(false)
-            return
+        
+        switch textField {
+        case loginBar.inputTextField:
+            viewModel.email.value = text
+        case passwordBar.inputTextField:
+            viewModel.password.value = text
+        default:
+            print("Unregistered text field")
         }
-        loginButton.changeButtonColor(color: .secondarySystemFill)
-        loginButton.setButtonEnabled(true)
     }
-
-    // 로그인버튼 누르면 다음화면으로 넘어가는 것 구현
-    @objc func didTapButton() {}
 }
 
 extension SignInPageViewController: ButtonTappedViewDelegate {
     func didTapButton(button: UIButton) {
-        guard let email = loginBar.inputTextField.text else { return }
-        guard let password = passwordBar.inputTextField.text else { return }
-        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
-            if loginResult.isSuccess {
-                let rootView = TabBarController()
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
-            } else {
-                print("LoginFail")
+
+        switch button {
+        case loginButton.anyButton:
+            viewModel.loginManager.trySignIn(email: viewModel.email.value, password: viewModel.password.value) { loginResult in
+                if loginResult.isSuccess {
+                    let rootView = TabBarController()
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
+                } else {
+//                    print("LoginFail")
+//                    let alert = UIAlertController(title: "오류", message: "이메일 혹은 비밀번호를 잘못 입력하셨거나 등록되지 않은 이메일 입니다.", preferredStyle: .alert)
+//                    let yes = UIAlertAction(title: "확인", style: .cancel)
+//                    alert.addAction(yes)
+//                    self.present(alert, animated: true)
+                    self.loginBar.shake()
+                    self.passwordBar.shake()
+                }
             }
+        case haveAccountButton.anyButton:
+            let vc = SignUpPageViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            print("Unregistered button")
         }
+        
 
 //        // 서령: 로그인 버튼 클릭 시 씬델리게이트의 루트뷰 컨트롤러 탭바로 변경
 //        let tabbar = TabBarController()

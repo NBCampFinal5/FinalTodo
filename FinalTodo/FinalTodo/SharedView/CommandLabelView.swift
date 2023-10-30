@@ -22,8 +22,8 @@ class CommandLabelView: UIView {
     lazy var inputTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .secondarySystemBackground
-        tf.tintColor = .white
-        tf.textColor = .white
+        tf.tintColor = .label
+        tf.textColor = .label
         tf.font = UIFont.preferredFont(forTextStyle: .headline)
         tf.layer.cornerRadius = 5
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
@@ -47,6 +47,7 @@ class CommandLabelView: UIView {
     }
 }
 private extension CommandLabelView {
+    
     func setup(){
         setupLabelName()
         setupTextField()
