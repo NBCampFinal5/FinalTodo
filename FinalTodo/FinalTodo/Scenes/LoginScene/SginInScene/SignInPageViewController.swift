@@ -15,6 +15,7 @@ import UIKit
 
 // 로그인페이지
 class SignInPageViewController: UIViewController, CommandLabelDelegate {
+    
     // 맨위에 로그인 굵은글자
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
@@ -23,10 +24,19 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         label.textColor = .label
         return label
     }()
-
+    
     let loginBar = CommandLabelView(title: "아이디", placeholder: "아이디를 입력해주세요.", isSecureTextEntry: false)
     let passwordBar = CommandLabelView(title: "비밀번호", placeholder: "비밀번호를 입력해주세요.", isSecureTextEntry: true)
     let loginButton = ButtonTappedView(title: "로그인")
+    let loginInfoLabel: UILabel = {
+        let view = UILabel()
+        view.text = "이메일 혹은 비밀번호를 잘못 입력하셨거나 등록되지 않은 이메일 입니다."
+        view.textColor = .systemRed
+        view.numberOfLines = 0
+        view.font = .preferredFont(forTextStyle: .footnote)
+        view.alpha = 0
+        return view
+    }()
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
 
     private let viewModel = SignInPageViewModel()
@@ -37,14 +47,11 @@ extension SignInPageViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginBar.delegate = self
-        passwordBar.delegate = self
-        loginButton.delegate = self
-        haveAccountButton.delegate = self
         view.backgroundColor = .systemBackground
-        isLoginAble(state: false)
+        loginButton.changeButtonColor(color: .secondarySystemBackground)
         haveAccountButton.changeButtonColor(color: .systemBackground)
         haveAccountButton.changeTitleColor(color: .secondaryLabel)
+        setUpDelegate()
         setUp()
         bind()
        
@@ -53,11 +60,18 @@ extension SignInPageViewController {
 
 private extension SignInPageViewController {
     // MARK: - SetUp
-
+    
+    func setUpDelegate() {
+        loginBar.delegate = self
+        passwordBar.delegate = self
+        loginButton.delegate = self
+        haveAccountButton.delegate = self
+    }
     
     func bind() {
         viewModel.email.bind { [weak self] email in
             guard let self = self else { return }
+            self.showMissMatchMassage(state: false)
             if !viewModel.password.value.isEmpty && !email.isEmpty {
                 isLoginAble(state: true)
             } else {
@@ -67,6 +81,7 @@ private extension SignInPageViewController {
         
         viewModel.password.bind { [weak self] password in
             guard let self = self else { return }
+            self.showMissMatchMassage(state: false)
             if !viewModel.email.value.isEmpty && !password.isEmpty {
                 isLoginAble(state: true)
             } else {
@@ -75,12 +90,11 @@ private extension SignInPageViewController {
         }
     }
     
-    
     func setUp() {
         setUpUserName()
         setUpPasswordName()
+        setUpLoginInfoLabel()
         setUpButton()
-        
     }
 
     func setUpUserName() {
@@ -107,6 +121,14 @@ private extension SignInPageViewController {
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
+    
+    func setUpLoginInfoLabel() {
+        view.addSubview(loginInfoLabel)
+        loginInfoLabel.snp.makeConstraints { make in
+            make.top.equalTo(passwordBar.snp.bottom)
+            make.left.right.equalTo(passwordBar).inset(Constant.defaultPadding)
+        }
+    }
 
     func setUpButton() {
         view.addSubview(loginButton)
@@ -119,7 +141,7 @@ private extension SignInPageViewController {
         view.addSubview(haveAccountButton)
         haveAccountButton.snp.makeConstraints { make in
             make.top.equalTo(loginButton.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
     }
@@ -142,6 +164,18 @@ extension SignInPageViewController {
             }
         }
     }
+    
+    func showMissMatchMassage(state: Bool) {
+        
+        UIView.animate(withDuration: 0.3) {
+            if state {
+                self.loginInfoLabel.alpha = 1
+            } else {
+                self.loginInfoLabel.alpha = 0
+            }
+        }
+    }
+    
     // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -171,7 +205,7 @@ extension SignInPageViewController {
 
 extension SignInPageViewController: ButtonTappedViewDelegate {
     func didTapButton(button: UIButton) {
-
+        
         switch button {
         case loginButton.anyButton:
             viewModel.loginManager.trySignIn(email: viewModel.email.value, password: viewModel.password.value) { loginResult in
@@ -179,11 +213,7 @@ extension SignInPageViewController: ButtonTappedViewDelegate {
                     let rootView = TabBarController()
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
                 } else {
-//                    print("LoginFail")
-//                    let alert = UIAlertController(title: "오류", message: "이메일 혹은 비밀번호를 잘못 입력하셨거나 등록되지 않은 이메일 입니다.", preferredStyle: .alert)
-//                    let yes = UIAlertAction(title: "확인", style: .cancel)
-//                    alert.addAction(yes)
-//                    self.present(alert, animated: true)
+                    self.showMissMatchMassage(state: true)
                     self.loginBar.shake()
                     self.passwordBar.shake()
                 }
@@ -194,10 +224,5 @@ extension SignInPageViewController: ButtonTappedViewDelegate {
         default:
             print("Unregistered button")
         }
-        
-
-//        // 서령: 로그인 버튼 클릭 시 씬델리게이트의 루트뷰 컨트롤러 탭바로 변경
-//        let tabbar = TabBarController()
-//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: tabbar, animated: true)
     }
 }

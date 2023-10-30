@@ -22,9 +22,10 @@ class SignUpPageViewController: UIViewController, ButtonTappedViewDelegate, Comm
         return label
     }()
 
-    let idTextBar = CommandLabelView(title: "아이디", placeholder: "아이디를 입력하세요", isSecureTextEntry: false)
-    let pwTextBar = CommandLabelView(title: "비밀번호", placeholder: "• • • • • • • •", isSecureTextEntry: true)
-    let confirmPwBar = CommandLabelView(title: "비밀번호 확인", placeholder: "• • • • • • • •", isSecureTextEntry: true)
+    let idTextBar = CommandLabelView(title: "이메일", placeholder: "이메일을 입력해 주세요.", isSecureTextEntry: false)
+    let nicknameTextField = CommandLabelView(title: "닉네임", placeholder: "닉네임을 입력해 주세요.", isSecureTextEntry: false)
+    let pwTextBar = CommandLabelView(title: "비밀번호", placeholder: "패스워드를 입력해 주세요.", isSecureTextEntry: true)
+    let confirmPwBar = CommandLabelView(title: "비밀번호 확인", placeholder: "패스워드를 재입력해 주세요.", isSecureTextEntry: true)
     let registerButton = ButtonTappedView(title: "가입하기")
     
     override func viewDidLoad() {
@@ -58,21 +59,31 @@ private extension SignUpPageViewController {
         
         // 아이디텍스트
         view.addSubview(idTextBar)
+        idTextBar.addInfoLabel()
         idTextBar.snp.makeConstraints { make in
-            make.top.equalTo(registerLabel.snp.bottom).offset(Constant.screenHeight * 0.03)
+            make.top.equalTo(registerLabel.snp.bottom).offset(Constant.screenHeight * 0.02)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+        }
+        
+        view.addSubview(nicknameTextField)
+        nicknameTextField.addInfoLabel()
+        nicknameTextField.snp.makeConstraints { make in
+            make.top.equalTo(idTextBar.snp.bottom).offset(Constant.screenHeight * 0.02)
+            make.left.right.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
     
     func setUpPasswordName() {
         // 패스워드 텍스트
         view.addSubview(pwTextBar)
+        pwTextBar.addInfoLabel()
         pwTextBar.snp.makeConstraints { make in
-            make.top.equalTo(idTextBar.snp.bottom).offset(Constant.screenHeight * 0.02)
+            make.top.equalTo(nicknameTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
         
         view.addSubview(confirmPwBar)
+        confirmPwBar.addInfoLabel()
         confirmPwBar.snp.makeConstraints { make in
             make.top.equalTo(pwTextBar.snp.bottom).offset(Constant.screenHeight * 0.02)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
@@ -85,13 +96,19 @@ private extension SignUpPageViewController {
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(confirmPwBar.snp.bottom).offset(Constant.screenHeight * 0.07)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            //        make.height.equalTo(Constant.screenHeight * 0.05)
         }
     }
 }
 
 extension SignUpPageViewController {
     // MARK: - Method
+    
+    // email 유효성 검사
+    func isValidEmail(testStr:String) -> Bool {
+          let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+          let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+          return emailTest.evaluate(with: testStr)
+           }
 
     // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -113,8 +130,8 @@ extension SignUpPageViewController {
             let confirmPw = confirmPwBar.inputTextField.text, !confirmPw.isEmpty
         else {
             // 하나라도 비어 있는 경우 버튼을 비활성화합니다.
-            registerButton.setButtonEnabled(false)
-            registerButton.backgroundColor = .systemFill
+//            registerButton.setButtonEnabled(false)
+//            registerButton.backgroundColor = .systemFill
             return
         }
         

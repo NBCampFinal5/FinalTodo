@@ -18,6 +18,12 @@ class CommandLabelView: UIView {
         return label
     }()
     
+    let infoCommandLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        return label
+    }()
+    
     //입력바(입력받을수있는 공간..)
     lazy var inputTextField : UITextField = {
         var tf = UITextField()
@@ -85,5 +91,15 @@ extension CommandLabelView {
     @objc func textFieldEditingChanged(_ textField: UITextField) {
         // 이 함수를 델리게이트 메서드로 호출
         delegate?.textFieldEditingChanged(textField)
+    }
+}
+
+extension CommandLabelView {
+    func addInfoLabel() {
+        self.addSubview(infoCommandLabel)
+        infoCommandLabel.snp.makeConstraints { make in
+            make.left.equalTo(commandLabel.snp.right).offset(Constant.defaultPadding)
+            make.centerY.equalTo(commandLabel.snp.centerY)
+        }
     }
 }
