@@ -536,7 +536,6 @@
 		08F8AE812AE294DF00F79FD0 /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
-				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
@@ -570,13 +569,6 @@
 				08F8AE7F2AE2897700F79FD0 /* Managers */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		30E798502AD7F4B900903272 /* ThemeColorPageScene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ThemeColorPageScene;
 			sourceTree = "<group>";
 		};
 		30E798532AD7F54C00903272 /* ProfilePageScene */ = {
