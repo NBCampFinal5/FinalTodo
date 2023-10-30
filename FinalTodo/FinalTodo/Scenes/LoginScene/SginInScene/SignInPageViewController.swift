@@ -29,7 +29,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
     let loginButton = ButtonTappedView(title: "로그인")
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
 
-//    private let viewModel = SignInPageViewModel()
+    private let viewModel = SignInPageViewModel()
 }
 
 extension SignInPageViewController {
@@ -132,19 +132,19 @@ extension SignInPageViewController {
 
 extension SignInPageViewController: ButtonTappedViewDelegate {
     func didTapButton(button: UIButton) {
-//        guard let email = loginBar.inputTextField.text else { return }
-//        guard let password = passwordBar.inputTextField.text else { return }
-//        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
-//            if loginResult.isSuccess {
-//                let rootView = TabBarController()
-//                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
-//            } else {
-//                print("LoginFail")
-//            }
-//        }
+        guard let email = loginBar.inputTextField.text else { return }
+        guard let password = passwordBar.inputTextField.text else { return }
+        viewModel.loginManager.trySignIn(email: email, password: password) { loginResult in
+            if loginResult.isSuccess {
+                let rootView = TabBarController()
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
+            } else {
+                print("LoginFail")
+            }
+        }
 
-        // 서령: 로그인 버튼 클릭 시 씬델리게이트의 루트뷰 컨트롤러 탭바로 변경
-        let tabbar = TabBarController()
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: tabbar, animated: true)
+//        // 서령: 로그인 버튼 클릭 시 씬델리게이트의 루트뷰 컨트롤러 탭바로 변경
+//        let tabbar = TabBarController()
+//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: tabbar, animated: true)
     }
 }
