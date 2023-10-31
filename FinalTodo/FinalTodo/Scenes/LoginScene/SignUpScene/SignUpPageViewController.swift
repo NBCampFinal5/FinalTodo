@@ -44,7 +44,6 @@ class SignUpPageViewController: UIViewController, ButtonTappedViewDelegate, Comm
         self.registerButton.setButtonEnabled(false)
         setUp()
         bind()
-        viewModel.loginManager.passwordFind(email: "ghddns34@gmail.com")
     }
 }
 
