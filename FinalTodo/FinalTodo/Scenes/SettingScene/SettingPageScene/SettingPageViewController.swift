@@ -117,8 +117,8 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
         }
         else if indexPath.section == 1 && indexPath.row == 2 {
             // 로그아웃 버튼 - 로그인 화면으로 이동
-            let signInVC = SignInPageViewController()
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+            let vc = AppInfoViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
