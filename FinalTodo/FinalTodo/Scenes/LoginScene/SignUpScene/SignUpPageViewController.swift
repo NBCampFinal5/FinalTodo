@@ -105,10 +105,10 @@ extension SignUpPageViewController {
     
     // email 유효성 검사
     func isValidEmail(testStr:String) -> Bool {
-          let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-          let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-          return emailTest.evaluate(with: testStr)
-           }
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
 
     // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -123,20 +123,7 @@ extension SignUpPageViewController {
     
     // 회원가입 버튼 색갈 바뀌는 함수
     @objc func textFieldEditingChanged(_ textField: UITextField) {
-        // 모든 텍스트 필드에 내용이 있는지 확인합니다.
-        guard
-            let id = idTextBar.inputTextField.text, !id.isEmpty,
-            let password = pwTextBar.inputTextField.text, !password.isEmpty,
-            let confirmPw = confirmPwBar.inputTextField.text, !confirmPw.isEmpty
-        else {
-            // 하나라도 비어 있는 경우 버튼을 비활성화합니다.
-//            registerButton.setButtonEnabled(false)
-//            registerButton.backgroundColor = .systemFill
-            return
-        }
         
-        // 모든 텍스트 필드에 내용이 있는 경우 버튼을 활성화합니다.
-        registerButton.setButtonEnabled(true)
-        registerButton.changeButtonColor(color: .secondarySystemFill)
+        
     }
 }
