@@ -23,10 +23,6 @@ struct LoginManager {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             var result = LoginResult(isSuccess: true, email: email)
             if error == nil {
-                completion(result)
-            } else {
-                result.isSuccess = false
-                result.errorMessage = String(describing: error)
                 let user = UserData(
                     id: email,
                     nickName: nickName,
@@ -34,7 +30,8 @@ struct LoginManager {
                     memos: [],
                     rewardPoint: 0,
                     rewardName: "",
-                    themeColor: "error")
+                    themeColor: "error"
+                )
                 FirebaseDBManager.shared.createUser(user: user) { error in
                     if error == nil {
                         print("@@@ create Fail")
@@ -42,6 +39,10 @@ struct LoginManager {
                         print("@@@ create")
                     }
                 }
+                completion(result)
+            } else {
+                result.isSuccess = false
+                result.errorMessage = String(describing: error)
                 completion(result)
             }
         }

@@ -176,6 +176,7 @@ extension SignUpPageViewController {
                     passwordTextField.infoCommandLabel.textColor = .systemBlue
                 }
             }
+            viewModel.checkPassword.value = viewModel.checkPassword.value
             isPossibleSingUp()
         }
         
@@ -273,18 +274,7 @@ extension SignUpPageViewController {
     
     // 가입버튼 누르면 다음화면으로 넘어가는 것 구현
     func didTapButton(button: UIButton) {
-        print("@@@ didtapSingUpButton")
-//        let user = UserData(
-//            id: viewModel.email.value,
-//            nickName: viewModel.nickName.value,
-//            folders: [],
-//            memos: [],
-//            rewardPoint: 0,
-//            rewardName: "",
-//            themeColor: "error")
-        
-        
-        viewModel.loginManager.trySignUp(email: viewModel.email.value, password: viewModel.password.value, nickName: viewModel.password.value) { [weak self] result in
+        viewModel.loginManager.trySignUp(email: viewModel.email.value, password: viewModel.password.value, nickName: viewModel.nickName.value) { [weak self] result in
             guard let self = self else { return }
             if result.isSuccess {
                 print("Create User")
