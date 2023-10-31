@@ -40,6 +40,8 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
     let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
 
     private let viewModel = SignInPageViewModel()
+    
+    private let coredataManager = CoreDataManager.shared
 }
 
 extension SignInPageViewController {

@@ -20,7 +20,7 @@ class CommandLabelView: UIView {
     
     let infoCommandLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.font = UIFont.preferredFont(forTextStyle: .caption2)
         return label
     }()
     

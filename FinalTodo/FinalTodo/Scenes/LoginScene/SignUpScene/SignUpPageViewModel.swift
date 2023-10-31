@@ -9,5 +9,11 @@ import Foundation
 
 class SignUpPageViewModel {
     
+    let loginManager = LoginManager()
+    
+    let email:Observable<String> = Observable("")
+    let nickName:Observable<String> = Observable("")
+    let password:Observable<String> = Observable("")
+    let checkPassword:Observable<String> = Observable("")
     
 }
