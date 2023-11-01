@@ -5,9 +5,16 @@ import UIKit
 // MARK: - view 선언방식 이유가 필요할 듯
 
 class CalendarPageViewController: UIViewController {
+    let manager = CoreDataManager.shared
+
     // 선택된 D-day 날짜
     var selectedDdays: [Date] = []
     var calendarView: CalendarPageView!
+
+    var isModalDismissed: Bool = false { 
+        didSet { self.calendarView.calendar.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +27,12 @@ class CalendarPageViewController: UIViewController {
         calendarView.todayButton.addTarget(self, action: #selector(didTapTodayButton), for: .touchUpInside)
 
         setupNavigationBar()
+
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        calendarView.calendar.reloadData()
     }
 
     // 네비게이션 바 설정
@@ -56,11 +69,22 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 날짜 선택 시 호출
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(calendarView.dateFormatter.string(from: date) + " 선택됨")
+
+        let calendarListVC = CalendarListViewController(date: calendarView.dateFormatter.string(from: date))
+        calendarListVC.onDismiss = { [weak self] in self?.isModalDismissed = true }
+
+        let navController = UINavigationController(rootViewController: calendarListVC)
+        navController.modalPresentationStyle = .custom
+        navController.transitioningDelegate = self
+        present(navController, animated: true)
+        
+        calendarView.calendar.deselect(date)
     }
 
     // 날짜 선택 해제 시 호출
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(calendarView.dateFormatter.string(from: date) + " 해제됨")
+        calendarView.calendar.reloadData()
     }
 
     // 특정 날짜에 표시될 서브타이틀을 결정 ("D-day", "오늘")
@@ -89,10 +113,15 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
                 }
             }
         }
-        // 현재 날짜에 "오늘" 이라는 문구 나타냄
-        if calendarView.dateFormatter.string(from: date) == calendarView.dateFormatter.string(from: Date()) {
-            return "오늘"
+//        // 현재 날짜에 "오늘" 이라는 문구 나타냄
+//        if calendarView.dateFormatter.string(from: date) == calendarView.dateFormatter.string(from: Date()) {
+//            return "오늘"
+//        }
+
+        if !manager.getMemos().filter({ $0.date.prefix(10) == calendarView.dateFormatter.string(from: date) }).isEmpty {
+            return "●"
         }
+
         return nil
     }
 
@@ -107,14 +136,19 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 오늘 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         if date == Date().startOfDay {
-            return .myPointColor // 오늘 날짜 배경색
+            return .label // 오늘 날짜 배경색
         }
         return nil
     }
 
     // 선택 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-        return .myPointColor // 선택된 날짜 배경색
+        return .tertiaryLabel // 선택된 날짜 배경색
+    }
+
+    // 서브타이틀 컬러 설정
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, subtitleDefaultColorFor date: Date) -> UIColor? {
+        return .myPointColor
     }
 }
 
