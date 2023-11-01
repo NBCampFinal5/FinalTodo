@@ -19,10 +19,26 @@ struct LoginResult {
 
 struct LoginManager {
     
-    func trySignUp(email:String, password: String, completion: @escaping (LoginResult) -> Void) {
+    func trySignUp(email:String, password: String, nickName: String, completion: @escaping (LoginResult) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             var result = LoginResult(isSuccess: true, email: email)
             if error == nil {
+                let user = UserData(
+                    id: email,
+                    nickName: nickName,
+                    folders: [],
+                    memos: [],
+                    rewardPoint: 0,
+                    rewardName: "",
+                    themeColor: "error"
+                )
+                FirebaseDBManager.shared.createUser(user: user) { error in
+                    if error == nil {
+                        print("@@@ create Fail")
+                    } else {
+                        print("@@@ create")
+                    }
+                }
                 completion(result)
             } else {
                 result.isSuccess = false
@@ -45,35 +61,33 @@ struct LoginManager {
         }
     }
     
-//     MARK: - Enum 을 이용한 type지정 메서드 구현
-//     함수의 이름으로 정확히 구분하는 것이 좋아서 위의 구분된 함수 사용!
-//
-//    enum SignType {
-//        case signUp
-//        case signIn
-//    }
-//    
-//    func trySign(type: SignType, email: String, password: String, completion: @escaping (LoginResult) -> Void) {
-//        switch type {
-//        case .signIn:
-//            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-//                checkError(email: email, authResult: authResult, error: error, completion: completion)
-//            }
-//        case .signUp:
-//            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-//                checkError(email: email, authResult: authResult, error: error, completion: completion)
-//            }
-//        }
-//    }
-//    
-//    func checkError(email: String, authResult: AuthDataResult?, error: Error?, completion: @escaping (LoginResult) -> Void) {
-//        var result = LoginResult(isSuccess: true, email: email)
-//        if error == nil {
-//            completion(result)
-//        } else {
-//            result.isSuccess = false
-//            result.errorMessage = String(describing: error)
-//            completion(result)
-//        }
-//    }
+    func isAvailableEmail(email: String, completion: @escaping (Bool) -> Void){
+        
+        let db = Firestore.firestore()
+        let users = "users"
+        
+        
+        db.collection(users).getDocuments { data, error in
+            if error != nil {
+                print("[FirebaseManager][\(#function)]: \(String(describing: error?.localizedDescription))")
+            } else {
+                guard let safeData = data else { return }
+                if safeData.documents.map({$0.documentID}).contains(email) {
+                    completion(false)
+                } else {
+                    completion(true)
+                }
+            }
+        }
+    }
+    
+    func passwordFind(email: String) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if error == nil {
+                print("send Email")
+            } else {
+                print("fail Email")
+            }
+        }
+    }
 }
