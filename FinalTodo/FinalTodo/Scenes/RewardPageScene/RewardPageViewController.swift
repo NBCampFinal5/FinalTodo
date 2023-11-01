@@ -79,14 +79,16 @@ class RewardPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let user = UserData(id: UUID().uuidString, nickName: "test", folders: [], memos: [], rewardPoint: 0, rewardName: "", themeColor: "error")
+//        CoreDataManager.shared.createUser(newUser: user, completion: {
+//            print("유저생성 성공!")
+//        })
+//        
         score = Int(CoreDataManager.shared.getUser().rewardPoint)
         print("@@@@@@@@@")
         print(CoreDataManager.shared.getUser())
         
-//        let user = UserData(id: UUID().uuidString, nickName: "", folders: [], memos: [], rewardPoint: 0, rewardName: "", themeColor: "error")
-//        CoreDataManager.shared.createUser(newUser: user, completion: {
-//            print("유저생성 성공!")
-//        })
         
         view.backgroundColor = .systemBackground
         scoreLabel.text = "\(score)"
@@ -221,6 +223,7 @@ extension RewardPageViewController {
             themeColor: userData.themeColor
         )) {
             print("저장성공?? ")
+            print(userData)
         }
     }
     
@@ -265,12 +268,12 @@ extension RewardPageViewController {
                 let userData = CoreDataManager.shared.getUser()
                 CoreDataManager.shared.updateUser(targetId: userData.id, newUser: UserData(
                     id: userData.id,
-                    nickName: "",
-                    folders: [],
-                    memos: [],
+                    nickName: userData.nickName,
+                    folders: userData.folders,
+                    memos: userData.memos,
                     rewardPoint: Int32(),
                     rewardName: text,
-                    themeColor: ""
+                    themeColor: userData.themeColor
                 )){
                     print("유저 데이터 업데이트?!")
                 }
