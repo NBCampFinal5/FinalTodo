@@ -99,6 +99,13 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
         if calendarView.dateFormatter.string(from: date) == calendarView.dateFormatter.string(from: Date()) {
             return "오늘"
         }
+        
+        // 코어데이터 해당 날짜 메모 정보 검색 후 있으면, circle.fill 구현
+        if calendarView.dateFormatter.string(from: date) == calendarView.dateFormatter.string(from: Date()) {
+            return "●"
+        }
+        //
+        
         return nil
     }
 

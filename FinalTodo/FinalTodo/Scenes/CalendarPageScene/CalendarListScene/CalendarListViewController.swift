@@ -11,7 +11,20 @@ class CalendarListViewController: UIViewController {
     let viewModel = CalendarPageViewModel()
 
     let topView = ModalTopView(title: "")
-    let memoListView = MemoListView()
+    let calendarListView = CalendarListView()
+    
+    let date: Date
+    var memos: [MemoData] = [] 
+    
+    init(date: Date) {
+        self.date = date
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +35,14 @@ class CalendarListViewController: UIViewController {
 private extension CalendarListViewController {
     func setUp() {
         view.addSubview(topView)
-        view.addSubview(memoListView)
+        view.addSubview(calendarListView)
 
         topView.backgroundColor = .systemBackground
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
-        memoListView.snp.makeConstraints { make in
+        calendarListView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
