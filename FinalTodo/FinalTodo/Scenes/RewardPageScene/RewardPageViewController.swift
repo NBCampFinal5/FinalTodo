@@ -9,7 +9,9 @@ import SnapKit
 import UIKit
 
 class RewardPageViewController: UIViewController {
+    
     private var score = 0
+    
     // 버튼들
     lazy var plusButton: UIButton = {
         let button = UIButton()
@@ -22,7 +24,7 @@ class RewardPageViewController: UIViewController {
         button.layer.cornerRadius = 10
         return button
     }()
-
+    
     lazy var minusButton: UIButton = {
         let button = UIButton()
         button.setTitle("-1", for: .normal)
@@ -68,16 +70,27 @@ class RewardPageViewController: UIViewController {
     
     lazy var giniName: UILabel = {
         let label = UILabel()
-        label.text = "기니피그"
+        label.text = "기니"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        score = Int(CoreDataManager.shared.getUser().rewardPoint)
+        print("@@@@@@@@@")
+        print(CoreDataManager.shared.getUser())
+        
+//        let user = UserData(id: UUID().uuidString, nickName: "", folders: [], memos: [], rewardPoint: 0, rewardName: "", themeColor: "error")
+//        CoreDataManager.shared.createUser(newUser: user, completion: {
+//            print("유저생성 성공!")
+//        })
+        
         view.backgroundColor = .systemBackground
         scoreLabel.text = "\(score)"
+        showImage()
         setup()
     }
     
@@ -85,6 +98,8 @@ class RewardPageViewController: UIViewController {
         super.viewWillAppear(true)
         plusButton.layer.borderColor = UIColor.myPointColor.cgColor
         minusButton.layer.borderColor = UIColor.myPointColor.cgColor
+        
+        
     }
 }
 
@@ -104,7 +119,7 @@ private extension RewardPageViewController {
             make.height.equalTo(view.snp.height).multipliedBy(0.25)
         }
     }
-
+    
     func setupButton() {
         view.addSubview(plusButton)
         plusButton.snp.makeConstraints { make in
@@ -130,7 +145,7 @@ private extension RewardPageViewController {
             make.height.equalTo(view.snp.height).multipliedBy(0.07)
         }
     }
-
+    
     func setuplabel() {
         view.addSubview(giniName)
         giniName.snp.makeConstraints { make in
@@ -155,63 +170,71 @@ private extension RewardPageViewController {
 }
 
 extension RewardPageViewController {
-    @objc func increaseScore() {
-        score += 1
-        scoreLabel.text = "\(score)"
-            
+    // MARK: - func
+    
+    func showImage(){
+        
         switch score {
-        case 10:
+        case 0...9:
+            giniimageView.image = UIImage(named: "gini1")
+            UIView.animate(withDuration: 0.5, animations: {
+                self.giniimageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0) // 이미지 확대
+            })
+        case 10...19:
             giniimageView.image = UIImage(named: "gini2")
             UIView.animate(withDuration: 0.5, animations: {
                 self.giniimageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1) // 이미지 확대
             })
-        case 20:
+        case 20...29:
             giniimageView.image = UIImage(named: "gini3")
             UIView.animate(withDuration: 0.5, animations: {
                 self.giniimageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.4)
             })
-        case 30:
+        case 30...:
             giniimageView.image = UIImage(named: "gini4")
             UIView.animate(withDuration: 0.5, animations: {
                 self.giniimageView.transform = CGAffineTransform(scaleX: 1.21, y: 1.41)
             })
         default:
-            break // 다른 점수에 대한 특별한 조치 없음
+            break
+        }
+        
+        
+    }
+    
+    
+    @objc func increaseScore() {
+        score += 1
+        scoreLabel.text = "\(score)"
+        
+        showImage()
+        
+        let userData = CoreDataManager.shared.getUser()
+        let rewardPoint = score
+        CoreDataManager.shared.updateUser(targetId: userData.id, newUser: UserData(
+            id: userData.id,
+            nickName: userData.nickName,
+            folders: userData.folders,
+            memos: userData.memos,
+            rewardPoint: Int32(rewardPoint),
+            rewardName: userData.rewardName,
+            themeColor: userData.themeColor
+        )) {
+            print("저장성공?? ")
         }
     }
-
+    
     @objc func diminishScore() {
         // 버튼을 누를 때 호출되는 함수
         if score > 0 {
             score -= 1
             scoreLabel.text = "\(score)"
             
-            switch score {
-            case 9:
-                giniimageView.image = UIImage(named: "gini1")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0) // 이미지 확대
-                })
-            case 10:
-                giniimageView.image = UIImage(named: "gini2")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1) // 이미지 확대
-                })
-            case 20:
-                giniimageView.image = UIImage(named: "gini3")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.4)
-                })
-            case 30:
-                giniimageView.image = UIImage(named: "gini4")
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.giniimageView.transform = CGAffineTransform(scaleX: 1.21, y: 1.41)
-                })
-            default:
-                break // 다른 점수에 대한 특별한 조치 없음
-            }
+            showImage()
+            
         }
     }
+    
     
     @objc func showPopup() {
         let alertController = UIAlertController(title: "포인트로 기니피그를 키워보세요.", message: "매일 출석, 또는 할일을 끝내고\n포인트를 쌓아 기니피그를 키우세요!\n기니피그 이름을 지어줄래요?", preferredStyle: .alert)
@@ -224,29 +247,46 @@ extension RewardPageViewController {
             alertController.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(cancelAction)
-    
+        
         present(alertController, animated: true, completion: nil)
     }
     
     func showInputPopup() {
         let inputAlertController = UIAlertController(title: "기니피그의 이름을 지어주세요!", message: "당신의 기니피그는\n이름이 무엇인가요?", preferredStyle: .alert)
-
+        
         inputAlertController.addTextField { textField in
             textField.placeholder = "ex) 기니, 뿡뿡이, 밤톨"
         }
-
+        
         let saveAction = UIAlertAction(title: "저장", style: .default) { [weak self] _ in
             if let text = inputAlertController.textFields?.first?.text, !text.isEmpty {
                 self?.giniName.text = text
+                
+                let userData = CoreDataManager.shared.getUser()
+                CoreDataManager.shared.updateUser(targetId: userData.id, newUser: UserData(
+                    id: userData.id,
+                    nickName: "",
+                    folders: [],
+                    memos: [],
+                    rewardPoint: Int32(),
+                    rewardName: text,
+                    themeColor: ""
+                )){
+                    print("유저 데이터 업데이트?!")
+                }
+                
             } else {
-                self?.giniName.text = "기니피그"
+                self?.giniName.text = "기니"
             }
         }
         inputAlertController.addAction(saveAction)
-
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         inputAlertController.addAction(cancelAction)
-
+        
         present(inputAlertController, animated: true, completion: nil)
+        
+        
     }
 }
+
