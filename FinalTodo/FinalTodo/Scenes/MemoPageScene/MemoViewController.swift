@@ -19,6 +19,22 @@ class MemoViewController: UIViewController {
 extension MemoViewController {
     // MARK: - LifeCycle
 
+    override func viewWillAppear(_ animated: Bool) {
+        if selectedFolderId! != "allNote" {
+            let folders = viewModel.coredataManager.getFolders()
+            let folder = folders.filter({$0.id == selectedFolderId!}).first!
+            viewModel.optionImageAry[2] = folder.title
+        }
+        if currentMemoId != nil {
+            let memo = viewModel.coredataManager.getMemos().filter({$0.id == currentMemoId!}).first!
+            if memo.timeNotifySetting! != "" {
+                viewModel.optionImageAry[0] = memo.timeNotifySetting!
+                print(memo.timeNotifySetting)
+            }
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -46,8 +62,6 @@ private extension MemoViewController {
     }
 
     func setupNavigationBar() {
-        // "메모 추가하기"로 제목 설정
-        navigationItem.title = "메모 추가하기"
 
         let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(didTapSaveButton))
         navigationItem.rightBarButtonItem = saveButton
@@ -188,7 +202,29 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
+        cell.contentView.backgroundColor = .systemBackground
+        cell.contentView.layer.borderColor = UIColor.label.cgColor
+        cell.categoryLabel.textColor = .label
+        switch indexPath.row {
+        case 0:
+            if viewModel.selectedTime != nil {
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+                
+            }
+        case 2:
+            if selectedFolderId! != "allNote"{
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+            }
+        default:
+            cell.contentView.backgroundColor = .systemBackground
+            cell.contentView.layer.borderColor = UIColor.label.cgColor
+            cell.categoryLabel.textColor = .label
+            print("default")
+        }
         cell.bind(title: viewModel.optionImageAry[indexPath.row])
+        
         return cell
     }
 
@@ -196,24 +232,35 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
         print(indexPath.row)
 
         // 사용자에게 보여질 뷰 컨트롤러를 저장하기 위한 임시 변수를 선언
-        var vc: UIViewController!
 
         switch indexPath.row {
         case 0: // "날짜 및 시간알림" 셀 선택 시
-            vc = AddMemoMainNotifyViewController()
+            let vc = AddMemoMainNotifyViewController(viewModel: viewModel)
+            vc.handler = { [weak self] in
+                self?.memoView.optionCollectionView.reloadData()
+            }
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            present(vc, animated: true, completion: nil)
         case 1: // 위치 설정을 선택한 경우
-            vc = LocationSettingPageViewController()
+            let vc = LocationSettingPageViewController()
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            present(vc, animated: true, completion: nil)
         case 2: // 폴더 선택
-            let folderSelectVC = FolderSelectPageViewController()
-            folderSelectVC.delegate = self
-            vc = folderSelectVC
+            let vc = FolderSelectPageViewController(viewModel: viewModel)
+            vc.delegate = self
+            vc.handler = { [weak self] in
+                self?.memoView.optionCollectionView.reloadData()
+            }
+            vc.modalPresentationStyle = .custom
+            vc.transitioningDelegate = self
+            present(vc, animated: true, completion: nil)
         default:
             break
         }
 
-        vc.modalPresentationStyle = .custom
-        vc.transitioningDelegate = self
-        present(vc, animated: true, completion: nil)
+
     }
 }
 

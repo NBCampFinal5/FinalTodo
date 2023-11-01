@@ -30,11 +30,21 @@ class ProfilePageViewController: UIViewController {
 
     private lazy var rewardImageButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: viewModel.giniImage), for: .normal)
         button.layer.borderWidth = 1.5
         button.layer.borderColor = UIColor.systemFill.cgColor
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
         button.backgroundColor = .systemBackground
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: viewModel.giniImage)
+        imageView.contentMode = .scaleAspectFit // 이미지를 원래 비율로 유지하도록 설정
+
+        button.addSubview(imageView)
+
+        imageView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+        }
+
         return button
     }()
 
@@ -70,8 +80,7 @@ class ProfilePageViewController: UIViewController {
 
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
-        table.rowHeight = Constant.screenHeight * 0.1
-        table.backgroundColor = .secondarySystemBackground
+        table.backgroundColor = .clear
         return table
     }()
 
@@ -89,9 +98,6 @@ class ProfilePageViewController: UIViewController {
             print("@@viewDidLoad")
         }
         setUp()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
     }
 }
 
@@ -99,6 +105,12 @@ private extension ProfilePageViewController {
     func setUp() {
         title = "프로필"
         view.backgroundColor = .systemBackground
+
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
+        tableView.rowHeight = Constant.screenWidth / 10
+        tableView.isScrollEnabled = false
 
         view.addSubview(rewardImageButton)
         view.addSubview(chatView)
