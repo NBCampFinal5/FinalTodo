@@ -26,26 +26,26 @@ private extension TabBarController {
     func setUp() {
         let mainVC = UINavigationController(rootViewController: MainPageViewController())
         mainVC.tabBarItem = UITabBarItem(
-            title: "Main",
-            image: UIImage(systemName: "newspaper"),
-            selectedImage: UIImage(systemName: "newspaper.fill")
+            title: nil,
+            image: UIImage(systemName: "list.bullet"),
+            selectedImage: UIImage(systemName: "list.bullet")
         )
 
         let calendarVC = UINavigationController(rootViewController: CalendarPageViewController())
         calendarVC.tabBarItem = UITabBarItem(
-            title: "Calendar",
+            title: nil,
             image: UIImage(systemName: "calendar"),
-            selectedImage: UIImage(systemName: "calendar.badge.clock")
+            selectedImage: UIImage(systemName: "calendar")
         )
         let rewardVC = UINavigationController(rootViewController: RewardPageViewController())
         rewardVC.tabBarItem = UITabBarItem(
-            title: "Reward",
-            image: UIImage(systemName: "pencil.circle"),
-            selectedImage: UIImage(systemName: "pencil.circle.fill")
+            title: nil,
+            image: UIImage(systemName: "pawprint"),
+            selectedImage: UIImage(systemName: "pawprint.fill")
         )
         let settingVC = UINavigationController(rootViewController: SettingPageViewController())
         settingVC.tabBarItem = UITabBarItem(
-            title: "Setting",
+            title: nil,
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill")
         )

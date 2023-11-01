@@ -16,8 +16,8 @@ final class MemoView: UIView {
         let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = Constant.defaultPadding
-        view.isScrollEnabled = false
         view.backgroundColor = .clear
+        view.showsHorizontalScrollIndicator = false
         view.tintColor = .systemBackground
         return view
     }()

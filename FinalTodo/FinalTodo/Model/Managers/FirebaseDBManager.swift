@@ -7,23 +7,80 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
+import FirebaseAuth
 
 class FirebaseDBManager {
     
     static let shared = FirebaseDBManager()
     private let db = Firestore.firestore()
     
+    private enum FirestoreError: Int {
+        case noUserFound = 1
+        case userIdMismatch = 2
+        case dataConversionError = 3
+        
+        var localizedDescription: String {
+            switch self {
+            case .noUserFound: return "로그인된 사용자를 찾을 수 없습니다."
+            case .userIdMismatch: return "사용자 ID가 일치하지 않습니다."
+            case .dataConversionError: return "데이터 변환 에러"
+            }
+        }
+        
+        func asNSError() -> NSError {
+            return NSError(domain: "FirebaseDBManager", code: rawValue, userInfo: [NSLocalizedDescriptionKey: localizedDescription])
+        }
+    }
+    
+    var currentUserId: String? {
+        return Auth.auth().currentUser?.uid
+    }
+    
     private init() { }
+}
+
+// MARK: - UserData Operations
+extension FirebaseDBManager {
+    
     
     func createUser(user: UserData, completion: @escaping (Error?) -> Void) {
-        saveUser(user: user, isUpdate: false, completion: completion)
+        guard let userId = currentUserId, user.id == userId else {
+            completion(FirestoreError.userIdMismatch.asNSError())
+            return
+        }
+        guard let documentData = try? user.asDictionary() else {
+            completion(FirestoreError.dataConversionError.asNSError())
+            return
+        }
+        db.collection("users").document(userId).setData(documentData, completion: completion)
     }
     
     func updateUser(user: UserData, completion: @escaping (Error?) -> Void) {
-        saveUser(user: user, isUpdate: true, completion: completion)
+        guard let userId = currentUserId, user.id == userId else {
+            completion(FirestoreError.userIdMismatch.asNSError())
+            return
+        }
+        guard let documentData = try? user.asDictionary() else {
+            completion(FirestoreError.dataConversionError.asNSError())
+            return
+        }
+        db.collection("users").document(userId).updateData(documentData, completion: completion)
     }
     
-    func fetchUser(userId: String, completion: @escaping (UserData?, Error?) -> Void) {
+    func deleteUser(completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
+            return
+        }
+        db.collection("users").document(userId).delete(completion: completion)
+    }
+    
+    func fetchUser(completion: @escaping (UserData?, Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(nil, FirestoreError.noUserFound.asNSError())
+            return
+        }
         db.collection("users").document(userId).getDocument { document, error in
             guard let data = document?.data(), let user = UserData(fromDictionary: data) else {
                 completion(nil, error)
@@ -32,45 +89,111 @@ class FirebaseDBManager {
             completion(user, nil)
         }
     }
+}
+
+// MARK: - FolderData Operations
+extension FirebaseDBManager {
     
-    func deleteUser(userId: String, completion: @escaping (Error?) -> Void) {
-        db.collection("users").document(userId).delete() { error in
-            completion(error)
-        }
-    }
-    
-    func saveUser(user: UserData, isUpdate: Bool, completion: @escaping (Error?) -> Void) {
-        guard let documentData = try? user.asDictionary() else {
-            completion(NSError(domain: "", code: -1, userInfo: nil))
+    func createFolder(folder: FolderData, completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
             return
         }
-        let userRef = db.collection("users").document(user.id)
-        if isUpdate {
-            userRef.updateData(documentData, completion: completion)
-        } else {
-            userRef.setData(documentData, completion: completion)
+        guard let documentData = try? folder.asDictionary() else {
+            completion(FirestoreError.dataConversionError.asNSError())
+            return
         }
+        db.collection("users").document(userId).collection("folders").document(folder.id).setData(documentData, completion: completion)
     }
     
-    func fetchData<T: Decodable>(for user: UserData, collection: String, completion: @escaping ([T]?, Error?) -> Void) {
-        db.collection("users").document(user.id).collection(collection).getDocuments { (snapshot, error) in
+    func updateFolder(folder: FolderData, completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
+            return
+        }
+        guard let documentData = try? folder.asDictionary() else {
+            completion(FirestoreError.dataConversionError.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("folders").document(folder.id).updateData(documentData, completion: completion)
+    }
+    
+    func deleteFolder(folderId: String, completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("folders").document(folderId).delete(completion: completion)
+    }
+    
+    func fetchFolderData(completion: @escaping ([FolderData]?, Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(nil, FirestoreError.noUserFound.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("folders").getDocuments { (snapshot, error) in
             guard let documents = snapshot?.documents else {
                 completion(nil, error)
                 return
             }
-            let items = documents.compactMap { T(fromDictionary: $0.data()) }
-            completion(items, nil)
+            let folders = documents.compactMap { FolderData(fromDictionary: $0.data()) }
+            completion(folders, nil)
         }
     }
+}
+
+// MARK: - MemoData Operations
+extension FirebaseDBManager {
     
-    func fetchFolders(of user: UserData, completion: @escaping ([FolderData]?, Error?) -> Void) {
-        fetchData(for: user, collection: "folders", completion: completion)
+    func createMemo(memo: MemoData, completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
+            return
+        }
+        guard let documentData = try? memo.asDictionary() else {
+            completion(FirestoreError.dataConversionError.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("memos").document(memo.id).setData(documentData, completion: completion)
     }
     
-    func fetchMemos(of user: UserData, completion: @escaping ([MemoData]?, Error?) -> Void) {
-        fetchData(for: user, collection: "memos", completion: completion)
+    func updateMemo(memo: MemoData, completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
+            return
+        }
+        guard let documentData = try? memo.asDictionary() else {
+            completion(FirestoreError.dataConversionError.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("memos").document(memo.id).updateData(documentData, completion: completion)
+        
+    }
+    
+    func deleteMemo(memoId: String, completion: @escaping (Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(FirestoreError.noUserFound.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("memos").document(memoId).delete(completion: completion)
+    }
+    
+    func fetchMemos(completion: @escaping ([MemoData]?, Error?) -> Void) {
+        guard let userId = currentUserId else {
+            completion(nil, FirestoreError.noUserFound.asNSError())
+            return
+        }
+        db.collection("users").document(userId).collection("memos").getDocuments { (snapshot, error) in
+            guard let documents = snapshot?.documents else {
+                completion(nil, error)
+                return
+            }
+            let memos = documents.compactMap { MemoData(fromDictionary: $0.data()) }
+            completion(memos, nil)
+        }
     }
 }
+
 
 extension Encodable {
     func asDictionary() throws -> [String: Any] {
