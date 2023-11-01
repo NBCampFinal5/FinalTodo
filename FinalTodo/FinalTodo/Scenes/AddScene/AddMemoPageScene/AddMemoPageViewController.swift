@@ -169,12 +169,27 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
-        if indexPath.row == 0 {
+//        if indexPath.row == 0 {
+//            if viewModel.selectedTime != nil {
+//                cell.contentView.backgroundColor = .myPointColor
+//                cell.categoryLabel.textColor = .systemBackground
+//            }
+//        }
+        switch indexPath.row {
+        case 0:
             if viewModel.selectedTime != nil {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
             }
+        case 2:
+            if selectedFolderId! != "allNote"{
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+            }
+        default:
+            print("default")
         }
+        print(selectedFolderId!)
         cell.bind(title: viewModel.optionImageAry[indexPath.row])
         return cell
     }
@@ -213,9 +228,12 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
         case 2: // 폴더 선택
-            let folderSelectVC = FolderSelectPageViewController()
+            let folderSelectVC = FolderSelectPageViewController(viewModel: viewModel)
             folderSelectVC.delegate = self
             let vc = folderSelectVC
+            vc.handler = { [weak self] in
+                self?.memoView.optionCollectionView.reloadData()
+            }
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
@@ -299,5 +317,6 @@ extension AddMemoPageViewController: FolderSelectDelegate {
     func didSelectFolder(folderId: String) {
         // 선택된 폴더의 ID 저장
         selectedFolderId = folderId
+        
     }
 }

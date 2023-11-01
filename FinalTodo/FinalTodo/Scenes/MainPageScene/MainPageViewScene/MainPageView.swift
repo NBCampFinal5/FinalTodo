@@ -13,6 +13,7 @@ class MainPageView: UIView {
     var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .insetGrouped)
         view.allowsSelectionDuringEditing = true
+        view.backgroundColor = .systemBackground
         return view
     }()
     

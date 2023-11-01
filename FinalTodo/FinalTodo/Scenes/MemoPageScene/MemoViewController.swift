@@ -204,7 +204,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 1: // 위치 설정을 선택한 경우
             vc = LocationSettingPageViewController()
         case 2: // 폴더 선택
-            let folderSelectVC = FolderSelectPageViewController()
+            let folderSelectVC = FolderSelectPageViewController(viewModel: viewModel)
             folderSelectVC.delegate = self
             vc = folderSelectVC
         default:

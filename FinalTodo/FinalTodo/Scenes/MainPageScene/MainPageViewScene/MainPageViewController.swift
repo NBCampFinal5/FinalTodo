@@ -31,15 +31,13 @@ class MainPageViewController: UIViewController {
         setupUI()
         setupDelegates()
         locationManager.startTracking()
-        
-        print(viewModel.coredataManager.getFolders())
     }
     
     private func setupUI() {
         setupNavigationBar()
-        navigationController?.configureBar()
-        tabBarController?.configureBar()
-        changeStatusBarBgColor(bgColor: .systemBackground)
+//        navigationController?.configureBar()
+//        tabBarController?.configureBar()
+//        changeStatusBarBgColor(bgColor: .systemBackground)
     }
     
     private func setupDelegates() {
@@ -199,6 +197,7 @@ extension UITableViewCell {
     }
     
     func configureAsAllNotesCell() {
+        contentView.backgroundColor = .secondarySystemBackground
         textLabel?.text = "모든 노트"
         let templateImage = UIImage(systemName: "note.text")?.withRenderingMode(.alwaysTemplate)
         imageView?.image = templateImage
@@ -207,6 +206,7 @@ extension UITableViewCell {
     
     func configureCellWith(item: FolderData) {
         textLabel?.textColor = .label
+        contentView.backgroundColor = .secondarySystemBackground
         
         textLabel?.text = item.title
         
