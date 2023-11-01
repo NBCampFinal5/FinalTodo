@@ -44,7 +44,7 @@ class FirebaseDBManager {
 extension FirebaseDBManager {
     
     
-    func createUserData(user: UserData, completion: @escaping (Error?) -> Void) {
+    func createUser(user: UserData, completion: @escaping (Error?) -> Void) {
         guard let userId = currentUserId, user.id == userId else {
             completion(FirestoreError.userIdMismatch.asNSError())
             return
@@ -56,7 +56,7 @@ extension FirebaseDBManager {
         db.collection("users").document(userId).setData(documentData, completion: completion)
     }
     
-    func updateUserData(user: UserData, completion: @escaping (Error?) -> Void) {
+    func updateUser(user: UserData, completion: @escaping (Error?) -> Void) {
         guard let userId = currentUserId, user.id == userId else {
             completion(FirestoreError.userIdMismatch.asNSError())
             return
@@ -68,7 +68,7 @@ extension FirebaseDBManager {
         db.collection("users").document(userId).updateData(documentData, completion: completion)
     }
     
-    func deleteUserData(completion: @escaping (Error?) -> Void) {
+    func deleteUser(completion: @escaping (Error?) -> Void) {
         guard let userId = currentUserId else {
             completion(FirestoreError.noUserFound.asNSError())
             return
@@ -76,7 +76,7 @@ extension FirebaseDBManager {
         db.collection("users").document(userId).delete(completion: completion)
     }
     
-    func fetchUserData(completion: @escaping (UserData?, Error?) -> Void) {
+    func fetchUser(completion: @escaping (UserData?, Error?) -> Void) {
         guard let userId = currentUserId else {
             completion(nil, FirestoreError.noUserFound.asNSError())
             return
