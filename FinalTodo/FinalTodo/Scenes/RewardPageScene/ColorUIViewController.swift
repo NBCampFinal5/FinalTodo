@@ -9,79 +9,33 @@ import SnapKit
 import UIKit
 
 class ColorUIViewController: UIViewController, UIColorPickerViewControllerDelegate {
-    lazy var theme1View: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(hex: coredataManager.getUser().themeColor)
-        
-        view.layer.cornerRadius = 10
-        view.layer.borderWidth = 10
-        view.layer.borderColor = UIColor.systemGray.cgColor
-        return view
-    }()
-    
-    private let theme2View: UIView = {
-        let view = UIView()
-        view.backgroundColor = .secondarySystemFill
-        view.layer.cornerRadius = 10
-        view.layer.borderWidth = 10
-        view.layer.borderColor = UIColor.tertiarySystemFill.cgColor
-        return view
-    }()
-    
-    private let themeColorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "테마 컬러"
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
-        return label
-    }()
-    
-    private let firstColorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "컬러 1"
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
-        return label
-    }()
-    
-    private let secondColorLabel: UILabel = {
-        let label = UILabel()
-        label.text = "컬러 2"
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
-        return label
-    }()
-    
-    private let firstColorChangeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("첫번째 컬러", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .gray
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(showFirstColorPicker), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private let manager = CoreDataManager.shared
+    lazy var user = manager.getUser()
+
+    private let tableView: UITableView = {
+        let table = UITableView(frame: .zero, style: .insetGrouped)
+        return table
     }()
 
-    private let secondColorChangeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("두번째 컬러", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .gray
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(showSecondColorPicker), for: .touchUpInside)
+    var settingOptionData: [[SettingOption]] = [
+        [SettingOption(icon: "paintpalette", title: "기본컬러", showSwitch: true, isOn: false),
+         SettingOption(icon: "paintpalette.fill", title: "테마컬러 설정", showSwitch: false, isOn: false)],
+        [SettingOption(icon: "moon.stars", title: "다크모드", showSwitch: true, isOn: false)]
+    ]
 
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let coredataManager = CoreDataManager.shared
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-
         setUp()
-        setupColorPicker()
+        setUpTableView()
+        setUpColorPicker()
+
+        print("@@", manager.getUser())
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        tableView.reloadData()
+        user = manager.getUser()
     }
 }
 
@@ -89,115 +43,48 @@ private extension ColorUIViewController {
     // MARK: - SetUp
 
     func setUp() {
-        setUptheme1()
-//            setUptheme2()
+        navigationItem.title = "테마컬러"
+        view.backgroundColor = .systemBackground
+        view.addSubview(tableView)
     }
-        
-    func setUptheme1() {
-        view.addSubview(themeColorLabel)
-        themeColorLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.03)
-            make.leading.equalTo(Constant.defaultPadding)
-        }
-            
-        view.addSubview(firstColorLabel)
-        firstColorLabel.snp.makeConstraints { make in
-            make.top.equalTo(themeColorLabel.snp.bottom).offset(Constant.screenHeight * 0.07)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-        }
-            
-        view.addSubview(theme1View)
-        theme1View.snp.makeConstraints { make in
-            make.top.equalTo(firstColorLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.centerX.equalToSuperview()
-               
-            make.height.equalTo(Constant.screenHeight * 0.1)
-            make.width.equalTo(Constant.screenHeight * 0.1)
-        }
-            
-        view.addSubview(firstColorChangeButton)
-        firstColorChangeButton.snp.makeConstraints { make in
-            make.top.equalTo(theme1View.snp.bottom).offset(Constant.screenHeight * 0.01)
-            make.centerX.equalToSuperview()
-        }
+
+    func setUpTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.frame = view.bounds
+        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
+        tableView.backgroundColor = .systemBackground
+        tableView.rowHeight = Constant.screenWidth / 10
     }
-        
-//        func setUptheme2() {
-//
-//            view.addSubview(secondColorLabel)
-//            secondColorLabel.snp.makeConstraints { make in
-//                make.top.equalTo(theme1View.snp.bottom).offset(Constant.screenHeight * 0.1)
-//                make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-//            }
-//            view.addSubview(theme2View)
-//            theme2View.snp.makeConstraints { make in
-//                make.top.equalTo(secondColorLabel.snp.bottom).offset(Constant.screenHeight * 0.05)
-//                make.centerX.equalToSuperview()
-//                make.height.equalTo(Constant.screenHeight * 0.1)
-//                make.width.equalTo(Constant.screenHeight * 0.1)
-//            }
-//
-//            view.addSubview(secondColorChangeButton)
-//            secondColorChangeButton.snp.makeConstraints { make in
-//                make.top.equalTo(theme2View.snp.bottom).offset(Constant.screenHeight * 0.01)
-//                make.centerX.equalToSuperview()
-//            }
-//        }
 }
 
 extension ColorUIViewController {
-    // 컬러 피커를 설정하는 함수
-    private func setupColorPicker() {
+    private func setUpColorPicker() {
         let colorPicker = UIColorPickerViewController()
         colorPicker.delegate = self
         colorPicker.supportsAlpha = true
         colorPicker.modalPresentationStyle = .popover
-        colorPicker.popoverPresentationController?.sourceView = firstColorChangeButton
-        colorPicker.popoverPresentationController?.sourceView = secondColorChangeButton
-        // 뷰 컨트롤러에 컬러 피커를 추가합니다.
+
         addChild(colorPicker)
     }
 
-    @objc private func showFirstColorPicker() {
+    private func showColorPicker() {
         let picker = UIColorPickerViewController()
         picker.delegate = self
-        picker.selectedColor = theme1View.backgroundColor ?? .white
+        picker.selectedColor = .myPointColor
         picker.supportsAlpha = true
-        // 첫 번째 컬러 피커를 표시할 때는 첫 번째 버튼의 태그를 설정
-        firstColorChangeButton.tag = 1
-        secondColorChangeButton.tag = 0 // 두 번째 버튼의 태그를 초기화
+
         present(picker, animated: true, completion: nil)
     }
 
-    @objc private func showSecondColorPicker() {
-        let picker = UIColorPickerViewController()
-        picker.delegate = self
-        picker.selectedColor = theme2View.backgroundColor ?? .white
-        picker.supportsAlpha = true
-        // 두 번째 컬러 피커를 표시할 때는 두 번째 버튼의 태그를 설정
-        firstColorChangeButton.tag = 0 // 첫 번째 버튼의 태그를 초기화
-        secondColorChangeButton.tag = 2
-        present(picker, animated: true, completion: nil)
-    }
-
-    // 사용자가 색상을 선택하면 호출되는 델리게이트 메서드
     func showColorPicker(_ sender: Any) {
         let picker = UIColorPickerViewController()
         picker.selectedColor = UIColor.cyan
         picker.supportsAlpha = true
         present(picker, animated: true, completion: nil)
     }
-    
-    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        // 버튼의 태그를 사용하여 어떤 버튼을 클릭했는지 구별
-//        if firstColorChangeButton.tag == 1 {
-//            theme1View.backgroundColor = viewController.selectedColor
-//        } else if secondColorChangeButton.tag == 2 {
-//            theme2View.backgroundColor = viewController.selectedColor
-//        }
 
-        let user = coredataManager.getUser()
-        
+    func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         if user.id == "error" {
             let alert = UIAlertController(title: "오류", message: "로그인이 필요합니다", preferredStyle: .alert)
             let yes = UIAlertAction(title: "확인", style: .cancel)
@@ -206,13 +93,84 @@ extension ColorUIViewController {
         } else {
             let color = viewController.selectedColor.toHexString()
             let updateUser = UserData(id: user.id, nickName: user.nickName, folders: user.folders, memos: user.memos, rewardPoint: user.rewardPoint, rewardName: user.rewardName, themeColor: color)
-            coredataManager.updateUser(targetId: user.id, newUser: updateUser) {
+            manager.updateUser(targetId: user.id, newUser: updateUser) {
                 print("Update Color")
             }
             UIColor.myPointColor = UIColor(hex: color)
-            theme1View.backgroundColor = UIColor(hex: color)
         }
-        
-        viewController.dismiss(animated: true, completion: nil)
+        viewController.dismiss(animated: true) { [self] in
+            user = manager.getUser()
+            tableView.reloadData()
+        }
+    }
+}
+
+extension ColorUIViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return settingOptionData.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return settingOptionData[0].count
+        } else if section == 1 {
+            return settingOptionData[1].count
+        }
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
+
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let model = settingOptionData[0][indexPath.row]
+            cell.configure(with: model)
+            cell.accessoryView = .none
+            cell.accessoryType = .none
+
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            let model = settingOptionData[0][indexPath.row]
+            cell.configure(with: model)
+            cell.accessoryType = .disclosureIndicator
+
+            let colorView: UIView = {
+                let view = UIView()
+                view.backgroundColor = .myPointColor
+                view.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+                view.layer.cornerRadius = 5
+                return view
+            }()
+            cell.accessoryView = colorView
+
+        } else if indexPath.section == 1 {
+            let model = settingOptionData[1][indexPath.row]
+            cell.configure(with: model)
+            cell.accessoryView = .none
+            cell.accessoryType = .none
+        }
+
+        cell.backgroundColor = .secondarySystemBackground
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        if indexPath.section == 0 && indexPath.row == 0 {
+            // 기본컬러 설정 로직 필요
+            let color = UIColor.secondaryLabel.toHexString()
+            let updateUser = UserData(id: user.id, nickName: user.nickName, folders: user.folders, memos: user.memos, rewardPoint: user.rewardPoint, rewardName: user.rewardName, themeColor: color)
+            manager.updateUser(targetId: user.id, newUser: updateUser) { [self] in
+                user = manager.getUser()
+                tableView.reloadData()
+            }
+
+        } else if indexPath.section == 0 && indexPath.row == 1 {
+            // 테마컬러 설정
+            showColorPicker()
+
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            // 다크모드 기능 구현 필요
+        }
     }
 }

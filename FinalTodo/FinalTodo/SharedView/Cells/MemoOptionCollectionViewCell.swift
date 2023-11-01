@@ -8,10 +8,12 @@
 import UIKit
 
 final class MemoOptionCollectionViewCell: UICollectionViewCell {
-    private let categoryLabel: UILabel = {
+    let categoryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .label
+        label.lineBreakMode = .byCharWrapping
+        label.numberOfLines = 0
         label.font = UIFont.preferredFont(forTextStyle: .body)
         return label
     }()

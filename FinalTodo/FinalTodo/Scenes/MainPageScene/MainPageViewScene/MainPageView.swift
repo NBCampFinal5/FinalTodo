@@ -13,6 +13,7 @@ class MainPageView: UIView {
     var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .insetGrouped)
         view.allowsSelectionDuringEditing = true
+        view.backgroundColor = .systemBackground
         return view
     }()
     
@@ -36,7 +37,7 @@ class MainPageView: UIView {
         fab.backgroundColor = .myPointColor
         fab.layer.cornerRadius = 28
         fab.setImage(UIImage(systemName: "plus"), for: .normal)
-        fab.tintColor = .white
+        fab.tintColor = .systemBackground
         addSubview(fab)
     }
     

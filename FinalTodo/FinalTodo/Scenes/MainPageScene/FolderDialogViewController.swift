@@ -70,8 +70,11 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
     
     func setupUI() {
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
+//        view.alpha = 0.9
+        view.layer.shadowOpacity = 0.5
+//        view.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         titleLabel = UILabel()
         titleLabel.text = "폴더 명"
