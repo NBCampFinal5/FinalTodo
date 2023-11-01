@@ -29,7 +29,7 @@ extension SettingPageViewController {
 
 private extension SettingPageViewController {
     func setUp() {
-        title = "설정"
+        navigationItem.title = "설정"
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         settingOptionManager.makeSettingOptions() // 데이터 만들기
