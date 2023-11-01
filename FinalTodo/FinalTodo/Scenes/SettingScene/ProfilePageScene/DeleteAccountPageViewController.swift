@@ -8,6 +8,28 @@
 import UIKit
 
 class DeleteAccountPageViewController: UIViewController {
+    private lazy var giniChatLabel: UILabel = {
+        let label = UILabel()
+        label.text = "정말... 계정 삭제하실 건가요?"
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.backgroundColor = .systemFill
+        label.layer.cornerRadius = 10
+        label.layer.masksToBounds = true
+        return label
+    }()
+
+    private lazy var allertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "계정 삭제 시 \n데이터가 모두 삭제되니 주의해 주세요."
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = .systemGray
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+
     private lazy var giniImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "gini1")
@@ -15,30 +37,11 @@ class DeleteAccountPageViewController: UIViewController {
         return imageView
     }()
 
-    private lazy var giniChatLabel: UILabel = {
-        let label = UILabel()
-        label.text = "정말... 계정 삭제하실 건가요?"
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-
     private let deleteAccountButton: UIButton = {
         let button = UIButton()
         button.setTitle("계정 삭제", for: .normal)
         button.setTitleColor(.label, for: .normal)
         return button
-    }()
-
-    private lazy var allertLabel: UILabel = {
-        let label = UILabel()
-        label.text = "*주의*\n계정 삭제 시 \n폴더·메모·기니피그 데이터가 함께 삭제됩니다."
-        label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = .systemGray
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
     }()
 
     override func viewDidLoad() {
@@ -53,7 +56,7 @@ class DeleteAccountPageViewController: UIViewController {
 
 private extension DeleteAccountPageViewController {
     func setUp() {
-        title = "계정 삭제"
+        navigationItem.title = "계정 삭제"
         view.backgroundColor = .systemBackground
 
         deleteAccountButton.addTarget(self, action: #selector(DidTapDeleteAccountButton), for: .touchUpInside)
@@ -65,18 +68,20 @@ private extension DeleteAccountPageViewController {
 
         giniChatLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.1)
-            make.centerX.equalToSuperview()
-        }
-
-        giniImageView.snp.makeConstraints { make in
-            make.top.equalTo(giniChatLabel.snp.bottom).offset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.45)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenHeight * 0.08)
         }
 
         allertLabel.snp.makeConstraints { make in
-            make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
+            make.top.equalTo(giniChatLabel.snp.bottom).offset(Constant.defaultPadding)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+        }
+
+        giniImageView.snp.makeConstraints { make in
+            make.top.equalTo(allertLabel.snp.bottom).offset(Constant.defaultPadding)
+            make.width.equalTo(Constant.screenWidth * 0.4)
+            make.height.equalTo(Constant.screenHeight * 0.3)
+            make.centerX.equalToSuperview()
         }
 
         deleteAccountButton.snp.makeConstraints { make in

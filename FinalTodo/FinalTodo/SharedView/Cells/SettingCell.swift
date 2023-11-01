@@ -4,7 +4,6 @@ import UIKit
 class SettingCell: UITableViewCell {
     weak var delegate: SettingCellDelegate? // 성준 - 델리게이트 프로퍼티 추가
 
-    // 스택뷰: 디폴트값 .horizontal
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = Constant.defaultPadding
@@ -14,7 +13,7 @@ class SettingCell: UITableViewCell {
 
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .myPointColor
+        imageView.tintColor = .label
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -87,7 +86,7 @@ class SettingCell: UITableViewCell {
         cellSwitch.isHidden = !option.showSwitch
         cellSwitch.isOn = option.isOn
         detailLabel.text = option.detailText
-        iconImageView.tintColor = .myPointColor
+        iconImageView.tintColor = .secondaryLabel
     }
 
     // 성준 - 스위치 on / off 시 설정

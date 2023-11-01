@@ -32,19 +32,19 @@ private extension SettingPageViewController {
         navigationItem.title = "설정"
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        settingOptionManager.makeSettingOptions() // 데이터 만들기
-        settingOptionData = settingOptionManager.getSettingOptions() // 데이터매니저에서 데이터 받아오기!
-        
-        if let navigationBar = self.navigationController?.navigationBar {
+        settingOptionManager.makeSettingOptions()
+        settingOptionData = settingOptionManager.getSettingOptions()
+
+        if let navigationBar = navigationController?.navigationBar {
             navigationBar.tintColor = .label
         }
     }
 
     func setUpTableView() {
-        tableView.delegate = self // 테이블뷰 동작 구현 대리자로 해당 뷰컨트롤러 설정
-        tableView.dataSource = self // 테이블뷰 구성 구현 대리자로 해당 뷰컨트롤러 설정
-        tableView.frame = view.bounds // 화면을 꽉 채우기 위해 오토레이아웃 대신 설정
-        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier) // 셀 등록 필수
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.frame = view.bounds
+        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
         tableView.backgroundColor = .systemBackground
         tableView.rowHeight = Constant.screenWidth / 10
     }
@@ -73,7 +73,7 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             let model = settingOptionData[1][indexPath.row]
             cell.configure(with: model)
         }
-        
+
         cell.backgroundColor = .secondarySystemBackground
         cell.accessoryType = .disclosureIndicator
 
@@ -81,44 +81,34 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true) // 성준 - 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
-        let notifyVC = NotifyPageViewController() // 성준
+        tableView.deselectRow(at: indexPath, animated: true)
+        let notifyVC = NotifyPageViewController()
         let themeColorVC = ColorUIViewController()
-//        let lockVC = ThemeColorViewController
-
         let profileVC = ProfilePageViewController()
-        let singInVC = SignInPageViewController()
 
         if indexPath.section == 0 && indexPath.row == 0 {
-            // 알림 화면으로 이동
-            navigationController?.pushViewController(notifyVC, animated: true) // 성준
+            navigationController?.pushViewController(notifyVC, animated: true)
             tabBarController?.tabBar.isHidden = true
 
         } else if indexPath.section == 0 && indexPath.row == 1 {
-            // 테마컬러 화면으로 이동
             navigationController?.pushViewController(themeColorVC, animated: true)
             tabBarController?.tabBar.isHidden = true
 
         } else if indexPath.section == 0 && indexPath.row == 2 {
-            // 잠금화면으로 이동
             let lockVC = LockSettingViewController()
             navigationController?.pushViewController(lockVC, animated: true)
             tabBarController?.tabBar.isHidden = true
 
         } else if indexPath.section == 1 && indexPath.row == 0 {
-            // 프로필 화면으로 이동
             navigationController?.pushViewController(profileVC, animated: true)
             tabBarController?.tabBar.isHidden = true
 
         } else if indexPath.section == 1 && indexPath.row == 1 {
-            // 로그아웃 버튼 - 로그인 화면으로 이동
             let signInVC = SignInPageViewController()
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
-        }
-        else if indexPath.section == 1 && indexPath.row == 2 {
-            // 로그아웃 버튼 - 로그인 화면으로 이동
+        } else if indexPath.section == 1 && indexPath.row == 2 {
             let vc = AppInfoViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
