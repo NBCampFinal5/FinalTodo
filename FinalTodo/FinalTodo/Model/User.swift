@@ -32,4 +32,6 @@ struct MemoData: Codable {
     let isPin: Bool
     let locationNotifySetting: String?
     let timeNotifySetting: String?
+    var notificationDate: Date? // 알림 날짜 및 시간 추가
+    var tags: String? // 태그를 저장할 새로운 속성
 }

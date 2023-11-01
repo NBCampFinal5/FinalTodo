@@ -109,3 +109,11 @@ extension UIColor {
         return brightness > 0.5 ? .black : .white
     }
 }
+
+extension DateFormatter {
+    static let yourFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter
+    }()
+}
