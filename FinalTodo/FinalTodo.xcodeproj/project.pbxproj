@@ -50,6 +50,8 @@
 		08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F8892AD8216A0092C6EF /* MemoViewController.swift */; };
 		08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88B2AD8218E0092C6EF /* MemoView.swift */; };
 		08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */; };
+		08ACC7382AEF81FB00F4AA9A /* SignInPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */; };
+		08D1BF7A2AF0D40E00FE896A /* SignUpPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */; };
 		08E7243E2ADE6E840015514D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 08E7243D2ADE6E840015514D /* FirebaseAnalytics */; };
 		08E724402ADE6E840015514D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 08E7243F2ADE6E840015514D /* FirebaseAnalyticsOnDeviceConversion */; };
 		08E724422ADE6E840015514D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 08E724412ADE6E840015514D /* FirebaseAnalyticsSwift */; };
@@ -168,6 +170,8 @@
 		08A4F8892AD8216A0092C6EF /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		08A4F88B2AD8218E0092C6EF /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewModel.swift; sourceTree = "<group>"; };
+		08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewModel.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		301B39672AE134C200B19313 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -386,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				084412162AD569E9005F2FA9 /* SignInPageViewController.swift */,
+				08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */,
 			);
 			path = SginInScene;
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */,
+				08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */,
 			);
 			path = SignUpScene;
 			sourceTree = "<group>";
@@ -536,7 +542,6 @@
 		08F8AE812AE294DF00F79FD0 /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
-				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
@@ -570,13 +575,6 @@
 				08F8AE7F2AE2897700F79FD0 /* Managers */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		30E798502AD7F4B900903272 /* ThemeColorPageScene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ThemeColorPageScene;
 			sourceTree = "<group>";
 		};
 		30E798532AD7F54C00903272 /* ProfilePageScene */ = {
@@ -775,6 +773,7 @@
 				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
 				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				69EBADD42AEA4E320009CB21 /* FirebaseDBManager.swift in Sources */,
+				08D1BF7A2AF0D40E00FE896A /* SignUpPageViewModel.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
@@ -786,6 +785,7 @@
 				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				08487F912AE54A39009AE6CB /* LockSettingViewController.swift in Sources */,
+				08ACC7382AEF81FB00F4AA9A /* SignInPageViewModel.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
