@@ -24,6 +24,12 @@ class AddMemoPageViewController: UIViewController {
 extension AddMemoPageViewController {
     // MARK: - LifeCycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        if selectedFolderId! != "allNote" {
+            let folders = viewModel.coredataManager.getFolders()
+            viewModel.optionImageAry[2] = folders.filter({$0.id == selectedFolderId!}).first!.title
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -169,17 +175,16 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
-//        if indexPath.row == 0 {
-//            if viewModel.selectedTime != nil {
-//                cell.contentView.backgroundColor = .myPointColor
-//                cell.categoryLabel.textColor = .systemBackground
-//            }
-//        }
+        cell.contentView.backgroundColor = .systemBackground
+        cell.contentView.layer.borderColor = UIColor.label.cgColor
+        cell.categoryLabel.textColor = .label
         switch indexPath.row {
         case 0:
             if viewModel.selectedTime != nil {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
+                print("here")
+                
             }
         case 2:
             if selectedFolderId! != "allNote"{
@@ -187,10 +192,13 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.categoryLabel.textColor = .systemBackground
             }
         default:
+            cell.contentView.backgroundColor = .systemBackground
+            cell.contentView.layer.borderColor = UIColor.label.cgColor
+            cell.categoryLabel.textColor = .label
             print("default")
         }
-        print(selectedFolderId!)
         cell.bind(title: viewModel.optionImageAry[indexPath.row])
+        
         return cell
     }
     
