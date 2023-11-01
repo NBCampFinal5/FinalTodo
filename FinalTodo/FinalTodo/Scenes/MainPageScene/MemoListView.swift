@@ -23,17 +23,27 @@ class MemoListView: UIView {
     }
     
     private func setupUI() {
+        self.backgroundColor = .systemBackground
         tableView = UITableView()
         tableView.backgroundColor = .systemBackground
         tableView.separatorStyle = .none
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
         addSubview(tableView)
         
+//        fab = UIButton(type: .custom)
+////        fab.backgroundColor = .myPointColor
+//        fab.layer.cornerRadius = 28
+//        fab.layer.borderWidth = 1
+//        fab.layer.borderColor = UIColor.label.cgColor
+//        fab.setImage(UIImage(systemName: "plus"), for: .normal)
+//        fab.tintColor = .label
+//        addSubview(fab)
         fab = UIButton(type: .custom)
         fab.backgroundColor = .myPointColor
         fab.layer.cornerRadius = 28
         fab.setImage(UIImage(systemName: "plus"), for: .normal)
-        fab.tintColor = .white
+        
+        fab.tintColor = .systemBackground
         addSubview(fab)
     }
     
