@@ -101,8 +101,6 @@
 		30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7987E2ADC074900903272 /* SettingOptionManager.swift */; };
 		30F521862AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */; };
 		30F521A72AF0867F00DA1DD8 /* CalendarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */; };
-		30F521A92AF0878700DA1DD8 /* CalendarPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521A82AF0878700DA1DD8 /* CalendarPageViewModel.swift */; };
-		30F521AF2AF1E65D00DA1DD8 /* CalendarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521AE2AF1E65D00DA1DD8 /* CalendarListView.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */; };
 		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
@@ -190,8 +188,6 @@
 		30E7987E2ADC074900903272 /* SettingOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionManager.swift; sourceTree = "<group>"; };
 		30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountPageViewController.swift; sourceTree = "<group>"; };
 		30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListViewController.swift; sourceTree = "<group>"; };
-		30F521A82AF0878700DA1DD8 /* CalendarPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageViewModel.swift; sourceTree = "<group>"; };
-		30F521AE2AF1E65D00DA1DD8 /* CalendarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListView.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -592,8 +588,6 @@
 			isa = PBXGroup;
 			children = (
 				30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */,
-				30F521A82AF0878700DA1DD8 /* CalendarPageViewModel.swift */,
-				30F521AE2AF1E65D00DA1DD8 /* CalendarListView.swift */,
 			);
 			path = CalendarListScene;
 			sourceTree = "<group>";
@@ -753,7 +747,6 @@
 				085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */,
 				037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */,
 				0844120F2AD5699F005F2FA9 /* CalendarPageViewController.swift in Sources */,
-				30F521AF2AF1E65D00DA1DD8 /* CalendarListView.swift in Sources */,
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */,
 				C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */,
@@ -807,7 +800,6 @@
 				081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */,
 				301B39DF2AE93B9E00B19313 /* MemoModel+CoreDataProperties.swift in Sources */,
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
-				30F521A92AF0878700DA1DD8 /* CalendarPageViewModel.swift in Sources */,
 				037668B52ADE5CEA008BED0A /* CommandLabelView.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
 				0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */,

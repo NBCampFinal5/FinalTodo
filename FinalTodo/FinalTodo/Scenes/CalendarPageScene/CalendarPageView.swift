@@ -1,6 +1,6 @@
 import FSCalendar
-import UIKit
 import SnapKit
+import UIKit
 
 class CalendarPageView: UIView {
     // 날짜 형식을 변환하기 위한 dateFormatter
