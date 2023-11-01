@@ -56,11 +56,17 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 날짜 선택 시 호출
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(calendarView.dateFormatter.string(from: date) + " 선택됨")
+        let calendarListVC = CalendarListViewController()
+        let navController = UINavigationController(rootViewController: calendarListVC)
+        navController.modalPresentationStyle = .custom
+        navController.transitioningDelegate = self
+        present(navController, animated: true)
     }
 
     // 날짜 선택 해제 시 호출
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(calendarView.dateFormatter.string(from: date) + " 해제됨")
+        calendarView.calendar.reloadData()
     }
 
     // 특정 날짜에 표시될 서브타이틀을 결정 ("D-day", "오늘")
