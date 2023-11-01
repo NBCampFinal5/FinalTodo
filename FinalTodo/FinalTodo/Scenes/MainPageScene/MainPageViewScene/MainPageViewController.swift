@@ -210,13 +210,17 @@ extension UITableViewCell {
         
         textLabel?.text = item.title
         
-        let size = CGSize(width: 24, height: 24)
+        let length: CGFloat = 24
+        let size = CGSize(width: length, height: length)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         UIColor(hex: item.color).setFill()
         UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
+//        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let colorImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+        imageView?.layer.borderWidth = 1
+        imageView?.layer.borderColor = UIColor.label.cgColor
+        imageView?.layer.cornerRadius = length / 2
         imageView?.image = colorImage
     }
 }
@@ -232,6 +236,7 @@ extension MainPageViewController {
         folderDialogVC.modalPresentationStyle = .custom
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
+//        folderDialogVC.view.backgroundColor = .secondarySystemBackground
         
         folderDialogVC.completion = { [weak self] title, color, id in
             

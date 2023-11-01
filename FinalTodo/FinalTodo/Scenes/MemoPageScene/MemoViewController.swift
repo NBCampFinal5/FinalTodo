@@ -200,7 +200,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
         switch indexPath.row {
         case 0: // "날짜 및 시간알림" 셀 선택 시
-            vc = AddMemoMainNotifyViewController()
+            vc = AddMemoMainNotifyViewController(viewModel: viewModel)
         case 1: // 위치 설정을 선택한 경우
             vc = LocationSettingPageViewController()
         case 2: // 폴더 선택
