@@ -109,6 +109,14 @@ private extension DeleteAccountPageViewController {
     func deleteAccount() {
         // 데이터베이스 유저 정보 삭제 로직 추가 필요
 
+        FirebaseDBManager.shared.deleteUser { error in
+            if error == nil {
+                print("User Delete Fail")
+            } else {
+                print("User Delete Success")
+            }
+        }
+        
         let signInVC = SignInPageViewController()
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
 
