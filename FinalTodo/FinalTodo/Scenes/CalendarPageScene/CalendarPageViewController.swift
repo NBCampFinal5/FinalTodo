@@ -11,7 +11,7 @@ class CalendarPageViewController: UIViewController {
     var selectedDdays: [Date] = []
     var calendarView: CalendarPageView!
 
-    var isModalDismissed: Bool = false { 
+    var isModalDismissed: Bool = false {
         didSet { self.calendarView.calendar.reloadData()
         }
     }

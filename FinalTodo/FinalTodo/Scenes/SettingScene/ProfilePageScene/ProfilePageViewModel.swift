@@ -28,7 +28,7 @@ class ProfilePageViewModel {
 
         userPoint = manager.getUser().rewardPoint
         userNickName = manager.getUser().nickName
-        rewardNickName = manager.getUser().rewardName 
+        rewardNickName = manager.getUser().rewardName
 
         fetchGiniImage(point: userPoint)
         print("@@ 유저 패치!")
