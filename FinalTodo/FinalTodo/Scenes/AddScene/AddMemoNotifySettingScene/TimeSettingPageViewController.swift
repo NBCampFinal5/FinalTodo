@@ -58,12 +58,12 @@ class TimeSettingPageViewController: UIViewController {
         return button
     }()
 
-    lazy var infoButton: UIButton = {
-        let button = UIButton(type: .infoLight)
-        button.tintColor = .black
-        button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
-        return button
-    }()
+//    lazy var infoButton: UIButton = {
+//        let button = UIButton(type: .infoLight)
+//        button.tintColor = .black
+//        button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
+//        return button
+//    }()
 }
 
 extension TimeSettingPageViewController {
@@ -91,16 +91,16 @@ private extension TimeSettingPageViewController {
 
     func setUpTopView() {
         view.addSubview(topView)
-        view.addSubview(infoButton)
+        // view.addSubview(infoButton)
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
         topView.backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
 
-        infoButton.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
-        }
+//        infoButton.snp.makeConstraints { make in
+//            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
+//        }
     }
 
     func setUpPickerView() {
@@ -167,38 +167,38 @@ private extension TimeSettingPageViewController {
         timePickerView.selectRow(currentMinute, inComponent: 2, animated: true)
     }
 
-    @objc func didTapDateTooltip() {
-        let alertController = UIAlertController(title: "알림 설정", message: "현재 시간보다 이전 시간을 예약할 수 없습니다.", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "확인", style: .default))
-        present(alertController, animated: true)
-    }
-
-//    func showToast(message: String, duration: TimeInterval = 2.0) {
-//        let toastLabel = UILabel()
-//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-//        toastLabel.textColor = .systemBackground
-//        toastLabel.textAlignment = .center
-//        toastLabel.font = UIFont.systemFont(ofSize: 14)
-//        toastLabel.text = message
-//        toastLabel.alpha = 0.5
-//        toastLabel.layer.cornerRadius = 10
-//        toastLabel.clipsToBounds = true
-//        // 화면 최상단에 표시하기위함
-//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-//        window?.addSubview(toastLabel)
-//        // 위치와 크기 지정
-//        toastLabel.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.width.equalTo(Constant.screenWidth * 0.7)
-//            make.height.equalTo(Constant.screenHeight * 0.04)
-//            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
-//        }
-//        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
-//            toastLabel.alpha = 0.0
-//        }, completion: { _ in
-//            toastLabel.removeFromSuperview()
-//        })
+//    @objc func didTapDateTooltip() {
+//        let alertController = UIAlertController(title: "알림 설정", message: "시간알림만 설정시 매일 해당 시간에 알림이 옵니다.", preferredStyle: .alert)
+//        alertController.addAction(UIAlertAction(title: "확인", style: .default))
+//        present(alertController, animated: true)
 //    }
+
+    func showToast(message: String, duration: TimeInterval = 2.0) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = .systemBackground
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14)
+        toastLabel.text = message
+        toastLabel.alpha = 0.5
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        // 화면 최상단에 표시하기위함
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        window?.addSubview(toastLabel)
+        // 위치와 크기 지정
+        toastLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constant.screenWidth * 0.7)
+            make.height.equalTo(Constant.screenHeight * 0.04)
+            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
+        }
+        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
+    }
 }
 
 extension TimeSettingPageViewController {
@@ -229,11 +229,26 @@ extension TimeSettingPageViewController {
             print("설정된 시간: \(selectedTime)")
         }
 
+        // 선택된 날짜 및 시간이 모두 있을 경우에만 알림을 예약
+//        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
+//            let combinedComponents = DateComponents(year: calendar.component(.year, from: date),
+//                                                    month: calendar.component(.month, from: date),
+//                                                    day: calendar.component(.day, from: date),
+//                                                    hour: calendar.component(.hour, from: time),
+//                                                    minute: calendar.component(.minute, from: time))
+//
+//            if let combinedDate = calendar.date(from: combinedComponents) {
+//                let identifier = UUID().uuidString
+//                viewModel.notificationIdentifier = identifier
+//                Notifications.shared.scheduleNotificationAtDate(title: "?????????", body: "알림을 확인해주세요", date: combinedDate, identifier: identifier, soundEnabled: true, vibrationEnabled: true)
+//                delegate?.didCompleteNotifySetting()
+//            }
+//        }
         let amPmText = amPm[timePickerView.selectedRow(inComponent: 0)]
         let hourText = hours[timePickerView.selectedRow(inComponent: 1)]
         let minuteText = minutes[timePickerView.selectedRow(inComponent: 2)]
         let formattedTime = "\(amPmText) \(hourText)시 \(minuteText)분"
-        // showToast(message: "\(formattedTime) 설정이 완료되었습니다.")
+        showToast(message: "\(formattedTime) 설정이 완료되었습니다.")
 
         dismiss(animated: true, completion: nil)
     }
@@ -252,7 +267,7 @@ extension TimeSettingPageViewController {
         // 델리게이트 메서드 호출하여 알림 설정 초기화 알림
         delegate?.didResetNotifySetting()
         setPickerToSelectedTime()
-        // showToast(message: "시간 설정이 초기화 됐습니다.")
+        showToast(message: "시간 설정이 초기화 됐습니다.")
     }
 }
 

@@ -33,7 +33,3 @@ protocol CommandLabelDelegate: AnyObject {
 protocol AddMemoDelegate: AnyObject {
     func didAddMemo()
 }
-
-protocol AddMemoMainNotifyViewControllerDelegate: AnyObject {
-    func didReserveNotification(date: Date, time: Date)
-}
