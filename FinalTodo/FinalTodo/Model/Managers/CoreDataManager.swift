@@ -266,6 +266,11 @@ extension CoreDataManager {
                     changeMemoData(target: memo, newData: newMemo)
                     appDelegate?.saveContext()
 
+                    // 시간 알림 설정이 있는 경우 알림을 예약
+                    if let timeNotifySetting = newMemo.timeNotifySetting,
+                       let date = DateFormatter.yourFormatter.date(from: timeNotifySetting) {
+                        Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: newMemo.content, date: date, identifier: newMemo.id, soundEnabled: true, vibrationEnabled: true)
+                         
                     let user = getUser()
                     let yourUserData = UserData(id: user.id, nickName: user.nickName, folders: user.folders, memos: user.memos, rewardPoint: user.rewardPoint + 1, rewardName: user.rewardName, themeColor: user.themeColor)
 
@@ -303,8 +308,21 @@ extension CoreDataManager {
 
             do {
                 if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel], let targetMemo = fetchedMemoDatas.first {
+                    // 기존에 설정된 알림이 있다면 취소
+                    if let existingNotifySetting = targetMemo.timeNotifySetting {
+                        Notifications.shared.cancelNotification(identifier: targetMemo.id ?? "")
+                    }
+
+                    // 메모 데이터를 업데이트
                     changeMemoData(target: targetMemo, newData: updatedMemo)
                     appDelegate?.saveContext()
+
+                    // 새로운 시간 알림 설정이 있다면 알림 예약
+                    if let timeNotifySetting = updatedMemo.timeNotifySetting,
+                       let date = DateFormatter.yourFormatter.date(from: timeNotifySetting) {
+                        Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: updatedMemo.content, date: date, identifier: updatedMemo.id, soundEnabled: true, vibrationEnabled: true)
+                    }
+
                     completion()
                 } else {
                     print("메모를 찾는데 실패: \(updatedMemo.id)")
@@ -332,12 +350,13 @@ extension CoreDataManager {
 
             do {
                 // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
-                if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel] {
-                    // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
-                    if let targetMemo = fetchedMemoDatas.first {
-                        context.delete(targetMemo)
-                        appDelegate?.saveContext()
-                    }
+                if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel],
+                   // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
+                   let targetMemo = fetchedMemoDatas.first {
+                    // 알림을 취소
+                    Notifications.shared.cancelNotification(identifier: targetMemo.id ?? "")
+                    context.delete(targetMemo)
+                    appDelegate?.saveContext()
                 }
                 completion()
             } catch {
@@ -347,3 +366,4 @@ extension CoreDataManager {
         }
     }
 }
+
