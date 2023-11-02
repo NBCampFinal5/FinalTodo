@@ -39,6 +39,7 @@ struct LoginManager {
                         print("@@@ create")
                     }
                 }
+                CoreDataManager.shared.createUser(newUser: user) {}
                 completion(result)
             } else {
                 result.isSuccess = false
@@ -48,18 +49,58 @@ struct LoginManager {
         }
     }
     
-    func trySignIn(email:String, password: String, completion: @escaping (LoginResult) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) {authResult, error in
+    func trySignIn(email: String, password: String, completion: @escaping (LoginResult) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             var result = LoginResult(isSuccess: true, email: email)
-            if error == nil {
-                completion(result)
-            } else {
+            
+            if let error = error {
                 result.isSuccess = false
-                result.errorMessage = String(describing: error)
+                result.errorMessage = error.localizedDescription
                 completion(result)
+                return
+            }
+            
+            guard let authResult = authResult else {
+                result.isSuccess = false
+                result.errorMessage = "사용자 인증 결과가 없습니다."
+                completion(result)
+                return
+            }
+            
+            FirebaseDBManager.shared.fetchUser { userData, fetchError in
+                if let fetchError = fetchError {
+                    result.isSuccess = false
+                    result.errorMessage = fetchError.localizedDescription
+                    print("Error fetching user from Firebase: \(fetchError.localizedDescription)")
+                    completion(result)
+                    return
+                }
+                
+                if let userData = userData {
+                    CoreDataManager.shared.updateUser(targetId: authResult.user.email!, newUser: userData) {
+                        print("User data successfully updated in CoreData.")
+                        completion(result)
+                    }
+                } else {
+                    let newUser = UserData(
+                        id: email,
+                        nickName: "",
+                        folders: [],
+                        memos: [],
+                        rewardPoint: 0,
+                        rewardName: "",
+                        themeColor: ""
+                    )
+                    CoreDataManager.shared.createUser(newUser: newUser) {
+                        print("User data successfully created in CoreData.")
+                        completion(result)
+                    }
+                }
             }
         }
     }
+    
+    
     
     func isAvailableEmail(email: String, completion: @escaping (Bool) -> Void){
         
