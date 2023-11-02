@@ -19,12 +19,14 @@ class FirebaseDBManager {
         case noUserFound = 1
         case userIdMismatch = 2
         case dataConversionError = 3
+        case invalidUserData = 4
         
         var localizedDescription: String {
             switch self {
             case .noUserFound: return "로그인된 사용자를 찾을 수 없습니다."
             case .userIdMismatch: return "사용자 ID가 일치하지 않습니다."
             case .dataConversionError: return "데이터 변환 에러"
+            case .invalidUserData: return "사용 불가 유저 데이터"
             }
         }
         
@@ -34,15 +36,44 @@ class FirebaseDBManager {
     }
     
     var currentUserId: String? {
-        return Auth.auth().currentUser?.uid
+        return Auth.auth().currentUser?.email
     }
     
     private init() { }
 }
 
+// MARK: - Coredata-Firebase Fetch
+extension FirebaseDBManager {
+    func updateFirebaseWithCoredata(completion: @escaping (Error?) -> Void) {
+        var coreDataUser = CoreDataManager.shared.getUser()
+        
+        if coreDataUser.id.isEmpty {
+            completion(FirestoreError.invalidUserData.asNSError())
+            return
+        }
+        
+        do {
+            let userDictionary = try coreDataUser.asDictionary()
+            
+            guard let userId = currentUserId, userId == coreDataUser.id else {
+                let currentUserIdString = currentUserId ?? "nil"
+                let coreUserIdString = coreDataUser.id
+                print("currentUserId: \(currentUserIdString), coreDataUser.id: \(coreUserIdString)")
+                completion(FirestoreError.userIdMismatch.asNSError())
+                return
+            }
+            
+            self.db.collection("users").document(userId).setData(userDictionary) { error in
+                completion(error)
+            }
+        } catch {
+            completion(error)
+        }
+    }
+}
+
 // MARK: - UserData Operations
 extension FirebaseDBManager {
-    
     
     func createUser(user: UserData, completion: @escaping (Error?) -> Void) {
         guard let userId = currentUserId, user.id == userId else {
