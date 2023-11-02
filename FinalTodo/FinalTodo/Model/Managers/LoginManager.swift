@@ -86,8 +86,27 @@ struct LoginManager {
             if error == nil {
                 print("send Email")
             } else {
-                print("fail Email")
+                print("Email sending failed.")
             }
+        }
+    }
+    
+    func isLogin() -> Bool{
+        if Auth.auth().currentUser != nil {
+            if let user = Auth.auth().currentUser {
+                print("@@@LoginEmail:",user.email)
+            }
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
         }
     }
 }
