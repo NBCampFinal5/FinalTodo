@@ -2,7 +2,6 @@ import SnapKit
 import UIKit
 
 class AddMemoMainNotifyViewController: UIViewController {
-    weak var delegate: AddMemoMainNotifyViewControllerDelegate?
     let viewModel: AddMemoPageViewModel
     let topView = ModalTopView(title: "날짜 및 시간 알림")
     var handler: () -> Void = {}
@@ -30,6 +29,13 @@ class AddMemoMainNotifyViewController: UIViewController {
         let buttonView = ButtonTappedView(title: "예약완료")
         buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
         return buttonView
+//        let button = UIButton(type: .system)
+//        button.setTitle("예약완료", for: .normal)
+//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+//        return button
     }()
     
     init(viewModel: AddMemoPageViewModel) {
@@ -104,6 +110,7 @@ class AddMemoMainNotifyViewController: UIViewController {
     private func setUpReserveButton() {
         view.addSubview(reserveButton)
         reserveButton.snp.makeConstraints { make in
+//            make.left.right.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(50)
             make.width.equalTo(UIScreen.main.bounds.width * 0.8)
@@ -126,7 +133,6 @@ class AddMemoMainNotifyViewController: UIViewController {
     @objc func didTapReserveButton() {
         // 날짜와 시간이 모두 설정되어 있을 경우 알림 예약 로직
         if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
-            delegate?.didReserveNotification(date: date, time: time)
             let calendar = Calendar.current
             let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
             let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
@@ -137,10 +143,6 @@ class AddMemoMainNotifyViewController: UIViewController {
             combinedComponents.day = dateComponents.day
             combinedComponents.hour = timeComponents.hour
             combinedComponents.minute = timeComponents.minute
-            // MemoViewController에 날짜와 시간을 전달합니다.
-            if let presenter = presentingViewController as? MemoViewController {
-                presenter.didReserveNotification(date: viewModel.selectedDate!, time: viewModel.selectedTime!)
-            }
             
             if let combinedDate = calendar.date(from: combinedComponents) {
                 Notifications.shared.scheduleNotificationAtDate(title: "날짜 및 시간 알림", body: "알림을 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
@@ -173,7 +175,7 @@ class AddMemoMainNotifyViewController: UIViewController {
         // 화면 최상단에 표시하기위함
         let window = UIApplication.shared.windows.first { $0.isKeyWindow }
         window?.addSubview(toastLabel)
-
+        // 위치와 크기 지정
         toastLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalTo(Constant.screenWidth * 0.8)
@@ -229,17 +231,10 @@ extension AddMemoMainNotifyViewController: UIViewControllerTransitioningDelegate
 
 extension AddMemoMainNotifyViewController: DateSettingDelegate {
     func didCompleteDateSetting(date: Date) {
-        viewModel.selectedDate = date
-        // 날짜 포맷을 업데이트하고 테이블뷰를 새로고침
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        settingOptionData[0][0].detailText = formatter.string(from: date)
-        tableView.reloadData()
+        //
     }
 
     func didResetDateSetting() {
-        viewModel.selectedDate = nil
-        settingOptionData[0][0].detailText = "날짜를 선택해주세요"
-        tableView.reloadData()
+        //
     }
 }
