@@ -104,6 +104,7 @@ struct LoginManager {
     
     func signOut() {
         do {
+            print(Auth.auth().currentUser?.email,"SignOut")
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
