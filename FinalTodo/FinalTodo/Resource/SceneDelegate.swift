@@ -47,7 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if manager.getLockIsOn() {
                 window?.rootViewController = LockScreenViewController(rootViewController: SignInPageViewController())
             } else {
-                window?.rootViewController = SignInPageViewController()
+                window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
             }
         }
     }
