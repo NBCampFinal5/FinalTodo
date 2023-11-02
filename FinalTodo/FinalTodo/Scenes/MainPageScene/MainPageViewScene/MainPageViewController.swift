@@ -15,7 +15,6 @@ import UIKit
 class MainPageViewController: UIViewController {
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
-    let firebaseManager = FirebaseDBManager.shared
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -166,14 +165,6 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                     print("deleteFolderID:", targetId)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
-                firebaseManager.deleteFolder(folderId: targetId) { error in
-                    if let error = error {
-                        print("Error deleting folder: \(error.localizedDescription)")
-                    } else {
-                        print("Folder deleted successfully")
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                    }
-                }
             }
         }
     }
@@ -245,28 +236,11 @@ extension MainPageViewController {
                 self?.viewModel.coredataManager.updateFolder(targetId: id, newFolder: folder, completion: {
                     print("folderUpdate")
                 })
-                self?.firebaseManager.updateFolder(folder: folder) { error in
-                    if let error = error {
-                        print("Error updating folder: \(error.localizedDescription)")
-                    } else {
-                        print("Folder updated successfully")
-                        self?.mainView.tableView.reloadData()
-                    }
-                }
-                
             } else {
                 let folder = FolderData(id: UUID().uuidString, title: title, color: color.toHexString())
                 self?.viewModel.coredataManager.createFolder(newFolder: folder, completion: {
                     print("folderCreate")
                 })
-                self?.firebaseManager.createFolder(folder: folder) { error in
-                    if let error = error {
-                        print("Error creating folder: \(error.localizedDescription)")
-                    } else {
-                        print("Folder created successfully")
-                        self?.mainView.tableView.reloadData()
-                    }
-                }
             }
             self?.mainView.tableView.reloadData()
         }
