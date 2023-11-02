@@ -265,10 +265,16 @@ extension CoreDataManager {
                 if let memo = NSManagedObject(entity: entity, insertInto: context) as? MemoModel {
                     changeMemoData(target: memo, newData: newMemo)
                     appDelegate?.saveContext()
+
+                    let user = getUser()
+                    let yourUserData = UserData(id: user.id, nickName: user.nickName, folders: user.folders, memos: user.memos, rewardPoint: user.rewardPoint + 1, rewardName: user.rewardName, themeColor: user.themeColor)
+
+                    updateUser(targetId: user.id, newUser: yourUserData) {
+                        completion()
+                    }
                 }
             }
         }
-        completion()
     }
 
     // MARK: - [Read] [MemoCRUD]
