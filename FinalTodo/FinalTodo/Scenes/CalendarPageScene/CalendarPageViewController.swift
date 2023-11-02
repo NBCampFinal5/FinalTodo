@@ -8,20 +8,21 @@ class CalendarPageViewController: UIViewController {
     // 선택된 D-day 날짜
     var selectedDdays: [Date] = []
     var calendarView: CalendarPageView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         calendarView = CalendarPageView(frame: view.bounds)
         view.addSubview(calendarView)
-
+        
         calendarView.calendar.delegate = self
         calendarView.calendar.dataSource = self
-
+        
         calendarView.todayButton.addTarget(self, action: #selector(didTapTodayButton), for: .touchUpInside)
-
+        
         setupNavigationBar()
+        setCalendarUI()
     }
-
+    
     // 네비게이션 바 설정
     private func setupNavigationBar() {
         navigationItem.title = "캘린더"
@@ -31,7 +32,7 @@ class CalendarPageViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .label
         navigationController?.navigationBar.barTintColor = .systemBackground
     }
-
+    
     // D-day 버튼 터치 시 호출
     @objc func didTapDdayButton() {
         let vc = DdayPageViewController()
@@ -42,10 +43,10 @@ class CalendarPageViewController: UIViewController {
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = .custom
         navController.transitioningDelegate = self
-
+        
         present(navController, animated: true, completion: nil)
     }
-
+    
     // 오늘 버튼 터치 시 호출
     @objc func didTapTodayButton() {
         calendarView.calendar.setCurrentPage(Date(), animated: true)
@@ -57,12 +58,12 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(calendarView.dateFormatter.string(from: date) + " 선택됨")
     }
-
+    
     // 날짜 선택 해제 시 호출
     public func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         print(calendarView.dateFormatter.string(from: date) + " 해제됨")
     }
-
+    
     // 특정 날짜에 표시될 서브타이틀을 결정 ("D-day", "오늘")
     func calendar(_ calendar: FSCalendar, subtitleFor date: Date) -> String? {
         for dday in selectedDdays {
@@ -95,7 +96,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
         }
         return nil
     }
-
+    
     // 날짜 선택 시 동작을 결정
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
         if let selectedDate = calendar.selectedDate {
@@ -103,7 +104,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
         }
         return true
     }
-
+    
     // 오늘 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         if date == Date().startOfDay {
@@ -116,6 +117,33 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
         return .myPointColor // 선택된 날짜 배경색
     }
+    
+    
+    //날짜색깔 다크모드 대응
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        
+        let defaultColor = appearance.titleDefaultColor
+        
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                
+                return .white
+            } else {
+                return defaultColor
+            }
+        } else {
+            return defaultColor
+        }
+        
+    }
+    
+    func setCalendarUI() {
+        
+        calendarView.calendar.locale = Locale(identifier: "ko_KR")
+        calendarView.calendar.appearance.headerTitleColor = .myPointColor
+        calendarView.calendar.appearance.weekdayTextColor = .myPointColor
+        
+    }
 }
 
 extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
@@ -123,3 +151,4 @@ extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
         return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
     }
 }
+
