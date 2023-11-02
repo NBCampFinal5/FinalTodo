@@ -33,6 +33,7 @@ class CalendarPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         calendarView.calendar.reloadData()
+        setCalendarUI()
     }
     
     // 네비게이션 바 설정
@@ -140,6 +141,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
         }
         return nil
     }
+    
 
     // 선택 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
@@ -172,10 +174,8 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     
     func setCalendarUI() {
         
-        calendarView.calendar.locale = Locale(identifier: "ko_KR")
         calendarView.calendar.appearance.headerTitleColor = .myPointColor
         calendarView.calendar.appearance.weekdayTextColor = .myPointColor
-        
     }
 }
 
