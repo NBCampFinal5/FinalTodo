@@ -270,11 +270,16 @@ extension CoreDataManager {
                     if let timeNotifySetting = newMemo.timeNotifySetting,
                        let date = DateFormatter.yourFormatter.date(from: timeNotifySetting) {
                         Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: newMemo.content, date: date, identifier: newMemo.id, soundEnabled: true, vibrationEnabled: true)
+                         
+                    let user = getUser()
+                    let yourUserData = UserData(id: user.id, nickName: user.nickName, folders: user.folders, memos: user.memos, rewardPoint: user.rewardPoint + 1, rewardName: user.rewardName, themeColor: user.themeColor)
+
+                    updateUser(targetId: user.id, newUser: yourUserData) {
+                        completion()
                     }
                 }
             }
         }
-        completion()
     }
 
     // MARK: - [Read] [MemoCRUD]
@@ -362,51 +367,3 @@ extension CoreDataManager {
     }
 }
 
-//func deleteMemo(targetId: String, completion: @escaping () -> Void) {
-//    // 임시저장소 있는지 확인
-//    if let context = context {
-//        // 요청서
-//        let request = NSFetchRequest<NSManagedObject>(entityName: memoModelName)
-//        // 단서 / 찾기 위한 조건 설정
-//        request.predicate = NSPredicate(format: "id = %@", targetId as CVarArg)
-//
-//        do {
-//            // 요청서를 통해서 데이터 가져오기 (조건에 일치하는 데이터 찾기) (fetch메서드)
-//            if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel] {
-//                // 임시저장소에서 (요청서를 통해서) 데이터 삭제하기 (delete메서드)
-//                if let targetMemo = fetchedMemoDatas.first {
-//                    context.delete(targetMemo)
-//                    appDelegate?.saveContext()
-//                }
-//            }
-//            completion()
-//        } catch {
-//            print("CoreDataManager:", #function, ":Fail")
-//            completion()
-//        }
-//    }
-//}
-
-//func updateMemo(updatedMemo: MemoData, completion: @escaping () -> Void) {
-//    if let context = context {
-//        let request = NSFetchRequest<MemoModel>(entityName: memoModelName)
-//        request.predicate = NSPredicate(format: "id = %@", updatedMemo.id as CVarArg)
-//
-//        do {
-//            if let fetchedMemoDatas = try context.fetch(request) as? [MemoModel], let targetMemo = fetchedMemoDatas.first {
-//                changeMemoData(target: targetMemo, newData: updatedMemo)
-//                appDelegate?.saveContext()
-//                completion()
-//            } else {
-//                print("메모를 찾는데 실패: \(updatedMemo.id)")
-//                completion()
-//            }
-//        } catch {
-//            print("메모 업데이트 실패:", error)
-//            completion()
-//        }
-//    } else {
-//        print("컨덱스트를 가져오는데 실패")
-//        completion()
-//    }
-//}

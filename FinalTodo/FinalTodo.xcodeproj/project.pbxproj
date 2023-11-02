@@ -50,6 +50,10 @@
 		08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F8892AD8216A0092C6EF /* MemoViewController.swift */; };
 		08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88B2AD8218E0092C6EF /* MemoView.swift */; };
 		08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */; };
+		08ACC7382AEF81FB00F4AA9A /* SignInPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */; };
+		08D1BF7A2AF0D40E00FE896A /* SignUpPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */; };
+		08D1BF872AF13FFF00FE896A /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */; };
+		08D1BF892AF1401600FE896A /* AppInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */; };
 		08E7243E2ADE6E840015514D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 08E7243D2ADE6E840015514D /* FirebaseAnalytics */; };
 		08E724402ADE6E840015514D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 08E7243F2ADE6E840015514D /* FirebaseAnalyticsOnDeviceConversion */; };
 		08E724422ADE6E840015514D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 08E724412ADE6E840015514D /* FirebaseAnalyticsSwift */; };
@@ -100,6 +104,7 @@
 		30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */; };
 		30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7987E2ADC074900903272 /* SettingOptionManager.swift */; };
 		30F521862AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */; };
+		30F521A72AF0867F00DA1DD8 /* CalendarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */; };
 		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
@@ -168,6 +173,10 @@
 		08A4F8892AD8216A0092C6EF /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		08A4F88B2AD8218E0092C6EF /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoOptionCollectionViewCell.swift; sourceTree = "<group>"; };
+		08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewModel.swift; sourceTree = "<group>"; };
+		08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewModel.swift; sourceTree = "<group>"; };
+		08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoViewController.swift; sourceTree = "<group>"; };
+		08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoViewModel.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		301B39672AE134C200B19313 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -186,6 +195,7 @@
 		30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		30E7987E2ADC074900903272 /* SettingOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionManager.swift; sourceTree = "<group>"; };
 		30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountPageViewController.swift; sourceTree = "<group>"; };
+		30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListViewController.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -386,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				084412162AD569E9005F2FA9 /* SignInPageViewController.swift */,
+				08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */,
 			);
 			path = SginInScene;
 			sourceTree = "<group>";
@@ -394,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				084412182AD569F4005F2FA9 /* SignUpPageViewController.swift */,
+				08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */,
 			);
 			path = SignUpScene;
 			sourceTree = "<group>";
@@ -415,6 +427,7 @@
 			children = (
 				0844120E2AD5699F005F2FA9 /* CalendarPageViewController.swift */,
 				C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */,
+				30F521A52AF0867200DA1DD8 /* CalendarListScene */,
 				C747DE282ADBBE9C0044499E /* DdayPageScene */,
 			);
 			path = CalendarPageScene;
@@ -493,6 +506,15 @@
 			path = MemoPageScene;
 			sourceTree = "<group>";
 		};
+		08D1BF852AF13FD900FE896A /* AppInfoPageScene */ = {
+			isa = PBXGroup;
+			children = (
+				08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */,
+				08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */,
+			);
+			path = AppInfoPageScene;
+			sourceTree = "<group>";
+		};
 		08EB092F2AD571B900CCD51A /* Helper */ = {
 			isa = PBXGroup;
 			children = (
@@ -536,11 +558,11 @@
 		08F8AE812AE294DF00F79FD0 /* SettingScene */ = {
 			isa = PBXGroup;
 			children = (
-				30E798502AD7F4B900903272 /* ThemeColorPageScene */,
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
 				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
 				08487F8D2AE54A15009AE6CB /* LockSettingPageScene */,
+				08D1BF852AF13FD900FE896A /* AppInfoPageScene */,
 			);
 			path = SettingScene;
 			sourceTree = "<group>";
@@ -572,13 +594,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		30E798502AD7F4B900903272 /* ThemeColorPageScene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ThemeColorPageScene;
-			sourceTree = "<group>";
-		};
 		30E798532AD7F54C00903272 /* ProfilePageScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -587,6 +602,14 @@
 				30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */,
 			);
 			path = ProfilePageScene;
+			sourceTree = "<group>";
+		};
+		30F521A52AF0867200DA1DD8 /* CalendarListScene */ = {
+			isa = PBXGroup;
+			children = (
+				30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */,
+			);
+			path = CalendarListScene;
 			sourceTree = "<group>";
 		};
 		C735C0422AD8E0EA00AA7663 /* NotifyScene */ = {
@@ -739,6 +762,7 @@
 				301B398A2AE7B60800B19313 /* ProfilePageViewModel.swift in Sources */,
 				301B39E22AE93B9E00B19313 /* UserModel+CoreDataClass.swift in Sources */,
 				30445E942ADF0958000D26A4 /* CoreDataManager.swift in Sources */,
+				30F521A72AF0867F00DA1DD8 /* CalendarListViewController.swift in Sources */,
 				083976042AE661C40042517E /* LockPasswordSettingViewModel.swift in Sources */,
 				085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */,
 				037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */,
@@ -769,23 +793,27 @@
 				C73BC4362AE14F8100E0302A /* DateSettingPageViewController.swift in Sources */,
 				69EBADD02AEA11630009CB21 /* MemoTableViewCell.swift in Sources */,
 				6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */,
+				08D1BF872AF13FFF00FE896A /* AppInfoViewController.swift in Sources */,
 				69EBADB42ADF75010009CB21 /* LocationTrackingManager.swift in Sources */,
 				083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */,
 				69EBADCA2AE912680009CB21 /* SearchViewController.swift in Sources */,
 				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
 				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				69EBADD42AEA4E320009CB21 /* FirebaseDBManager.swift in Sources */,
+				08D1BF7A2AF0D40E00FE896A /* SignUpPageViewModel.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
 				0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
 				083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */,
 				084EA3042AEA7FFB003031C0 /* MainPageViewModel.swift in Sources */,
 				6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */,
+				08D1BF892AF1401600FE896A /* AppInfoViewModel.swift in Sources */,
 				08487F8F2AE54A2D009AE6CB /* LockSettingViewModel.swift in Sources */,
 				083C98652AD8DBAA006895D2 /* AddMemoPageViewController.swift in Sources */,
 				083C98692AD8DED1006895D2 /* AddMemoPageViewModel.swift in Sources */,
 				084412132AD569C0005F2FA9 /* RewardPageViewController.swift in Sources */,
 				08487F912AE54A39009AE6CB /* LockSettingViewController.swift in Sources */,
+				08ACC7382AEF81FB00F4AA9A /* SignInPageViewModel.swift in Sources */,
 				084412172AD569E9005F2FA9 /* SignInPageViewController.swift in Sources */,
 				081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,

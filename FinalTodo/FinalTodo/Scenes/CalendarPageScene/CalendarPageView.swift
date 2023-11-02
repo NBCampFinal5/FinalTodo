@@ -12,8 +12,8 @@ class CalendarPageView: UIView {
         let configuration = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold)
         let image = UIImage(systemName: "arrow.clockwise", withConfiguration: configuration)
         button.setImage(image, for: .normal)
-        button.backgroundColor = .myPointColor
-        button.tintColor = .white
+        button.backgroundColor = .label
+        button.tintColor = .systemBackground
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         return button

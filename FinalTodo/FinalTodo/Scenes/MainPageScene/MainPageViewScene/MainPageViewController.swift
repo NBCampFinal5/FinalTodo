@@ -15,6 +15,7 @@ import UIKit
 class MainPageViewController: UIViewController {
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
+    let firebaseManager = FirebaseDBManager.shared
     
     var mainView: MainPageView {
         return view as! MainPageView
@@ -30,15 +31,13 @@ class MainPageViewController: UIViewController {
         setupUI()
         setupDelegates()
         locationManager.startTracking()
-
-        print(viewModel.coredataManager.getFolders())
     }
     
     private func setupUI() {
         setupNavigationBar()
-        navigationController?.configureBar()
-        tabBarController?.configureBar()
-        changeStatusBarBgColor(bgColor: .systemBackground)
+//        navigationController?.configureBar()
+//        tabBarController?.configureBar()
+//        changeStatusBarBgColor(bgColor: .systemBackground)
     }
     
     private func setupDelegates() {
@@ -49,7 +48,7 @@ class MainPageViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonTapped))
-        title = "리스트"
+        navigationItem.title = "모든 폴더"
         let searchButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonTapped))
         let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(folderButtonTapped))
         navigationItem.rightBarButtonItems = [folderButtonItem, searchButtonItem]
@@ -167,6 +166,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                     print("deleteFolderID:", targetId)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
+                firebaseManager.deleteFolder(folderId: targetId) { error in
+                    if let error = error {
+                        print("Error deleting folder: \(error.localizedDescription)")
+                    } else {
+                        print("Folder deleted successfully")
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+                }
             }
         }
     }
@@ -190,6 +197,7 @@ extension UITableViewCell {
     }
     
     func configureAsAllNotesCell() {
+        contentView.backgroundColor = .secondarySystemBackground
         textLabel?.text = "모든 노트"
         let templateImage = UIImage(systemName: "note.text")?.withRenderingMode(.alwaysTemplate)
         imageView?.image = templateImage
@@ -198,16 +206,21 @@ extension UITableViewCell {
     
     func configureCellWith(item: FolderData) {
         textLabel?.textColor = .label
+        contentView.backgroundColor = .secondarySystemBackground
         
         textLabel?.text = item.title
         
-        let size = CGSize(width: 24, height: 24)
+        let length: CGFloat = 24
+        let size = CGSize(width: length, height: length)
         UIGraphicsBeginImageContextWithOptions(size, false, 0)
         UIColor(hex: item.color).setFill()
         UIBezierPath(ovalIn: CGRect(origin: .zero, size: size)).fill()
+//        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let colorImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        
+        imageView?.layer.borderWidth = 1
+        imageView?.layer.borderColor = UIColor.label.cgColor
+        imageView?.layer.cornerRadius = length / 2
         imageView?.image = colorImage
     }
 }
@@ -223,19 +236,37 @@ extension MainPageViewController {
         folderDialogVC.modalPresentationStyle = .custom
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
+//        folderDialogVC.view.backgroundColor = .secondarySystemBackground
         
         folderDialogVC.completion = { [weak self] title, color, id in
-
+            
             if let id = id {
                 let folder = FolderData(id: id, title: title, color: color.toHexString())
                 self?.viewModel.coredataManager.updateFolder(targetId: id, newFolder: folder, completion: {
                     print("folderUpdate")
                 })
+                self?.firebaseManager.updateFolder(folder: folder) { error in
+                    if let error = error {
+                        print("Error updating folder: \(error.localizedDescription)")
+                    } else {
+                        print("Folder updated successfully")
+                        self?.mainView.tableView.reloadData()
+                    }
+                }
+                
             } else {
                 let folder = FolderData(id: UUID().uuidString, title: title, color: color.toHexString())
                 self?.viewModel.coredataManager.createFolder(newFolder: folder, completion: {
                     print("folderCreate")
                 })
+                self?.firebaseManager.createFolder(folder: folder) { error in
+                    if let error = error {
+                        print("Error creating folder: \(error.localizedDescription)")
+                    } else {
+                        print("Folder created successfully")
+                        self?.mainView.tableView.reloadData()
+                    }
+                }
             }
             self?.mainView.tableView.reloadData()
         }

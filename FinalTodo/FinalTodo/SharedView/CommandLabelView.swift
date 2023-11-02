@@ -18,12 +18,18 @@ class CommandLabelView: UIView {
         return label
     }()
     
+    let infoCommandLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .caption2)
+        return label
+    }()
+    
     //입력바(입력받을수있는 공간..)
     lazy var inputTextField : UITextField = {
         var tf = UITextField()
         tf.backgroundColor = .secondarySystemBackground
-        tf.tintColor = .white
-        tf.textColor = .white
+        tf.tintColor = .label
+        tf.textColor = .label
         tf.font = UIFont.preferredFont(forTextStyle: .headline)
         tf.layer.cornerRadius = 5
         tf.autocapitalizationType = .none //자동으로 대문자 만들어주는 옵션
@@ -47,6 +53,7 @@ class CommandLabelView: UIView {
     }
 }
 private extension CommandLabelView {
+    
     func setup(){
         setupLabelName()
         setupTextField()
@@ -84,5 +91,15 @@ extension CommandLabelView {
     @objc func textFieldEditingChanged(_ textField: UITextField) {
         // 이 함수를 델리게이트 메서드로 호출
         delegate?.textFieldEditingChanged(textField)
+    }
+}
+
+extension CommandLabelView {
+    func addInfoLabel() {
+        self.addSubview(infoCommandLabel)
+        infoCommandLabel.snp.makeConstraints { make in
+            make.left.equalTo(commandLabel.snp.right).offset(Constant.defaultPadding)
+            make.centerY.equalTo(commandLabel.snp.centerY)
+        }
     }
 }

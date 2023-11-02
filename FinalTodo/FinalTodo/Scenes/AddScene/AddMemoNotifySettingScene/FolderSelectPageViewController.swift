@@ -10,13 +10,29 @@ class FolderSelectPageViewController: UIViewController {
     weak var delegate: FolderSelectDelegate?
     let topView = ModalTopView(title: "폴더 선택")
     let tableView = UITableView() // 폴더 목록을 보여줄 테이블뷰
-    let viewModel = MainPageViewModel() // 폴더 데이터를 가져오기 위한 뷰모델
+//    let viewModel = MainPageViewModel() // 폴더 데이터를 가져오기 위한 뷰모델
+    let viewModel: AddMemoPageViewModel
+    
+    var handler: () -> Void = {}
+    
+    init(viewModel: AddMemoPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension FolderSelectPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        handler()
     }
 }
 
@@ -61,13 +77,18 @@ extension FolderSelectPageViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath)
         let folder = viewModel.coredataManager.getFolders()[indexPath.row]
+        if viewModel.optionImageAry[2] == folder.title {
+            cell.textLabel?.textColor = .red
+        }
         cell.textLabel?.text = folder.title
         cell.backgroundColor = .secondarySystemBackground
+        print(indexPath.row, cell.isSelected)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let folder = viewModel.coredataManager.getFolders()[indexPath.row]
+        viewModel.optionImageAry[2] = folder.title
         delegate?.didSelectFolder(folderId: folder.id)
         dismiss(animated: true)
         // TODO: 폴더 선택 완료 동작 구현

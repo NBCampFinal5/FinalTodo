@@ -3,8 +3,9 @@ import UIKit
 
 class AddMemoMainNotifyViewController: UIViewController {
     weak var delegate: AddMemoMainNotifyViewControllerDelegate?
-    let viewModel = AddMemoPageViewModel()
+    let viewModel: AddMemoPageViewModel
     let topView = ModalTopView(title: "날짜 및 시간 알림")
+    var handler: () -> Void = {}
 
     var settingOptionData: [[SettingOption]] = [
         [
@@ -30,7 +31,16 @@ class AddMemoMainNotifyViewController: UIViewController {
         buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
         return buttonView
     }()
-
+    
+    init(viewModel: AddMemoPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +48,9 @@ class AddMemoMainNotifyViewController: UIViewController {
         setUpTopView()
         setUpTableView()
         setUpReserveButton()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        handler()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +112,8 @@ class AddMemoMainNotifyViewController: UIViewController {
     }
 
     @objc func didTapBackButton() {
+        viewModel.selectedTime = nil
+        viewModel.selectedDate = nil
         dismiss(animated: true)
     }
 
@@ -126,15 +141,15 @@ class AddMemoMainNotifyViewController: UIViewController {
             if let presenter = presentingViewController as? MemoViewController {
                 presenter.didReserveNotification(date: viewModel.selectedDate!, time: viewModel.selectedTime!)
             }
+            
             if let combinedDate = calendar.date(from: combinedComponents) {
                 Notifications.shared.scheduleNotificationAtDate(title: "날짜 및 시간 알림", body: "알림을 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
                 print("예약된 알림 시간: \(combinedDate)")
-
                 // 토스트 메시지로 예약된 날짜와 시간 보여줌
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm"
                 showToast(message: "알림이 \(formatter.string(from: combinedDate))에 예약되었습니다.", duration: 2.0)
-
+                viewModel.optionImageAry[0] = formatter.string(from: combinedDate)
                 dismiss(animated: true)
             }
         } else {

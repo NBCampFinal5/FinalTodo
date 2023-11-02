@@ -7,11 +7,10 @@
 
 // SearchViewController.swift
 
-import UIKit
 import SnapKit
+import UIKit
 
 class SearchViewController: UIViewController {
-    
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     private let dateFormatter: DateFormatter = {
@@ -40,7 +39,7 @@ class SearchViewController: UIViewController {
     }
     
     private func bind() {
-        viewModel.filterData.bind { [weak self] memos in
+        viewModel.filterData.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
     }
@@ -71,10 +70,10 @@ class SearchViewController: UIViewController {
     
 //    private func filterMemos(with searchText: String) {
 //        if searchText.isEmpty {
-////            filteredMemos = allMemos
+    ////            filteredMemos = allMemos
 //            viewModel.filterData
 //        } else {
-////            filteredMemos = allMemos.filter { $0.title.range(of: searchText, options: .caseInsensitive) != nil }
+    ////            filteredMemos = allMemos.filter { $0.title.range(of: searchText, options: .caseInsensitive) != nil }
 //        }
 //    }
     
@@ -88,7 +87,7 @@ extension SearchViewController: UISearchBarDelegate {
         if searchText.isEmpty {
             viewModel.filterData.value = viewModel.coredataManager.getMemos()
         } else {
-            viewModel.filterData.value = viewModel.coredataManager.getMemos().filter{$0.content.contains(searchText)}
+            viewModel.filterData.value = viewModel.coredataManager.getMemos().filter { $0.content.contains(searchText) }
         }
     }
 }
@@ -104,6 +103,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: memo, dateFormatter: dateFormatter)
         return cell
     }
+
+    // 성준
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+    
+    // 성준
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if searchBar.isFirstResponder {
+            searchBar.resignFirstResponder()
+        }
+        tableView.deselectRow(at: indexPath, animated: true) // 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
+    }
 }
 
 extension MemoCell {
@@ -114,9 +126,3 @@ extension MemoCell {
 //        folderColorView.backgroundColor = memo.co
     }
 }
-
-
-
-
-
-
