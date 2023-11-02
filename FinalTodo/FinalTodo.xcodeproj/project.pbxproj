@@ -105,7 +105,6 @@
 		30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7987E2ADC074900903272 /* SettingOptionManager.swift */; };
 		30F521862AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */; };
 		30F521A72AF0867F00DA1DD8 /* CalendarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */; };
-		30F521C32AF3761A00DA1DD8 /* RewardPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521C22AF3761A00DA1DD8 /* RewardPageViewModel.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
 		6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */; };
 		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
@@ -197,7 +196,6 @@
 		30E7987E2ADC074900903272 /* SettingOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionManager.swift; sourceTree = "<group>"; };
 		30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountPageViewController.swift; sourceTree = "<group>"; };
 		30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListViewController.swift; sourceTree = "<group>"; };
-		30F521C22AF3761A00DA1DD8 /* RewardPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardPageViewModel.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
 		6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -439,7 +437,6 @@
 			isa = PBXGroup;
 			children = (
 				084412122AD569C0005F2FA9 /* RewardPageViewController.swift */,
-				30F521C22AF3761A00DA1DD8 /* RewardPageViewModel.swift */,
 				039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */,
 			);
 			path = RewardPageScene;
@@ -832,7 +829,6 @@
 				0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
 				083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */,
-				30F521C32AF3761A00DA1DD8 /* RewardPageViewModel.swift in Sources */,
 				30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
