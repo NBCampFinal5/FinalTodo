@@ -13,6 +13,7 @@ struct UserDefaultsManager {
     
     let isLock = "isLock"
     let isPassword = "isPassword"
+    let isAutoLogin = "isAutoLogin"
     
     func setLockIsOn(toggle:Bool) {
         defaults.set(toggle, forKey: isLock)
@@ -32,3 +33,16 @@ struct UserDefaultsManager {
     }
     
 }
+
+extension UserDefaultsManager {
+    
+    
+    func setAutoLogin(toggle:Bool) {
+        defaults.set(toggle, forKey: isAutoLogin)
+    }
+    
+    func getIsAutoLogin() -> Bool {
+        return defaults.bool(forKey: isAutoLogin)
+    }
+}
+

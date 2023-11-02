@@ -36,8 +36,6 @@ class MainPageViewController: UIViewController {
         setupUI()
         setupDelegates()
         locationManager.startTracking()
-        print("@@@",viewModel.coredataManager.getUser())
-        print("@@@",viewModel.coredataManager.getFolders())
     }
     
     private func setupUI() {
@@ -249,7 +247,6 @@ extension MainPageViewController {
         folderDialogVC.modalPresentationStyle = .custom
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
-//        folderDialogVC.view.backgroundColor = .secondarySystemBackground
         
         folderDialogVC.dismiisComplettion = { [weak self] in
             self?.backView.alpha = 0

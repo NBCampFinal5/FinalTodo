@@ -54,14 +54,19 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         return button
     }()
     
-    let autoLoginButton: UIButton = {
+    lazy var autoLoginButton: UIButton = {
         let button = UIButton()
         button.setTitle("자동 로그인", for: .normal)
+        if viewModel.userDefaultManager.getIsAutoLogin() {
+            button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        } else {
+            button.setImage(UIImage(systemName: "square"), for: .normal)
+        }
         button.setTitleColor(.secondaryLabel, for: .normal)
         button.tintColor = .secondaryLabel
         button.backgroundColor = .systemBackground
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
-        button.setImage(UIImage(systemName: "square"), for: .normal)
+        
         return button
     }()
 
@@ -177,6 +182,7 @@ private extension SignInPageViewController {
         }
         
         view.addSubview(autoLoginButton)
+        autoLoginButton.addTarget(self, action: #selector(didTapAutoLoginButton), for: .touchUpInside)
         autoLoginButton.snp.makeConstraints { make in
             make.centerY.equalTo(haveAccountButton.snp.centerY)
             make.left.equalTo(loginButton.snp.left).inset(Constant.defaultPadding)
@@ -255,6 +261,17 @@ extension SignInPageViewController {
         alert.addAction(yes)
         alert.addAction(cancel)
         self.present(alert, animated: true)
+    }
+    
+    @objc func didTapAutoLoginButton() {
+        if viewModel.userDefaultManager.getIsAutoLogin() {
+            viewModel.userDefaultManager.setAutoLogin(toggle: false)
+            autoLoginButton.setImage(UIImage(systemName: "square"), for: .normal)
+        } else {
+            viewModel.userDefaultManager.setAutoLogin(toggle: true)
+            autoLoginButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }
+        
     }
 }
 
