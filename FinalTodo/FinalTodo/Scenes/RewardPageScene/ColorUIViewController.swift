@@ -8,28 +8,20 @@
 import SnapKit
 import UIKit
 
-
 // 셀 분리**
 class ColorUIViewController: UIViewController {
     private let manager = CoreDataManager.shared
     lazy var user = manager.getUser()
     var isDefaultColor: Bool = true // 값 복사 struct 타입
-//    var isDefaultColor: Bool = true {
-//        didSet {
-//    settingOptionData[0][0].isOn = isOn
-//            tableViewReloadData()
-//        }
-//    } // didSet 많이 쓰면 가독성 떨어짐
 
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         return table
     }()
 
-    lazy var settingOptionData: [[SettingOption]] = [
-        [SettingOption(icon: "paintpalette", title: "기본컬러", showSwitch: true, isOn: isDefaultColor),
-         SettingOption(icon: "paintpalette.fill", title: "테마컬러 설정", showSwitch: false, isOn: false)],
-        [SettingOption(icon: "moon.stars", title: "다크모드", showSwitch: true, isOn: false)]
+    lazy var settingOptionData: [SettingOption] = [
+        SettingOption(icon: "paintpalette", title: "기본컬러", showSwitch: true, isOn: isDefaultColor),
+        SettingOption(icon: "paintpalette.fill", title: "테마컬러 설정", showSwitch: false, isOn: false)
     ]
 
     override func viewDidLoad() {
@@ -124,32 +116,19 @@ extension ColorUIViewController: UIColorPickerViewControllerDelegate {
 }
 
 extension ColorUIViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return settingOptionData.count
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
-        switch section {
-        case 0:
-            return settingOptionData[0].count
-
-        case 1:
-            return settingOptionData[1].count
-        default:
-            return 0
-        }
+        return settingOptionData.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
-        if indexPath.section == 0 && indexPath.row == 0 {
+        if indexPath.row == 0 {
             cell.accessoryView = .none
             cell.accessoryType = .none
             cell.isUserInteractionEnabled = true
             cell.contentView.alpha = 1.0
 
-        } else if indexPath.section == 0 && indexPath.row == 1 {
+        } else if indexPath.row == 1 {
             cell.accessoryType = .disclosureIndicator
             cell.isUserInteractionEnabled = !isDefaultColor
             cell.contentView.alpha = isDefaultColor ? 0.5 : 1.0
@@ -164,15 +143,9 @@ extension ColorUIViewController: UITableViewDelegate, UITableViewDataSource {
                 return view
             }()
             cell.accessoryView = colorView
-
-        } else if indexPath.section == 1 {
-            cell.accessoryView = .none
-            cell.accessoryType = .none
-            cell.isUserInteractionEnabled = true
-            cell.contentView.alpha = 1.0
         }
-        print("@@isOn: \(settingOptionData[indexPath.section][indexPath.row].isOn)")
-        cell.configure(with: settingOptionData[indexPath.section][indexPath.row])
+        print("@@isOn: \(settingOptionData[indexPath.row].isOn)")
+        cell.configure(with: settingOptionData[indexPath.row])
         cell.delegate = self
         cell.backgroundColor = .secondarySystemBackground
         return cell
@@ -181,22 +154,19 @@ extension ColorUIViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        if indexPath.section == 0 && indexPath.row == 0 {
+        if indexPath.row == 0 {
             // 기본컬러 설정
-        } else if indexPath.section == 0 && indexPath.row == 1 {
+        } else if indexPath.row == 1 {
             // 테마컬러 설정
             showColorPicker()
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            // 다크모드 설정
         }
     }
 }
 
 extension ColorUIViewController: SettingCellDelegate {
     func didChangeSwitchState(_ cell: SettingCell, isOn: Bool) {
-        
         isDefaultColor = isOn
-        settingOptionData[0][0].isOn = isOn // Bool 타입이
+        settingOptionData[0].isOn = isOn // Bool 타입이
         print("@@스위치변경: \(isOn), \(isDefaultColor)")
         if isOn {
             let newUser = UserData(
@@ -206,12 +176,15 @@ extension ColorUIViewController: SettingCellDelegate {
                 user = manager.getUser()
                 getIsDefaultColor()
                 print("@@유저업데이트 및 패치")
-                print("@@\(settingOptionData[0][0].isOn),\(isDefaultColor)")
+                print("@@\(settingOptionData[0].isOn),\(isDefaultColor)")
+                print("@@\(UIColor.myPointColor)")
+                UIColor.myPointColor = UIColor(hex: CoreDataManager.shared.getUser().themeColor)
                 tableViewReloadData()
             }
             print("@@스위치변경1: \(isOn), \(isDefaultColor)")
         } else {
             print("@@스위치변경2: \(isOn), \(isDefaultColor)")
+            print("@@\(UIColor.myPointColor)")
             tableViewReloadData()
         }
     }
