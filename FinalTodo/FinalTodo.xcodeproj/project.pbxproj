@@ -13,6 +13,7 @@
 		039B82E02AEA860300D3A73C /* ColorUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */; };
 		081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383902AE004620055FDA2 /* LockScreenViewController.swift */; };
 		081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */; };
+		082860CF2AF50CE700DAC63C /* RewardPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082860CE2AF50CE700DAC63C /* RewardPageViewModel.swift */; };
 		083975F62AE647540042517E /* LockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975F52AE647540042517E /* LockScreenView.swift */; };
 		083975FC2AE650830042517E /* LockPasswordSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975FB2AE650830042517E /* LockPasswordSettingViewController.swift */; };
 		083975FE2AE650930042517E /* LockPasswordChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */; };
@@ -135,6 +136,7 @@
 		039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUIViewController.swift; sourceTree = "<group>"; };
 		081383902AE004620055FDA2 /* LockScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewController.swift; sourceTree = "<group>"; };
 		081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenNumCollectionViewCell.swift; sourceTree = "<group>"; };
+		082860CE2AF50CE700DAC63C /* RewardPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RewardPageViewModel.swift; path = ../../../../../../../../Documents/RewardPageViewModel.swift; sourceTree = "<group>"; };
 		083975F52AE647540042517E /* LockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenView.swift; sourceTree = "<group>"; };
 		083975FB2AE650830042517E /* LockPasswordSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordSettingViewController.swift; sourceTree = "<group>"; };
 		083975FD2AE650930042517E /* LockPasswordChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPasswordChangeViewController.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				084412122AD569C0005F2FA9 /* RewardPageViewController.swift */,
+				082860CE2AF50CE700DAC63C /* RewardPageViewModel.swift */,
 				039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */,
 			);
 			path = RewardPageScene;
@@ -829,6 +832,7 @@
 				0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
 				083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */,
+				082860CF2AF50CE700DAC63C /* RewardPageViewModel.swift in Sources */,
 				30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
