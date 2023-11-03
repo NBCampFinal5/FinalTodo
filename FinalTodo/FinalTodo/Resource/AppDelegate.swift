@@ -27,7 +27,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         return true
     }
-
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
+            if let error = error {
+                print("Firebase update error: \(error.localizedDescription)")
+            } else {
+                print("Firebase update success")
+            }
+        }
+    }
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
