@@ -2,6 +2,7 @@ import SnapKit
 import UIKit
 
 class AddMemoMainNotifyViewController: UIViewController {
+    weak var delegate: AddMemoMainNotifyViewControllerDelegate?
     let viewModel: AddMemoPageViewModel
     let topView = ModalTopView(title: "날짜 및 시간 알림")
     var handler: () -> Void = {}
@@ -29,13 +30,6 @@ class AddMemoMainNotifyViewController: UIViewController {
         let buttonView = ButtonTappedView(title: "예약완료")
         buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
         return buttonView
-//        let button = UIButton(type: .system)
-//        button.setTitle("예약완료", for: .normal)
-//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-//        button.layer.cornerRadius = 10
-//        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
-//        return button
     }()
     
     init(viewModel: AddMemoPageViewModel) {
@@ -229,12 +223,4 @@ extension AddMemoMainNotifyViewController: UIViewControllerTransitioningDelegate
     }
 }
 
-extension AddMemoMainNotifyViewController: DateSettingDelegate {
-    func didCompleteDateSetting(date: Date) {
-        //
-    }
 
-    func didResetDateSetting() {
-        //
-    }
-}

@@ -28,9 +28,10 @@ extension AddMemoPageViewController {
     override func viewWillAppear(_ animated: Bool) {
         if selectedFolderId! != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
-            viewModel.optionImageAry[2] = folders.filter({$0.id == selectedFolderId!}).first!.title
+            viewModel.optionImageAry[2] = folders.filter { $0.id == selectedFolderId! }.first!.title
         }
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -74,6 +75,18 @@ private extension AddMemoPageViewController {
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
     }
+}
+
+extension AddMemoPageViewController {
+    // MARK: - Method
+    
+    @objc func didTappedBackButton() {
+        dismiss(animated: true)
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
     @objc func didTapSaveButton() {
         guard let content = memoView.contentTextView.text, !content.isEmpty else {
@@ -85,6 +98,17 @@ private extension AddMemoPageViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
+        
+        // 선택된 알림 날짜와 시간을 확인하고 문자열로 변환
+        var notifyDateTimeString: String?
+        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
+            let dateTimeFormatter = DateFormatter()
+            dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            notifyDateTimeString = dateTimeFormatter.string(from: date) + " " + dateTimeFormatter.string(from: time)
+            print("알림이 설정된 시간: \(notifyDateTimeString ?? "None")")
+        } else {
+            print("알림이 설정되지 않았습니다.")
+        }
         
         let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
         
@@ -98,7 +122,7 @@ private extension AddMemoPageViewController {
                 content: content,
                 isPin: false,
                 locationNotifySetting: "",
-                timeNotifySetting: ""
+                timeNotifySetting: notifyDateTimeString
             )
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
             CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
@@ -124,7 +148,7 @@ private extension AddMemoPageViewController {
                 content: content,
                 isPin: false,
                 locationNotifySetting: "",
-                timeNotifySetting: ""
+                timeNotifySetting: notifyDateTimeString 
             )
             // CoreDataManager를 사용하여 CoreData에 저장
             CoreDataManager.shared.createMemo(newMemo: newMemo) {
@@ -142,18 +166,6 @@ private extension AddMemoPageViewController {
                 }
             }
         }
-    }
-}
-
-extension AddMemoPageViewController {
-    // MARK: - Method
-    
-    @objc func didTappedBackButton() {
-        dismiss(animated: true)
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 
     // 성준 - 키보드가 나타날 때 호출될 메서드
@@ -237,10 +249,9 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
                 print("here")
-                
             }
         case 2:
-            if selectedFolderId! != "allNote"{
+            if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
             }
@@ -260,7 +271,6 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
         
         // 사용자에게 보여질 뷰 컨트롤러를 저장하기 위한 임시 변수를 선언
         
-        
         switch indexPath.row {
         case 0: // "날짜 및 시간알림" 셀 선택 시
             let vc = AddMemoMainNotifyViewController(viewModel: viewModel)
@@ -270,19 +280,6 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
-            //        case 0:
-            //            let dateSettingVC = DateSettingPageViewController(viewModel: viewModel)
-            //            // 현재 뷰 컨트롤러를 delegate로 설정하여, 날짜 설정 완료 시 콜백을 받을 수 있게 함
-            //            dateSettingVC.delegate = self
-            //            // viewModel에 저장된 선택된 날짜가 있다면, 해당 날짜를 뷰 컨트롤러의 초기 날짜로 설정
-            //            if let selectedDate = viewModel.selectedDate {
-            //                dateSettingVC.initialDate = selectedDate
-            //            }
-            //            vc = dateSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
-            //        case 1:
-            //            let notifySettingVC = NotifySettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime)
-            //            notifySettingVC.delegate = self
-            //            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 1: // 위치 설정을 선택한 경우
             let vc = LocationSettingPageViewController()
             vc.modalPresentationStyle = .custom
@@ -301,8 +298,6 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
         default:
             break
         }
-        
-        
     }
 }
 
@@ -378,6 +373,5 @@ extension AddMemoPageViewController: FolderSelectDelegate {
     func didSelectFolder(folderId: String) {
         // 선택된 폴더의 ID 저장
         selectedFolderId = folderId
-        
     }
 }
