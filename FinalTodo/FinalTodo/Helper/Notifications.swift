@@ -72,5 +72,9 @@ class Notifications {
         UNUserNotificationCenter.current().add(request)
     }
 
+    func cancelNotification(identifier: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+    }
+
     private init() {}
 }

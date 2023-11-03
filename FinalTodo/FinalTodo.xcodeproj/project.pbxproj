@@ -115,6 +115,7 @@
 		69EBADCA2AE912680009CB21 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADC92AE912680009CB21 /* SearchViewController.swift */; };
 		69EBADD02AEA11630009CB21 /* MemoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADCF2AEA11630009CB21 /* MemoTableViewCell.swift */; };
 		69EBADD42AEA4E320009CB21 /* FirebaseDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADD32AEA4E320009CB21 /* FirebaseDBManager.swift */; };
+		C716826F2AF3AEAD00922BA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C716826E2AF3AEAD00922BA2 /* GoogleService-Info.plist */; };
 		C71E4BF52AE663FB00DC46F7 /* NotifySettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C71E4BF42AE663FB00DC46F7 /* NotifySettingManager.swift */; };
 		C735C0442AD8E15A00AA7663 /* NotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0432AD8E15A00AA7663 /* NotifyPageViewController.swift */; };
 		C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */; };
@@ -206,6 +207,7 @@
 		69EBADC92AE912680009CB21 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		69EBADCF2AEA11630009CB21 /* MemoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoTableViewCell.swift; sourceTree = "<group>"; };
 		69EBADD32AEA4E320009CB21 /* FirebaseDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDBManager.swift; sourceTree = "<group>"; };
+		C716826E2AF3AEAD00922BA2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C71E4BF42AE663FB00DC46F7 /* NotifySettingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifySettingManager.swift; sourceTree = "<group>"; };
 		C735C0432AD8E15A00AA7663 /* NotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyPageViewController.swift; sourceTree = "<group>"; };
 		C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyPageViewController.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				084412062AD56871005F2FA9 /* Info.plist */,
 				084411F82AD56870005F2FA9 /* AppDelegate.swift */,
 				084411FA2AD56870005F2FA9 /* SceneDelegate.swift */,
+				C716826E2AF3AEAD00922BA2 /* GoogleService-Info.plist */,
 				084412012AD56871005F2FA9 /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -737,6 +740,7 @@
 			files = (
 				084412052AD56871005F2FA9 /* LaunchScreen.storyboard in Resources */,
 				084412022AD56871005F2FA9 /* Assets.xcassets in Resources */,
+				C716826F2AF3AEAD00922BA2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

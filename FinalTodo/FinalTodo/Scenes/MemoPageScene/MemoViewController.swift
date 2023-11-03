@@ -1,18 +1,13 @@
 import SnapKit
 import UIKit
 
-// 새 메모를 추가하거나 기존 메모를 편집할 때 호출되는 델리게이트 프로토콜
-// protocol AddMemoDelegate: AnyObject {
-//    func didAddMemo()
-// }
-
 class MemoViewController: UIViewController {
     // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
     weak var delegate: AddMemoDelegate?
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
     var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
     var keyboardHeight: CGFloat = 0
-    
+
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
 }
@@ -21,62 +16,58 @@ extension MemoViewController {
     // MARK: - LifeCycle
 
     override func viewWillAppear(_ animated: Bool) {
-        if selectedFolderId! != "allNote" {
+        super.viewWillAppear(animated)
+
+        if let folderId = selectedFolderId, folderId != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
-            let folder = folders.filter({$0.id == selectedFolderId!}).first!
-            viewModel.optionImageAry[2] = folder.title
-        }
-        if currentMemoId != nil {
-            let memo = viewModel.coredataManager.getMemos().filter({$0.id == currentMemoId!}).first!
-            if memo.timeNotifySetting! != "" {
-                viewModel.optionImageAry[0] = memo.timeNotifySetting!
-                print(memo.timeNotifySetting)
+            if let folder = folders.filter({ $0.id == folderId }).first {
+                viewModel.optionImageAry[2] = folder.title
             }
-            
+        }
+
+        if let memoId = currentMemoId {
+            let memos = viewModel.coredataManager.getMemos()
+            if let memo = memos.filter({ $0.id == memoId }).first, let timeNotifySetting = memo.timeNotifySetting, !timeNotifySetting.isEmpty {
+                viewModel.optionImageAry[0] = timeNotifySetting
+                print(timeNotifySetting)
+            }
         }
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setUp()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
 private extension MemoViewController {
     // MARK: - setUp
-    
+
     func setUp() {
         setUpMemoView()
         setupNavigationBar()
-        
     }
-    
+
     func setUpMemoView() {
         view.addSubview(memoView)
         memoView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.right.bottom.equalToSuperview()
         }
-        
-        
+
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
     }
-    
+
     func setupNavigationBar() {
-
-
-
         let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(didTapSaveButton))
         navigationItem.rightBarButtonItem = saveButton
-        
+
         // "뒤로" 버튼에 대한 액션 설정
         let backButton = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(didTapBackButton))
         navigationItem.leftBarButtonItem = backButton
@@ -89,77 +80,144 @@ extension MemoViewController {
             print("메모 내용이 없습니다.")
             return
         }
-        
+        // viewModel.updateTags()
+        // 날짜와 시간을 선택했는지 확인합니다.
+        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
+            // 날짜와 시간을 결합하여 알림을 설정합니다.
+            let calendar = Calendar.current
+            let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+
+            var combinedComponents = DateComponents()
+            combinedComponents.year = dateComponents.year
+            combinedComponents.month = dateComponents.month
+            combinedComponents.day = dateComponents.day
+            combinedComponents.hour = timeComponents.hour
+            combinedComponents.minute = timeComponents.minute
+
+            if let combinedDate = calendar.date(from: combinedComponents) {
+                // 기존 알림 취소 로직
+                if let oldIdentifier = viewModel.notificationIdentifier {
+                    Notifications.shared.cancelNotification(identifier: oldIdentifier)
+                }
+
+                // 새로운 알림 식별자 생성
+                let newIdentifier = "memoNotify_\(UUID().uuidString)"
+                viewModel.notificationIdentifier = newIdentifier
+
+                // 새로운 알림 설정 로직
+                Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: content, date: combinedDate, identifier: newIdentifier, soundEnabled: true, vibrationEnabled: true)
+                print("알림이 재설정된 시간: \(combinedDate)")
+            }
+        }
+
         // 현재 날짜를 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-        
+
         let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
-        
+
         // 메모 수정 또는 새 메모 생성
         if let memoId = currentMemoId {
             // 기존 메모 업데이트 로직
-            let updatedMemo = MemoData(
+            var updatedMemo = MemoData(
                 id: memoId,
                 folderId: folderId,
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: ""
+                locationNotifySetting: viewModel.locationNotifySetting, // 기존 위치 알림 설정 유지
+                timeNotifySetting: viewModel.timeNotifySetting // 기존 시간 알림 설정 유지
             )
+            updatedMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
             CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
                 print("메모가 성공적으로 업데이트되었습니다.")
                 self.delegate?.didAddMemo()
-                // self.dismiss(animated: true)
             }
         } else {
             // 새로운 메모 생성 로직
-            let newMemo = MemoData(
+            var newMemo = MemoData(
                 id: UUID().uuidString,
                 folderId: folderId,
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: ""
+                locationNotifySetting: viewModel.locationNotifySetting, // 위치 알림 설정
+                timeNotifySetting: viewModel.timeNotifySetting // 시간 알림 설정
             )
+            newMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에 저장
             CoreDataManager.shared.createMemo(newMemo: newMemo) {
                 print("메모가 성공적으로 저장되었습니다.")
                 self.delegate?.didAddMemo()
-                // self.dismiss(animated: true)
             }
         }
     }
-    
+
+    func combineDateAndTime(date: Date, time: Date) -> Date {
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+
+        var combinedComponents = DateComponents()
+        combinedComponents.year = dateComponents.year
+        combinedComponents.month = dateComponents.month
+        combinedComponents.day = dateComponents.day
+        combinedComponents.hour = timeComponents.hour
+        combinedComponents.minute = timeComponents.minute
+
+        return calendar.date(from: combinedComponents)!
+    }
+
     @objc func didTapBackButton() {
         guard let content = memoView.contentTextView.text, !content.isEmpty else {
             print("메모 내용이 없습니다.")
             return
         }
-        
+        // viewModel.updateTags()
         // 현재 날짜를 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-        
+
         let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
-        
+
+        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
+            // 날짜와 시간을 결합하여 알림을 설정합니다.
+            let calendar = Calendar.current
+            let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+
+            var combinedComponents = DateComponents()
+            combinedComponents.year = dateComponents.year
+            combinedComponents.month = dateComponents.month
+            combinedComponents.day = dateComponents.day
+            combinedComponents.hour = timeComponents.hour
+            combinedComponents.minute = timeComponents.minute
+
+            if let combinedDate = calendar.date(from: combinedComponents) {
+                // 알림 설정 로직
+                Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: content, date: combinedDate, identifier: "memoNotify_\(UUID().uuidString)", soundEnabled: true, vibrationEnabled: true)
+                print("알림이 재설정된 시간: \(combinedDate)")
+                viewModel.selectedDate = combinedDate
+            }
+        }
+
         // 메모 수정 또는 새 메모 생성
         if let memoId = currentMemoId {
             // 기존 메모 업데이트 로직
-            let updatedMemo = MemoData(
+            var updatedMemo = MemoData(
                 id: memoId,
                 folderId: folderId,
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: ""
+                locationNotifySetting: viewModel.locationNotifySetting, // 기존 위치 알림 설정 유지
+                timeNotifySetting: viewModel.timeNotifySetting // 기존 시간 알림 설정 유지
             )
+            updatedMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
             CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
                 print("메모가 성공적으로 업데이트되었습니다.")
@@ -167,15 +225,16 @@ extension MemoViewController {
             }
         } else {
             // 새로운 메모 생성 로직
-            let newMemo = MemoData(
+            var newMemo = MemoData(
                 id: UUID().uuidString,
                 folderId: folderId,
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: ""
+                locationNotifySetting: viewModel.locationNotifySetting, // 위치 알림 설정
+                timeNotifySetting: viewModel.timeNotifySetting // 시간 알림 설정
             )
+            newMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에 저장
             CoreDataManager.shared.createMemo(newMemo: newMemo) {
                 print("메모가 성공적으로 저장되었습니다.")
@@ -188,7 +247,7 @@ extension MemoViewController {
 
 extension MemoViewController: UITextViewDelegate {
     // MARK: - TextViewPlaceHolder
-    
+
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
@@ -196,7 +255,7 @@ extension MemoViewController: UITextViewDelegate {
         }
         return true
     }
-    
+
     func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         if textView.text == "" {
             textView.text = "메모를 입력해 주세요."
@@ -204,7 +263,7 @@ extension MemoViewController: UITextViewDelegate {
         }
         return true
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
         // 현재 커서의 위치를 계산하기 위한 변수를 선언
         var cursorPosition: CGRect?
@@ -234,7 +293,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.optionImageAry.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
         cell.contentView.backgroundColor = .systemBackground
@@ -245,10 +304,9 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             if viewModel.selectedTime != nil {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
-                
             }
         case 2:
-            if selectedFolderId! != "allNote"{
+            if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
             }
@@ -259,13 +317,13 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             print("default")
         }
         cell.bind(title: viewModel.optionImageAry[indexPath.row])
-        
+
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        
+
         // 사용자에게 보여질 뷰 컨트롤러를 저장하기 위한 임시 변수를 선언
 
         switch indexPath.row {
@@ -294,7 +352,6 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
         default:
             break
         }
-
     }
 }
 
@@ -302,14 +359,14 @@ extension MemoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let leadingTrailingInset: CGFloat = 10
         let cellHeight: CGFloat = Constant.screenHeight * 0.03
-        
+
         let category = viewModel.optionImageAry[indexPath.row]
         let size: CGSize = .init(width: collectionView.frame.width - 10, height: cellHeight)
         let attributes = [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .body)]
-        
+
         let estimatedFrame = category.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
         let cellWidth: CGFloat = estimatedFrame.width + (leadingTrailingInset * 2)
-        
+
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }
@@ -324,7 +381,7 @@ extension MemoViewController {
     func changeCellBackground(at row: Int, to color: UIColor) {
         let indexPath = IndexPath(row: row, section: 0)
         if let cell = memoView.optionCollectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
-            //cell.changeBackgroundColor(to: color)
+            // cell.changeBackgroundColor(to: color)
         } else {
             // 셀이 화면에 보이지 않는 경우 collectionView를 다시 로드하여 UI 업데이트
             memoView.optionCollectionView.reloadData()
@@ -339,7 +396,7 @@ extension MemoViewController: DateSettingDelegate {
         // 첫 번째 셀(날짜 설정)에 대한 배경색을 변경
         changeCellBackground(at: 0, to: .systemYellow)
     }
-    
+
     func didResetDateSetting() {
         changeCellBackground(at: 0, to: .secondarySystemBackground)
     }
@@ -350,7 +407,7 @@ extension MemoViewController: NotifySettingDelegate {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
         changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
-    
+
     func didResetNotifySetting() {
         changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
@@ -374,33 +431,39 @@ extension MemoViewController: FolderSelectDelegate {
 }
 
 extension MemoViewController {
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-           view.endEditing(true)
-       }
+        view.endEditing(true)
+    }
 
-       // 성준 - 키보드가 나타날 때 호출될 메서드
-       @objc func keyboardWillShow(notification: NSNotification) {
-           // 키보드의 높이 정보를 담고 있는 값을 NSNotification 객체로부터 추출
-           if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-               // NSValue 객체를 CGRect로 변환하여 실제 키보드의 크기를 얻음
-               let keyboardRealFrame = keyboardFrame.cgRectValue
-               keyboardHeight = keyboardRealFrame.height
-               // 텍스트 뷰의 하단 contentInset을 키보드의 높이만큼 설정하여 키보드에 의해 가려지지 않게함
-               memoView.contentTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-               // 스크롤 바(indicator)의 여백도 동일하게 설정합니다.
-               memoView.contentTextView.scrollIndicatorInsets = memoView.contentTextView.contentInset
-           }
-       }
+    // 성준 - 키보드가 나타날 때 호출될 메서드
+    @objc func keyboardWillShow(notification: NSNotification) {
+        // 키보드의 높이 정보를 담고 있는 값을 NSNotification 객체로부터 추출
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            // NSValue 객체를 CGRect로 변환하여 실제 키보드의 크기를 얻음
+            let keyboardRealFrame = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRealFrame.height
+            // 텍스트 뷰의 하단 contentInset을 키보드의 높이만큼 설정하여 키보드에 의해 가려지지 않게함
+            memoView.contentTextView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+            // 스크롤 바(indicator)의 여백도 동일하게 설정합니다.
+            memoView.contentTextView.scrollIndicatorInsets = memoView.contentTextView.contentInset
+        }
+    }
 
-       @objc private func keyboardWillHide(notification: NSNotification) {
-           // 키보드가 사라질 때 contentInset과 scrollIndicatorInsets을 기본 값(0)으로 되돌려 텍스트 뷰를 원래 위치로 되돌림
-           memoView.contentTextView.contentInset = .zero
-           memoView.contentTextView.scrollIndicatorInsets = .zero
-       }
-   
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        // 키보드가 사라질 때 contentInset과 scrollIndicatorInsets을 기본 값(0)으로 되돌려 텍스트 뷰를 원래 위치로 되돌림
+        memoView.contentTextView.contentInset = .zero
+        memoView.contentTextView.scrollIndicatorInsets = .zero
+    }
 }
 
+extension MemoViewController: AddMemoMainNotifyViewControllerDelegate {
+    func didReserveNotification(date: Date, time: Date) {
+        // 날짜와 시간을 MemoViewController의 프로퍼티로 저장
+        viewModel.selectedDate = date
+        viewModel.selectedTime = time
 
-    
-
+        // viewModel.updateTags()
+        // ViewModel의 timeNotifySetting을 tagsLabel에 설정
+        // memoView.tagsLabel.text = viewModel.timeNotifySetting
+    }
+}
