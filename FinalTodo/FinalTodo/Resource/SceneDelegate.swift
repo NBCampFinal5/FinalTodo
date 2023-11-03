@@ -12,11 +12,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let tabBar = TabBarController()
+        print("[SceneDelegate]:", #function)
         let signInVC = UINavigationController(rootViewController: SignInPageViewController())
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = signInVC // tabBar
+        window?.rootViewController = signInVC
         window?.makeKeyAndVisible()
     }
 
@@ -35,9 +35,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
         let manager = UserDefaultsManager()
-        if manager.getLockIsOn() {
-            guard let rootViewController = window?.rootViewController else { return }
-            window?.rootViewController = LockScreenViewController(rootViewController: rootViewController)
+        let loginManager = LoginManager()
+        
+        if loginManager.isLogin() {
+            if manager.getLockIsOn() {
+                window?.rootViewController = LockScreenViewController(rootViewController: TabBarController())
+            } else {
+                window?.rootViewController = TabBarController()
+            }
+        } else {
+            if manager.getLockIsOn() {
+                window?.rootViewController = LockScreenViewController(rootViewController: SignInPageViewController())
+            } else {
+                window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
+            }
         }
     }
 
