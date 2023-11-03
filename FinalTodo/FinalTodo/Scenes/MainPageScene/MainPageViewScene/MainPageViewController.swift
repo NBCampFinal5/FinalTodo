@@ -269,13 +269,3 @@ extension MainPageViewController: UIViewControllerTransitioningDelegate {
         PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }
-
-class Folder {
-    var name: String
-    var color: UIColor
-    
-    init(name: String, color: UIColor) {
-        self.name = name
-        self.color = color
-    }
-}

@@ -11,8 +11,8 @@ import UIKit
 struct UserData: Codable {
     let id: String
     let nickName: String
-    let folders: [FolderData]
-    let memos: [MemoData]
+    var folders: [FolderData]
+    var memos: [MemoData]
     let rewardPoint: Int32
     let rewardName: String
     let themeColor: String

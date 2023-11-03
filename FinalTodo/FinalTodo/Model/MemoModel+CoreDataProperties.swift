@@ -27,7 +27,7 @@ extension MemoModel: Identifiable {}
 
 extension MemoModel {
     func getValue() -> MemoData {
-        let data = MemoData(
+        var data = MemoData(
             id: self.id ?? "",
             folderId: self.folderId ?? "",
             date: self.date ?? "" ,
