@@ -242,12 +242,12 @@ extension SignUpPageViewController {
     func isSignUpAble(state: Bool) {
         UIView.animate(withDuration: 0.3) {
             if state {
-                self.registerButton.changeTitleColor(color: .systemGray4)
-                self.registerButton.changeButtonColor(color: .secondaryLabel)
+                self.registerButton.changeTitleColor(color: .white)
+                self.registerButton.changeButtonColor(color: .black)
                 self.registerButton.setButtonEnabled(true)
             } else {
                 self.registerButton.changeTitleColor(color: .label)
-                self.registerButton.changeButtonColor(color: .secondarySystemBackground)
+                self.registerButton.changeButtonColor(color: .systemGray4)
                 self.registerButton.setButtonEnabled(false)
             }
         }

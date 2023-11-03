@@ -29,6 +29,7 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
     }
     
     var completion: ((String, UIColor, String?) -> Void)?
+    var dismiisComplettion: () -> Void = {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,7 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        dismiisComplettion()
     }
     @objc func keyboardUp(notification:NSNotification) {
         if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -72,9 +74,6 @@ class FolderDialogViewController: UIViewController, UIColorPickerViewControllerD
         
         view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
-//        view.alpha = 0.9
-        view.layer.shadowOpacity = 0.5
-//        view.layer.shadowOffset = CGSize(width: 5, height: 5)
         
         titleLabel = UILabel()
         titleLabel.text = "폴더 명"

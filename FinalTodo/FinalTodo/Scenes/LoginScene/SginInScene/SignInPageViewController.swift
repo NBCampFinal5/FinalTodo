@@ -37,7 +37,38 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         return view
     }()
 
-    let haveAccountButton = ButtonTappedView(title: "가입이 필요하신가요?")
+    let haveAccountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("회원가입", for: .normal)
+        button.setTitleColor(.secondaryLabel, for: .normal)
+        button.backgroundColor = .systemBackground
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
+        return button
+    }()
+    let passwordFindButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("비밀번호 찾기", for: .normal)
+        button.setTitleColor(.secondaryLabel, for: .normal)
+        button.backgroundColor = .systemBackground
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
+        return button
+    }()
+    
+    lazy var autoLoginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("자동 로그인", for: .normal)
+        if viewModel.userDefaultManager.getIsAutoLogin() {
+            button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        } else {
+            button.setImage(UIImage(systemName: "square"), for: .normal)
+        }
+        button.setTitleColor(.secondaryLabel, for: .normal)
+        button.tintColor = .secondaryLabel
+        button.backgroundColor = .systemBackground
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
+        
+        return button
+    }()
 
     private let viewModel = SignInPageViewModel()
 
@@ -51,8 +82,6 @@ extension SignInPageViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         loginButton.changeButtonColor(color: .secondarySystemBackground)
-        haveAccountButton.changeButtonColor(color: .systemBackground)
-        haveAccountButton.changeTitleColor(color: .secondaryLabel)
         setUpDelegate()
         setUp()
         bind()
@@ -66,7 +95,6 @@ private extension SignInPageViewController {
         loginBar.delegate = self
         passwordBar.delegate = self
         loginButton.delegate = self
-        haveAccountButton.delegate = self
     }
 
     func bind() {
@@ -138,12 +166,26 @@ private extension SignInPageViewController {
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
+        
+        view.addSubview(passwordFindButton)
+        passwordFindButton.addTarget(self, action: #selector(didTapPasswordFindButton), for: .touchUpInside)
+        passwordFindButton.snp.makeConstraints { make in
+            make.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultPadding)
+            make.right.equalTo(loginButton.snp.right).inset(Constant.defaultPadding)
+        }
 
         view.addSubview(haveAccountButton)
+        haveAccountButton.addTarget(self, action: #selector(didTapSignUpbutton), for: .touchUpInside)
         haveAccountButton.snp.makeConstraints { make in
-            make.top.equalTo(loginButton.snp.bottom).offset(Constant.screenHeight * 0.05)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(Constant.screenHeight * 0.05)
+            make.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultPadding)
+            make.right.equalTo(passwordFindButton.snp.left).offset(-Constant.defaultPadding)
+        }
+        
+        view.addSubview(autoLoginButton)
+        autoLoginButton.addTarget(self, action: #selector(didTapAutoLoginButton), for: .touchUpInside)
+        autoLoginButton.snp.makeConstraints { make in
+            make.centerY.equalTo(haveAccountButton.snp.centerY)
+            make.left.equalTo(loginButton.snp.left).inset(Constant.defaultPadding)
         }
     }
 }
@@ -154,12 +196,12 @@ extension SignInPageViewController {
     func isLoginAble(state: Bool) {
         UIView.animate(withDuration: 0.3) {
             if state {
-                self.loginButton.changeTitleColor(color: .systemGray4)
-                self.loginButton.changeButtonColor(color: .secondaryLabel)
+                self.loginButton.changeTitleColor(color: .white)
+                self.loginButton.changeButtonColor(color: .black)
                 self.loginButton.setButtonEnabled(true)
             } else {
                 self.loginButton.changeTitleColor(color: .label)
-                self.loginButton.changeButtonColor(color: .secondarySystemBackground)
+                self.loginButton.changeButtonColor(color: .systemGray4)
                 self.loginButton.setButtonEnabled(false)
             }
         }
@@ -199,6 +241,38 @@ extension SignInPageViewController {
             print("Unregistered text field")
         }
     }
+    
+    @objc func didTapSignUpbutton() {
+        let vc = SignUpPageViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func didTapPasswordFindButton() {
+        let alert = UIAlertController(title: "비밀번호 재설정", message: "입력하신 이메일로 재설정 메일을 발송합니다.", preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let yes = UIAlertAction(title: "확인", style: .default) { [weak self]_ in
+            guard let email = alert.textFields?[0].text else { return }
+            guard let self = self else { return }
+            self.viewModel.loginManager.passwordFind(email: email)
+        }
+        alert.addTextField()
+        alert.textFields?[0].placeholder = "example@example.com"
+        alert.addAction(yes)
+        alert.addAction(cancel)
+        self.present(alert, animated: true)
+    }
+    
+    @objc func didTapAutoLoginButton() {
+        if viewModel.userDefaultManager.getIsAutoLogin() {
+            viewModel.userDefaultManager.setAutoLogin(toggle: false)
+            autoLoginButton.setImage(UIImage(systemName: "square"), for: .normal)
+        } else {
+            viewModel.userDefaultManager.setAutoLogin(toggle: true)
+            autoLoginButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }
+        
+    }
 }
 
 extension SignInPageViewController: ButtonTappedViewDelegate {
@@ -215,9 +289,6 @@ extension SignInPageViewController: ButtonTappedViewDelegate {
                     self.passwordBar.shake()
                 }
             }
-        case haveAccountButton.anyButton:
-            let vc = SignUpPageViewController()
-            navigationController?.pushViewController(vc, animated: true)
         default:
             print("Unregistered button")
         }
