@@ -20,6 +20,7 @@ class CalendarListViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
+        tableView.rowHeight = Constant.screenWidth / 6.5
         return tableView
     }()
 
@@ -37,6 +38,16 @@ class CalendarListViewController: UIViewController {
         super.viewDidLoad()
         setUp()
         fetchMemoList(date: date)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -60,6 +71,7 @@ private extension CalendarListViewController {
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
+            make.height.equalTo(Constant.screenHeight * 0.07)
         }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
