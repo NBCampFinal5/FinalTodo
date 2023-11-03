@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let signInVC = UINavigationController(rootViewController: SignInPageViewController())
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = tabBar // tabBar
+        window?.rootViewController = signInVC // tabBar
         window?.makeKeyAndVisible()
     }
 
