@@ -60,7 +60,7 @@ struct LoginManager {
                 return
             }
             
-            guard let authResult = authResult else {
+            guard authResult != nil else {
                 result.isSuccess = false
                 result.errorMessage = "사용자 인증 결과가 없습니다."
                 completion(result)
@@ -76,29 +76,43 @@ struct LoginManager {
                     return
                 }
                 
-                if let userData = userData {
-                    CoreDataManager.shared.updateUser(targetId: authResult.user.email!, newUser: userData) {
-                        print("User data successfully updated in CoreData.")
-                        completion(result)
-                    }
-                } else {
-                    let newUser = UserData(
-                        id: email,
-                        nickName: "",
-                        folders: [],
-                        memos: [],
-                        rewardPoint: 0,
-                        rewardName: "",
-                        themeColor: ""
-                    )
-                    CoreDataManager.shared.createUser(newUser: newUser) {
-                        print("User data successfully created in CoreData.")
-                        completion(result)
+                CoreDataManager.shared.deleteAllData() {
+                    // 모든 사용자 데이터 삭제 후, 파이어베이스 데이터로 업데이트 진행
+                    if let userData = userData {
+                        // Firebase에서 가져온 데이터로 코어 데이터 업데이트
+                        CoreDataManager.shared.createUser(newUser: userData) {
+                            print("User data successfully updated in CoreData.")
+                            CoreDataManager.shared.fetchFolder() {
+                                CoreDataManager.shared.fetchMemo() {
+                                    let folders = CoreDataManager.shared.getFolders()
+                                    let memos = CoreDataManager.shared.getMemos()
+                                    print(folders)
+                                    print(memos)
+                                    completion(result)
+                                }
+                            }
+                        }
+                    } else {
+                        // 파이어베이스에서 유저 데이터를 가져올 수 없는 경우, 새 유저 데이터 생성
+                        let newUser = UserData(
+                            id: email,
+                            nickName: "",
+                            folders: [],
+                            memos: [],
+                            rewardPoint: 0,
+                            rewardName: "",
+                            themeColor: ""
+                        )
+                        CoreDataManager.shared.createUser(newUser: newUser) {
+                            print("User data successfully created in CoreData.")
+                            completion(result)
+                        }
                     }
                 }
             }
         }
     }
+    
     
     
     
