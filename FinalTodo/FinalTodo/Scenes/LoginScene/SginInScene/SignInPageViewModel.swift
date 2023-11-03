@@ -8,6 +8,7 @@
 import Foundation
 
 class SignInPageViewModel {
+    let userDefaultManager = UserDefaultsManager()
     let loginManager = LoginManager()
     let email: Observable<String> = Observable("")
     let password: Observable<String> = Observable("")

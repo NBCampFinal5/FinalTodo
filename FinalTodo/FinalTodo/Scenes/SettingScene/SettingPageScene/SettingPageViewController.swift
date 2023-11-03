@@ -105,6 +105,8 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
 
         } else if indexPath.section == 1 && indexPath.row == 1 {
             let signInVC = UINavigationController(rootViewController: SignInPageViewController())
+            let manager = LoginManager()
+            manager.signOut()
             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 2 {
             let vc = AppInfoViewController()

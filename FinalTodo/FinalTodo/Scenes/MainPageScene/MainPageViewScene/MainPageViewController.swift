@@ -16,7 +16,12 @@ class MainPageViewController: UIViewController {
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
     let firebaseManager = FirebaseDBManager.shared
-    
+    let backView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        return view
+    }()
     var mainView: MainPageView {
         return view as! MainPageView
     }
@@ -38,6 +43,10 @@ class MainPageViewController: UIViewController {
 //        navigationController?.configureBar()
 //        tabBarController?.configureBar()
 //        changeStatusBarBgColor(bgColor: .systemBackground)
+        view.addSubview(backView)
+        backView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     private func setupDelegates() {
@@ -113,6 +122,8 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.configureAsAllNotesCell()
+        cell.imageView?.layer.borderWidth = 0
         switch indexPath.section {
         case 0:
             cell.configureAsAllNotesCell()
@@ -231,15 +242,17 @@ extension MainPageViewController {
             print("A view controller is already presented.")
             return
         }
-        
+        backView.alpha = 0.4
         let folderDialogVC = FolderDialogViewController()
         folderDialogVC.modalPresentationStyle = .custom
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
-//        folderDialogVC.view.backgroundColor = .secondarySystemBackground
+        
+        folderDialogVC.dismiisComplettion = { [weak self] in
+            self?.backView.alpha = 0
+        }
         
         folderDialogVC.completion = { [weak self] title, color, id in
-            
             if let id = id {
                 let folder = FolderData(id: id, title: title, color: color.toHexString())
                 self?.viewModel.coredataManager.updateFolder(targetId: id, newFolder: folder, completion: {
