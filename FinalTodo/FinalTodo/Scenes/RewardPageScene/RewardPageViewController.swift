@@ -84,7 +84,7 @@ class RewardPageViewController: UIViewController {
 //        CoreDataManager.shared.createUser(newUser: user, completion: {
 //            print("유저생성 성공!")
 //        })
-//        
+//
         score = Int(CoreDataManager.shared.getUser().rewardPoint)
         print("@@@@@@@@@")
         print(CoreDataManager.shared.getUser())

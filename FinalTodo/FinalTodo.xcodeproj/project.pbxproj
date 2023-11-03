@@ -50,10 +50,10 @@
 		08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F8892AD8216A0092C6EF /* MemoViewController.swift */; };
 		08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88B2AD8218E0092C6EF /* MemoView.swift */; };
 		08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */; };
-		08D1BF872AF13FFF00FE896A /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */; };
-		08D1BF892AF1401600FE896A /* AppInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */; };
 		08ACC7382AEF81FB00F4AA9A /* SignInPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */; };
 		08D1BF7A2AF0D40E00FE896A /* SignUpPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */; };
+		08D1BF872AF13FFF00FE896A /* AppInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */; };
+		08D1BF892AF1401600FE896A /* AppInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */; };
 		08E7243E2ADE6E840015514D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 08E7243D2ADE6E840015514D /* FirebaseAnalytics */; };
 		08E724402ADE6E840015514D /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 08E7243F2ADE6E840015514D /* FirebaseAnalyticsOnDeviceConversion */; };
 		08E724422ADE6E840015514D /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 08E724412ADE6E840015514D /* FirebaseAnalyticsSwift */; };
@@ -173,10 +173,10 @@
 		08A4F8892AD8216A0092C6EF /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		08A4F88B2AD8218E0092C6EF /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoOptionCollectionViewCell.swift; sourceTree = "<group>"; };
-		08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoViewController.swift; sourceTree = "<group>"; };
-		08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoViewModel.swift; sourceTree = "<group>"; };
 		08ACC7372AEF81FB00F4AA9A /* SignInPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewModel.swift; sourceTree = "<group>"; };
 		08D1BF792AF0D40E00FE896A /* SignUpPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPageViewModel.swift; sourceTree = "<group>"; };
+		08D1BF862AF13FFF00FE896A /* AppInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoViewController.swift; sourceTree = "<group>"; };
+		08D1BF882AF1401600FE896A /* AppInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoViewModel.swift; sourceTree = "<group>"; };
 		08EB09302AD571CC00CCD51A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		08F8F47F2ADE5FFF0067D3E4 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		301B39672AE134C200B19313 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
