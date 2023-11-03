@@ -65,7 +65,7 @@ class Notifications {
         }
         // 주어진 날짜에 알림을 발생시키는 트리거를 생성
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
 
         // 알림 요청을 생성하고 예약
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)

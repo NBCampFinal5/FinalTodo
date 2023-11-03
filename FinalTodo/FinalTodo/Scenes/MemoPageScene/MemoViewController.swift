@@ -7,6 +7,7 @@ class MemoViewController: UIViewController {
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
     var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
     var keyboardHeight: CGFloat = 0
+    var memoNotificationIdentifier: String?
 
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
@@ -80,42 +81,12 @@ extension MemoViewController {
             print("메모 내용이 없습니다.")
             return
         }
-        // viewModel.updateTags()
-        // 날짜와 시간을 선택했는지 확인합니다.
-        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
-            // 날짜와 시간을 결합하여 알림을 설정합니다.
-            let calendar = Calendar.current
-            let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
-            let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
-
-            var combinedComponents = DateComponents()
-            combinedComponents.year = dateComponents.year
-            combinedComponents.month = dateComponents.month
-            combinedComponents.day = dateComponents.day
-            combinedComponents.hour = timeComponents.hour
-            combinedComponents.minute = timeComponents.minute
-
-            if let combinedDate = calendar.date(from: combinedComponents) {
-                // 기존 알림 취소 로직
-                if let oldIdentifier = viewModel.notificationIdentifier {
-                    Notifications.shared.cancelNotification(identifier: oldIdentifier)
-                }
-
-                // 새로운 알림 식별자 생성
-                let newIdentifier = "memoNotify_\(UUID().uuidString)"
-                viewModel.notificationIdentifier = newIdentifier
-
-                // 새로운 알림 설정 로직
-                Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: content, date: combinedDate, identifier: newIdentifier, soundEnabled: true, vibrationEnabled: true)
-                print("알림이 재설정된 시간: \(combinedDate)")
-            }
-        }
+        scheduleMemoNotification() // 알림 스케줄링
 
         // 현재 날짜를 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-
         let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
 
         // 메모 수정 또는 새 메모 생성
@@ -127,8 +98,8 @@ extension MemoViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: viewModel.locationNotifySetting, // 기존 위치 알림 설정 유지
-                timeNotifySetting: viewModel.timeNotifySetting // 기존 시간 알림 설정 유지
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             updatedMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
@@ -144,8 +115,8 @@ extension MemoViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: viewModel.locationNotifySetting, // 위치 알림 설정
-                timeNotifySetting: viewModel.timeNotifySetting // 시간 알림 설정
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             newMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에 저장
@@ -176,34 +147,11 @@ extension MemoViewController {
             print("메모 내용이 없습니다.")
             return
         }
-        // viewModel.updateTags()
         // 현재 날짜를 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-
         let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
-
-        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
-            // 날짜와 시간을 결합하여 알림을 설정합니다.
-            let calendar = Calendar.current
-            let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
-            let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
-
-            var combinedComponents = DateComponents()
-            combinedComponents.year = dateComponents.year
-            combinedComponents.month = dateComponents.month
-            combinedComponents.day = dateComponents.day
-            combinedComponents.hour = timeComponents.hour
-            combinedComponents.minute = timeComponents.minute
-
-            if let combinedDate = calendar.date(from: combinedComponents) {
-                // 알림 설정 로직
-                Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: content, date: combinedDate, identifier: "memoNotify_\(UUID().uuidString)", soundEnabled: true, vibrationEnabled: true)
-                print("알림이 재설정된 시간: \(combinedDate)")
-                viewModel.selectedDate = combinedDate
-            }
-        }
 
         // 메모 수정 또는 새 메모 생성
         if let memoId = currentMemoId {
@@ -214,8 +162,8 @@ extension MemoViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: viewModel.locationNotifySetting, // 기존 위치 알림 설정 유지
-                timeNotifySetting: viewModel.timeNotifySetting // 기존 시간 알림 설정 유지
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             updatedMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
@@ -231,8 +179,8 @@ extension MemoViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: viewModel.locationNotifySetting, // 위치 알림 설정
-                timeNotifySetting: viewModel.timeNotifySetting // 시간 알림 설정
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             newMemo.notificationDate = viewModel.selectedDate
             // CoreDataManager를 사용하여 CoreData에 저장
@@ -241,7 +189,31 @@ extension MemoViewController {
                 self.delegate?.didAddMemo()
             }
         }
+        scheduleMemoNotification() // 알림 스케줄링
         navigationController?.popViewController(animated: true)
+    }
+
+    private func scheduleMemoNotification() {
+        // 현재 설정된 알림을 취소
+        if let identifier = memoNotificationIdentifier {
+            Notifications.shared.cancelNotification(identifier: identifier)
+        } else {
+            // 새 알림을 위한 고유 식별자를 생성
+            memoNotificationIdentifier = UUID().uuidString
+        }
+
+        guard let date = viewModel.selectedDate, let time = viewModel.selectedTime else { return }
+        let notificationDate = combineDateAndTime(date: date, time: time)
+
+        // 새 알림을 스케줄
+        Notifications.shared.scheduleNotificationAtDate(
+            title: "메모 알림",
+            body: memoView.contentTextView.text,
+            date: notificationDate,
+            identifier: memoNotificationIdentifier!,
+            soundEnabled: true,
+            vibrationEnabled: true
+        )
     }
 }
 
