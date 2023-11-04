@@ -34,6 +34,8 @@ class CalendarPageViewController: UIViewController {
         super.viewWillAppear(true)
         calendarView.calendar.reloadData()
         setCalendarUI()
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
     }
     
     // 네비게이션 바 설정

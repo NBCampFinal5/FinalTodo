@@ -13,12 +13,6 @@ class TabBarController: UITabBarController {
         setUp()
         self.selectedIndex = 0
         delegate = self
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
     }
 }
 

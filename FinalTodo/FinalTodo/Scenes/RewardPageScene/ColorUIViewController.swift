@@ -112,6 +112,8 @@ extension ColorUIViewController: UIColorPickerViewControllerDelegate {
             tableViewReloadData()
             print("@@reloadData")
         }
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
     }
 }
 

@@ -19,7 +19,6 @@ class RewardPageViewController: UIViewController {
         view.isUserInteractionEnabled = false
         view.textColor = .label
         view.font = .preferredFont(forTextStyle: .title1)
-        view.text = "어쩌구저쩌구님은\n지금까지 123개의\n메모를 작성했어요."
         return view
     }()
     
@@ -31,7 +30,6 @@ class RewardPageViewController: UIViewController {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "김춘식김춘식김"
         label.font = .preferredFont(forTextStyle: .largeTitle)
         return label
     }()
@@ -60,7 +58,6 @@ class RewardPageViewController: UIViewController {
     
     private let infoLabel: UILabel = {
         let label = UILabel()
-        label.text = "n개의 메모를 작성하면 다음 기니를 만날 수 있어요"
         label.font = .preferredFont(forTextStyle: .body)
         label.textColor = .secondaryLabel
         return label
@@ -71,7 +68,28 @@ extension RewardPageViewController {
     // MARK: - LifeCycle
 
     override func viewWillAppear(_ animated: Bool) {
+        print(#function)
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
         viewModel = RewardPageViewModel()
+        if viewModel.coredataManager.getUser().rewardName == "" {
+            let alert = UIAlertController(title: "기니의 이름을 만들어 주세요!", message: "기니의 이름은 수정이 가능합니다.", preferredStyle: .alert)
+            
+            let yes = UIAlertAction(title: "확인", style: .default) { [weak self]_ in
+                guard let self = self else { return }
+                guard let name = alert.textFields?[0].text else { return }
+                var user = self.viewModel.coredataManager.getUser()
+                user.rewardName = name
+                viewModel.coredataManager.updateUser(targetId: user.id, newUser: user) {
+                    self.viewWillAppear(true)
+                }
+                
+            }
+            alert.addTextField()
+            alert.textFields?[0].placeholder = "2글자에서 6글자 사이로 입력해주세요."
+            alert.addAction(yes)
+            self.present(alert, animated: true)
+        }
         setUpText()
         setUpImage()
     }
@@ -79,6 +97,9 @@ extension RewardPageViewController {
     override func viewDidLoad() {
         setUpNavigation()
         setUp()
+        setUpText()
+        setUpImage()
+        print(#function)
     }
 }
 
@@ -158,6 +179,7 @@ private extension RewardPageViewController {
     func setUpText() {
         titleTextView.text = viewModel.titleText
         infoLabel.text = viewModel.infoText
+        nameLabel.text = viewModel.coredataManager.getUser().rewardName
         let value = CGFloat(Int(viewModel.score.description.suffix(1))!)
         progressView.progressAnimation(duration: 0.4, value: value / 10)
     }

@@ -39,6 +39,12 @@ class MainPageViewController: UIViewController {
         locationManager.startTracking()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        mainView.fab.backgroundColor = .myPointColor
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
+    }
+    
     private func setupUI() {
         setupNavigationBar()
 //        navigationController?.configureBar()
@@ -93,13 +99,13 @@ class MainPageViewController: UIViewController {
 
 extension UINavigationController {
     func configureBar() {
-        navigationBar.tintColor = .label
+        navigationBar.tintColor = .myPointColor
     }
 }
 
 extension UITabBarController {
     func configureBar() {
-        tabBar.tintColor = .label
+        tabBar.tintColor = .myPointColor
     }
 }
 
