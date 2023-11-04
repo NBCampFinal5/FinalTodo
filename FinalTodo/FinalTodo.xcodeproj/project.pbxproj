@@ -48,6 +48,7 @@
 		085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085A52BD2ADEADD20041918D /* LoginManager.swift */; };
 		0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */; };
 		0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */; };
+		0898E1472AF62CF300300FFB /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898E1462AF62CF300300FFB /* CircularProgressView.swift */; };
 		08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F8892AD8216A0092C6EF /* MemoViewController.swift */; };
 		08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88B2AD8218E0092C6EF /* MemoView.swift */; };
 		08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */; };
@@ -172,6 +173,7 @@
 		085A52BD2ADEADD20041918D /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewModel.swift; sourceTree = "<group>"; };
 		0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenPasswordCollectionViewCell.swift; sourceTree = "<group>"; };
+		0898E1462AF62CF300300FFB /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		08A4F8892AD8216A0092C6EF /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		08A4F88B2AD8218E0092C6EF /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		08A4F88D2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoOptionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				037668B22ADE56CB008BED0A /* ButtonTappedView.swift */,
 				037668B42ADE5CEA008BED0A /* CommandLabelView.swift */,
 				083975F52AE647540042517E /* LockScreenView.swift */,
+				0898E1462AF62CF300300FFB /* CircularProgressView.swift */,
 				083C98602AD8D837006895D2 /* Cells */,
 			);
 			path = SharedView;
@@ -808,6 +811,7 @@
 				0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */,
 				C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */,
 				083C986E2AD90129006895D2 /* TimeSettingPageViewController.swift in Sources */,
+				0898E1472AF62CF300300FFB /* CircularProgressView.swift in Sources */,
 				084EA3042AEA7FFB003031C0 /* MainPageViewModel.swift in Sources */,
 				6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */,
 				08D1BF892AF1401600FE896A /* AppInfoViewModel.swift in Sources */,
