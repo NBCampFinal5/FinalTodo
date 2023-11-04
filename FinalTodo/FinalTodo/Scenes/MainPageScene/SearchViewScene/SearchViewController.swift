@@ -120,9 +120,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension MemoCell {
     func configure(with memo: MemoData, dateFormatter: DateFormatter) {
-        titleLabel.text = memo.content
+        // 메모 내용의 길이를 최대 20자로 제한
+        let maxLength = 20
+        let trimmedContent = String(memo.content.prefix(maxLength))
+        titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)" : memo.content
         dateLabel.text = memo.date
-        folderNameLabel.text = memo.folderId
+        // folderNameLabel.text = memo.folderId
 //        folderColorView.backgroundColor = memo.co
     }
 }

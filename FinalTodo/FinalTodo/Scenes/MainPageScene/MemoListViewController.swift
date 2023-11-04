@@ -12,12 +12,6 @@ import UIKit
 
 class MemoListViewController: UIViewController, AddMemoDelegate {
     var memos: [MemoData] = [] // 메모 데이터를 저장하는 배열
-
-//    var memos: [Memo] = [
-//        Memo(title: "첫 번째 메모", date: Date(), folderName: "개인", folderColor: .red, content: ""),
-//        Memo(title: "두 번째 메모", date: Date(), folderName: "업무", folderColor: .blue, content: ""),
-//    ]
-
     var memoListView: MemoListView!
     let titleLabel = UILabel()
     var folder: FolderData // 메모 리스트 뷰
@@ -110,7 +104,10 @@ extension MemoListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoCell", for: indexPath) as! MemoCell
 
         let memo = memos[indexPath.row]
-        cell.titleLabel.text = memo.content
+        // 메모 내용의 길이를 최대 30자로 제한
+        let maxLength = 30
+        let trimmedContent = String(memo.content.prefix(maxLength))
+        cell.titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)..." : memo.content
         cell.dateLabel.text = memo.date
         cell.backgroundColor = .systemBackground
 

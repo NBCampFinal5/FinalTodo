@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 
 class AddMemoMainNotifyViewController: UIViewController {
-    weak var delegate: AddMemoMainNotifyViewControllerDelegate?
+    weak var delegate: AddNotifyDelegate?
     let viewModel: AddMemoPageViewModel
     let topView = ModalTopView(title: "날짜 및 시간 알림")
     var handler: () -> Void = {}
@@ -31,16 +31,17 @@ class AddMemoMainNotifyViewController: UIViewController {
         buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
         return buttonView
     }()
-    
+
     init(viewModel: AddMemoPageViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,28 +50,9 @@ class AddMemoMainNotifyViewController: UIViewController {
         setUpTableView()
         setUpReserveButton()
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         handler()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        // 날짜와 시간을 갱신
-        if let date = viewModel.selectedDate {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            settingOptionData[0][0].detailText = formatter.string(from: date)
-        }
-
-        if let time = viewModel.selectedTime {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            settingOptionData[0][1].detailText = formatter.string(from: time)
-        }
-
-        // 테이블 뷰를 새로고침하여 변경 사항을 반영
-        tableView.reloadData()
     }
 
     private func setUpTableView() {
@@ -137,7 +119,7 @@ class AddMemoMainNotifyViewController: UIViewController {
             combinedComponents.day = dateComponents.day
             combinedComponents.hour = timeComponents.hour
             combinedComponents.minute = timeComponents.minute
-            
+
             if let combinedDate = calendar.date(from: combinedComponents) {
                 Notifications.shared.scheduleNotificationAtDate(title: "날짜 및 시간 알림", body: "알림을 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
                 print("예약된 알림 시간: \(combinedDate)")
@@ -145,7 +127,13 @@ class AddMemoMainNotifyViewController: UIViewController {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm"
                 showToast(message: "알림이 \(formatter.string(from: combinedDate))에 예약되었습니다.", duration: 2.0)
+                
+                // ViewModel에 예약된 알림 시간을 설정
+                viewModel.timeNotifySetting = formatter.string(from: combinedDate)
+                // Delegate에게 알림 설정을 알림
                 viewModel.optionImageAry[0] = formatter.string(from: combinedDate)
+                
+                delegate?.didReserveNotification(timeNotifySetting: formatter.string(from: combinedDate))
                 dismiss(animated: true)
             }
         } else {
@@ -223,4 +211,22 @@ extension AddMemoMainNotifyViewController: UIViewControllerTransitioningDelegate
     }
 }
 
-
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        // 날짜와 시간을 갱신
+//        if let date = viewModel.selectedDate {
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "yyyy-MM-dd"
+//            settingOptionData[0][0].detailText = formatter.string(from: date)
+//        }
+//
+//        if let time = viewModel.selectedTime {
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "HH:mm"
+//            settingOptionData[0][1].detailText = formatter.string(from: time)
+//        }
+//
+//        // 테이블 뷰를 새로고침하여 변경 사항을 반영
+//        tableView.reloadData()
+//    }
