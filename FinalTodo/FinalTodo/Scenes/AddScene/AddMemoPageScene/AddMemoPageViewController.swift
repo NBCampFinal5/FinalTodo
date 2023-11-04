@@ -356,3 +356,4 @@ extension AddMemoPageViewController: FolderSelectDelegate {
         selectedFolderId = folderId
     }
 }
+
