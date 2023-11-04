@@ -11,20 +11,19 @@ class DeleteAccountPageViewController: UIViewController {
     private lazy var giniChatLabel: UILabel = {
         let label = UILabel()
         label.text = "정말... 계정 삭제하실 건가요?"
-        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.backgroundColor = .systemFill
-        label.layer.cornerRadius = 10
+
         label.layer.masksToBounds = true
         return label
     }()
 
     private lazy var allertLabel: UILabel = {
         let label = UILabel()
-        label.text = "계정 삭제 시 \n데이터가 모두 삭제되니 주의해 주세요."
+        label.text = "계정 삭제 시 데이터가\n 모두 삭제되니 주의해 주세요."
         label.font = UIFont.preferredFont(forTextStyle: .body)
-        label.textColor = .systemGray
+        label.textColor = .secondaryLabel
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -41,6 +40,9 @@ class DeleteAccountPageViewController: UIViewController {
         let button = UIButton()
         button.setTitle("계정 삭제", for: .normal)
         button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 15
+        button.layer.borderColor = UIColor.secondaryLabel.cgColor
+        button.layer.borderWidth = 2
         return button
     }()
 
@@ -67,9 +69,9 @@ private extension DeleteAccountPageViewController {
         view.addSubview(deleteAccountButton)
 
         giniChatLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.1)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.15)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.08)
+            make.height.equalTo(Constant.screenHeight * 0.04)
         }
 
         allertLabel.snp.makeConstraints { make in
@@ -86,7 +88,7 @@ private extension DeleteAccountPageViewController {
 
         deleteAccountButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding * 2)
         }
     }
 
@@ -109,6 +111,14 @@ private extension DeleteAccountPageViewController {
     func deleteAccount() {
         // 데이터베이스 유저 정보 삭제 로직 추가 필요
 
+        FirebaseDBManager.shared.deleteUser { error in
+            if error == nil {
+                print("User Delete Fail")
+            } else {
+                print("User Delete Success")
+            }
+        }
+        
         let signInVC = SignInPageViewController()
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
 

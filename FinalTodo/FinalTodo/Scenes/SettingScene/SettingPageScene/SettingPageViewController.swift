@@ -105,9 +105,15 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
 
         } else if indexPath.section == 1 && indexPath.row == 1 {
             let signInVC = UINavigationController(rootViewController: SignInPageViewController())
-            let manager = LoginManager()
-            manager.signOut()
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+            FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
+                if let error = error {
+                    print("Firebase와 Core Data 동기화 중 에러 발생: \(error.localizedDescription)")
+                } else {
+                  let manager = LoginManager()
+                  manager.signOut()
+                  (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+                }
+            }
         } else if indexPath.section == 1 && indexPath.row == 2 {
             let vc = AppInfoViewController()
             navigationController?.pushViewController(vc, animated: true)

@@ -12,32 +12,31 @@ class ProfilePageViewController: UIViewController {
     private let viewModel = ProfilePageViewModel()
 
     lazy var Options = [
-        SettingOption(icon: "highlighter", title: "닉네임 변경하기!", showSwitch: false, isOn: false),
-        SettingOption(icon: "highlighter", title: "리워드 네임 변경하기!", showSwitch: false, isOn: false),
+        SettingOption(icon: "highlighter", title: "닉네임 변경", showSwitch: false, isOn: false),
+        SettingOption(icon: "highlighter", title: "리워드 네임 변경", showSwitch: false, isOn: false),
     ]
 
     lazy var userNickNameText = viewModel.userNickName {
         didSet {
-            nickNameLabel.text = "안녕하세요, <\(userNickNameText)> 님!"
+            nickNameLabel.text = "\(userNickNameText)"
         }
     }
 
     lazy var rewardNickNameText = viewModel.rewardNickName {
         didSet {
-            rewardNameLabel.text = "<\(rewardNickNameText)>랑 메모 쓰러 가요!"
+            rewardNameLabel.text = "메모를 쓰고 \(rewardNickNameText)를(을) 성장시켜요!"
         }
     }
 
     private lazy var rewardImageButton: UIButton = {
         let button = UIButton()
-        button.layer.borderWidth = 1.5
-        button.layer.borderColor = UIColor.systemFill.cgColor
+        button.layer.cornerRadius = 30
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = .secondarySystemBackground
 
         let imageView = UIImageView()
         imageView.image = UIImage(named: viewModel.giniImage)
-        imageView.contentMode = .scaleAspectFit // 이미지를 원래 비율로 유지하도록 설정
+        imageView.contentMode = .scaleAspectFit
 
         button.addSubview(imageView)
 
@@ -48,19 +47,11 @@ class ProfilePageViewController: UIViewController {
         return button
     }()
 
-    private lazy var chatView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 15
-        view.layer.cornerRadius = 15
-        view.layer.borderWidth = 1.5
-        view.layer.borderColor = UIColor.systemFill.cgColor
-        view.backgroundColor = .systemBackground
-        return view
-    }()
-
     private lazy var nickNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "안녕하세요, <\(userNickNameText)> 님!"
+        label.text = "\(userNickNameText)"
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
+
         label.textAlignment = .center
         label.textColor = .label
         label.backgroundColor = .clear
@@ -70,7 +61,8 @@ class ProfilePageViewController: UIViewController {
 
     private lazy var rewardNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "<\(rewardNickNameText)>랑 메모 쓰러 가요!"
+        label.text = "메모를 쓰고 \(rewardNickNameText)를(을) 성장시켜요!"
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.textAlignment = .center
         label.textColor = .label
         label.backgroundColor = .clear
@@ -89,6 +81,9 @@ class ProfilePageViewController: UIViewController {
         button.setTitle("계정 삭제", for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.addTarget(self, action: #selector(didTapDeleteAccountButton), for: .touchUpInside)
+        button.layer.cornerRadius = 15
+        button.layer.borderColor = UIColor.secondaryLabel.cgColor
+        button.layer.borderWidth = 2
         return button
     }()
 
@@ -109,49 +104,42 @@ private extension ProfilePageViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
-        tableView.rowHeight = Constant.screenWidth / 10
+        tableView.rowHeight = Constant.screenWidth * 0.1
         tableView.isScrollEnabled = false
 
         view.addSubview(rewardImageButton)
-        view.addSubview(chatView)
-        chatView.addSubview(nickNameLabel)
-        chatView.addSubview(rewardNameLabel)
-
+        view.addSubview(nickNameLabel)
+        view.addSubview(rewardNameLabel)
         view.addSubview(tableView)
         view.addSubview(deleteAccountButton)
 
         rewardImageButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(Constant.screenHeight * 0.05)
-            make.leading.equalToSuperview().inset(Constant.defaultPadding)
-            make.width.height.equalTo(Constant.screenWidth * 0.3)
-        }
-
-        chatView.snp.makeConstraints { make in
-            make.centerY.equalTo(rewardImageButton.snp.centerY)
-            make.leading.equalTo(rewardImageButton.snp.trailing).offset(Constant.defaultPadding)
-            make.trailing.equalToSuperview().inset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenWidth * 0.3)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constant.screenWidth * 0.2)
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(Constant.screenHeight * 0.2)
         }
 
         nickNameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(Constant.defaultPadding)
+            make.top.equalTo(rewardImageButton.snp.bottom).offset(Constant.defaultPadding)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenWidth * 0.1)
         }
 
         rewardNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(nickNameLabel.snp.bottom).offset(Constant.defaultPadding)
+            make.top.equalTo(nickNameLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenWidth * 0.07)
         }
 
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(rewardImageButton.snp.bottom).offset(Constant.defaultPadding)
-            make.height.equalTo(Constant.screenHeight * 0.3)
+            make.top.equalTo(rewardNameLabel.snp.bottom).offset(Constant.defaultPadding)
+            make.bottom.equalTo(deleteAccountButton.snp.top)
             make.leading.trailing.equalToSuperview()
         }
 
         deleteAccountButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding * 2)
         }
     }
 

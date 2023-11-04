@@ -9,7 +9,7 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         print("[SceneDelegate]:", #function)
@@ -19,19 +19,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = signInVC
         window?.makeKeyAndVisible()
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
     }
-
+    
     func sceneDidBecomeActive(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
     }
-
+    
     func sceneWillResignActive(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
     }
-
+    
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
         let manager = UserDefaultsManager()
@@ -47,15 +47,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
         }
     }
-
+    
     func sceneDidEnterBackground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
+        func applicationDidEnterBackground(_ application: UIApplication) {
+            FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
+                if let error = error {
+                    print("Firebase update error: \(error.localizedDescription)")
+                } else {
+                    print("Firebase update success")
+                }
+            }
+        }
     }
 }
 
 extension SceneDelegate {
     // MARK: - RootViewChangeMethod
-
+    
     func changeRootVC(viewController: UIViewController, animated: Bool) {
         guard let window = window else { return }
         window.rootViewController = viewController

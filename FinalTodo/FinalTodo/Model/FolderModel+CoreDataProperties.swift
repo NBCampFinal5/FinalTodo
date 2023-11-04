@@ -23,7 +23,7 @@ extension FolderModel: Identifiable {}
 
 extension FolderModel {
     func getValue() -> FolderData {
-        let data = FolderData(
+        var data = FolderData(
             id: self.id ?? "",
             title: self.title ?? "",
             color: self.color ?? ""

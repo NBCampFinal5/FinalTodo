@@ -11,7 +11,6 @@ class AddMemoPageViewController: UIViewController {
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
-    let firebaseManager = FirebaseDBManager.shared
     
     lazy var savebutton: UIButton = {
         let button = UIButton(type: .system)
@@ -130,15 +129,6 @@ extension AddMemoPageViewController {
                 self.delegate?.didAddMemo()
                 self.dismiss(animated: true)
             }
-            firebaseManager.updateMemo(memo: updatedMemo) { error in
-                if error == nil {
-                    print("메모가 성공적으로 업데이트되었습니다.")
-                    self.delegate?.didAddMemo()
-                    self.dismiss(animated: true)
-                } else {
-                    print("메모 업데이트에 실패했습니다.")
-                }
-            }
         } else {
             // 새로운 메모 생성 로직
             let newMemo = MemoData(
@@ -155,15 +145,6 @@ extension AddMemoPageViewController {
                 print("메모가 성공적으로 저장되었습니다.")
                 self.delegate?.didAddMemo()
                 self.dismiss(animated: true)
-            }
-            firebaseManager.createMemo(memo: newMemo) { error in
-                if error == nil {
-                    print("메모가 성공적으로 저장되었습니다.")
-                    self.delegate?.didAddMemo()
-                    self.dismiss(animated: true)
-                } else {
-                    print("메모 저장에 실패했습니다.")
-                }
             }
         }
     }

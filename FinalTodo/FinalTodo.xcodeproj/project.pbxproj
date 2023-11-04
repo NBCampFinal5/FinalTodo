@@ -111,6 +111,8 @@
 		6906BA9F2AD8E8570088FE6E /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */; };
 		6906BAA12AD91DBC0088FE6E /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA02AD91DBC0088FE6E /* MainPageView.swift */; };
 		6906BAA32ADD06860088FE6E /* MemoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BAA22ADD06860088FE6E /* MemoListView.swift */; };
+		6988279B2AF51F1600CA3E08 /* Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6988279A2AF51F1600CA3E08 /* Print.swift */; };
+		69C94CC72AF48DF8003D4BDE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69C94CC62AF48DF8003D4BDE /* GoogleService-Info.plist */; };
 		69EBADB42ADF75010009CB21 /* LocationTrackingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADB32ADF75010009CB21 /* LocationTrackingManager.swift */; };
 		69EBADC02AE0EF920009CB21 /* MapKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADBF2AE0EF910009CB21 /* MapKitManager.swift */; };
 		69EBADC22AE0F29C0009CB21 /* LocationSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EBADC12AE0F29C0009CB21 /* LocationSettingViewController.swift */; };
@@ -204,6 +206,7 @@
 		6906BA9E2AD8E8570088FE6E /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		6906BAA02AD91DBC0088FE6E /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
 		6906BAA22ADD06860088FE6E /* MemoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListView.swift; sourceTree = "<group>"; };
+		6988279A2AF51F1600CA3E08 /* Print.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Print.swift; sourceTree = "<group>"; };
 		69EBADB32ADF75010009CB21 /* LocationTrackingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackingManager.swift; sourceTree = "<group>"; };
 		69EBADBF2AE0EF910009CB21 /* MapKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKitManager.swift; sourceTree = "<group>"; };
 		69EBADC12AE0F29C0009CB21 /* LocationSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingViewController.swift; sourceTree = "<group>"; };
@@ -533,6 +536,7 @@
 				C77CC48B2ADD2C060085C048 /* Notifications.swift */,
 				08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */,
 				083976012AE659650042517E /* LockController.swift */,
+				6988279A2AF51F1600CA3E08 /* Print.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -833,6 +837,7 @@
 				084411FB2AD56870005F2FA9 /* SceneDelegate.swift in Sources */,
 				037668B52ADE5CEA008BED0A /* CommandLabelView.swift in Sources */,
 				084412192AD569F4005F2FA9 /* SignUpPageViewController.swift in Sources */,
+				6988279B2AF51F1600CA3E08 /* Print.swift in Sources */,
 				0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */,
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
 				083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */,
