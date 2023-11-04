@@ -70,6 +70,8 @@ class AppInfoViewController: UIViewController {
     private lazy var developerTextView: UITextView = {
         let view = UITextView()
         view.isScrollEnabled = false
+        view.isEditable = false
+        view.isUserInteractionEnabled = false
         view.text = viewModel.developer
         view.font = .preferredFont(forTextStyle: .caption1)
         view.textColor = .systemGray

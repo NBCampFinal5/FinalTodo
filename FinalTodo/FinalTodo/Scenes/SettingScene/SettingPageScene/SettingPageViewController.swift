@@ -24,6 +24,8 @@ extension SettingPageViewController {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = false
         tableView.reloadData()
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
     }
 }
 

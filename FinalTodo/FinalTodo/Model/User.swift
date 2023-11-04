@@ -10,11 +10,11 @@ import UIKit
 
 struct UserData: Codable {
     let id: String
-    let nickName: String
+    var nickName: String
     var folders: [FolderData]
     var memos: [MemoData]
-    let rewardPoint: Int32
-    let rewardName: String
+    var rewardPoint: Int32
+    var rewardName: String
     let themeColor: String
 }
 
