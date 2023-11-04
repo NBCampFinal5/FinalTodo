@@ -10,49 +10,59 @@ import UIKit
 
 class RewardPageViewController: UIViewController {
 
-    private let viewModel = RewardPageViewModel()
+    private var viewModel = RewardPageViewModel()
     
-    let titleTextView: UITextView = {
+    private let titleTextView: UITextView = {
         let view = UITextView()
         view.isScrollEnabled = false
         view.isEditable = false
+        view.isUserInteractionEnabled = false
         view.textColor = .label
-        view.font = .preferredFont(forTextStyle: .headline)
-        view.text = "어쩌구저쩌구님은\nn개의 메모를 작성했어요."
+        view.font = .preferredFont(forTextStyle: .title1)
+        view.text = "어쩌구저쩌구님은\n지금까지 123개의\n메모를 작성했어요."
         return view
     }()
     
-    let giniImageView: UIImageView = {
+    private let giniImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "gini1")
         return view
     }()
     
-    let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "김춘식"
+        label.text = "김춘식김춘식김"
         label.font = .preferredFont(forTextStyle: .largeTitle)
         return label
     }()
     
-    let stackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.backgroundColor = .blue
-        return view
-    }()
-
-    let progressView: CircularProgressView = {
-        let size = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let view = CircularProgressView(round: 100, lineWidth: 10)
-//        view.progressAnimation(duration: 1, value: 0.2)
-        view.backgroundColor = .blue
+    private lazy var progressContainer: UIView = {
+        let view = UIView()
         return view
     }()
     
-    let infoLabel: UILabel = {
+    private lazy var progressView: CircularProgressView = {
+        let view = CircularProgressView(
+            round: viewModel.progressRadius,
+            lineWidth: viewModel.progressLineWidth,
+            circleColor: UIColor.systemGray.cgColor,
+            progressColor: UIColor.myPointColor.cgColor
+        )
+        return view
+    }()
+    
+    private let stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = Constant.defaultPadding / 2
+        return view
+    }()
+    
+    private let infoLabel: UILabel = {
         let label = UILabel()
-        label.text = "DDddd"
+        label.text = "n개의 메모를 작성하면 다음 기니를 만날 수 있어요"
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .secondaryLabel
         return label
     }()
 }
@@ -61,13 +71,15 @@ extension RewardPageViewController {
     // MARK: - LifeCycle
 
     override func viewWillAppear(_ animated: Bool) {
-        print(#function)
+        viewModel = RewardPageViewModel()
+        setUpText()
+        setUpImage()
     }
+    
     override func viewDidLoad() {
         setUpNavigation()
         setUp()
     }
-    
 }
 
 private extension RewardPageViewController {
@@ -80,8 +92,9 @@ private extension RewardPageViewController {
     func setUp() {
         setUpTitleTextView()
         setUpGiniImageView()
-        setUpNameLabel()
         setUpStackView()
+        setUpProgressBar()
+        setUpInfoLabel()
     }
     
     func setUpTitleTextView() {
@@ -95,34 +108,59 @@ private extension RewardPageViewController {
     func setUpGiniImageView() {
         view.addSubview(giniImageView)
         giniImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextView.snp.bottom).offset(Constant.defaultPadding * 2)
+            make.top.equalTo(titleTextView.snp.bottom).offset(Constant.defaultPadding * 4)
             make.centerX.equalToSuperview()
             make.height.width.equalTo(Constant.screenWidth / 2)
         }
     }
     
-    func setUpNameLabel() {
-        view.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { make in
+    func setUpStackView() {
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(progressContainer)
+        stackView.addArrangedSubview(nameLabel)
+        stackView.snp.makeConstraints { make in
             make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
             make.centerX.equalToSuperview()
         }
     }
     
-    func setUpStackView() {
-        view.addSubview(progressView)
+    func setUpProgressBar() {
+        progressContainer.snp.makeConstraints { make in
+            make.width.height.equalTo(
+                (viewModel.progressRadius + (viewModel.progressLineWidth / 2)) * 2
+            )
+        }
+        progressContainer.addSubview(progressView)
         progressView.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom)
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+    
+    func setUpInfoLabel() {
+        view.addSubview(infoLabel)
+        infoLabel.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(Constant.defaultPadding * 2)
             make.centerX.equalToSuperview()
-
         }
     }
 }
 
-extension RewardPageViewController {
+private extension RewardPageViewController {
     // MARK: - Method
     
+    func setUpImage() {
+        var scoreString = viewModel.score.description
+        scoreString.removeLast()
+        guard let value = Int(scoreString) else { return }
+        giniImageView.image = UIImage(named: "gini\(value + 1)")
+    }
     
+    func setUpText() {
+        titleTextView.text = viewModel.titleText
+        infoLabel.text = viewModel.infoText
+        let value = CGFloat(Int(viewModel.score.description.suffix(1))!)
+        progressView.progressAnimation(duration: 0.4, value: value / 10)
+    }
 
 }
 
@@ -132,10 +170,14 @@ class CircularProgressView: UIView {
     private var progressLayer = CAShapeLayer()
     private var round: CGFloat
     private var lineWidth: CGFloat
+    private var circleColor: CGColor
+    private var progressColor: CGColor
     
-    init (round: CGFloat, lineWidth: CGFloat){
+    init (round: CGFloat, lineWidth: CGFloat, circleColor: CGColor, progressColor: CGColor){
         self.round = round
         self.lineWidth = lineWidth
+        self.circleColor = circleColor
+        self.progressColor = progressColor
         super.init(frame: .zero)
         createCircularPath()
     }
@@ -150,13 +192,13 @@ class CircularProgressView: UIView {
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.lineCap = .round
         circleLayer.lineWidth = lineWidth
-        circleLayer.strokeColor = UIColor.black.cgColor
+        circleLayer.strokeColor = circleColor
         progressLayer.path = circularPath.cgPath
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.lineCap = .round
         progressLayer.lineWidth = lineWidth / 2
         progressLayer.strokeEnd = 0
-        progressLayer.strokeColor = UIColor.red.cgColor
+        progressLayer.strokeColor = progressColor
         layer.addSublayer(circleLayer)
         layer.addSublayer(progressLayer)
     }
