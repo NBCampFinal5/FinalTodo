@@ -43,6 +43,7 @@ class MainPageViewController: UIViewController {
         mainView.fab.backgroundColor = .myPointColor
         navigationController?.configureBar()
         tabBarController?.configureBar()
+        mainView.tableView.reloadData()
     }
     
     private func setupUI() {
@@ -228,9 +229,9 @@ extension UITableViewCell {
 //        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let colorImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        imageView?.layer.borderWidth = 1
-        imageView?.layer.borderColor = UIColor.label.cgColor
-        imageView?.layer.cornerRadius = length / 2
+//        imageView?.layer.borderWidth = 1
+//        imageView?.layer.borderColor = UIColor.label.cgColor
+//        imageView?.layer.cornerRadius = length / 2
         imageView?.image = colorImage
     }
 }

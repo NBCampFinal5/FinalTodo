@@ -14,7 +14,7 @@ class CircularProgressView: UIView {
     private var round: CGFloat
     private var lineWidth: CGFloat
     private var circleColor: CGColor
-    private var progressColor: CGColor
+    var progressColor: CGColor
     
     init (round: CGFloat, lineWidth: CGFloat, circleColor: CGColor, progressColor: CGColor){
         self.round = round
