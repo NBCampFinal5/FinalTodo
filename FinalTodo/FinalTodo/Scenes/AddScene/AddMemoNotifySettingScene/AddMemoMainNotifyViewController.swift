@@ -14,6 +14,8 @@ class AddMemoMainNotifyViewController: UIViewController {
         ],
     ]
 
+    // MARK: - View
+
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
         return table
@@ -21,7 +23,7 @@ class AddMemoMainNotifyViewController: UIViewController {
 
     lazy var infoButton: UIButton = {
         let button = UIButton(type: .infoLight)
-        button.tintColor = .black
+        button.tintColor = .label
         button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
         return button
     }()
@@ -29,6 +31,12 @@ class AddMemoMainNotifyViewController: UIViewController {
     lazy var reserveButton: ButtonTappedView = {
         let buttonView = ButtonTappedView(title: "예약완료")
         buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+        return buttonView
+    }()
+
+    lazy var resetButton: ButtonTappedView = {
+        let buttonView = ButtonTappedView(title: "예약초기화")
+        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return buttonView
     }()
 
@@ -41,20 +49,28 @@ class AddMemoMainNotifyViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
+// MARK: - LifeCycle
+
+extension AddMemoMainNotifyViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
         setUpTopView()
         setUpTableView()
-        setUpReserveButton()
+        setUpButtons()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         handler()
     }
+}
 
+// MARK: - SetUp
+
+extension AddMemoMainNotifyViewController {
     private func setUpTableView() {
         view.addSubview(tableView)
         tableView.delegate = self
@@ -72,7 +88,6 @@ class AddMemoMainNotifyViewController: UIViewController {
     private func setUpTopView() {
         view.addSubview(topView)
         view.addSubview(infoButton)
-
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
@@ -83,17 +98,28 @@ class AddMemoMainNotifyViewController: UIViewController {
         }
     }
 
-    private func setUpReserveButton() {
+    private func setUpButtons() {
         view.addSubview(reserveButton)
         reserveButton.snp.makeConstraints { make in
-//            make.left.right.equalToSuperview().inset(20)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(50)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+            make.bottom.equalToSuperview().inset(100)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+        }
+
+        view.addSubview(resetButton)
+        resetButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(reserveButton.snp.bottom).offset(13)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
     }
+}
 
+// MARK: - Method
+
+extension AddMemoMainNotifyViewController {
     @objc func didTapBackButton() {
         viewModel.selectedTime = nil
         viewModel.selectedDate = nil
@@ -127,12 +153,12 @@ class AddMemoMainNotifyViewController: UIViewController {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "yyyy-MM-dd HH:mm"
                 showToast(message: "알림이 \(formatter.string(from: combinedDate))에 예약되었습니다.", duration: 2.0)
-                
+
                 // ViewModel에 예약된 알림 시간을 설정
                 viewModel.timeNotifySetting = formatter.string(from: combinedDate)
                 // Delegate에게 알림 설정을 알림
                 viewModel.optionImageAry[0] = formatter.string(from: combinedDate)
-                
+
                 delegate?.didReserveNotification(timeNotifySetting: formatter.string(from: combinedDate))
                 dismiss(animated: true)
             }
@@ -142,6 +168,23 @@ class AddMemoMainNotifyViewController: UIViewController {
             alertController.addAction(UIAlertAction(title: "확인", style: .default))
             present(alertController, animated: true)
         }
+    }
+
+    @objc func didTapResetButton() {
+        // 알림 취소 로직
+        Notifications.shared.cancelNotification(identifier: "memoNotify")
+        print("알림이 취소되었습니다.")
+
+        // ViewModel의 알림 설정 시간을 초기화
+        viewModel.timeNotifySetting = nil
+        viewModel.selectedTime = nil
+        viewModel.selectedDate = nil
+        viewModel.optionImageAry[0] = "알림 없음"
+
+        // Delegate에게 알림 취소를 알림
+        delegate?.didCancelNotification()
+        // 토스트 메시지로 알림 취소를 사용자에게 알림
+        showToast(message: "알림이 취소되었습니다.", duration: 2.0)
     }
 
     func showToast(message: String, duration: TimeInterval = 3.0) {
@@ -171,6 +214,8 @@ class AddMemoMainNotifyViewController: UIViewController {
         })
     }
 }
+
+// MARK: - Delegate,DataSource
 
 extension AddMemoMainNotifyViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

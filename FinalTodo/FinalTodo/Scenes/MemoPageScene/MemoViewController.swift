@@ -3,6 +3,7 @@ import UIKit
 
 protocol AddNotifyDelegate: AnyObject {
     func didReserveNotification(timeNotifySetting: String)
+    func didCancelNotification()
 }
 
 class MemoViewController: UIViewController {
@@ -156,10 +157,9 @@ extension MemoViewController {
     }
 
     @objc func didTapBackButton() {
-        guard let content = memoView.contentTextView.text, !content.isEmpty else {
-            print("메모 내용이 없습니다.")
-            return
-        }
+        let content = memoView.contentTextView.text ?? ""
+        print("메모 내용이 없습니다.")
+
         memoNotificationIdentifier = currentMemoId ?? UUID().uuidString
         scheduleMemoNotification() // 알림 스케줄링
 
@@ -441,8 +441,14 @@ extension MemoViewController {
 }
 
 extension MemoViewController: AddNotifyDelegate {
+    func didCancelNotification() {
+        if let identifier = memoNotificationIdentifier {
+            Notifications.shared.cancelNotification(identifier: identifier)
+        }
+    }
+
     func didReserveNotification(timeNotifySetting: String) {
-        //viewModel.timeNotifySetting = timeNotifySetting
+        // viewModel.timeNotifySetting = timeNotifySetting
         viewModel.optionImageAry[0] = timeNotifySetting
         // DateFormatter를 설정합니다.
         let formatter = DateFormatter()

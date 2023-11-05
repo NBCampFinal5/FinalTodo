@@ -38,24 +38,18 @@ class TimeSettingPageViewController: UIViewController {
         return pickerView
     }()
 
-    lazy var doneButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("설정완료", for: .normal)
-        button.backgroundColor = .secondarySystemBackground
-        button.setTitleColor(.label, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-        return button
+    // 설정 완료 버튼
+    lazy var doneButton: ButtonTappedView = {
+        let buttonView = ButtonTappedView(title: "설정완료")
+        buttonView.anyButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        return buttonView
     }()
 
-    lazy var resetButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("설정초기화", for: .normal)
-        button.backgroundColor = .secondarySystemBackground
-        button.setTitleColor(.label, for: .normal)
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        return button
+    // 설정 초기화 버튼
+    lazy var resetButton: ButtonTappedView = {
+        let buttonView = ButtonTappedView(title: "설정초기화")
+        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+        return buttonView
     }()
 
     lazy var infoButton: UIButton = {
@@ -115,9 +109,9 @@ private extension TimeSettingPageViewController {
         view.addSubview(doneButton)
         doneButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(timePickerView.snp.bottom).offset(20)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+            make.top.equalTo(timePickerView.snp.bottom).offset(40)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
     }
 
@@ -125,9 +119,9 @@ private extension TimeSettingPageViewController {
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(doneButton.snp.bottom).offset(10)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+            make.top.equalTo(doneButton.snp.bottom).offset(13)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
     }
 

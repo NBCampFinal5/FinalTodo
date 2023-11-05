@@ -50,7 +50,7 @@ class DateSettingPageViewController: UIViewController {
 
     lazy var infoButton: UIButton = {
         let button = UIButton(type: .infoLight)
-        button.tintColor = .black
+        button.tintColor = .label
         button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
         return button
     }()
@@ -109,16 +109,16 @@ extension DateSettingPageViewController {
         doneButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(datePickerView.snp.bottom).offset(20)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
 
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(doneButton.snp.bottom).offset(10)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+            make.top.equalTo(doneButton.snp.bottom).offset(13)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
     }
 

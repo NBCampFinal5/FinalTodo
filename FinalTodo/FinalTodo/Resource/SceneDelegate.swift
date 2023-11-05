@@ -13,11 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         print("[SceneDelegate]:", #function)
-        let signInVC = UINavigationController(rootViewController: SignInPageViewController())
-        // let tabBar = TabBarController()
+        // let signInVC = UINavigationController(rootViewController: SignInPageViewController())
+        let tabBar = TabBarController()
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = signInVC // signInVC
+        window?.rootViewController = tabBar // signInVC
         window?.makeKeyAndVisible()
     }
     
