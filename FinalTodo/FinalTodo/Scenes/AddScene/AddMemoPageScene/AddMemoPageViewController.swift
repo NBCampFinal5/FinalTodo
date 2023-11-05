@@ -39,6 +39,10 @@ extension AddMemoPageViewController {
                 print("알림설정 시간: \(timeNotifySetting)")
             }
         }
+        
+        if let locationSetting = viewModel.locationNotifySetting, !locationSetting.isEmpty {
+            viewModel.optionImageAry[1] = locationSetting
+        }
     }
 
     override func viewDidLoad() {
@@ -240,6 +244,12 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.categoryLabel.textColor = .systemBackground
                 print("here")
             }
+        case 1:
+            if viewModel.locationNotifySetting != nil {
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+                print("here")
+            }
         case 2:
             if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
@@ -335,6 +345,17 @@ extension AddMemoPageViewController: DateSettingDelegate {
     
     func didResetDateSetting() {
         changeCellBackground(at: 0, to: .secondarySystemBackground)
+    }
+}
+
+extension AddMemoPageViewController: LocationSettingDelegate {
+    func didCompleteLocationSetting(location: String) {
+        viewModel.locationNotifySetting = location
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
+    }
+    
+    func didResetLocationSetting() {
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
 }
 
