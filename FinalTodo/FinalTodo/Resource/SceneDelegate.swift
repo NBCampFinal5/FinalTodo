@@ -54,15 +54,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let manager = UserDefaultsManager()
         let loginManager = LoginManager()
 
-        func applicationDidEnterBackground(_ application: UIApplication) {
-            FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
-                if let error = error {
-                    print("Firebase update error: \(error.localizedDescription)")
-                } else {
-                    print("Firebase update success")
-                }
+        FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
+            if let error = error {
+                print("Firebase update error: \(error.localizedDescription)")
+            } else {
+                print("Firebase update success")
             }
         }
+        
         if !manager.getIsAutoLogin() {
             loginManager.signOut()
         }
