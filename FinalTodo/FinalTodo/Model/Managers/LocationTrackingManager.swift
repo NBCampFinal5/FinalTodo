@@ -48,12 +48,32 @@ class LocationTrackingManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
-            locationManager.stopUpdatingLocation()
+    func startMonitoringGeofence(at coordinate: CLLocationCoordinate2D, radius: CLLocationDistance, identifier: String) {
+        if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            let geofenceRegion = CLCircularRegion(center: coordinate, radius: radius, identifier: identifier)
+            geofenceRegion.notifyOnEntry = true
+            geofenceRegion.notifyOnExit = false
+            
+            print("지오펜스 모니터링을 시작합니다")
+            locationManager.startMonitoring(for: geofenceRegion)
+        } else {
+            print("지오펜스 모니터링을 사용할 수 없습니다.")
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        if region is CLCircularRegion {
+            print("지오펜스 영역에 진입했습니다: \(region.identifier)")
+            sendNotification(title: "알림", body: "목표 달성!")
+        }
+    }
+    
+        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            if let location = locations.last {
+                print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
+//                locationManager.stopUpdatingLocation()
+            }
+        }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error: \(error)")
@@ -84,6 +104,16 @@ class LocationTrackingManager: NSObject, CLLocationManagerDelegate {
         if let topController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
             topController.present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    private func sendNotification(title: String, body: String) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        
+        let request = UNNotificationRequest(identifier: "geofence", content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
 }
 
