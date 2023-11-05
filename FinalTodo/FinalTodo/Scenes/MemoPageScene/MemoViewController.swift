@@ -79,10 +79,12 @@ private extension MemoViewController {
 
     func setupNavigationBar() {
         let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(didTapSaveButton))
+        saveButton.tintColor = .myPointColor
         navigationItem.rightBarButtonItem = saveButton
 
         // "뒤로" 버튼에 대한 액션 설정
         let backButton = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(didTapBackButton))
+        backButton.tintColor = .myPointColor
         navigationItem.leftBarButtonItem = backButton
     }
 }
