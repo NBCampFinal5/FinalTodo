@@ -21,13 +21,23 @@ class AddMemoPageViewController: UIViewController {
     }()
 }
 
+// MARK: - LifeCycle
 extension AddMemoPageViewController {
-    // MARK: - LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
         if selectedFolderId! != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
             viewModel.optionImageAry[2] = folders.filter { $0.id == selectedFolderId! }.first!.title
+        }
+        if let timeNotifySetting = viewModel.timeNotifySetting, !timeNotifySetting.isEmpty {
+            viewModel.optionImageAry[0] = timeNotifySetting
+        } else if let memoId = currentMemoId {
+            let memos = viewModel.coredataManager.getMemos()
+            if let memo = memos.filter({ $0.id == memoId }).first, let timeNotifySetting = memo.timeNotifySetting, !timeNotifySetting.isEmpty {
+                viewModel.timeNotifySetting = timeNotifySetting
+                viewModel.optionImageAry[0] = timeNotifySetting
+                print("알림설정 시간: \(timeNotifySetting)")
+            }
         }
     }
 
@@ -42,8 +52,8 @@ extension AddMemoPageViewController {
     }
 }
 
+// MARK: - setUp
 private extension AddMemoPageViewController {
-    // MARK: - setUp
     
     func setUp() {
         setUpTopView()
@@ -75,9 +85,8 @@ private extension AddMemoPageViewController {
         memoView.optionCollectionView.dataSource = self
     }
 }
-
+// MARK: - Method
 extension AddMemoPageViewController {
-    // MARK: - Method
     
     @objc func didTappedBackButton() {
         dismiss(animated: true)
@@ -120,8 +129,8 @@ extension AddMemoPageViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: notifyDateTimeString
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
             CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
@@ -137,8 +146,8 @@ extension AddMemoPageViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: notifyDateTimeString 
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             // CoreDataManager를 사용하여 CoreData에 저장
             CoreDataManager.shared.createMemo(newMemo: newMemo) {
@@ -356,4 +365,3 @@ extension AddMemoPageViewController: FolderSelectDelegate {
         selectedFolderId = folderId
     }
 }
-
