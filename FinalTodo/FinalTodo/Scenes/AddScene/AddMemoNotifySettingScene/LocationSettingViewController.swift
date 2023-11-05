@@ -14,6 +14,7 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
     private let mapView = MKMapView()
     private let searchBar = UISearchBar()
     private let confirmButton = UIButton(type: .system)
+    let viewModel = AddMemoPageViewModel()
     
     private var didInitialZoomToUserLocation = false
     private var mapManager: MapKitManager!
@@ -103,10 +104,17 @@ extension LocationSettingPageViewController {
     
     @objc func didTappedConfirmButton() {
         let centerCoordinate = mapView.centerCoordinate
-        mapManager.getAddressFrom(coordinate: centerCoordinate) { address in
-            if let address = address {
-                print("Selected Address: \(address)")
-            }
+        mapManager.getAddressFrom(coordinate: centerCoordinate) { [weak self] address in
+            guard let address = address else { return }
+            
+            print("Selected Address: \(address)")
+            self?.viewModel.locationNotifySetting = address
+            
+            let geofenceRadius: CLLocationDistance = 50
+            print("모니터링을 시작합니다: \(centerCoordinate.latitude), \(centerCoordinate.longitude), 반경: \(geofenceRadius)미터")
+            LocationTrackingManager.shared.startMonitoringGeofence(at: centerCoordinate, radius: geofenceRadius, identifier: "selectedGeofence")
+            
+            self?.dismiss(animated: true)
         }
     }
     
