@@ -61,10 +61,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("Firebase update success")
             }
         }
-        
-        if !manager.getIsAutoLogin() {
-            loginManager.signOut()
-        }
     }
 }
 
