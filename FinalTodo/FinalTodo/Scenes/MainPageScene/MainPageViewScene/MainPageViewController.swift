@@ -48,9 +48,6 @@ class MainPageViewController: UIViewController {
     
     private func setupUI() {
         setupNavigationBar()
-//        navigationController?.configureBar()
-//        tabBarController?.configureBar()
-//        changeStatusBarBgColor(bgColor: .systemBackground)
         view.addSubview(backView)
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
