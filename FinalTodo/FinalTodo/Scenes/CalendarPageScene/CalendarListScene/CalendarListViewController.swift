@@ -10,7 +10,7 @@ import UIKit
 class CalendarListViewController: UIViewController {
     let manager = CoreDataManager.shared
 
-    let topView = ModalTopView(title: "")
+    let topView = ModalTopView(title: "메모 목록")
 
     var date: String
     var memos: [MemoData] = []
@@ -122,9 +122,12 @@ extension CalendarListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoCell", for: indexPath) as! MemoCell
 
         let memo = memos[indexPath.row]
-        cell.titleLabel.text = memo.content
+        // 메모 내용의 길이를 최대 30자로 제한
+        let maxLength = 30
+        let trimmedContent = String(memo.content.prefix(maxLength))
+        cell.titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)..." : memo.content
         cell.dateLabel.text = memo.date
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .systemBackground
 
         return cell
     }

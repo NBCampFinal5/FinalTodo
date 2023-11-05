@@ -14,9 +14,11 @@ class ButtonTappedView: UIView {
     // 버튼
     lazy var anyButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .label
+        button.backgroundColor = .systemGray3
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
+        button.setTitleColor(.label, for: .selected) // 여기서 색상을 원하는 대로 설정합니다.
+        button.isSelected = true
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         return button

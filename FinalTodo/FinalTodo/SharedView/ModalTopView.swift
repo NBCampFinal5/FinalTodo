@@ -19,7 +19,7 @@ class ModalTopView: UIView {
         let button = UIButton()
         let image = UIImage(systemName: "xmark.circle.fill")
         button.setImage(image, for: .normal)
-        button.tintColor = .label
+        button.tintColor = .myPointColor
         button.imageView?.contentMode = .scaleAspectFit
         return button
     }()

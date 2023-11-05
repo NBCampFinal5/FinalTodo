@@ -28,7 +28,7 @@ struct MemoData: Codable {
     let id: String
     let folderId: String
     let date: String
-    let content: String
+    let content: String // 메모 내용
     let isPin: Bool
     let locationNotifySetting: String?
     let timeNotifySetting: String?
