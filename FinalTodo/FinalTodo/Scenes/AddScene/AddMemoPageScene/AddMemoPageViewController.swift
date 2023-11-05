@@ -15,15 +15,15 @@ class AddMemoPageViewController: UIViewController {
     lazy var savebutton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("저장", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.myPointColor, for: .normal)
         button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
         return button
     }()
 }
 
 // MARK: - LifeCycle
+
 extension AddMemoPageViewController {
-    
     override func viewWillAppear(_ animated: Bool) {
         if selectedFolderId! != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
@@ -53,8 +53,8 @@ extension AddMemoPageViewController {
 }
 
 // MARK: - setUp
+
 private extension AddMemoPageViewController {
-    
     func setUp() {
         setUpTopView()
         setUpMemoView()
@@ -85,9 +85,10 @@ private extension AddMemoPageViewController {
         memoView.optionCollectionView.dataSource = self
     }
 }
+
 // MARK: - Method
+
 extension AddMemoPageViewController {
-    
     @objc func didTappedBackButton() {
         dismiss(animated: true)
     }

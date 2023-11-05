@@ -4,7 +4,7 @@ import UIKit
 class AddMemoMainNotifyViewController: UIViewController {
     weak var delegate: AddNotifyDelegate?
     let viewModel: AddMemoPageViewModel
-    let topView = ModalTopView(title: "날짜 및 시간 알림")
+    let topView = ModalTopView(title: "알림 설정")
     var handler: () -> Void = {}
 
     var settingOptionData: [[SettingOption]] = [
@@ -23,7 +23,7 @@ class AddMemoMainNotifyViewController: UIViewController {
 
     lazy var infoButton: UIButton = {
         let button = UIButton(type: .infoLight)
-        button.tintColor = .label
+        button.tintColor = .myPointColor
         button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
         return button
     }()
@@ -103,7 +103,7 @@ extension AddMemoMainNotifyViewController {
         reserveButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(100)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
             make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
 
@@ -111,7 +111,7 @@ extension AddMemoMainNotifyViewController {
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(reserveButton.snp.bottom).offset(13)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
             make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
     }
@@ -147,7 +147,7 @@ extension AddMemoMainNotifyViewController {
             combinedComponents.minute = timeComponents.minute
 
             if let combinedDate = calendar.date(from: combinedComponents) {
-                Notifications.shared.scheduleNotificationAtDate(title: "날짜 및 시간 알림", body: "알림을 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
+                Notifications.shared.scheduleNotificationAtDate(title: "메모 알림", body: "메모를 확인해주세요", date: combinedDate, identifier: "memoNotify", soundEnabled: true, vibrationEnabled: true)
                 print("예약된 알림 시간: \(combinedDate)")
                 // 토스트 메시지로 예약된 날짜와 시간 보여줌
                 let formatter = DateFormatter()

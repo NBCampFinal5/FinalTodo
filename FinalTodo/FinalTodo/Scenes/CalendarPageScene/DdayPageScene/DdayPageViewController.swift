@@ -15,7 +15,7 @@ class DdayPageViewController: UIViewController {
     lazy var ddayTitleTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .systemBackground
-        textField.textColor = .black
+        textField.textColor = .label
         textField.placeholder = "D-day 제목을 입력하세요"
         textField.layer.cornerRadius = 5
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
@@ -44,9 +44,9 @@ class DdayPageViewController: UIViewController {
 
     func setupNavigationBar() {
         navigationItem.title = "D-day 설정"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
         let doneButton = UIBarButtonItem(title: "완료", style: .done, target: self, action: #selector(didTapDoneButton))
-        doneButton.tintColor = .black
+        doneButton.tintColor = .label
         navigationItem.rightBarButtonItem = doneButton
     }
 
