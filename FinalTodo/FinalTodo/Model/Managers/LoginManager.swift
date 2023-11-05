@@ -158,8 +158,19 @@ struct LoginManager {
     }
     
     func signOut() {
+        
+        let userDefaultManager = UserDefaultsManager()
+        let notifySettingManager = NotifySettingManager.shared
+        
         do {
             print(Auth.auth().currentUser?.email,"SignOut")
+            userDefaultManager.setPassword(password: "")
+            userDefaultManager.setLockIsOn(toggle: false)
+            userDefaultManager.setAutoLogin(toggle: false)
+            notifySettingManager.isNotificationEnabled = false
+            notifySettingManager.isSoundEnabled = false
+            notifySettingManager.isVibrationEnabled = false
+            
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)

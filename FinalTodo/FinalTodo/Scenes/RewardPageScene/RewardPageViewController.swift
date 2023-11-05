@@ -34,9 +34,12 @@ class RewardPageViewController: UIViewController {
         return label
     }()
     
-    private lazy var progressContainer: UIView = {
-        let view = UIView()
-        return view
+    private lazy var progressContainerLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .secondaryLabel
+        label.textAlignment = .center
+        return label
     }()
     
     private lazy var progressView: CircularProgressView = {
@@ -49,18 +52,30 @@ class RewardPageViewController: UIViewController {
         return view
     }()
     
-    private let stackView: UIStackView = {
+    private let verticalStackView: UIStackView = {
         let view = UIStackView()
-        view.axis = .horizontal
-        view.spacing = Constant.defaultPadding / 2
+        view.axis = .vertical
+//        view.spacing = Constant.defaultPadding / 2
+        view.alignment = .leading
         return view
     }()
     
-    private let infoLabel: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = .secondaryLabel
-        return label
+    private let horizontalStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.spacing = Constant.defaultPadding / 2
+        view.alignment = .center
+        return view
+    }()
+    
+    private let infoTextView: UITextView = {
+        let view = UITextView()
+        view.font = .preferredFont(forTextStyle: .body)
+        view.isEditable = false
+        view.isScrollEnabled = false
+        view.isUserInteractionEnabled = false
+        view.textColor = .secondaryLabel
+        return view
     }()
 }
 
@@ -113,9 +128,11 @@ private extension RewardPageViewController {
     func setUp() {
         setUpTitleTextView()
         setUpGiniImageView()
-        setUpStackView()
+        setUpNameLabel()
         setUpProgressBar()
-        setUpInfoLabel()
+        setUpVerticalStackView()
+        setUpHorizontalStackView()
+
     }
     
     func setUpTitleTextView() {
@@ -135,32 +152,38 @@ private extension RewardPageViewController {
         }
     }
     
-    func setUpStackView() {
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(progressContainer)
-        stackView.addArrangedSubview(nameLabel)
-        stackView.snp.makeConstraints { make in
+    func setUpNameLabel() {
+        view.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { make in
             make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
             make.centerX.equalToSuperview()
         }
+        
     }
     
     func setUpProgressBar() {
-        progressContainer.snp.makeConstraints { make in
+        progressContainerLabel.snp.makeConstraints { make in
             make.width.height.equalTo(
                 (viewModel.progressRadius + (viewModel.progressLineWidth / 2)) * 2
             )
         }
-        progressContainer.addSubview(progressView)
+        progressContainerLabel.addSubview(progressView)
         progressView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
     }
     
-    func setUpInfoLabel() {
-        view.addSubview(infoLabel)
-        infoLabel.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(Constant.defaultPadding * 2)
+    func setUpVerticalStackView() {
+        verticalStackView.addArrangedSubview(nameLabel)
+        verticalStackView.addArrangedSubview(infoTextView)
+    }
+    
+    func setUpHorizontalStackView() {
+        view.addSubview(horizontalStackView)
+        horizontalStackView.addArrangedSubview(progressContainerLabel)
+        horizontalStackView.addArrangedSubview(verticalStackView)
+        horizontalStackView.snp.makeConstraints { make in
+            make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
             make.centerX.equalToSuperview()
         }
     }
@@ -178,10 +201,13 @@ private extension RewardPageViewController {
     
     func setUpText() {
         titleTextView.text = viewModel.titleText
-        infoLabel.text = viewModel.infoText
+        infoTextView.text = viewModel.infoText
         nameLabel.text = viewModel.coredataManager.getUser().rewardName
+        progressContainerLabel.text = viewModel.scoreText
         let value = CGFloat(Int(viewModel.score.description.suffix(1))!)
-        progressView.progressAnimation(duration: 0.4, value: value / 10)
+        progressView.progressColor = UIColor.myPointColor.cgColor
+        progressView.createCircularPath()
+        progressView.progressAnimation(duration: 1, value: value / 10)
     }
 
 }
