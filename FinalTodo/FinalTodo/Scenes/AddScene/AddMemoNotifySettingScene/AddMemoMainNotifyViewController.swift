@@ -46,7 +46,7 @@ class AddMemoMainNotifyViewController: UIViewController {
         button.backgroundColor = .secondarySystemBackground
         button.setTitleColor(.label, for: .normal)
         button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
         return button
     }()
 
@@ -189,7 +189,7 @@ extension AddMemoMainNotifyViewController {
         viewModel.timeNotifySetting = nil
         viewModel.selectedTime = nil
         viewModel.selectedDate = nil
-        viewModel.optionImageAry[0] = "알림 없음"
+        //viewModel.optionImageAry[0] = "알림 없음"
 
         // Delegate에게 알림 취소를 알림
         delegate?.didCancelNotification()

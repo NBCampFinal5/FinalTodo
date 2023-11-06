@@ -31,13 +31,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneWillResignActive(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
+        let manager = UserDefaultsManager()
+        let loginManager = LoginManager()
+        let coredataMnager = CoreDataManager.shared
+
+        if coredataMnager.getUser().id == "error" {
+            loginManager.signOut()
+        }
+        
+        if loginManager.isLogin() {
+            if manager.getLockIsOn() {
+                window?.rootViewController = LockScreenViewController(rootViewController: TabBarController())
+            } else {
+                window?.rootViewController = TabBarController()
+            }
+        } else {
+            window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
+        }
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
         let manager = UserDefaultsManager()
         let loginManager = LoginManager()
+        let coredataMnager = CoreDataManager.shared
 
+        if coredataMnager.getUser().id == "error" {
+            loginManager.signOut()
+        }
+        
         if loginManager.isLogin() {
             if manager.getLockIsOn() {
                 window?.rootViewController = LockScreenViewController(rootViewController: TabBarController())

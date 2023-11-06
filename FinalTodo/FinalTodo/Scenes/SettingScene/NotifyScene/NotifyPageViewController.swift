@@ -12,8 +12,8 @@ class NotifyPageViewController: UIViewController {
 
     var notifyOptions = [
         SettingOption(icon: "bell", title: "앱 실행 중 알림", showSwitch: true, isOn: NotifySettingManager.shared.isNotificationEnabled),
-        SettingOption(icon: "bell", title: "앱 실행 중 사운드", showSwitch: true, isOn: NotifySettingManager.shared.isSoundEnabled),
-        SettingOption(icon: "bell", title: "앱 실행 중 진동", showSwitch: true, isOn: NotifySettingManager.shared.isVibrationEnabled),
+        SettingOption(icon: "bell", title: "사운드", showSwitch: true, isOn: NotifySettingManager.shared.isSoundEnabled),
+        SettingOption(icon: "bell", title: "진동", showSwitch: true, isOn: NotifySettingManager.shared.isVibrationEnabled),
     ]
 
     override func viewDidLoad() {
