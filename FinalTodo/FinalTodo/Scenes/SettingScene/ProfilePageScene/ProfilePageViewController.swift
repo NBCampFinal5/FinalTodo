@@ -13,7 +13,7 @@ class ProfilePageViewController: UIViewController {
 
     lazy var Options = [
         SettingOption(icon: "highlighter", title: "닉네임 변경", showSwitch: false, isOn: false),
-        SettingOption(icon: "highlighter", title: "리워드 네임 변경", showSwitch: false, isOn: false),
+        SettingOption(icon: "highlighter", title: "기니 닉네임 변경", showSwitch: false, isOn: false),
     ]
 
     lazy var userNickNameText = viewModel.userNickName {
@@ -28,21 +28,20 @@ class ProfilePageViewController: UIViewController {
         }
     }
 
+    private let giniImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "gini1")
+        return view
+    }()
+
     private lazy var rewardImageButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 30
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
         button.backgroundColor = .secondarySystemBackground
-
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: viewModel.giniImage)
-        imageView.contentMode = .scaleAspectFit
-
-        button.addSubview(imageView)
-
-        imageView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
-        }
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(named: viewModel.giniImage)
+//        imageView.contentMode = .scaleAspectFit
 
         return button
     }()
@@ -50,10 +49,22 @@ class ProfilePageViewController: UIViewController {
     private lazy var nickNameLabel: UILabel = {
         let label = UILabel()
         label.text = "\(userNickNameText)"
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
 
         label.textAlignment = .center
         label.textColor = .label
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var nickIdLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(viewModel.userId)"
+        label.font = UIFont.preferredFont(forTextStyle: .callout)
+
+        label.textAlignment = .center
+        label.textColor = .secondaryLabel
         label.backgroundColor = .clear
         label.numberOfLines = 0
         return label
@@ -93,6 +104,7 @@ class ProfilePageViewController: UIViewController {
             print("@@viewDidLoad")
         }
         setUp()
+        setUpImage()
     }
 }
 
@@ -109,14 +121,21 @@ private extension ProfilePageViewController {
 
         view.addSubview(rewardImageButton)
         view.addSubview(nickNameLabel)
+        view.addSubview(nickIdLabel)
         view.addSubview(rewardNameLabel)
         view.addSubview(tableView)
         view.addSubview(deleteAccountButton)
 
+        rewardImageButton.addSubview(giniImageView)
+
         rewardImageButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constant.screenWidth * 0.2)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constant.screenWidth * 0.15)
             make.centerX.equalToSuperview()
             make.width.height.equalTo(Constant.screenHeight * 0.2)
+        }
+
+        giniImageView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
 
         nickNameLabel.snp.makeConstraints { make in
@@ -125,8 +144,14 @@ private extension ProfilePageViewController {
             make.height.equalTo(Constant.screenWidth * 0.1)
         }
 
-        rewardNameLabel.snp.makeConstraints { make in
+        nickIdLabel.snp.makeConstraints { make in
             make.top.equalTo(nickNameLabel.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenWidth * 0.05)
+        }
+
+        rewardNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(nickIdLabel.snp.bottom).offset(Constant.defaultPadding)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenWidth * 0.07)
         }
@@ -141,6 +166,13 @@ private extension ProfilePageViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding * 2)
         }
+    }
+
+    func setUpImage() {
+        var scoreString = viewModel.score.description
+        scoreString.removeLast()
+        guard let value = Int(scoreString) else { return }
+        giniImageView.image = UIImage(named: "gini\(value + 1)")
     }
 
     @objc
@@ -159,7 +191,7 @@ private extension ProfilePageViewController {
         case .userNickName:
             title = "유저 닉네임 변경"
         case .rewardNickName:
-            title = "리워드 닉네임 변경"
+            title = "기니 닉네임 변경"
         }
 
         let alertController = UIAlertController(title: title, message: "닉네임을 입력해주세요.", preferredStyle: .alert)
