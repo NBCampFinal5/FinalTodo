@@ -175,11 +175,11 @@ private extension ProfilePageViewController {
 
     @objc
     func didTapGiniImageButton(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-        if let tabBarController = tabBarController {
-            tabBarController.selectedIndex = 2
-            self.tabBarController?.tabBar.isHidden = false
-        }
+//        navigationController?.popViewController(animated: true)
+//        if let tabBarController = tabBarController {
+//            tabBarController.selectedIndex = 2
+//            self.tabBarController?.tabBar.isHidden = false
+//        }
     }
 
     func showEditAlert(editType: ProfilePageViewModel.EditType, completion: @escaping () -> Void) {
