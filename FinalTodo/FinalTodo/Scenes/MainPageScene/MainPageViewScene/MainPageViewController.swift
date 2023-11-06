@@ -43,6 +43,7 @@ class MainPageViewController: UIViewController {
         mainView.fab.backgroundColor = .myPointColor
         navigationController?.configureBar()
         tabBarController?.configureBar()
+        tabBarController?.tabBar.isHidden = false // 하위 화면에서 숨겼던 탭바 복구
         mainView.tableView.reloadData()
     }
     
@@ -152,11 +153,13 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let folder = FolderData(id: "allNote", title: "모든 노트", color: "")
                 let vc = MemoListViewController(folder: folder)
                 navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
             } else if indexPath.section == 1 {
                 let folder = viewModel.coredataManager.getFolders()[indexPath.row]
                 print(folder)
                 let vc = MemoListViewController(folder: folder)
                 navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
             }
         }
     }
