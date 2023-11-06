@@ -39,22 +39,32 @@ class TimeSettingPageViewController: UIViewController {
     }()
 
     // 설정 완료 버튼
-    lazy var doneButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "설정완료")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-        return buttonView
+    lazy var doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("설정완료", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        return button
     }()
 
     // 설정 초기화 버튼
-    lazy var resetButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "설정초기화")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        return buttonView
+    lazy var resetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("설정초기화", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+        return button
     }()
 
     lazy var infoButton: UIButton = {
         let button = UIButton(type: .infoLight)
-        button.tintColor = .black
+        button.tintColor = .myPointColor
         button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
         return button
     }()

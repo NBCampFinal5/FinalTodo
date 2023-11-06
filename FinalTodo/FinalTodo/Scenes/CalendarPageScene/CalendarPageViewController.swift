@@ -160,15 +160,6 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
         return CGPoint(x: 0, y: 30)
     }
 
-    // 오늘 날짜 텍스트 위치조정
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleOffsetFor date: Date) -> CGPoint {
-        if calendarView.dateFormatter.string(from: date) == calendarView.dateFormatter.string(from: Date()) {
-            // 오늘 날짜의 경우 타이틀을 중앙에 위치시킴
-            return CGPoint(x: 0, y: 5.5)
-        }
-        return CGPoint(x: 0, y: appearance.titleOffset.y)
-    }
-
     // 날짜색깔 다크모드 대응
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         return .label
@@ -193,6 +184,6 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
 
 extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
+        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }

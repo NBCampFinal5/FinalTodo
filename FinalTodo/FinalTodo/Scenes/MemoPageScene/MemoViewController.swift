@@ -218,7 +218,14 @@ extension MemoViewController {
         else {
             return
         }
-
+//        let notificationContent = UNMutableNotificationContent()
+//        notificationContent.title = "메모 알림"
+//        notificationContent.body = memoView.contentTextView.text
+//        notificationContent.sound = .default
+//
+//        // userInfo 딕셔너리에 메모 ID 추가
+//        notificationContent.userInfo = ["memoId": memoNotificationIdentifier ?? ""]
+        
         // memoNotificationIdentifier가 nil이면 새로운 값을 할당
         let identifier = memoNotificationIdentifier ?? UUID().uuidString
         memoNotificationIdentifier = identifier

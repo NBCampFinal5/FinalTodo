@@ -59,10 +59,11 @@ private extension LocationSettingPageViewController {
     func configureConfirmButton() {
         view.addSubview(confirmButton)
         confirmButton.setTitle("설정완료", for: .normal)
+        confirmButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         confirmButton.addTarget(self, action: #selector(didTappedConfirmButton), for: .touchUpInside)
         confirmButton.backgroundColor = .secondarySystemBackground
         confirmButton.setTitleColor(.label, for: .normal)
-        confirmButton.layer.cornerRadius = 10
+        confirmButton.layer.cornerRadius = 5
     }
     
     func setUpConstraints() {
@@ -84,8 +85,8 @@ private extension LocationSettingPageViewController {
         confirmButton.snp.makeConstraints { make in
             make.top.equalTo(mapView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
-            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
         }
     }
     

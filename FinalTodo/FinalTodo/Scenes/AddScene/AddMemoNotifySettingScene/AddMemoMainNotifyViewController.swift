@@ -28,16 +28,26 @@ class AddMemoMainNotifyViewController: UIViewController {
         return button
     }()
 
-    lazy var reserveButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "예약완료")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
-        return buttonView
+    lazy var reserveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("예약완료", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+        return button
     }()
 
-    lazy var resetButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "예약초기화")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        return buttonView
+    lazy var resetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("예약초기화", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapReserveButton), for: .touchUpInside)
+        return button
     }()
 
     init(viewModel: AddMemoPageViewModel) {
