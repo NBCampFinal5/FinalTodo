@@ -214,7 +214,7 @@ extension UITableViewCell {
     }
     
     func configureAsAllNotesCell() {
-        contentView.backgroundColor = .secondarySystemBackground
+//        contentView.backgroundColor = .secondarySystemBackground
         textLabel?.text = "모든 노트"
         let templateImage = UIImage(systemName: "note.text")?.withRenderingMode(.alwaysTemplate)
         imageView?.image = templateImage
@@ -223,7 +223,7 @@ extension UITableViewCell {
     
     func configureCellWith(item: FolderData) {
         textLabel?.textColor = .label
-        contentView.backgroundColor = .secondarySystemBackground
+//        contentView.backgroundColor = .secondarySystemBackground
         
         textLabel?.text = item.title
         
@@ -235,9 +235,9 @@ extension UITableViewCell {
 //        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let colorImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-//        imageView?.layer.borderWidth = 1
-//        imageView?.layer.borderColor = UIColor.label.cgColor
-//        imageView?.layer.cornerRadius = length / 2
+        imageView?.layer.borderWidth = 0.2
+        imageView?.layer.borderColor = UIColor.label.cgColor
+        imageView?.layer.cornerRadius = length / 2
         imageView?.image = colorImage
     }
 }

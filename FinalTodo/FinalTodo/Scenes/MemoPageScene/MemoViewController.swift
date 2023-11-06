@@ -225,7 +225,7 @@ extension MemoViewController {
 //
 //        // userInfo 딕셔너리에 메모 ID 추가
 //        notificationContent.userInfo = ["memoId": memoNotificationIdentifier ?? ""]
-        
+
         // memoNotificationIdentifier가 nil이면 새로운 값을 할당
         let identifier = memoNotificationIdentifier ?? UUID().uuidString
         memoNotificationIdentifier = identifier

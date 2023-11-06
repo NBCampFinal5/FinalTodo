@@ -167,9 +167,9 @@ struct LoginManager {
             userDefaultManager.setPassword(password: "")
             userDefaultManager.setLockIsOn(toggle: false)
             userDefaultManager.setAutoLogin(toggle: false)
-            notifySettingManager.isNotificationEnabled = false
-            notifySettingManager.isSoundEnabled = false
-            notifySettingManager.isVibrationEnabled = false
+            notifySettingManager.isNotificationEnabled = true
+            notifySettingManager.isSoundEnabled = true
+            notifySettingManager.isVibrationEnabled = true
             
             try Auth.auth().signOut()
         } catch let signOutError as NSError {
