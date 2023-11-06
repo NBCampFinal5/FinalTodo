@@ -127,7 +127,6 @@
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
 		C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CC48B2ADD2C060085C048 /* Notifications.swift */; };
-		C789AA722AF8DBF600577572 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C789AA712AF8DBF600577572 /* GoogleService-Info.plist */; };
 		C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */; };
 		C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */; };
 /* End PBXBuildFile section */
@@ -221,7 +220,6 @@
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		C789AA712AF8DBF600577572 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderSelectPageViewController.swift; sourceTree = "<group>"; };
 		C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoMainNotifyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -467,7 +465,6 @@
 				084412062AD56871005F2FA9 /* Info.plist */,
 				084411F82AD56870005F2FA9 /* AppDelegate.swift */,
 				084411FA2AD56870005F2FA9 /* SceneDelegate.swift */,
-				C789AA712AF8DBF600577572 /* GoogleService-Info.plist */,
 				084412012AD56871005F2FA9 /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -749,7 +746,6 @@
 			files = (
 				084412052AD56871005F2FA9 /* LaunchScreen.storyboard in Resources */,
 				084412022AD56871005F2FA9 /* Assets.xcassets in Resources */,
-				C789AA722AF8DBF600577572 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
