@@ -7,7 +7,7 @@ class AddMemoPageViewController: UIViewController {
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
     var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
     var keyboardHeight: CGFloat = 0 // 성준 - 키보드 높이를 저장할 프로퍼티
-
+    
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
@@ -39,8 +39,12 @@ extension AddMemoPageViewController {
                 print("알림설정 시간: \(timeNotifySetting)")
             }
         }
+        
+        if let locationSetting = viewModel.locationNotifySetting, !locationSetting.isEmpty {
+            viewModel.optionImageAry[1] = locationSetting
+        }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -92,7 +96,7 @@ extension AddMemoPageViewController {
     @objc func didTappedBackButton() {
         dismiss(animated: true)
     }
-
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
@@ -158,7 +162,7 @@ extension AddMemoPageViewController {
             }
         }
     }
-
+    
     // 성준 - 키보드가 나타날 때 호출될 메서드
     @objc func keyboardWillShow(notification: NSNotification) {
         // 키보드의 높이 정보를 담고 있는 값을 NSNotification 객체로부터 추출
@@ -172,7 +176,7 @@ extension AddMemoPageViewController {
             memoView.contentTextView.scrollIndicatorInsets = memoView.contentTextView.contentInset
         }
     }
-
+    
     @objc private func keyboardWillHide(notification: NSNotification) {
         // 키보드가 사라질 때 contentInset과 scrollIndicatorInsets을 기본 값(0)으로 되돌려 텍스트 뷰를 원래 위치로 되돌림
         memoView.contentTextView.contentInset = .zero
@@ -198,7 +202,7 @@ extension AddMemoPageViewController: UITextViewDelegate {
         }
         return true
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         // 현재 커서의 위치를 계산하기 위한 변수를 선언
         var cursorPosition: CGRect?
@@ -241,6 +245,12 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.categoryLabel.textColor = .systemBackground
                 print("here")
             }
+        case 1:
+            if viewModel.locationNotifySetting != nil {
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+                print("here")
+            }
         case 2:
             if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
@@ -272,7 +282,11 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
         case 1: // 위치 설정을 선택한 경우
-            let vc = LocationSettingPageViewController()
+            let vc = LocationSettingPageViewController(viewModel: viewModel)
+            vc.delegate = self
+            vc.handler = { [weak self] in
+                self?.memoView.optionCollectionView.reloadData()
+            }
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
@@ -336,6 +350,17 @@ extension AddMemoPageViewController: DateSettingDelegate {
     
     func didResetDateSetting() {
         changeCellBackground(at: 0, to: .secondarySystemBackground)
+    }
+}
+
+extension AddMemoPageViewController: LocationSettingDelegate {
+    func didCompleteLocationSetting(location: String) {
+        viewModel.locationNotifySetting = location
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
+    }
+    
+    func didResetLocationSetting() {
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
 }
 
