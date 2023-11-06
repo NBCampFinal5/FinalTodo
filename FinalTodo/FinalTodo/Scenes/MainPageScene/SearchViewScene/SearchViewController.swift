@@ -48,7 +48,7 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(MemoCell.self, forCellReuseIdentifier: "memoCell")
-        tableView.rowHeight = 80
+        tableView.rowHeight = 90
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in

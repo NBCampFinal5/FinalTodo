@@ -20,7 +20,7 @@ class CalendarListViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
-        tableView.rowHeight = Constant.screenWidth / 6.5
+        tableView.rowHeight = 90
         return tableView
     }()
 
@@ -60,7 +60,7 @@ private extension CalendarListViewController {
     func setUp() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
 
         view.addSubview(topView)
