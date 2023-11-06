@@ -31,6 +31,7 @@ class ProfilePageViewController: UIViewController {
     private let giniImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "gini1")
+        view.contentMode = .scaleAspectFit
         return view
     }()
 
@@ -39,9 +40,6 @@ class ProfilePageViewController: UIViewController {
         button.layer.cornerRadius = 30
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
         button.backgroundColor = .secondarySystemBackground
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(named: viewModel.giniImage)
-//        imageView.contentMode = .scaleAspectFit
 
         return button
     }()
@@ -197,18 +195,28 @@ private extension ProfilePageViewController {
         let alertController = UIAlertController(title: title, message: "닉네임을 입력해주세요.", preferredStyle: .alert)
 
         alertController.addTextField { textField in
-            textField.placeholder = "새로운 닉네임"
+            textField.placeholder = "최대 8글자입니다"
         }
 
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
             if let textField = alertController.textFields?.first, let newNickName = textField.text {
-                switch editType {
-                case .userNickName:
-                    self.viewModel.updateNickName(type: .userNickName, newName: newNickName)
-                case .rewardNickName:
-                    self.viewModel.updateNickName(type: .rewardNickName, newName: newNickName)
+                if newNickName.count <= 8 {
+                    if let textField = alertController.textFields?.first, let newNickName = textField.text {
+                        switch editType {
+                        case .userNickName:
+                            self.viewModel.updateNickName(type: .userNickName, newName: newNickName)
+                        case .rewardNickName:
+                            self.viewModel.updateNickName(type: .rewardNickName, newName: newNickName)
+                        }
+                    }
+                } else {
+                    let errorAlert = UIAlertController(title: "오류", message: "닉네임은 최대 8글자여야 합니다.", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                    errorAlert.addAction(okAction)
+                    self.present(errorAlert, animated: true, completion: nil)
                 }
             }
+
             completion()
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
