@@ -119,16 +119,16 @@ extension DateSettingPageViewController {
         doneButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(datePickerView.snp.bottom).offset(40)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
 
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(doneButton.snp.bottom).offset(13)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
     }
 

@@ -83,10 +83,10 @@ private extension LocationSettingPageViewController {
         }
         
         confirmButton.snp.makeConstraints { make in
-            make.top.equalTo(mapView.snp.bottom).offset(20)
+            make.top.equalTo(mapView.snp.bottom).offset(30)
             make.centerX.equalToSuperview()
-            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
     }
     

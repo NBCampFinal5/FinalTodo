@@ -113,16 +113,16 @@ extension AddMemoMainNotifyViewController {
         reserveButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(100)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
 
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(reserveButton.snp.bottom).offset(13)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.65)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
     }
 }
