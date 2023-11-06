@@ -11,8 +11,8 @@
 // 현재 유저데이터모델 타입을 우리의 유저모델 타입으로 변환하는 방법???????????
 
 import CoreData
-import UIKit
 import FirebaseAuth
+import UIKit
 
 class CoreDataManager {
     static let shared = CoreDataManager()
@@ -28,11 +28,9 @@ class CoreDataManager {
     private let userModelName: String = "UserModel"
     private let folderModelName: String = "FolderModel"
     private let memoModelName: String = "MemoModel"
-    
 }
 
 extension CoreDataManager {
-    
     func fetchUser() -> UserData {
         var userData = getUser()
         let folderData = getFolders()
@@ -188,7 +186,7 @@ extension CoreDataManager {
     
     func fetchFolder(completion: @escaping () -> Void) {
         print("시작: 폴더 데이터 가져오기 시작")
-        FirebaseDBManager.shared.fetchFolderData { (folderDataArray, error) in
+        FirebaseDBManager.shared.fetchFolderData { folderDataArray, error in
             print("완료: 폴더 데이터 가져오기 완료")
             guard let context = self.context else {
                 print("코어데이터 컨텍스트가 nil 입니다.")
@@ -235,7 +233,6 @@ extension CoreDataManager {
         }
     }
     
-    
     // MARK: - [Create] [FolderCRUD]
     
     func createFolder(newFolder: FolderData, completion: @escaping () -> Void) {
@@ -257,6 +254,10 @@ extension CoreDataManager {
         
         if let context = context {
             let request = NSFetchRequest<FolderModel>(entityName: folderModelName)
+            // 이름순으로 정렬하기 위한 Sort Descriptor 추가 - 영어보다 한글이 먼저 상단에 배치되게함
+            let sortDescriptor = NSSortDescriptor(key: "title", ascending: true, selector: #selector(NSString.localizedStandardCompare(_:)))
+            request.sortDescriptors = [sortDescriptor]
+            
             do {
                 folderList = try context.fetch(request)
             } catch {
@@ -343,7 +344,7 @@ extension CoreDataManager {
     
     func fetchMemo(completion: @escaping () -> Void) {
         print("시작: memo 데이터 가져오기 시작")
-        FirebaseDBManager.shared.fetchMemos { (memoDataArray, error) in
+        FirebaseDBManager.shared.fetchMemos { memoDataArray, error in
             print("완료: 폴더 데이터 가져오기 완료")
             guard let context = self.context else {
                 print("코어데이터 컨텍스트가 nil 입니다.")
@@ -495,7 +496,6 @@ extension CoreDataManager {
 }
 
 extension CoreDataManager {
-    
     func deleteAllData(completion: (() -> Void)? = nil) {
         deleteAllUsers()
         deleteAllMemos()
@@ -504,7 +504,7 @@ extension CoreDataManager {
     }
     
     func deleteAllUsers() {
-        guard let context = self.context else { return }
+        guard let context = context else { return }
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: userModelName)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -519,7 +519,7 @@ extension CoreDataManager {
     }
     
     func deleteAllMemos() {
-        guard let context = self.context else { return }
+        guard let context = context else { return }
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: memoModelName)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -534,7 +534,7 @@ extension CoreDataManager {
     }
     
     func deleteAllFolders() {
-        guard let context = self.context else { return }
+        guard let context = context else { return }
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: folderModelName)
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -549,8 +549,6 @@ extension CoreDataManager {
     }
 }
 
-
-
 extension UserData {
     static func errorData() -> UserData {
         return UserData(
@@ -564,5 +562,3 @@ extension UserData {
         )
     }
 }
-
-

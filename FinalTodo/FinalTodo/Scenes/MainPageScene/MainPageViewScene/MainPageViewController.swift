@@ -34,6 +34,11 @@ class MainPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        let user = UserData(id: UUID().uuidString, nickName: "test", folders: [], memos: [], rewardPoint: 0, rewardName: "test", themeColor: "error")
+//        viewModel.coredataManager.createUser(newUser: user) {
+//            print("create!!!")
+//        }
+        
         setupUI()
         setupDelegates()
         locationManager.startTracking()
@@ -134,7 +139,8 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             cell.configureAsAllNotesCell()
         default:
-            cell.configureCellWith(item: viewModel.coredataManager.getFolders()[indexPath.row])
+            let sortedFolders = viewModel.coredataManager.getFolders()
+            cell.configureCellWith(item: sortedFolders[indexPath.row])
         }
         
         return cell
