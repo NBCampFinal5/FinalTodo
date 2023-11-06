@@ -48,7 +48,7 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(MemoCell.self, forCellReuseIdentifier: "memoCell")
-        tableView.rowHeight = 80
+        tableView.rowHeight = 90
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
@@ -115,6 +115,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             searchBar.resignFirstResponder()
         }
         tableView.deselectRow(at: indexPath, animated: true) // 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
+        let selectedMemo = viewModel.filterData.value[indexPath.row]
+        let editMemoVC = MemoViewController()
+        editMemoVC.loadMemoData(memo: selectedMemo)
+        navigationController?.pushViewController(editMemoVC, animated: true)
     }
 }
 

@@ -42,6 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    func applicationWillTerminate(_ application: UIApplication) {
+        let manager = UserDefaultsManager()
+        let loginManager = LoginManager()
+        if !manager.getIsAutoLogin() {
+            loginManager.signOut()
+        }
+    }
+
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -76,4 +84,33 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     {
         completionHandler([.banner, .sound, .badge]) // 원하는 알림 옵션을 선택합니다.
     }
+
+//    func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                didReceive response: UNNotificationResponse,
+//                                withCompletionHandler completionHandler: @escaping () -> Void)
+//    {
+//        let userInfo = response.notification.request.content.userInfo
+//        if let memoId = userInfo["memoId"] as? String {
+//            // 현재 활성화된 scene을 찾습니다.
+//            guard let sceneDelegate = UIApplication.shared.connectedScenes
+//                .first(where: { $0.activationState == .foregroundActive })?
+//                .delegate as? SceneDelegate
+//            else {
+//                completionHandler()
+//                return
+//            }
+//
+//            // 메모 ID를 사용하여 코어 데이터에서 해당 메모의 데이터를 가져옵니다.
+//            let memos = CoreDataManager.shared.getMemos()
+//            if let targetMemo = memos.first(where: { $0.id == memoId }) {
+//                // scene의 window에 접근합니다.
+//                if let navigationController = sceneDelegate.window?.rootViewController as? UINavigationController {
+//                    let memoDetailVC = MemoViewController() // 메모 상세 화면 뷰 컨트롤러 인스턴스 생성
+//                    memoDetailVC.loadMemoData(memo: targetMemo) // 가져온 메모 데이터를 뷰 컨트롤러에 전달
+//                    navigationController.pushViewController(memoDetailVC, animated: true)
+//                }
+//            }
+//        }
+//        completionHandler()
+//    }
 }

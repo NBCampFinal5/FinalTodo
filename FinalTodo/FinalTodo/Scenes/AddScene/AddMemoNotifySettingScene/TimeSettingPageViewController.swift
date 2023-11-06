@@ -12,7 +12,7 @@ class TimeSettingPageViewController: UIViewController {
     var hours = Array(1...12)
     let minutes = Array(0...59)
 
-    private let topView = ModalTopView(title: "시간 알림")
+    private let topView = ModalTopView(title: "시간")
     private let viewModel: AddMemoPageViewModel
     private var cellHeight: CGFloat = 0
 
@@ -39,22 +39,32 @@ class TimeSettingPageViewController: UIViewController {
     }()
 
     // 설정 완료 버튼
-    lazy var doneButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "설정완료")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-        return buttonView
+    lazy var doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("설정완료", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        return button
     }()
 
     // 설정 초기화 버튼
-    lazy var resetButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "설정초기화")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        return buttonView
+    lazy var resetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("설정초기화", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+        return button
     }()
 
     lazy var infoButton: UIButton = {
         let button = UIButton(type: .infoLight)
-        button.tintColor = .black
+        button.tintColor = .myPointColor
         button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
         return button
     }()
@@ -110,8 +120,8 @@ private extension TimeSettingPageViewController {
         doneButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(timePickerView.snp.bottom).offset(40)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
     }
 
@@ -120,8 +130,8 @@ private extension TimeSettingPageViewController {
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(doneButton.snp.bottom).offset(13)
-            make.width.equalTo(UIScreen.main.bounds.width * 0.7)
-            make.height.equalTo(UIScreen.main.bounds.height * 0.045)
+            make.width.equalTo(UIScreen.main.bounds.width * 0.8)
+            make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
     }
 
@@ -166,33 +176,6 @@ private extension TimeSettingPageViewController {
         alertController.addAction(UIAlertAction(title: "확인", style: .default))
         present(alertController, animated: true)
     }
-
-//    func showToast(message: String, duration: TimeInterval = 2.0) {
-//        let toastLabel = UILabel()
-//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-//        toastLabel.textColor = .systemBackground
-//        toastLabel.textAlignment = .center
-//        toastLabel.font = UIFont.systemFont(ofSize: 14)
-//        toastLabel.text = message
-//        toastLabel.alpha = 0.5
-//        toastLabel.layer.cornerRadius = 10
-//        toastLabel.clipsToBounds = true
-//        // 화면 최상단에 표시하기위함
-//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-//        window?.addSubview(toastLabel)
-//        // 위치와 크기 지정
-//        toastLabel.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.width.equalTo(Constant.screenWidth * 0.7)
-//            make.height.equalTo(Constant.screenHeight * 0.04)
-//            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
-//        }
-//        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
-//            toastLabel.alpha = 0.0
-//        }, completion: { _ in
-//            toastLabel.removeFromSuperview()
-//        })
-//    }
 }
 
 extension TimeSettingPageViewController {
@@ -221,6 +204,8 @@ extension TimeSettingPageViewController {
         if let selectedTime = calendar.date(from: components) {
             viewModel.selectedTime = selectedTime
             print("설정된 시간: \(selectedTime)")
+        } else {
+            print("시간 설정에 실패했습니다.")
         }
 
         let amPmText = amPm[timePickerView.selectedRow(inComponent: 0)]
@@ -283,3 +268,30 @@ extension TimeSettingPageViewController: UNUserNotificationCenterDelegate {
         completionHandler([.banner, .sound]) // 알림을 표시하고 소리를 재생합니다.
     }
 }
+
+//    func showToast(message: String, duration: TimeInterval = 2.0) {
+//        let toastLabel = UILabel()
+//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        toastLabel.textColor = .systemBackground
+//        toastLabel.textAlignment = .center
+//        toastLabel.font = UIFont.systemFont(ofSize: 14)
+//        toastLabel.text = message
+//        toastLabel.alpha = 0.5
+//        toastLabel.layer.cornerRadius = 10
+//        toastLabel.clipsToBounds = true
+//        // 화면 최상단에 표시하기위함
+//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+//        window?.addSubview(toastLabel)
+//        // 위치와 크기 지정
+//        toastLabel.snp.makeConstraints { make in
+//            make.centerX.equalToSuperview()
+//            make.width.equalTo(Constant.screenWidth * 0.7)
+//            make.height.equalTo(Constant.screenHeight * 0.04)
+//            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
+//        }
+//        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
+//            toastLabel.alpha = 0.0
+//        }, completion: { _ in
+//            toastLabel.removeFromSuperview()
+//        })
+//    }

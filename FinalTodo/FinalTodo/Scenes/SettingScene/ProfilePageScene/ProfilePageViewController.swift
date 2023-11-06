@@ -13,7 +13,7 @@ class ProfilePageViewController: UIViewController {
 
     lazy var Options = [
         SettingOption(icon: "highlighter", title: "닉네임 변경", showSwitch: false, isOn: false),
-        SettingOption(icon: "highlighter", title: "리워드 네임 변경", showSwitch: false, isOn: false),
+        SettingOption(icon: "highlighter", title: "기니 닉네임 변경", showSwitch: false, isOn: false),
     ]
 
     lazy var userNickNameText = viewModel.userNickName {
@@ -28,21 +28,18 @@ class ProfilePageViewController: UIViewController {
         }
     }
 
+    private let giniImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "gini1")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+
     private lazy var rewardImageButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 30
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
         button.backgroundColor = .secondarySystemBackground
-
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: viewModel.giniImage)
-        imageView.contentMode = .scaleAspectFit
-
-        button.addSubview(imageView)
-
-        imageView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview()
-        }
 
         return button
     }()
@@ -50,10 +47,22 @@ class ProfilePageViewController: UIViewController {
     private lazy var nickNameLabel: UILabel = {
         let label = UILabel()
         label.text = "\(userNickNameText)"
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
+        label.font = UIFont.preferredFont(forTextStyle: .title2)
 
         label.textAlignment = .center
         label.textColor = .label
+        label.backgroundColor = .clear
+        label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var nickIdLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(viewModel.userId)"
+        label.font = UIFont.preferredFont(forTextStyle: .callout)
+
+        label.textAlignment = .center
+        label.textColor = .secondaryLabel
         label.backgroundColor = .clear
         label.numberOfLines = 0
         return label
@@ -93,6 +102,7 @@ class ProfilePageViewController: UIViewController {
             print("@@viewDidLoad")
         }
         setUp()
+        setUpImage()
     }
 }
 
@@ -109,14 +119,21 @@ private extension ProfilePageViewController {
 
         view.addSubview(rewardImageButton)
         view.addSubview(nickNameLabel)
+        view.addSubview(nickIdLabel)
         view.addSubview(rewardNameLabel)
         view.addSubview(tableView)
         view.addSubview(deleteAccountButton)
 
+        rewardImageButton.addSubview(giniImageView)
+
         rewardImageButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constant.screenWidth * 0.2)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(Constant.screenWidth * 0.15)
             make.centerX.equalToSuperview()
             make.width.height.equalTo(Constant.screenHeight * 0.2)
+        }
+
+        giniImageView.snp.makeConstraints { make in
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
 
         nickNameLabel.snp.makeConstraints { make in
@@ -125,8 +142,14 @@ private extension ProfilePageViewController {
             make.height.equalTo(Constant.screenWidth * 0.1)
         }
 
-        rewardNameLabel.snp.makeConstraints { make in
+        nickIdLabel.snp.makeConstraints { make in
             make.top.equalTo(nickNameLabel.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
+            make.height.equalTo(Constant.screenWidth * 0.05)
+        }
+
+        rewardNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(nickIdLabel.snp.bottom).offset(Constant.defaultPadding)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenWidth * 0.07)
         }
@@ -143,13 +166,20 @@ private extension ProfilePageViewController {
         }
     }
 
+    func setUpImage() {
+        var scoreString = viewModel.score.description
+        scoreString.removeLast()
+        guard let value = Int(scoreString) else { return }
+        giniImageView.image = UIImage(named: "gini\(value + 1)")
+    }
+
     @objc
     func didTapGiniImageButton(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-        if let tabBarController = tabBarController {
-            tabBarController.selectedIndex = 2
-            self.tabBarController?.tabBar.isHidden = false
-        }
+//        navigationController?.popViewController(animated: true)
+//        if let tabBarController = tabBarController {
+//            tabBarController.selectedIndex = 2
+//            self.tabBarController?.tabBar.isHidden = false
+//        }
     }
 
     func showEditAlert(editType: ProfilePageViewModel.EditType, completion: @escaping () -> Void) {
@@ -159,24 +189,34 @@ private extension ProfilePageViewController {
         case .userNickName:
             title = "유저 닉네임 변경"
         case .rewardNickName:
-            title = "리워드 닉네임 변경"
+            title = "기니 닉네임 변경"
         }
 
         let alertController = UIAlertController(title: title, message: "닉네임을 입력해주세요.", preferredStyle: .alert)
 
         alertController.addTextField { textField in
-            textField.placeholder = "새로운 닉네임"
+            textField.placeholder = "최대 8글자입니다"
         }
 
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
             if let textField = alertController.textFields?.first, let newNickName = textField.text {
-                switch editType {
-                case .userNickName:
-                    self.viewModel.updateNickName(type: .userNickName, newName: newNickName)
-                case .rewardNickName:
-                    self.viewModel.updateNickName(type: .rewardNickName, newName: newNickName)
+                if newNickName.count <= 8 {
+                    if let textField = alertController.textFields?.first, let newNickName = textField.text {
+                        switch editType {
+                        case .userNickName:
+                            self.viewModel.updateNickName(type: .userNickName, newName: newNickName)
+                        case .rewardNickName:
+                            self.viewModel.updateNickName(type: .rewardNickName, newName: newNickName)
+                        }
+                    }
+                } else {
+                    let errorAlert = UIAlertController(title: "오류", message: "닉네임은 최대 8글자여야 합니다.", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                    errorAlert.addAction(okAction)
+                    self.present(errorAlert, animated: true, completion: nil)
                 }
             }
+
             completion()
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)

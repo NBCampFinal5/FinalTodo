@@ -23,25 +23,25 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         label.textColor = .label
         return label
     }()
-    
+
     lazy var activityIndicator: UIActivityIndicatorView = {
         // 해당 클로저에서 나중에 indicator 를 반환해주기 위해 상수형태로 선언
         let activityIndicator = UIActivityIndicatorView()
-        
+
         activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        
+
         activityIndicator.center = self.view.center
-        
+
         // 기타 옵션
-        activityIndicator.color = .myPointColor
+        activityIndicator.color = .secondaryLabel
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .medium
-        
+
         // stopAnimating을 걸어주는 이유는, 최초에 해당 indicator가 선언되었을 때, 멈춘 상태로 있기 위해서
         activityIndicator.stopAnimating()
-        
+
         return activityIndicator
-        
+
     }()
 
     let loginBar = CommandLabelView(title: "아이디", placeholder: "아이디를 입력해주세요.", isSecureTextEntry: false)
@@ -65,6 +65,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
         return button
     }()
+
     let passwordFindButton: UIButton = {
         let button = UIButton()
         button.setTitle("비밀번호 찾기", for: .normal)
@@ -73,7 +74,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
         return button
     }()
-    
+
     lazy var autoLoginButton: UIButton = {
         let button = UIButton()
         button.setTitle("자동 로그인", for: .normal)
@@ -86,7 +87,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
         button.tintColor = .secondaryLabel
         button.backgroundColor = .systemBackground
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
-        
+
         return button
     }()
 
@@ -105,6 +106,7 @@ extension SignInPageViewController {
         setUpDelegate()
         setUp()
         bind()
+        print("@@, \(CoreDataManager.shared.getUser().themeColor)")
     }
 }
 
@@ -187,7 +189,7 @@ private extension SignInPageViewController {
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
             make.height.equalTo(Constant.screenHeight * 0.05)
         }
-        
+
         view.addSubview(passwordFindButton)
         passwordFindButton.addTarget(self, action: #selector(didTapPasswordFindButton), for: .touchUpInside)
         passwordFindButton.snp.makeConstraints { make in
@@ -201,7 +203,7 @@ private extension SignInPageViewController {
             make.top.equalTo(loginButton.snp.bottom).offset(Constant.defaultPadding)
             make.right.equalTo(passwordFindButton.snp.left).offset(-Constant.defaultPadding)
         }
-        
+
         view.addSubview(autoLoginButton)
         autoLoginButton.addTarget(self, action: #selector(didTapAutoLoginButton), for: .touchUpInside)
         autoLoginButton.snp.makeConstraints { make in
@@ -262,17 +264,17 @@ extension SignInPageViewController {
             print("Unregistered text field")
         }
     }
-    
+
     @objc func didTapSignUpbutton() {
         let vc = SignUpPageViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-    
+
     @objc func didTapPasswordFindButton() {
         let alert = UIAlertController(title: "비밀번호 재설정", message: "입력하신 이메일로 재설정 메일을 발송합니다.", preferredStyle: .alert)
-        
+
         let cancel = UIAlertAction(title: "취소", style: .cancel)
-        let yes = UIAlertAction(title: "확인", style: .default) { [weak self]_ in
+        let yes = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             guard let email = alert.textFields?[0].text else { return }
             guard let self = self else { return }
             self.viewModel.loginManager.passwordFind(email: email)
@@ -281,9 +283,9 @@ extension SignInPageViewController {
         alert.textFields?[0].placeholder = "example@example.com"
         alert.addAction(yes)
         alert.addAction(cancel)
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
-    
+
     @objc func didTapAutoLoginButton() {
         if viewModel.userDefaultManager.getIsAutoLogin() {
             viewModel.userDefaultManager.setAutoLogin(toggle: false)
@@ -292,7 +294,6 @@ extension SignInPageViewController {
             viewModel.userDefaultManager.setAutoLogin(toggle: true)
             autoLoginButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         }
-        
     }
 }
 
@@ -304,6 +305,8 @@ extension SignInPageViewController: ButtonTappedViewDelegate {
             viewModel.loginManager.trySignIn(email: viewModel.email.value, password: viewModel.password.value) { loginResult in
                 if loginResult.isSuccess {
                     self.activityIndicator.stopAnimating()
+                    print("@@, \(CoreDataManager.shared.getUser().themeColor)")
+                    UIColor.myPointColor = UIColor(hex: CoreDataManager.shared.getUser().themeColor)
                     let rootView = TabBarController()
                     (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: rootView, animated: false)
                 } else {

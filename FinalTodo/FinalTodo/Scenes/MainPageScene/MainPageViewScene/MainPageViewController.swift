@@ -34,6 +34,11 @@ class MainPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        let user = UserData(id: UUID().uuidString, nickName: "test", folders: [], memos: [], rewardPoint: 0, rewardName: "test", themeColor: "error")
+//        viewModel.coredataManager.createUser(newUser: user) {
+//            print("create!!!")
+//        }
+        
         setupUI()
         setupDelegates()
         locationManager.startTracking()
@@ -43,14 +48,12 @@ class MainPageViewController: UIViewController {
         mainView.fab.backgroundColor = .myPointColor
         navigationController?.configureBar()
         tabBarController?.configureBar()
+        tabBarController?.tabBar.isHidden = false // 하위 화면에서 숨겼던 탭바 복구
         mainView.tableView.reloadData()
     }
     
     private func setupUI() {
         setupNavigationBar()
-//        navigationController?.configureBar()
-//        tabBarController?.configureBar()
-//        changeStatusBarBgColor(bgColor: .systemBackground)
         view.addSubview(backView)
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -136,7 +139,8 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             cell.configureAsAllNotesCell()
         default:
-            cell.configureCellWith(item: viewModel.coredataManager.getFolders()[indexPath.row])
+            let sortedFolders = viewModel.coredataManager.getFolders()
+            cell.configureCellWith(item: sortedFolders[indexPath.row])
         }
         
         return cell
@@ -155,11 +159,13 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let folder = FolderData(id: "allNote", title: "모든 노트", color: "")
                 let vc = MemoListViewController(folder: folder)
                 navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
             } else if indexPath.section == 1 {
                 let folder = viewModel.coredataManager.getFolders()[indexPath.row]
                 print(folder)
                 let vc = MemoListViewController(folder: folder)
                 navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
             }
         }
     }

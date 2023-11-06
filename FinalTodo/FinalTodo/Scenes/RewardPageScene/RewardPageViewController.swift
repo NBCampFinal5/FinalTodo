@@ -87,24 +87,7 @@ extension RewardPageViewController {
         navigationController?.configureBar()
         tabBarController?.configureBar()
         viewModel = RewardPageViewModel()
-        if viewModel.coredataManager.getUser().rewardName == "" {
-            let alert = UIAlertController(title: "기니의 이름을 만들어 주세요!", message: "기니의 이름은 수정이 가능합니다.", preferredStyle: .alert)
-            
-            let yes = UIAlertAction(title: "확인", style: .default) { [weak self]_ in
-                guard let self = self else { return }
-                guard let name = alert.textFields?[0].text else { return }
-                var user = self.viewModel.coredataManager.getUser()
-                user.rewardName = name
-                viewModel.coredataManager.updateUser(targetId: user.id, newUser: user) {
-                    self.viewWillAppear(true)
-                }
-                
-            }
-            alert.addTextField()
-            alert.textFields?[0].placeholder = "2글자에서 6글자 사이로 입력해주세요."
-            alert.addAction(yes)
-            self.present(alert, animated: true)
-        }
+        showAlert()
         setUpText()
         setUpImage()
     }
@@ -208,6 +191,27 @@ private extension RewardPageViewController {
         progressView.progressColor = UIColor.myPointColor.cgColor
         progressView.createCircularPath()
         progressView.progressAnimation(duration: 1, value: value / 10)
+    }
+    
+    func showAlert() {
+        if viewModel.coredataManager.getUser().rewardName == "" {
+            let alert = UIAlertController(title: "기니의 이름을 만들어 주세요!", message: "기니의 이름은 수정이 가능합니다.", preferredStyle: .alert)
+            
+            let yes = UIAlertAction(title: "확인", style: .default) { [weak self]_ in
+                guard let self = self else { return }
+                guard let name = alert.textFields?[0].text else { return }
+                var user = self.viewModel.coredataManager.getUser()
+                user.rewardName = name
+                viewModel.coredataManager.updateUser(targetId: user.id, newUser: user) {
+                    self.viewWillAppear(true)
+                }
+                
+            }
+            alert.addTextField()
+            alert.textFields?[0].placeholder = "2글자에서 6글자 사이로 입력해주세요."
+            alert.addAction(yes)
+            self.present(alert, animated: true)
+        }
     }
 
 }

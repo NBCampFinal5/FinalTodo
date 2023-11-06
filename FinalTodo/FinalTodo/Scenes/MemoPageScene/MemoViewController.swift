@@ -83,10 +83,12 @@ private extension MemoViewController {
     
     func setupNavigationBar() {
         let saveButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(didTapSaveButton))
+        saveButton.tintColor = .myPointColor
         navigationItem.rightBarButtonItem = saveButton
         
         // "뒤로" 버튼에 대한 액션 설정
         let backButton = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(didTapBackButton))
+        backButton.tintColor = .myPointColor
         navigationItem.leftBarButtonItem = backButton
     }
 }
@@ -220,6 +222,14 @@ extension MemoViewController {
         else {
             return
         }
+      
+//        let notificationContent = UNMutableNotificationContent()
+//        notificationContent.title = "메모 알림"
+//        notificationContent.body = memoView.contentTextView.text
+//        notificationContent.sound = .default
+//
+//        // userInfo 딕셔너리에 메모 ID 추가
+//        notificationContent.userInfo = ["memoId": memoNotificationIdentifier ?? ""]
         
         // memoNotificationIdentifier가 nil이면 새로운 값을 할당
         let identifier = memoNotificationIdentifier ?? UUID().uuidString
