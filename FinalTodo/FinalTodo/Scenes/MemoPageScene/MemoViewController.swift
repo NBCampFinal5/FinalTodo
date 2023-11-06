@@ -303,6 +303,11 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
             }
+        case 1:
+            if viewModel.locationNotifySetting != nil {
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+            }
         case 2:
             if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
@@ -331,8 +336,12 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
-        case 1: // 위치 설정 컬렉션뷰
-            let vc = LocationSettingPageViewController()
+        case 1: // 지역설정 컬렉션뷰
+            let vc = LocationSettingPageViewController(viewModel: viewModel)
+            vc.delegate = self
+            vc.handler = { [weak self] in
+                self?.memoView.optionCollectionView.reloadData()
+            }
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)

@@ -10,11 +10,22 @@ import UIKit
 
 class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
     
+    weak var delegate: LocationSettingDelegate?
     private let topView = ModalTopView(title: "알림 설정")
     private let mapView = MKMapView()
     private let searchBar = UISearchBar()
     private let confirmButton = UIButton(type: .system)
-    let viewModel = AddMemoPageViewModel()
+    let viewModel: AddMemoPageViewModel
+    var handler: () -> Void = {}
+    
+    init(viewModel: AddMemoPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private var didInitialZoomToUserLocation = false
     private var mapManager: MapKitManager!
@@ -24,6 +35,10 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         setupUI()
         setupMapManager()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        handler()
     }
 }
 
@@ -109,12 +124,14 @@ extension LocationSettingPageViewController {
             
             print("Selected Address: \(address)")
             self?.viewModel.locationNotifySetting = address
+            self?.delegate?.didCompleteLocationSetting(location: address)
+            self?.viewModel.optionImageAry[1] = address
             
             let geofenceRadius: CLLocationDistance = 50
             print("모니터링을 시작합니다: \(centerCoordinate.latitude), \(centerCoordinate.longitude), 반경: \(geofenceRadius)미터")
             LocationTrackingManager.shared.startMonitoringGeofence(at: centerCoordinate, radius: geofenceRadius, identifier: "selectedGeofence")
             
-            self?.dismiss(animated: true)
+            self?.dismiss(animated: true, completion: nil)
         }
     }
     
