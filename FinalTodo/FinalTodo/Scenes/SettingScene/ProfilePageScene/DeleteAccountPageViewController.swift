@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class DeleteAccountPageViewController: UIViewController {
     private lazy var giniChatLabel: UILabel = {
@@ -109,19 +110,36 @@ private extension DeleteAccountPageViewController {
     }
 
     func deleteAccount() {
-        // 데이터베이스 유저 정보 삭제 로직 추가 필요
-
-        FirebaseDBManager.shared.deleteUser { error in
-            if error == nil {
-                print("User Delete Fail")
-            } else {
-                print("User Delete Success")
-            }
+        guard let email = Auth.auth().currentUser?.email else {
+            print("Email is not available.")
+            return
         }
         
-        let signInVC = SignInPageViewController()
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+        let password = "qwer1234!"
 
-        print("계정 삭제 완료")
+        FirebaseDBManager.shared.reauthenticateUser(email: email, password: password) { success, error in
+            if let error = error {
+                print("Reauthentication failed with error: \(error.localizedDescription)")
+                return
+            }
+
+            if success {
+                FirebaseDBManager.shared.deleteUser { error in
+                    if let error = error {
+                        print("User deletion failed with error: \(error.localizedDescription)")
+                    } else {
+                        print("User Delete Success")
+                        
+                        DispatchQueue.main.async {
+                            let signInVC = SignInPageViewController()
+                            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+                            print("계정 삭제 완료")
+                        }
+                    }
+                }
+            } else {
+                print("Reauthentication failed. User could not be reauthenticated.")
+            }
+        }
     }
 }
