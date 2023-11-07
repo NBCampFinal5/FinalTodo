@@ -15,6 +15,11 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
     private let mapView = MKMapView()
     private let searchBar = UISearchBar()
     private let confirmButton = UIButton(type: .system)
+    private var didInitialZoomToUserLocation = false
+    private var mapManager: MapKitManager!
+    private let locationManager = CLLocationManager()
+    private let regionDelta: Double = 0.001
+    
     let viewModel: AddMemoPageViewModel
     var handler: () -> Void = {}
     
@@ -27,14 +32,12 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var didInitialZoomToUserLocation = false
-    private var mapManager: MapKitManager!
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupMapManager()
+        locationManager.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -151,4 +154,24 @@ extension LocationSettingPageViewController {
         }
     }
 }
+
+extension LocationSettingPageViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last, !didInitialZoomToUserLocation {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            
+            mapView.moveTo(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), with: regionDelta)
+            didInitialZoomToUserLocation = true
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+    }
+}
+
 
