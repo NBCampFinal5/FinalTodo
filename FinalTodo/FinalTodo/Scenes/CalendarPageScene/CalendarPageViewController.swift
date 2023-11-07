@@ -40,10 +40,7 @@ class CalendarPageViewController: UIViewController {
     // 네비게이션 바 설정
     private func setupNavigationBar() {
         navigationItem.title = "캘린더"
-        let ddayButton = UIBarButtonItem(title: "D-day", style: .plain, target: self, action: #selector(didTapDdayButton))
-        // ddayButton.tintColor = .label
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
-        navigationItem.rightBarButtonItem = ddayButton
         navigationController?.navigationBar.tintColor = .label
         navigationController?.navigationBar.barTintColor = .systemBackground
     }
