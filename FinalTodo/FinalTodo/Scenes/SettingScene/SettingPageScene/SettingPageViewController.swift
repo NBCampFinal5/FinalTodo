@@ -47,7 +47,6 @@ private extension SettingPageViewController {
         tableView.dataSource = self
         tableView.frame = view.bounds
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
-        tableView.backgroundColor = .systemBackground
         tableView.rowHeight = Constant.screenWidth / 10
     }
 }
@@ -76,7 +75,6 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             cell.configure(with: model)
         }
 
-        cell.backgroundColor = .secondarySystemBackground
         cell.accessoryType = .disclosureIndicator
 
         return cell

@@ -33,12 +33,7 @@ class MainPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let user = UserData(id: UUID().uuidString, nickName: "test", folders: [], memos: [], rewardPoint: 0, rewardName: "test", themeColor: "error")
-//        viewModel.coredataManager.createUser(newUser: user) {
-//            print("create!!!")
-//        }
-        
+        view.backgroundColor = .secondarySystemBackground
         setupUI()
         setupDelegates()
         locationManager.startTracking()
@@ -70,7 +65,7 @@ class MainPageViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonTapped))
         navigationItem.title = "모든 폴더"
         let searchButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonTapped))
-        let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(folderButtonTapped))
+        let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(folderButtonTapped))
         navigationItem.rightBarButtonItems = [folderButtonItem, searchButtonItem]
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
     }

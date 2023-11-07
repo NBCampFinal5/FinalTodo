@@ -45,7 +45,7 @@ class CalendarPageView: UIView {
 
 extension CalendarPageView {
     func setup() {
-        backgroundColor = .systemBackground
+        backgroundColor = .secondarySystemBackground
         addSubview(calendar)
         addSubview(todayButton)
 
