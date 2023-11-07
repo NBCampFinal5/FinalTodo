@@ -60,6 +60,7 @@ private extension SignUpPageViewController {
         setUpUserName()
         setUpPasswordName()
         setUpButton()
+        setupNavigationBar()
     }
     
     func setUpUserName() {
@@ -110,6 +111,15 @@ private extension SignUpPageViewController {
             make.top.equalTo(checkPasswordTextField.snp.bottom).offset(Constant.screenHeight * 0.07)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
+    }
+
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.leftBarButtonItem?.tintColor = .label
+    }
+
+    @objc private func didTapBackButton() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

@@ -80,14 +80,27 @@ class SearchViewController: UIViewController {
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
+
+    func getMemosSortedByDateDescending(memos: [MemoData]) -> [MemoData] {
+        return memos.sorted { memo1, memo2 in
+            guard let date1 = self.dateFormatter.date(from: memo1.date),
+                  let date2 = self.dateFormatter.date(from: memo2.date)
+            else {
+                return false
+            }
+            return date1 > date2
+        }
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let allMemos = viewModel.coredataManager.getMemos()
+        let sortedMemos = getMemosSortedByDateDescending(memos: allMemos)
         if searchText.isEmpty {
-            viewModel.filterData.value = viewModel.coredataManager.getMemos()
+            viewModel.filterData.value = sortedMemos
         } else {
-            viewModel.filterData.value = viewModel.coredataManager.getMemos().filter { $0.content.contains(searchText) }
+            viewModel.filterData.value = sortedMemos.filter { $0.content.contains(searchText) }
         }
     }
 }
