@@ -44,6 +44,7 @@ class DeleteAccountPageViewController: UIViewController {
         button.layer.cornerRadius = 15
         button.layer.borderColor = UIColor.secondaryLabel.cgColor
         button.layer.borderWidth = 2
+        button.backgroundColor = .systemBackground
         return button
     }()
 
@@ -60,7 +61,7 @@ class DeleteAccountPageViewController: UIViewController {
 private extension DeleteAccountPageViewController {
     func setUp() {
         navigationItem.title = "계정 삭제"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
 
         deleteAccountButton.addTarget(self, action: #selector(DidTapDeleteAccountButton), for: .touchUpInside)
 

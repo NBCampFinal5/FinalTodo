@@ -34,8 +34,7 @@ class ColorUIViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-//        getIsDefaultColor()
-//        tableViewReloadData()
+
         print("@@viewWillAppear:\(isDefaultColor)", manager.getUser())
     }
 }
@@ -43,13 +42,13 @@ class ColorUIViewController: UIViewController {
 extension ColorUIViewController {
     func setUp() {
         navigationItem.title = "테마컬러"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = .secondarySystemBackground
         tableView.rowHeight = Constant.screenWidth / 10
     }
 
@@ -149,7 +148,7 @@ extension ColorUIViewController: UITableViewDelegate, UITableViewDataSource {
         print("@@isOn: \(settingOptionData[indexPath.row].isOn)")
         cell.configure(with: settingOptionData[indexPath.row])
         cell.delegate = self
-        cell.backgroundColor = .secondarySystemBackground
+        cell.backgroundColor = .systemBackground
         return cell
     }
 

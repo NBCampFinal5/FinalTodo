@@ -104,21 +104,11 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             tabBarController?.tabBar.isHidden = true
 
         } else if indexPath.section == 1 && indexPath.row == 1 {
-            let signInVC = UINavigationController(rootViewController: SignInPageViewController())
-            FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
-                if let error = error {
-                    print("Firebase와 Core Data 동기화 중 에러 발생: \(error.localizedDescription)")
-                } else {
-                    let manager = LoginManager()
-                    manager.signOut()
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
-                }
-            }
-        } else if indexPath.section == 1 && indexPath.row == 2 {
             let vc = AppInfoViewController()
             navigationController?.pushViewController(vc, animated: true)
             tabBarController?.tabBar.isHidden = true
-        } else if indexPath.section == 1 && indexPath.row == 3 {
+
+        } else if indexPath.section == 1 && indexPath.row == 2 {
             let privacyPolicyVC = PrivacyPolicyViewController()
             navigationController?.pushViewController(privacyPolicyVC, animated: true)
             tabBarController?.tabBar.isHidden = true
