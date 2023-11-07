@@ -46,3 +46,12 @@ extension UserDefaultsManager {
     }
 }
 
+extension UserDefaultsManager {
+    func setAgreement(toggle: Bool) {
+        defaults.set(toggle, forKey: "isAgreed")
+    }
+    
+    func getIsAgreed() -> Bool {
+        return defaults.bool(forKey: "isAgreed")
+    }
+}

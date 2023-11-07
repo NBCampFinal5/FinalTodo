@@ -126,6 +126,7 @@
 		C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* DdayPageModel.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
+		C761283A2AF9467A00E64B82 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */; };
 		C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CC48B2ADD2C060085C048 /* Notifications.swift */; };
 		C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */; };
 		C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */; };
@@ -219,6 +220,7 @@
 		C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSettingPageViewController.swift; sourceTree = "<group>"; };
 		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
+		C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderSelectPageViewController.swift; sourceTree = "<group>"; };
 		C7EFD4142AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoMainNotifyViewController.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
 				08487F8D2AE54A15009AE6CB /* LockSettingPageScene */,
 				08D1BF852AF13FD900FE896A /* AppInfoPageScene */,
+				C76128382AF9460100E64B82 /* privacyPolicyScene */,
 			);
 			path = SettingScene;
 			sourceTree = "<group>";
@@ -643,6 +646,14 @@
 				C75C10782AD8274200F70A7D /* DdayPageViewController.swift */,
 			);
 			path = DdayPageScene;
+			sourceTree = "<group>";
+		};
+		C76128382AF9460100E64B82 /* privacyPolicyScene */ = {
+			isa = PBXGroup;
+			children = (
+				C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */,
+			);
+			path = privacyPolicyScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -828,6 +839,7 @@
 				081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */,
 				30E798492AD6362D00903272 /* Extensions.swift in Sources */,
 				30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */,
+				C761283A2AF9467A00E64B82 /* PrivacyPolicyViewController.swift in Sources */,
 				0843FA492AEB9B890036D8C4 /* SearchViewModel.swift in Sources */,
 				084412112AD569AA005F2FA9 /* MainPageViewController.swift in Sources */,
 				08EB09312AD571CC00CCD51A /* Constant.swift in Sources */,

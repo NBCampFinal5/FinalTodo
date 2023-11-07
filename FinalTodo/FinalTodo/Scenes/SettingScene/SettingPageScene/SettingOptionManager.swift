@@ -16,7 +16,7 @@ class SettingOptionManager {
                 SettingOption(icon: "person.circle", title: "프로필", showSwitch: false, isOn: false),
                 SettingOption(icon: "arrow.right.circle", title: "로그아웃", showSwitch: false, isOn: false),
                 SettingOption(icon: "info.circle", title: "앱정보", showSwitch: false, isOn: false),
-                SettingOption(icon: "info.circle", title: "개인정보처리방침", showSwitch: false, isOn: false)
+                SettingOption(icon: "hand.raised", title: "개인정보처리방침", showSwitch: false, isOn: false)
             ]
         ]
     }

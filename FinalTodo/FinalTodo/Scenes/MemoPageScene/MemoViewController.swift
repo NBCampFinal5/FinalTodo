@@ -304,29 +304,36 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
+        
+        cell.contentView.layer.borderWidth = 0.4 // 테두리 굵기 넣어줘야함
         cell.contentView.backgroundColor = .systemBackground
         cell.contentView.layer.borderColor = UIColor.label.cgColor
         cell.categoryLabel.textColor = .label
+        
         switch indexPath.row {
         case 0:
             if viewModel.timeNotifySetting != nil {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
+                cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             }
         case 1:
             if viewModel.locationNotifySetting != nil {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
+                cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             }
         case 2:
             if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
+                cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             }
         default:
             cell.contentView.backgroundColor = .systemBackground
             cell.contentView.layer.borderColor = UIColor.label.cgColor
             cell.categoryLabel.textColor = .label
+            cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             print("default")
         }
         cell.bind(title: viewModel.optionImageAry[indexPath.row])
@@ -336,7 +343,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-        
+     
         switch indexPath.row {
         case 0: // 알림설정 컬렉션뷰
             let vc = AddMemoMainNotifyViewController(viewModel: viewModel)
@@ -346,7 +353,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
-        case 1: // 지역설정 컬렉션뷰
+        case 1: // 위치설정 컬렉션뷰
             let vc = LocationSettingPageViewController(viewModel: viewModel)
             vc.delegate = self
             vc.handler = { [weak self] in
@@ -355,7 +362,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
-        case 2: // 폴더 선택 컬렉션뷰
+        case 2: // 폴더선택 컬렉션뷰
             let vc = FolderSelectPageViewController(viewModel: viewModel)
             vc.delegate = self
             vc.handler = { [weak self] in
@@ -366,6 +373,24 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             present(vc, animated: true, completion: nil)
         default:
             break
+        }
+    }
+
+    // 셀이 하이라이트될 때 호출
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
+            UIView.animate(withDuration: 0.4) {
+                cell.contentView.alpha = 0.3 // 터치했을때 투명도를 낮춤
+            }
+        }
+    }
+
+    // 셀의 하이라이트가 해제될 때 호출
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
+            UIView.animate(withDuration: 0.4) {
+                cell.contentView.alpha = 1.0 // 터치를 마쳤을때 투명도를 원래대로 복구
+            }
         }
     }
 }
