@@ -91,17 +91,6 @@ class ProfilePageViewController: UIViewController {
         return table
     }()
 
-//    private lazy var deleteAccountButton: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("계정 삭제", for: .normal)
-//        button.setTitleColor(.label, for: .normal)
-//        button.addTarget(self, action: #selector(didTapDeleteAccountButton), for: .touchUpInside)
-//        button.layer.cornerRadius = 15
-//        button.layer.borderColor = UIColor.secondaryLabel.cgColor
-//        button.layer.borderWidth = 2
-//        return button
-//    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.fetchUserData {
@@ -128,7 +117,6 @@ private extension ProfilePageViewController {
         view.addSubview(nickIdLabel)
         view.addSubview(rewardNameLabel)
         view.addSubview(tableView)
-//        view.addSubview(deleteAccountButton)
 
         rewardImageButton.addSubview(giniImageView)
 
@@ -165,11 +153,6 @@ private extension ProfilePageViewController {
             make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
         }
-
-//        deleteAccountButton.snp.makeConstraints { make in
-//            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
-//            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding * 2)
-//        }
     }
 
     func setUpImage() {
@@ -180,13 +163,7 @@ private extension ProfilePageViewController {
     }
 
     @objc
-    func didTapGiniImageButton(_ sender: UIButton) {
-//        navigationController?.popViewController(animated: true)
-//        if let tabBarController = tabBarController {
-//            tabBarController.selectedIndex = 2
-//            self.tabBarController?.tabBar.isHidden = false
-//        }
-    }
+    func didTapGiniImageButton(_ sender: UIButton) {}
 
     func showEditAlert(editType: ProfilePageViewModel.EditType, completion: @escaping () -> Void) {
         let title: String
@@ -195,10 +172,10 @@ private extension ProfilePageViewController {
         case .userNickName:
             title = "유저 닉네임 변경"
         case .rewardNickName:
-            title = "기니 닉네임 변경"
+            title = "기니 이름 변경"
         }
 
-        let alertController = UIAlertController(title: title, message: "닉네임을 입력해주세요.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: title, message: "변경할 내용을 입력해주세요.", preferredStyle: .alert)
 
         alertController.addTextField { textField in
             textField.placeholder = "최대 8글자입니다"
@@ -232,12 +209,6 @@ private extension ProfilePageViewController {
 
         present(alertController, animated: true, completion: nil)
     }
-
-//    @objc
-//    func didTapDeleteAccountButton(_ sender: UIButton) {
-//        let deleteAccountPageVC = DeleteAccountPageViewController()
-//        navigationController?.pushViewController(deleteAccountPageVC, animated: true) {}
-//    }
 }
 
 extension ProfilePageViewController: UITableViewDelegate, UITableViewDataSource {
