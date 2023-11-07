@@ -123,11 +123,67 @@ extension FirebaseDBManager {
     }
     
     func deleteUser(completion: @escaping (Error?) -> Void) {
-        guard let userId = currentUserId else {
+        deleteUserFromFirestore { firestoreError in
+            if let firestoreError = firestoreError {
+                print("Firestore user deletion failed: \(firestoreError.localizedDescription)")
+                completion(firestoreError)
+            } else {
+                print("Firestore user deleted successfully.")
+                self.deleteUserFromAuth { authError in
+                    if let authError = authError {
+                        print("Auth user deletion failed: \(authError.localizedDescription)")
+                        completion(authError)
+                    } else {
+                        print("Auth user deleted successfully.")
+                        completion(nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func reauthenticateUser(email: String, password: String, completion: @escaping (Bool, Error?) -> Void) {
+        let user = Auth.auth().currentUser
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        
+        user?.reauthenticate(with: credential, completion: { _, error in
+            if let error = error {
+                completion(false, error)
+            } else {
+                completion(true, nil)
+            }
+        })
+    }
+    
+    func deleteUserFromAuth(completion: @escaping (Error?) -> Void) {
+        let user = Auth.auth().currentUser
+        
+        user?.delete { error in
+            if let error = error {
+                print("Error deleting user from Auth: \(error.localizedDescription)")
+                completion(error)
+            } else {
+                print("User successfully deleted from Auth.")
+                completion(nil)
+            }
+        }
+    }
+    
+    func deleteUserFromFirestore(completion: @escaping (Error?) -> Void) {
+        guard let userId = Auth.auth().currentUser?.email else {
+            print("No user found to delete from Firestore.")
             completion(FirestoreError.noUserFound.asNSError())
             return
         }
-        db.collection("users").document(userId).delete(completion: completion)
+        db.collection("users").document(userId).delete { error in
+            if let error = error {
+                print("Error deleting user from Firestore: \(error.localizedDescription)")
+                completion(error)
+            } else {
+                print("User successfully deleted from Firestore.")
+                completion(nil)
+            }
+        }
     }
     
     func fetchUser(completion: @escaping (UserData?, Error?) -> Void) {
@@ -295,6 +351,13 @@ extension FirebaseDBManager {
             completion(memos, nil)
         }
     }
+    
+}
+
+extension FirebaseDBManager {
+    
+    // MARK: - DeleteUserAuth
+    
     
 }
 
