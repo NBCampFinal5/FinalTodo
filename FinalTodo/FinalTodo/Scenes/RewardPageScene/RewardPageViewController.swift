@@ -63,7 +63,7 @@ class RewardPageViewController: UIViewController {
     private let horizontalStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
-        view.spacing = Constant.defaultPadding / 2
+        view.spacing = Constant.defaultPadding
         view.alignment = .center
         return view
     }()
@@ -128,7 +128,7 @@ private extension RewardPageViewController {
     func setUpGiniImageView() {
         view.addSubview(giniImageView)
         giniImageView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextView.snp.bottom).offset(Constant.defaultPadding * 4)
+            make.top.equalTo(titleTextView.snp.bottom).offset(Constant.screenHeight * 0.1)
             make.centerX.equalToSuperview()
             make.height.width.equalTo(Constant.screenWidth / 2)
         }
@@ -164,7 +164,7 @@ private extension RewardPageViewController {
         horizontalStackView.addArrangedSubview(progressContainerLabel)
         horizontalStackView.addArrangedSubview(verticalStackView)
         horizontalStackView.snp.makeConstraints { make in
-            make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
+            make.top.equalTo(giniImageView.snp.bottom).offset(Constant.screenHeight * 0.08)
             make.centerX.equalToSuperview()
         }
     }
