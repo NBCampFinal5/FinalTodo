@@ -9,7 +9,6 @@ import SnapKit
 import UIKit
 
 class RewardPageViewController: UIViewController {
-
     private var viewModel = RewardPageViewModel()
     
     private let titleTextView: UITextView = {
@@ -25,6 +24,7 @@ class RewardPageViewController: UIViewController {
     private let giniImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "gini1")
+        view.contentMode = .scaleAspectFill
         return view
     }()
     
@@ -105,7 +105,7 @@ private extension RewardPageViewController {
     // MARK: - SetUp
 
     func setUpNavigation() {
-        self.navigationItem.title = "나의 기니"
+        navigationItem.title = "나의 기니"
     }
     
     func setUp() {
@@ -115,7 +115,6 @@ private extension RewardPageViewController {
         setUpProgressBar()
         setUpVerticalStackView()
         setUpHorizontalStackView()
-
     }
     
     func setUpTitleTextView() {
@@ -141,7 +140,6 @@ private extension RewardPageViewController {
             make.top.equalTo(giniImageView.snp.bottom).offset(Constant.defaultPadding * 2)
             make.centerX.equalToSuperview()
         }
-        
     }
     
     func setUpProgressBar() {
@@ -197,7 +195,7 @@ private extension RewardPageViewController {
         if viewModel.coredataManager.getUser().rewardName == "" {
             let alert = UIAlertController(title: "기니의 이름을 만들어 주세요!", message: "기니의 이름은 수정이 가능합니다.", preferredStyle: .alert)
             
-            let yes = UIAlertAction(title: "확인", style: .default) { [weak self]_ in
+            let yes = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
                 guard let self = self else { return }
                 guard let name = alert.textFields?[0].text else { return }
                 var user = self.viewModel.coredataManager.getUser()
@@ -205,14 +203,11 @@ private extension RewardPageViewController {
                 viewModel.coredataManager.updateUser(targetId: user.id, newUser: user) {
                     self.viewWillAppear(true)
                 }
-                
             }
             alert.addTextField()
             alert.textFields?[0].placeholder = "2글자에서 6글자 사이로 입력해주세요."
             alert.addAction(yes)
-            self.present(alert, animated: true)
+            present(alert, animated: true)
         }
     }
-
 }
-

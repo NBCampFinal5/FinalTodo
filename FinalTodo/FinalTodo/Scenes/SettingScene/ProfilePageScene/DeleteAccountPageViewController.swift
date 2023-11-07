@@ -5,8 +5,8 @@
 //  Created by SR on 2023/10/26.
 //
 
-import UIKit
 import FirebaseAuth
+import UIKit
 
 class DeleteAccountPageViewController: UIViewController {
     private lazy var giniChatLabel: UILabel = {
@@ -95,10 +95,17 @@ private extension DeleteAccountPageViewController {
 
     @objc
     func DidTapDeleteAccountButton() {
-        let alert = UIAlertController(title: "계정 삭제", message: "사용자 계정을 영구 삭제합니다.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "계정 삭제", message: "비밀번호를 입력하시면\n사용자 계정이 영구 삭제됩니다.", preferredStyle: .alert)
+
+        alert.addTextField { textField in
+            textField.placeholder = "비밀번호를 입력해 주세요."
+            textField.isSecureTextEntry = true
+        }
 
         let confirmAction = UIAlertAction(title: "확인", style: .destructive) { [weak self] _ in
-            self?.deleteAccount()
+            if let password = alert.textFields?.first?.text {
+                self?.deleteAccount(withPassword: password)
+            }
         }
 
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -109,15 +116,13 @@ private extension DeleteAccountPageViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    func deleteAccount() {
+    func deleteAccount(withPassword: String) {
         guard let email = Auth.auth().currentUser?.email else {
             print("Email is not available.")
             return
         }
-        
-        let password = "qwer1234!"
 
-        FirebaseDBManager.shared.reauthenticateUser(email: email, password: password) { success, error in
+        FirebaseDBManager.shared.reauthenticateUser(email: email, password: withPassword) { success, error in
             if let error = error {
                 print("Reauthentication failed with error: \(error.localizedDescription)")
                 return
@@ -129,7 +134,7 @@ private extension DeleteAccountPageViewController {
                         print("User deletion failed with error: \(error.localizedDescription)")
                     } else {
                         print("User Delete Success")
-                        
+
                         DispatchQueue.main.async {
                             let signInVC = SignInPageViewController()
                             (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
