@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FolderModel" representedClassName="FolderModel" syncable="YES">
+        <attribute name="color" attributeType="String"/>
+        <attribute name="id" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="memo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MemoModel" inverseName="folder" inverseEntity="MemoModel"/>
+    </entity>
+    <entity name="MemoModel" representedClassName="MemoModel" syncable="YES">
+        <attribute name="content" attributeType="String"/>
+        <attribute name="date" attributeType="String"/>
+        <attribute name="fileID" attributeType="String"/>
+        <attribute name="isPin" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="locationNotifySetting" optional="YES" attributeType="String"/>
+        <attribute name="timeNotifySetting" optional="YES" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <relationship name="folder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FolderModel" inverseName="memo" inverseEntity="FolderModel"/>
+    </entity>
+    <entity name="SettingModel" representedClassName="SettingModel" syncable="YES">
+        <attribute name="color" attributeType="String"/>
+        <attribute name="font" attributeType="String"/>
+    </entity>
+</model>
