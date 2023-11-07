@@ -35,19 +35,21 @@ extension MemoViewController {
             }
         }
         
-        if let timeNotifySetting = viewModel.timeNotifySetting, !timeNotifySetting.isEmpty {
-            viewModel.optionImageAry[0] = timeNotifySetting
-        } else if let memoId = currentMemoId {
+        if let memoId = currentMemoId {
             let memos = viewModel.coredataManager.getMemos()
-            if let memo = memos.filter({ $0.id == memoId }).first, let timeNotifySetting = memo.timeNotifySetting, !timeNotifySetting.isEmpty {
-                viewModel.timeNotifySetting = timeNotifySetting
-                viewModel.optionImageAry[0] = timeNotifySetting
-                print("알림설정 시간: \(timeNotifySetting)")
+            if let memo = memos.filter({ $0.id == memoId }).first {
+                if let timeNotifySetting = memo.timeNotifySetting, !timeNotifySetting.isEmpty {
+                    viewModel.timeNotifySetting = timeNotifySetting
+                    viewModel.optionImageAry[0] = timeNotifySetting
+                }
+                
+                if let locationSetting = memo.locationNotifySetting, !locationSetting.isEmpty {
+                    viewModel.locationNotifySetting = locationSetting
+                    viewModel.optionImageAry[1] = locationSetting
+                }
             }
-        }
-        
-        if let locationSetting = viewModel.locationNotifySetting, !locationSetting.isEmpty {
-            viewModel.optionImageAry[1] = locationSetting
+        } else {
+            // 메모가 새로 생성된 경우, 기본 설정을 반영
         }
     }
     
@@ -222,15 +224,15 @@ extension MemoViewController {
         else {
             return
         }
-      
-//        let notificationContent = UNMutableNotificationContent()
-//        notificationContent.title = "메모 알림"
-//        notificationContent.body = memoView.contentTextView.text
-//        notificationContent.sound = .default
-//
-//        // userInfo 딕셔너리에 메모 ID 추가
-//        notificationContent.userInfo = ["memoId": memoNotificationIdentifier ?? ""]
-
+        
+        //        let notificationContent = UNMutableNotificationContent()
+        //        notificationContent.title = "메모 알림"
+        //        notificationContent.body = memoView.contentTextView.text
+        //        notificationContent.sound = .default
+        //
+        //        // userInfo 딕셔너리에 메모 ID 추가
+        //        notificationContent.userInfo = ["memoId": memoNotificationIdentifier ?? ""]
+        
         // memoNotificationIdentifier가 nil이면 새로운 값을 할당
         let identifier = memoNotificationIdentifier ?? UUID().uuidString
         memoNotificationIdentifier = identifier
@@ -343,7 +345,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.row)
-     
+        
         switch indexPath.row {
         case 0: // 알림설정 컬렉션뷰
             let vc = AddMemoMainNotifyViewController(viewModel: viewModel)
@@ -354,7 +356,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
         case 1: // 위치설정 컬렉션뷰
-            let vc = LocationSettingPageViewController(viewModel: viewModel)
+            let vc = LocationSettingPageViewController(viewModel: self.viewModel)
             vc.delegate = self
             vc.handler = { [weak self] in
                 self?.memoView.optionCollectionView.reloadData()
@@ -375,7 +377,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             break
         }
     }
-
+    
     // 셀이 하이라이트될 때 호출
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
@@ -384,7 +386,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
         }
     }
-
+    
     // 셀의 하이라이트가 해제될 때 호출
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? MemoOptionCollectionViewCell {
@@ -456,6 +458,7 @@ extension MemoViewController: NotifySettingDelegate {
 extension MemoViewController: LocationSettingDelegate {
     func didCompleteLocationSetting(location: String) {
         viewModel.locationNotifySetting = location
+        viewModel.optionImageAry[1] = location
         changeCellBackground(at: 1, to: .secondarySystemBackground)
     }
     
