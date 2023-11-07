@@ -52,6 +52,28 @@ class MapKitManager: NSObject, MKMapViewDelegate, UISearchBarDelegate, CLLocatio
             completion(placemark.name)
         }
     }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
+        if newState == .ending, let draggedCoordinate = view.annotation?.coordinate {
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        } else {
+            let reuseId = "pin"
+            var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
+            if pinView == nil {
+                pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                pinView!.isDraggable = true
+                pinView!.canShowCallout = true
+            } else {
+                pinView!.annotation = annotation
+            }
+            return pinView
+        }
+    }
 }
 
 extension MKMapView {

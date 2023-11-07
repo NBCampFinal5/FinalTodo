@@ -15,6 +15,11 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
     private let mapView = MKMapView()
     private let searchBar = UISearchBar()
     private let confirmButton = UIButton(type: .system)
+    private var didInitialZoomToUserLocation = false
+    private var mapManager: MapKitManager!
+    private let locationManager = CLLocationManager()
+    private let regionDelta: Double = 0.001
+    
     let viewModel: AddMemoPageViewModel
     var handler: () -> Void = {}
     
@@ -27,14 +32,12 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private var didInitialZoomToUserLocation = false
-    private var mapManager: MapKitManager!
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupMapManager()
+        locationManager.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -139,12 +142,36 @@ extension LocationSettingPageViewController {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if let searchText = searchBar.text {
-            mapManager.searchForLocation(searchText: searchText) { location in
-                if let coordinate = location {
-                    self.mapView.moveTo(coordinate: coordinate, with: 0.05)
-                }
+            mapManager.searchForLocation(searchText: searchText) { [weak self] location in
+                guard let self = self, let coordinate = location else { return }
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                self.mapView.addAnnotation(annotation)
+                
+                self.mapView.moveTo(coordinate: coordinate, with: 0.01)
             }
         }
     }
 }
+
+extension LocationSettingPageViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last, !didInitialZoomToUserLocation {
+            let latitude = location.coordinate.latitude
+            let longitude = location.coordinate.longitude
+            
+            mapView.moveTo(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), with: regionDelta)
+            didInitialZoomToUserLocation = true
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            locationManager.startUpdatingLocation()
+        }
+    }
+}
+
 
