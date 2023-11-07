@@ -64,7 +64,7 @@ class LocationTrackingManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if region is CLCircularRegion {
             print("지오펜스 영역에 진입했습니다: \(region.identifier)")
-            sendNotification(title: "알림", body: "목표 달성!")
+            sendNotification(title: "위치 도착 알림", body: "메모에 설정한 위치에 도착했습니다.")
         }
     }
     
