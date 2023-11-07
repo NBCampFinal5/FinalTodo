@@ -47,8 +47,8 @@ class SignUpPageViewController: UIViewController, ButtonTappedViewDelegate, Comm
     }()
     let linkButton: UIButton = {
         let button = UIButton()
-        button.addTarget(self, action: #selector(openLink), for: .touchUpInside)
-        button.setTitle("보기", for: .normal)
+        button.setTitle("[보기]", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
         button.setTitleColor(.black, for: .normal)
         return button
     }()
@@ -133,11 +133,13 @@ private extension SignUpPageViewController {
             make.left.equalTo(checkPasswordTextField.snp.left).inset(Constant.defaultPadding)
         }
         
+        
         view.addSubview(linkButton)
         linkButton.snp.makeConstraints { make in
-            make.top.equalTo(checkPasswordTextField.snp.bottom).offset(Constant.screenHeight * 0.01)
-            make.left.equalTo(privacyPolicyButton.snp.right).offset(Constant.defaultPadding)
+            make.centerY.equalTo(privacyPolicyButton.snp.centerY)
+            make.left.equalTo(privacyPolicyButton.snp.right).offset(Constant.defaultPadding / 2)
         }
+        linkButton.addTarget(self, action: #selector(openLink), for: .touchUpInside)
     }
     
     func setUpButton() {
