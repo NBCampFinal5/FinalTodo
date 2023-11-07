@@ -14,9 +14,9 @@ class PrivacyPolicyViewController: UIViewController, SFSafariViewControllerDeleg
 extension PrivacyPolicyViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         self.title = "개인정보처리방침"
-        
+
         let safariViewController = SFSafariViewController(url: privacyPolicyURL)
         safariViewController.delegate = self
         present(safariViewController, animated: true, completion: nil)

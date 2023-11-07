@@ -5,12 +5,10 @@
 //  Created by SeoJunYoung on 10/31/23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 class AppInfoViewController: UIViewController {
-
-    
     private let viewModel = AppInfoViewModel()
     
     private let versionLabel: UILabel = {
@@ -64,6 +62,7 @@ class AppInfoViewController: UIViewController {
         label.text = "Developer"
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .systemGray
+        label.backgroundColor = .clear
         return label
     }()
     
@@ -75,12 +74,14 @@ class AppInfoViewController: UIViewController {
         view.text = viewModel.developer
         view.font = .preferredFont(forTextStyle: .caption1)
         view.textColor = .systemGray
+        view.backgroundColor = .clear
         return view
     }()
 }
 
 extension AppInfoViewController {
     // MARK: - LifeCycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -88,9 +89,8 @@ extension AppInfoViewController {
 }
 
 private extension AppInfoViewController {
-    
     func setUp() {
-        self.view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         setUpVersionLabel()
         setUpAppIconImageView()
         setUpAppInfoStackView()
@@ -107,7 +107,6 @@ private extension AppInfoViewController {
     }
     
     func setUpAppIconImageView() {
-        
         view.addSubview(appIconImageView)
         appIconImageView.snp.makeConstraints { make in
             make.top.equalTo(versionLabel.snp.bottom).offset(Constant.defaultPadding)
@@ -142,6 +141,7 @@ private extension AppInfoViewController {
             make.left.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
+
     func setUpDeveloperTextView() {
         view.addSubview(developerTextView)
         developerTextView.snp.makeConstraints { make in

@@ -11,9 +11,15 @@ import UIKit
 class ProfilePageViewController: UIViewController {
     private let viewModel = ProfilePageViewModel()
 
-    lazy var Options = [
-        SettingOption(icon: "highlighter", title: "닉네임 변경", showSwitch: false, isOn: false),
-        SettingOption(icon: "highlighter", title: "기니 닉네임 변경", showSwitch: false, isOn: false),
+    lazy var Options: [[SettingOption]] = [
+        [
+            SettingOption(icon: "highlighter", title: "닉네임 변경", showSwitch: false, isOn: false),
+            SettingOption(icon: "pawprint", title: "기니 이름 변경", showSwitch: false, isOn: false),
+            SettingOption(icon: "arrow.right.circle", title: "로그아웃", showSwitch: false, isOn: false)
+        ],
+        [
+            SettingOption(icon: "person.fill.xmark", title: "계정삭제", showSwitch: false, isOn: false)
+        ]
     ]
 
     lazy var userNickNameText = viewModel.userNickName {
@@ -39,7 +45,7 @@ class ProfilePageViewController: UIViewController {
         let button = UIButton()
         button.layer.cornerRadius = 30
         button.addTarget(self, action: #selector(didTapGiniImageButton), for: .touchUpInside)
-        button.backgroundColor = .secondarySystemBackground
+        button.backgroundColor = .systemBackground
 
         return button
     }()
@@ -81,20 +87,20 @@ class ProfilePageViewController: UIViewController {
 
     private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
-        table.backgroundColor = .clear
+        table.backgroundColor = .secondarySystemBackground
         return table
     }()
 
-    private lazy var deleteAccountButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("계정 삭제", for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.addTarget(self, action: #selector(didTapDeleteAccountButton), for: .touchUpInside)
-        button.layer.cornerRadius = 15
-        button.layer.borderColor = UIColor.secondaryLabel.cgColor
-        button.layer.borderWidth = 2
-        return button
-    }()
+//    private lazy var deleteAccountButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("계정 삭제", for: .normal)
+//        button.setTitleColor(.label, for: .normal)
+//        button.addTarget(self, action: #selector(didTapDeleteAccountButton), for: .touchUpInside)
+//        button.layer.cornerRadius = 15
+//        button.layer.borderColor = UIColor.secondaryLabel.cgColor
+//        button.layer.borderWidth = 2
+//        return button
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +115,7 @@ class ProfilePageViewController: UIViewController {
 private extension ProfilePageViewController {
     func setUp() {
         title = "프로필"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -122,7 +128,7 @@ private extension ProfilePageViewController {
         view.addSubview(nickIdLabel)
         view.addSubview(rewardNameLabel)
         view.addSubview(tableView)
-        view.addSubview(deleteAccountButton)
+//        view.addSubview(deleteAccountButton)
 
         rewardImageButton.addSubview(giniImageView)
 
@@ -156,14 +162,14 @@ private extension ProfilePageViewController {
 
         tableView.snp.makeConstraints { make in
             make.top.equalTo(rewardNameLabel.snp.bottom).offset(Constant.defaultPadding)
-            make.bottom.equalTo(deleteAccountButton.snp.top)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
         }
 
-        deleteAccountButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
-            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding * 2)
-        }
+//        deleteAccountButton.snp.makeConstraints { make in
+//            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
+//            make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding * 2)
+//        }
     }
 
     func setUpImage() {
@@ -227,42 +233,73 @@ private extension ProfilePageViewController {
         present(alertController, animated: true, completion: nil)
     }
 
-    @objc
-    func didTapDeleteAccountButton(_ sender: UIButton) {
-        let deleteAccountPageVC = DeleteAccountPageViewController()
-        navigationController?.pushViewController(deleteAccountPageVC, animated: true) {}
-    }
+//    @objc
+//    func didTapDeleteAccountButton(_ sender: UIButton) {
+//        let deleteAccountPageVC = DeleteAccountPageViewController()
+//        navigationController?.pushViewController(deleteAccountPageVC, animated: true) {}
+//    }
 }
 
 extension ProfilePageViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return Options.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return Options[0].count
+        } else if section == 1 {
+            return Options[1].count
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
-        let model = Options[indexPath.row]
-        cell.configure(with: model)
-        cell.backgroundColor = .secondarySystemBackground
+        if indexPath.section == 0 {
+            let model = Options[0][indexPath.row]
+            cell.configure(with: model)
+        } else if indexPath.section == 1 {
+            let model = Options[1][indexPath.row]
+            cell.configure(with: model)
+        }
+
         cell.accessoryType = .disclosureIndicator
+
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 0 {
+        if indexPath.section == 0 && indexPath.row == 0 {
             showEditAlert(editType: ProfilePageViewModel.EditType.userNickName) {
                 self.viewModel.fetchUserData {
                     self.userNickNameText = self.viewModel.userNickName
                 }
             }
 
-        } else if indexPath.row == 1 {
+        } else if indexPath.section == 0 && indexPath.row == 1 {
             showEditAlert(editType: ProfilePageViewModel.EditType.rewardNickName) {
                 self.viewModel.fetchUserData {
                     self.rewardNickNameText = self.viewModel.rewardNickName
                 }
             }
+
+        } else if indexPath.section == 0 && indexPath.row == 2 {
+            let signInVC = UINavigationController(rootViewController: SignInPageViewController())
+            FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
+                if let error = error {
+                    print("Firebase와 Core Data 동기화 중 에러 발생: \(error.localizedDescription)")
+                } else {
+                    let manager = LoginManager()
+                    manager.signOut()
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
+                }
+            }
+
+        } else if indexPath.section == 1 && indexPath.row == 0 {
+            let deleteAccountPageVC = DeleteAccountPageViewController()
+            navigationController?.pushViewController(deleteAccountPageVC, animated: true) {}
         }
     }
 }
