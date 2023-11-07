@@ -33,12 +33,7 @@ class MainPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let user = UserData(id: UUID().uuidString, nickName: "test", folders: [], memos: [], rewardPoint: 0, rewardName: "test", themeColor: "error")
-//        viewModel.coredataManager.createUser(newUser: user) {
-//            print("create!!!")
-//        }
-        
+        view.backgroundColor = .secondarySystemBackground
         setupUI()
         setupDelegates()
         locationManager.startTracking()

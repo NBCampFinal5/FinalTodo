@@ -20,7 +20,8 @@ class CalendarPageViewController: UIViewController {
         super.viewDidLoad()
         calendarView = CalendarPageView(frame: view.bounds)
         view.addSubview(calendarView)
-
+        view.backgroundColor = .secondarySystemBackground
+        calendarView.backgroundColor = .secondarySystemBackground
         calendarView.calendar.delegate = self
         calendarView.calendar.dataSource = self
 
@@ -40,9 +41,8 @@ class CalendarPageViewController: UIViewController {
     // 네비게이션 바 설정
     private func setupNavigationBar() {
         navigationItem.title = "캘린더"
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
-        navigationController?.navigationBar.tintColor = .label
-        navigationController?.navigationBar.barTintColor = .systemBackground
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondarySystemBackground]
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
     }
 
     // D-day 버튼 터치 시 호출

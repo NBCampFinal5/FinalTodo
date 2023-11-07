@@ -18,6 +18,7 @@ class RewardPageViewController: UIViewController {
         view.isUserInteractionEnabled = false
         view.textColor = .label
         view.font = .preferredFont(forTextStyle: .title1)
+        view.backgroundColor = .clear
         return view
     }()
     
@@ -75,6 +76,7 @@ class RewardPageViewController: UIViewController {
         view.isScrollEnabled = false
         view.isUserInteractionEnabled = false
         view.textColor = .secondaryLabel
+        view.backgroundColor = .clear
         return view
     }()
 }
@@ -115,6 +117,7 @@ private extension RewardPageViewController {
         setUpProgressBar()
         setUpVerticalStackView()
         setUpHorizontalStackView()
+        view.backgroundColor = .secondarySystemBackground
     }
     
     func setUpTitleTextView() {
