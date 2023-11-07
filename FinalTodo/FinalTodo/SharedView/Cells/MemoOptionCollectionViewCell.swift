@@ -32,10 +32,6 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
         categoryLabel.text = title
     }
 
-//    // 성준 - 배경색 변경 메소드 추가
-//    func changeBackgroundColor(to color: UIColor) {
-//        contentView.backgroundColor = color
-//    }
 }
 
 extension MemoOptionCollectionViewCell {
@@ -48,7 +44,5 @@ extension MemoOptionCollectionViewCell {
         categoryLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        // 배경색에 따른 적절한 텍스트 색상 설정
-//        categoryLabel.textColor = UIColor.appropriateTextColor(forBackgroundColor: contentView.backgroundColor ?? .white)
     }
 }

@@ -120,6 +120,10 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             let vc = AppInfoViewController()
             navigationController?.pushViewController(vc, animated: true)
             tabBarController?.tabBar.isHidden = true
+        } else if indexPath.section == 1 && indexPath.row == 3 {
+            let privacyPolicyVC = PrivacyPolicyViewController()
+            navigationController?.pushViewController(privacyPolicyVC, animated: true)
+            tabBarController?.tabBar.isHidden = true
         }
     }
 }
