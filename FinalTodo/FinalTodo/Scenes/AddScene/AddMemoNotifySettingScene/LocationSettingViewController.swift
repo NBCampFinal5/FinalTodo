@@ -139,10 +139,14 @@ extension LocationSettingPageViewController {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if let searchText = searchBar.text {
-            mapManager.searchForLocation(searchText: searchText) { location in
-                if let coordinate = location {
-                    self.mapView.moveTo(coordinate: coordinate, with: 0.05)
-                }
+            mapManager.searchForLocation(searchText: searchText) { [weak self] location in
+                guard let self = self, let coordinate = location else { return }
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                self.mapView.addAnnotation(annotation)
+                
+                self.mapView.moveTo(coordinate: coordinate, with: 0.01)
             }
         }
     }
