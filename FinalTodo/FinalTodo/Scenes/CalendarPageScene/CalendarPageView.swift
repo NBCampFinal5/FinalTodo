@@ -57,7 +57,7 @@ extension CalendarPageView {
             // make.size.equalTo(CGSize(width: 30, height: 30))
         }
         calendar.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(30)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.leading.trailing.bottom.equalTo(safeAreaLayoutGuide).inset(Constant.defaultPadding)
             // make.edges.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
             // make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-10)

@@ -43,6 +43,8 @@ class CalendarPageViewController: UIViewController {
         navigationItem.title = "캘린더"
 //        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondarySystemBackground]
         navigationController?.navigationBar.barTintColor = .secondarySystemBackground
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
 
     // D-day 버튼 터치 시 호출
