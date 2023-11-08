@@ -74,11 +74,9 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
 
         let calendarListVC = CalendarListViewController(date: calendarView.dateFormatter.string(from: date))
         calendarListVC.onDismiss = { [weak self] in self?.isModalDismissed = true }
-
-        let navController = UINavigationController(rootViewController: calendarListVC)
-        navController.modalPresentationStyle = .custom
-        navController.transitioningDelegate = self
-        present(navController, animated: true)
+        calendarListVC.modalPresentationStyle = .custom
+        calendarListVC.transitioningDelegate = self
+        present(calendarListVC, animated: true)
 
         calendarView.calendar.deselect(date)
     }

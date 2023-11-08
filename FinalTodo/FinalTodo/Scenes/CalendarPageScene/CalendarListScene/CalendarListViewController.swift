@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalendarListViewController: UIViewController {
+class CalendarListViewController: ModalPossibleGestureController {
     let manager = CoreDataManager.shared
 
     let topView = ModalTopView(title: "메모 목록")
@@ -26,7 +26,7 @@ class CalendarListViewController: UIViewController {
 
     init(date: String) {
         self.date = date
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     @available(*, unavailable)
