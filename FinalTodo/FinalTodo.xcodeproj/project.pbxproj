@@ -995,8 +995,8 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalTodo/Resource/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "GPS 확인";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS 확인";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1028,8 +1028,8 @@
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FinalTodo/Resource/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "GPS 확인";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS 확인";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
