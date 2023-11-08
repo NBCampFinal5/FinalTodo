@@ -77,7 +77,7 @@ private extension MemoViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.right.bottom.equalToSuperview()
         }
-        
+        memoView.contentTextView.textColor = .black
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
