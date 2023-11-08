@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>체크인 기능을 사용하기 위해서 위치정보 권한이 필요합니다.</string>
+	<string>사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>체크인 기능을 사용하기 위해서 위치정보 권한이 필요합니다.</string>
+	<string>사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능</string>
 	<key>NSLocationUsageDescription</key>
-	<string>체크인 기능을 사용하기 위해서 위치정보 권한이 필요합니다.</string>
+	<string>사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
