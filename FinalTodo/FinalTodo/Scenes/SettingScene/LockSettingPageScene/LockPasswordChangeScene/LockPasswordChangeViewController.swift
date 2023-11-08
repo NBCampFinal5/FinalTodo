@@ -22,7 +22,6 @@ extension LockPasswordChangeViewController {
     // MARK: - Bind
 
     override func bind() {
-        
         viewModel.isUnlock.bind { [weak self] state in
             guard let self = self else { return }
             if state {
@@ -40,13 +39,16 @@ extension LockPasswordChangeViewController {
         }
         
         userInPutPassword.bind { [weak self] inputPassword in
+            print(inputPassword)
             guard let self = self else { return }
             lockScreenView.passwordCollectionView.reloadData()
+            lockScreenView.passwordInfoLabel.alpha = 0
             if inputPassword.count == 4 {
                 if viewModel.isUnlock.value {
                     // 기존암호를 입력한 후
                     if viewModel.firstPassword.value == "" {
                         viewModel.firstPassword.value = inputPassword
+                        userInPutPassword.value = ""
                     } else {
                         if viewModel.firstPassword.value == inputPassword {
                             userDefaultsManager.setPassword(password: inputPassword)
@@ -59,11 +61,11 @@ extension LockPasswordChangeViewController {
                     // 기존암호를 입력하기 전
                     if inputPassword == lockScreenPassword {
                         viewModel.isUnlock.value = true
+                        userInPutPassword.value = ""
                     } else {
                         showPasswordMissMatch(type: .mismatch)
                     }
                 }
-                userInPutPassword.value = ""
             }
         }
     }

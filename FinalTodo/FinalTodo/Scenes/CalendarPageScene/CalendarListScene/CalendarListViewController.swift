@@ -10,7 +10,7 @@ import UIKit
 class CalendarListViewController: UIViewController {
     let manager = CoreDataManager.shared
 
-    let topView = ModalTopView(title: "")
+    let topView = ModalTopView(title: "메모 목록")
 
     var date: String
     var memos: [MemoData] = []
@@ -20,6 +20,7 @@ class CalendarListViewController: UIViewController {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .systemBackground
+        tableView.rowHeight = 90
         return tableView
     }()
 
@@ -39,6 +40,16 @@ class CalendarListViewController: UIViewController {
         fetchMemoList(date: date)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
         onDismiss?()
@@ -49,7 +60,7 @@ private extension CalendarListViewController {
     func setUp() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .none
+//        tableView.separatorStyle = .none
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
 
         view.addSubview(topView)
@@ -60,6 +71,7 @@ private extension CalendarListViewController {
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
+            make.height.equalTo(Constant.screenHeight * 0.07)
         }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
@@ -110,9 +122,12 @@ extension CalendarListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemoCell", for: indexPath) as! MemoCell
 
         let memo = memos[indexPath.row]
-        cell.titleLabel.text = memo.content
+        // 메모 내용의 길이를 최대 30자로 제한
+        let maxLength = 30
+        let trimmedContent = String(memo.content.prefix(maxLength))
+        cell.titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)..." : memo.content
         cell.dateLabel.text = memo.date
-        cell.backgroundColor = .clear
+        cell.backgroundColor = .systemBackground
 
         return cell
     }

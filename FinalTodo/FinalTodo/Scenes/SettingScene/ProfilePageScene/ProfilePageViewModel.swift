@@ -10,7 +10,7 @@ import UIKit
 class ProfilePageViewModel {
     private let manager = CoreDataManager.shared
 
-    private var userId: String = "userId"
+    var userId: String = "userId"
     private var userFolders: [FolderData] = []
     private var userFoldersMemos: [MemoData] = []
     private var userPoint: Int32 = 0
@@ -28,24 +28,27 @@ class ProfilePageViewModel {
 
         userPoint = manager.getUser().rewardPoint
         userNickName = manager.getUser().nickName
-        rewardNickName = manager.getUser().rewardName 
+        rewardNickName = manager.getUser().rewardName
 
-        fetchGiniImage(point: userPoint)
+//        fetchGiniImage(point: userPoint)
         print("@@ 유저 패치!")
         completion()
     }
 
-    private func fetchGiniImage(point: Int32) {
-        if userPoint >= 30 {
-            giniImage = "gini4"
-        } else if userPoint >= 20 {
-            giniImage = "gini3"
-        } else if userPoint >= 10 {
-            giniImage = "gini2"
-        } else {
-            giniImage = "gini1"
-        }
-    }
+//    private func fetchGiniImage(point: Int32) {
+//        if userPoint >= 30 {
+//            giniImage = "gini4"
+//        } else if userPoint >= 20 {
+//            giniImage = "gini3"
+//        } else if userPoint >= 10 {
+//            giniImage = "gini2"
+//        } else {
+//            giniImage = "gini1"
+//        }
+//    }
+
+    // 프로필 이미지 계산용
+    lazy var score = manager.getUser().rewardPoint
 
     enum EditType {
         case userNickName

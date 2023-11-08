@@ -11,7 +11,8 @@ import UIKit
 class MemoViewModel {
     let optionImageAry: [String] = [
         "날짜 설정",
-        "알림 설정"
+        "위치 설정",
+        "알림 설정",
     ]
     
     var isPin: Observable<Bool> = Observable(false)

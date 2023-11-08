@@ -7,30 +7,44 @@ class AddMemoPageViewController: UIViewController {
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
     var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
     var keyboardHeight: CGFloat = 0 // 성준 - 키보드 높이를 저장할 프로퍼티
-
+    
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
-    let firebaseManager = FirebaseDBManager.shared
     
     lazy var savebutton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("저장", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.myPointColor, for: .normal)
         button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
         return button
     }()
 }
 
+// MARK: - LifeCycle
+
 extension AddMemoPageViewController {
-    // MARK: - LifeCycle
-    
     override func viewWillAppear(_ animated: Bool) {
         if selectedFolderId! != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
-            viewModel.optionImageAry[2] = folders.filter({$0.id == selectedFolderId!}).first!.title
+            viewModel.optionImageAry[2] = folders.filter { $0.id == selectedFolderId! }.first!.title
+        }
+        if let timeNotifySetting = viewModel.timeNotifySetting, !timeNotifySetting.isEmpty {
+            viewModel.optionImageAry[0] = timeNotifySetting
+        } else if let memoId = currentMemoId {
+            let memos = viewModel.coredataManager.getMemos()
+            if let memo = memos.filter({ $0.id == memoId }).first, let timeNotifySetting = memo.timeNotifySetting, !timeNotifySetting.isEmpty {
+                viewModel.timeNotifySetting = timeNotifySetting
+                viewModel.optionImageAry[0] = timeNotifySetting
+                print("알림설정 시간: \(timeNotifySetting)")
+            }
+        }
+        
+        if let locationSetting = viewModel.locationNotifySetting, !locationSetting.isEmpty {
+            viewModel.optionImageAry[1] = locationSetting
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -42,9 +56,9 @@ extension AddMemoPageViewController {
     }
 }
 
+// MARK: - setUp
+
 private extension AddMemoPageViewController {
-    // MARK: - setUp
-    
     func setUp() {
         setUpTopView()
         setUpMemoView()
@@ -74,6 +88,18 @@ private extension AddMemoPageViewController {
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
     }
+}
+
+// MARK: - Method
+
+extension AddMemoPageViewController {
+    @objc func didTappedBackButton() {
+        dismiss(animated: true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
     @objc func didTapSaveButton() {
         guard let content = memoView.contentTextView.text, !content.isEmpty else {
@@ -86,6 +112,17 @@ private extension AddMemoPageViewController {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
         
+        // 선택된 알림 날짜와 시간을 확인하고 문자열로 변환
+        var notifyDateTimeString: String?
+        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
+            let dateTimeFormatter = DateFormatter()
+            dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+            notifyDateTimeString = dateTimeFormatter.string(from: date) + " " + dateTimeFormatter.string(from: time)
+            print("알림이 설정된 시간: \(notifyDateTimeString ?? "None")")
+        } else {
+            print("알림이 설정되지 않았습니다.")
+        }
+        
         let folderId = selectedFolderId ?? "FOLDER_ID" // 선택된 폴더의 ID 또는 기본값
         
         // 메모 수정 또는 새 메모 생성
@@ -97,23 +134,14 @@ private extension AddMemoPageViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: ""
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             // CoreDataManager를 사용하여 CoreData에서 메모 업데이트
             CoreDataManager.shared.updateMemo(updatedMemo: updatedMemo) {
                 print("메모가 성공적으로 업데이트되었습니다.")
                 self.delegate?.didAddMemo()
                 self.dismiss(animated: true)
-            }
-            firebaseManager.updateMemo(memo: updatedMemo) { error in
-                if error == nil {
-                    print("메모가 성공적으로 업데이트되었습니다.")
-                    self.delegate?.didAddMemo()
-                    self.dismiss(animated: true)
-                } else {
-                    print("메모 업데이트에 실패했습니다.")
-                }
             }
         } else {
             // 새로운 메모 생성 로직
@@ -123,8 +151,8 @@ private extension AddMemoPageViewController {
                 date: dateString,
                 content: content,
                 isPin: false,
-                locationNotifySetting: "",
-                timeNotifySetting: ""
+                locationNotifySetting: viewModel.locationNotifySetting,
+                timeNotifySetting: viewModel.timeNotifySetting
             )
             // CoreDataManager를 사용하여 CoreData에 저장
             CoreDataManager.shared.createMemo(newMemo: newMemo) {
@@ -132,30 +160,9 @@ private extension AddMemoPageViewController {
                 self.delegate?.didAddMemo()
                 self.dismiss(animated: true)
             }
-            firebaseManager.createMemo(memo: newMemo) { error in
-                if error == nil {
-                    print("메모가 성공적으로 저장되었습니다.")
-                    self.delegate?.didAddMemo()
-                    self.dismiss(animated: true)
-                } else {
-                    print("메모 저장에 실패했습니다.")
-                }
-            }
         }
     }
-}
-
-extension AddMemoPageViewController {
-    // MARK: - Method
     
-    @objc func didTappedBackButton() {
-        dismiss(animated: true)
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-
     // 성준 - 키보드가 나타날 때 호출될 메서드
     @objc func keyboardWillShow(notification: NSNotification) {
         // 키보드의 높이 정보를 담고 있는 값을 NSNotification 객체로부터 추출
@@ -169,7 +176,7 @@ extension AddMemoPageViewController {
             memoView.contentTextView.scrollIndicatorInsets = memoView.contentTextView.contentInset
         }
     }
-
+    
     @objc private func keyboardWillHide(notification: NSNotification) {
         // 키보드가 사라질 때 contentInset과 scrollIndicatorInsets을 기본 값(0)으로 되돌려 텍스트 뷰를 원래 위치로 되돌림
         memoView.contentTextView.contentInset = .zero
@@ -195,7 +202,7 @@ extension AddMemoPageViewController: UITextViewDelegate {
         }
         return true
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         // 현재 커서의 위치를 계산하기 위한 변수를 선언
         var cursorPosition: CGRect?
@@ -237,10 +244,15 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
                 print("here")
-                
+            }
+        case 1:
+            if viewModel.locationNotifySetting != nil {
+                cell.contentView.backgroundColor = .myPointColor
+                cell.categoryLabel.textColor = .systemBackground
+                print("here")
             }
         case 2:
-            if selectedFolderId! != "allNote"{
+            if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
                 cell.categoryLabel.textColor = .systemBackground
             }
@@ -260,7 +272,6 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
         
         // 사용자에게 보여질 뷰 컨트롤러를 저장하기 위한 임시 변수를 선언
         
-        
         switch indexPath.row {
         case 0: // "날짜 및 시간알림" 셀 선택 시
             let vc = AddMemoMainNotifyViewController(viewModel: viewModel)
@@ -270,21 +281,12 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
-            //        case 0:
-            //            let dateSettingVC = DateSettingPageViewController(viewModel: viewModel)
-            //            // 현재 뷰 컨트롤러를 delegate로 설정하여, 날짜 설정 완료 시 콜백을 받을 수 있게 함
-            //            dateSettingVC.delegate = self
-            //            // viewModel에 저장된 선택된 날짜가 있다면, 해당 날짜를 뷰 컨트롤러의 초기 날짜로 설정
-            //            if let selectedDate = viewModel.selectedDate {
-            //                dateSettingVC.initialDate = selectedDate
-            //            }
-            //            vc = dateSettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
-            //        case 1:
-            //            let notifySettingVC = NotifySettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime)
-            //            notifySettingVC.delegate = self
-            //            vc = notifySettingVC // 임시 변수 vc에 해당하는 뷰 컨트롤러
         case 1: // 위치 설정을 선택한 경우
-            let vc = LocationSettingPageViewController()
+            let vc = LocationSettingPageViewController(viewModel: viewModel)
+            vc.delegate = self
+            vc.handler = { [weak self] in
+                self?.memoView.optionCollectionView.reloadData()
+            }
             vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
@@ -301,8 +303,6 @@ extension AddMemoPageViewController: UICollectionViewDelegate, UICollectionViewD
         default:
             break
         }
-        
-        
     }
 }
 
@@ -353,6 +353,17 @@ extension AddMemoPageViewController: DateSettingDelegate {
     }
 }
 
+extension AddMemoPageViewController: LocationSettingDelegate {
+    func didCompleteLocationSetting(location: String) {
+        viewModel.locationNotifySetting = location
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
+    }
+    
+    func didResetLocationSetting() {
+        changeCellBackground(at: 1, to: .secondarySystemBackground)
+    }
+}
+
 extension AddMemoPageViewController: NotifySettingDelegate {
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
@@ -378,6 +389,5 @@ extension AddMemoPageViewController: FolderSelectDelegate {
     func didSelectFolder(folderId: String) {
         // 선택된 폴더의 ID 저장
         selectedFolderId = folderId
-        
     }
 }

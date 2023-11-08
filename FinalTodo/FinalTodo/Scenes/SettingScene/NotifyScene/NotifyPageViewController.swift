@@ -12,8 +12,8 @@ class NotifyPageViewController: UIViewController {
 
     var notifyOptions = [
         SettingOption(icon: "bell", title: "앱 실행 중 알림", showSwitch: true, isOn: NotifySettingManager.shared.isNotificationEnabled),
-        SettingOption(icon: "bell", title: "앱 실행 중 사운드", showSwitch: true, isOn: NotifySettingManager.shared.isSoundEnabled),
-        SettingOption(icon: "bell", title: "앱 실행 중 진동", showSwitch: true, isOn: NotifySettingManager.shared.isVibrationEnabled),
+        SettingOption(icon: "bell", title: "사운드", showSwitch: true, isOn: NotifySettingManager.shared.isSoundEnabled),
+        SettingOption(icon: "bell", title: "진동", showSwitch: true, isOn: NotifySettingManager.shared.isVibrationEnabled),
     ]
 
     override func viewDidLoad() {
@@ -25,13 +25,13 @@ class NotifyPageViewController: UIViewController {
 
 extension NotifyPageViewController {
     func setup() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         title = "알림 설정"
         view.addSubview(tableView)
     }
 
     func setupTableView() {
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = .secondarySystemBackground
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
@@ -48,7 +48,7 @@ extension NotifyPageViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         let model = notifyOptions[indexPath.row]
         cell.configure(with: model)
-        cell.backgroundColor = .secondarySystemBackground
+        cell.backgroundColor = .systemBackground
         cell.delegate = self
 
         // 앱 실행 중 알림이 꺼져있을 경우, 사운드와 진동의 스위치를 비활성화합니다.

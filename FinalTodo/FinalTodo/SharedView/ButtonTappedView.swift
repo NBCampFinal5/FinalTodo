@@ -14,9 +14,11 @@ class ButtonTappedView: UIView {
     // 버튼
     lazy var anyButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .label
+        button.backgroundColor = .systemGray3
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
+        button.setTitleColor(.systemGray4, for: .selected)
+        button.isSelected = true
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         return button

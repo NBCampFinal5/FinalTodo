@@ -10,11 +10,11 @@ import UIKit
 
 struct UserData: Codable {
     let id: String
-    let nickName: String
-    let folders: [FolderData]
-    let memos: [MemoData]
-    let rewardPoint: Int32
-    let rewardName: String
+    var nickName: String
+    var folders: [FolderData]
+    var memos: [MemoData]
+    var rewardPoint: Int32
+    var rewardName: String
     let themeColor: String
 }
 
@@ -28,8 +28,9 @@ struct MemoData: Codable {
     let id: String
     let folderId: String
     let date: String
-    let content: String
+    let content: String // 메모 내용
     let isPin: Bool
     let locationNotifySetting: String?
     let timeNotifySetting: String?
+    var notificationDate: Date? // 알림 날짜 및 시간 추가
 }

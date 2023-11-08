@@ -16,7 +16,13 @@ class MainPageViewController: UIViewController {
     let locationManager = LocationTrackingManager.shared
     let viewModel = MainPageViewModel()
     let firebaseManager = FirebaseDBManager.shared
-    
+    let backView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        return view
+    }()
+
     var mainView: MainPageView {
         return view as! MainPageView
     }
@@ -27,17 +33,26 @@ class MainPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .secondarySystemBackground
         setupUI()
         setupDelegates()
         locationManager.startTracking()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        mainView.fab.backgroundColor = .myPointColor
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
+        tabBarController?.tabBar.isHidden = false // 하위 화면에서 숨겼던 탭바 복구
+        mainView.tableView.reloadData()
+    }
+    
     private func setupUI() {
         setupNavigationBar()
-//        navigationController?.configureBar()
-//        tabBarController?.configureBar()
-//        changeStatusBarBgColor(bgColor: .systemBackground)
+        view.addSubview(backView)
+        backView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     private func setupDelegates() {
@@ -50,7 +65,7 @@ class MainPageViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonTapped))
         navigationItem.title = "모든 폴더"
         let searchButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchButtonTapped))
-        let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder"), style: .plain, target: self, action: #selector(folderButtonTapped))
+        let folderButtonItem = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"), style: .plain, target: self, action: #selector(folderButtonTapped))
         navigationItem.rightBarButtonItems = [folderButtonItem, searchButtonItem]
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
     }
@@ -83,13 +98,13 @@ class MainPageViewController: UIViewController {
 
 extension UINavigationController {
     func configureBar() {
-        navigationBar.tintColor = .label
+        navigationBar.tintColor = .myPointColor
     }
 }
 
 extension UITabBarController {
     func configureBar() {
-        tabBar.tintColor = .label
+        tabBar.tintColor = .myPointColor
     }
 }
 
@@ -113,11 +128,14 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.configureAsAllNotesCell()
+        cell.imageView?.layer.borderWidth = 0
         switch indexPath.section {
         case 0:
             cell.configureAsAllNotesCell()
         default:
-            cell.configureCellWith(item: viewModel.coredataManager.getFolders()[indexPath.row])
+            let sortedFolders = viewModel.coredataManager.getFolders()
+            cell.configureCellWith(item: sortedFolders[indexPath.row])
         }
         
         return cell
@@ -136,11 +154,13 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                 let folder = FolderData(id: "allNote", title: "모든 노트", color: "")
                 let vc = MemoListViewController(folder: folder)
                 navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
             } else if indexPath.section == 1 {
                 let folder = viewModel.coredataManager.getFolders()[indexPath.row]
                 print(folder)
                 let vc = MemoListViewController(folder: folder)
                 navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
             }
         }
     }
@@ -166,14 +186,6 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
                     print("deleteFolderID:", targetId)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                 }
-                firebaseManager.deleteFolder(folderId: targetId) { error in
-                    if let error = error {
-                        print("Error deleting folder: \(error.localizedDescription)")
-                    } else {
-                        print("Folder deleted successfully")
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                    }
-                }
             }
         }
     }
@@ -197,7 +209,7 @@ extension UITableViewCell {
     }
     
     func configureAsAllNotesCell() {
-        contentView.backgroundColor = .secondarySystemBackground
+//        contentView.backgroundColor = .secondarySystemBackground
         textLabel?.text = "모든 노트"
         let templateImage = UIImage(systemName: "note.text")?.withRenderingMode(.alwaysTemplate)
         imageView?.image = templateImage
@@ -206,7 +218,7 @@ extension UITableViewCell {
     
     func configureCellWith(item: FolderData) {
         textLabel?.textColor = .label
-        contentView.backgroundColor = .secondarySystemBackground
+//        contentView.backgroundColor = .secondarySystemBackground
         
         textLabel?.text = item.title
         
@@ -218,7 +230,7 @@ extension UITableViewCell {
 //        UIBezierPath(rect: CGRect(origin: .zero, size: size)).fill()
         let colorImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        imageView?.layer.borderWidth = 1
+        imageView?.layer.borderWidth = 0.2
         imageView?.layer.borderColor = UIColor.label.cgColor
         imageView?.layer.cornerRadius = length / 2
         imageView?.image = colorImage
@@ -231,42 +243,27 @@ extension MainPageViewController {
             print("A view controller is already presented.")
             return
         }
-        
+        backView.alpha = 0.4
         let folderDialogVC = FolderDialogViewController()
         folderDialogVC.modalPresentationStyle = .custom
         folderDialogVC.transitioningDelegate = folderDialogVC
         folderDialogVC.initialFolder = folder
-//        folderDialogVC.view.backgroundColor = .secondarySystemBackground
+        
+        folderDialogVC.dismiisComplettion = { [weak self] in
+            self?.backView.alpha = 0
+        }
         
         folderDialogVC.completion = { [weak self] title, color, id in
-            
             if let id = id {
                 let folder = FolderData(id: id, title: title, color: color.toHexString())
                 self?.viewModel.coredataManager.updateFolder(targetId: id, newFolder: folder, completion: {
                     print("folderUpdate")
                 })
-                self?.firebaseManager.updateFolder(folder: folder) { error in
-                    if let error = error {
-                        print("Error updating folder: \(error.localizedDescription)")
-                    } else {
-                        print("Folder updated successfully")
-                        self?.mainView.tableView.reloadData()
-                    }
-                }
-                
             } else {
                 let folder = FolderData(id: UUID().uuidString, title: title, color: color.toHexString())
                 self?.viewModel.coredataManager.createFolder(newFolder: folder, completion: {
                     print("folderCreate")
                 })
-                self?.firebaseManager.createFolder(folder: folder) { error in
-                    if let error = error {
-                        print("Error creating folder: \(error.localizedDescription)")
-                    } else {
-                        print("Folder created successfully")
-                        self?.mainView.tableView.reloadData()
-                    }
-                }
             }
             self?.mainView.tableView.reloadData()
         }
@@ -293,15 +290,5 @@ extension MainPageViewController {
 extension MainPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
-    }
-}
-
-class Folder {
-    var name: String
-    var color: UIColor
-    
-    init(name: String, color: UIColor) {
-        self.name = name
-        self.color = color
     }
 }

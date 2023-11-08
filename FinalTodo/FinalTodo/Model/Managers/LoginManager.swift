@@ -39,6 +39,7 @@ struct LoginManager {
                         print("@@@ create")
                     }
                 }
+                CoreDataManager.shared.createUser(newUser: user) {}
                 completion(result)
             } else {
                 result.isSuccess = false
@@ -48,18 +49,72 @@ struct LoginManager {
         }
     }
     
-    func trySignIn(email:String, password: String, completion: @escaping (LoginResult) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) {authResult, error in
+    func trySignIn(email: String, password: String, completion: @escaping (LoginResult) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             var result = LoginResult(isSuccess: true, email: email)
-            if error == nil {
-                completion(result)
-            } else {
+            
+            if let error = error {
                 result.isSuccess = false
-                result.errorMessage = String(describing: error)
+                result.errorMessage = error.localizedDescription
                 completion(result)
+                return
+            }
+            
+            guard authResult != nil else {
+                result.isSuccess = false
+                result.errorMessage = "사용자 인증 결과가 없습니다."
+                completion(result)
+                return
+            }
+            
+            FirebaseDBManager.shared.fetchUser { userData, fetchError in
+                if let fetchError = fetchError {
+                    result.isSuccess = false
+                    result.errorMessage = fetchError.localizedDescription
+                    print("Error fetching user from Firebase: \(fetchError.localizedDescription)")
+                    completion(result)
+                    return
+                }
+                
+                CoreDataManager.shared.deleteAllData() {
+                    // 모든 사용자 데이터 삭제 후, 파이어베이스 데이터로 업데이트 진행
+                    if let userData = userData {
+                        // Firebase에서 가져온 데이터로 코어 데이터 업데이트
+                        CoreDataManager.shared.createUser(newUser: userData) {
+                            print("User data successfully updated in CoreData.")
+                            CoreDataManager.shared.fetchFolder() {
+                                CoreDataManager.shared.fetchMemo() {
+                                    let folders = CoreDataManager.shared.getFolders()
+                                    let memos = CoreDataManager.shared.getMemos()
+                                    print(folders)
+                                    print(memos)
+                                    completion(result)
+                                }
+                            }
+                        }
+                    } else {
+                        // 파이어베이스에서 유저 데이터를 가져올 수 없는 경우, 새 유저 데이터 생성
+                        let newUser = UserData(
+                            id: email,
+                            nickName: "",
+                            folders: [],
+                            memos: [],
+                            rewardPoint: 0,
+                            rewardName: "",
+                            themeColor: ""
+                        )
+                        CoreDataManager.shared.createUser(newUser: newUser) {
+                            print("User data successfully created in CoreData.")
+                            completion(result)
+                        }
+                    }
+                }
             }
         }
     }
+    
+    
+    
     
     func isAvailableEmail(email: String, completion: @escaping (Bool) -> Void){
         
@@ -86,8 +141,39 @@ struct LoginManager {
             if error == nil {
                 print("send Email")
             } else {
-                print("fail Email")
+                print("Email sending failed.")
             }
+        }
+    }
+    
+    func isLogin() -> Bool{
+        if Auth.auth().currentUser != nil {
+            if let user = Auth.auth().currentUser {
+                print("@@@LoginEmail:",user.email)
+            }
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func signOut() {
+        
+        let userDefaultManager = UserDefaultsManager()
+        let notifySettingManager = NotifySettingManager.shared
+        
+        do {
+            print(Auth.auth().currentUser?.email,"SignOut")
+            userDefaultManager.setPassword(password: "")
+            userDefaultManager.setLockIsOn(toggle: false)
+            userDefaultManager.setAutoLogin(toggle: false)
+            notifySettingManager.isNotificationEnabled = true
+            notifySettingManager.isSoundEnabled = true
+            notifySettingManager.isVibrationEnabled = true
+            
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
         }
     }
 }

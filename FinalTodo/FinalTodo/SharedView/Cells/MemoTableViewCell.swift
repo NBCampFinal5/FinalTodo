@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class MemoCell: UITableViewCell {
-    
     let titleLabel = UILabel()
     let dateLabel = UILabel()
     let folderNameLabel = UILabel()
@@ -28,6 +27,7 @@ class MemoCell: UITableViewCell {
         setupConstraints()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -37,7 +37,7 @@ class MemoCell: UITableViewCell {
         addSubview(dateLabel)
         addSubview(folderNameLabel)
         addSubview(folderColorView)
-        addSubview(arrowImageView)
+        // addSubview(arrowImageView)
         addSubview(separatorLine)
         
         folderColorView.layer.cornerRadius = 10
@@ -46,7 +46,8 @@ class MemoCell: UITableViewCell {
         dateLabel.font = UIFont.systemFont(ofSize: 14)
         folderNameLabel.textColor = .secondaryLabel
         folderNameLabel.font = UIFont.systemFont(ofSize: 14)
-        arrowImageView.tintColor = .label
+        // arrowImageView.tintColor = .label
+        accessoryType = .disclosureIndicator
     }
     
     func setupConstraints() {
@@ -70,16 +71,15 @@ class MemoCell: UITableViewCell {
             make.left.equalTo(folderColorView.snp.right).offset(8)
         }
         
-        arrowImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().offset(-10)
-            make.size.equalTo(CGSize(width: 20, height: 20))
-        }
+//        arrowImageView.snp.makeConstraints { make in
+//            make.centerY.equalToSuperview()
+//            make.right.equalToSuperview().offset(-10)
+//            make.size.equalTo(CGSize(width: 20, height: 20))
+//        }
         
         separatorLine.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(0.5)
         }
     }
-    
 }

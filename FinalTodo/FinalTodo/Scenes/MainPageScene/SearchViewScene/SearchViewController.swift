@@ -48,7 +48,7 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(MemoCell.self, forCellReuseIdentifier: "memoCell")
-        tableView.rowHeight = 80
+        tableView.rowHeight = 90
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
@@ -80,14 +80,27 @@ class SearchViewController: UIViewController {
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
+
+    func getMemosSortedByDateDescending(memos: [MemoData]) -> [MemoData] {
+        return memos.sorted { memo1, memo2 in
+            guard let date1 = self.dateFormatter.date(from: memo1.date),
+                  let date2 = self.dateFormatter.date(from: memo2.date)
+            else {
+                return false
+            }
+            return date1 > date2
+        }
+    }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let allMemos = viewModel.coredataManager.getMemos()
+        let sortedMemos = getMemosSortedByDateDescending(memos: allMemos)
         if searchText.isEmpty {
-            viewModel.filterData.value = viewModel.coredataManager.getMemos()
+            viewModel.filterData.value = sortedMemos
         } else {
-            viewModel.filterData.value = viewModel.coredataManager.getMemos().filter { $0.content.contains(searchText) }
+            viewModel.filterData.value = sortedMemos.filter { $0.content.contains(searchText) }
         }
     }
 }
@@ -115,14 +128,21 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             searchBar.resignFirstResponder()
         }
         tableView.deselectRow(at: indexPath, animated: true) // 셀 선택상태 해제(셀 터치시 한번만 터치되게끔)
+        let selectedMemo = viewModel.filterData.value[indexPath.row]
+        let editMemoVC = MemoViewController()
+        editMemoVC.loadMemoData(memo: selectedMemo)
+        navigationController?.pushViewController(editMemoVC, animated: true)
     }
 }
 
 extension MemoCell {
     func configure(with memo: MemoData, dateFormatter: DateFormatter) {
-        titleLabel.text = memo.content
+        // 메모 내용의 길이를 최대 20자로 제한
+        let maxLength = 20
+        let trimmedContent = String(memo.content.prefix(maxLength))
+        titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)" : memo.content
         dateLabel.text = memo.date
-        folderNameLabel.text = memo.folderId
+        // folderNameLabel.text = memo.folderId
 //        folderColorView.backgroundColor = memo.co
     }
 }

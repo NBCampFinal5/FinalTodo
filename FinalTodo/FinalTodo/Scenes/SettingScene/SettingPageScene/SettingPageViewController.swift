@@ -24,6 +24,8 @@ extension SettingPageViewController {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = false
         tableView.reloadData()
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
     }
 }
 
@@ -45,7 +47,6 @@ private extension SettingPageViewController {
         tableView.dataSource = self
         tableView.frame = view.bounds
         tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
-        tableView.backgroundColor = .systemBackground
         tableView.rowHeight = Constant.screenWidth / 10
     }
 }
@@ -74,7 +75,6 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             cell.configure(with: model)
         }
 
-        cell.backgroundColor = .secondarySystemBackground
         cell.accessoryType = .disclosureIndicator
 
         return cell
@@ -104,11 +104,14 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
             tabBarController?.tabBar.isHidden = true
 
         } else if indexPath.section == 1 && indexPath.row == 1 {
-            let signInVC = SignInPageViewController()
-            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(viewController: signInVC, animated: true)
-        } else if indexPath.section == 1 && indexPath.row == 2 {
             let vc = AppInfoViewController()
             navigationController?.pushViewController(vc, animated: true)
+            tabBarController?.tabBar.isHidden = true
+
+        } else if indexPath.section == 1 && indexPath.row == 2 {
+            let privacyPolicyVC = PrivacyPolicyViewController()
+            navigationController?.pushViewController(privacyPolicyVC, animated: true)
+            tabBarController?.tabBar.isHidden = true
         }
     }
 }

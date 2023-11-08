@@ -8,7 +8,7 @@ class DateSettingPageViewController: UIViewController {
     // 이전에 선택된 날짜 (있는 경우)를 저장하기 위한 변수
     var initialDate: Date?
 
-    let topView = ModalTopView(title: "날짜 알림")
+    let topView = ModalTopView(title: "날짜")
     let viewModel: AddMemoPageViewModel
 
     init(viewModel: AddMemoPageViewModel, initialDate: Date? = nil) {
@@ -35,39 +35,35 @@ class DateSettingPageViewController: UIViewController {
     }()
 
     // 설정 완료 버튼
-    lazy var doneButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "설정완료")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-        return buttonView
-//        let button = UIButton(type: .custom)
-//        button.setTitle("설정완료", for: .normal)
-//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-//        button.layer.cornerRadius = 10
-//        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-//        return button
+    lazy var doneButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("설정완료", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        return button
     }()
 
     // 설정 초기화 버튼
-    lazy var resetButton: ButtonTappedView = {
-        let buttonView = ButtonTappedView(title: "설정초기화")
-        buttonView.anyButton.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-        return buttonView
-//        let button = UIButton(type: .custom)
-//        button.setTitle("설정초기화", for: .normal)
-//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-//        button.layer.cornerRadius = 10
-//        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-//        return button
+    lazy var resetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("설정초기화", for: .normal)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+        button.backgroundColor = .secondarySystemBackground
+        button.setTitleColor(.label, for: .normal)
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+        return button
     }()
 
-//    lazy var infoButton: UIButton = {
-//        let button = UIButton(type: .infoLight)
-//        button.tintColor = .black
-//        button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
-//        return button
-//    }()
+    lazy var infoButton: UIButton = {
+        let button = UIButton(type: .infoLight)
+        button.tintColor = .myPointColor
+        button.addTarget(self, action: #selector(didTapDateTooltip), for: .touchUpInside)
+        return button
+    }()
 }
 
 extension DateSettingPageViewController {
@@ -96,16 +92,16 @@ extension DateSettingPageViewController {
 
     private func setUpTopView() {
         view.addSubview(topView)
-        // view.addSubview(infoButton)
+        view.addSubview(infoButton)
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
         }
         topView.backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
 
-//        infoButton.snp.makeConstraints { make in
-//            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
-//        }
+        infoButton.snp.makeConstraints { make in
+            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
+        }
     }
 
     private func setUpDatePickerView() {
@@ -122,7 +118,7 @@ extension DateSettingPageViewController {
         view.addSubview(doneButton)
         doneButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(datePickerView.snp.bottom).offset(20)
+            make.top.equalTo(datePickerView.snp.bottom).offset(40)
             make.width.equalTo(UIScreen.main.bounds.width * 0.8)
             make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
@@ -130,7 +126,7 @@ extension DateSettingPageViewController {
         view.addSubview(resetButton)
         resetButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(doneButton.snp.bottom).offset(10)
+            make.top.equalTo(doneButton.snp.bottom).offset(13)
             make.width.equalTo(UIScreen.main.bounds.width * 0.8)
             make.height.equalTo(UIScreen.main.bounds.height * 0.05)
         }
@@ -174,30 +170,19 @@ extension DateSettingPageViewController {
             components.hour = calendar.component(.hour, from: time)
             components.minute = calendar.component(.minute, from: time)
         }
-        if let selectedDate = calendar.date(from: components) {
+        if let selectedDate = calendar.date(from: components), selectedDate >= calendar.startOfDay(for: Date()) {
             viewModel.selectedDate = selectedDate
             print("설정된 날짜: \(selectedDate)")
+            let formattedDate = "\(selectedYear)년 \(selectedMonth)월 \(selectedDay)일"
+            // showToast(message: "\(formattedDate) 설정이 완료됐습니다.")
+            dismiss(animated: true, completion: nil)
+        } else {
+            // 선택한 날짜가 오늘 이전인 경우
+            let alertController = UIAlertController(title: "오류", message: "현재 날짜보다 이전 날짜는 예약할 수 없습니다.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "확인", style: .default))
+            print("오류: 현재 날짜보다 이전 날짜는 예약할 수 없습니다.")
+            present(alertController, animated: true)
         }
-
-        // 선택된 날짜 및 시간이 모두 있을 경우에만 알림을 예약
-//        if let date = viewModel.selectedDate, let time = viewModel.selectedTime {
-//            let combinedComponents = DateComponents(year: calendar.component(.year, from: date),
-//                                                    month: calendar.component(.month, from: date),
-//                                                    day: calendar.component(.day, from: date),
-//                                                    hour: calendar.component(.hour, from: time),
-//                                                    minute: calendar.component(.minute, from: time))
-//
-//            if let combinedDate = calendar.date(from: combinedComponents) {
-//                let identifier = UUID().uuidString
-//                viewModel.notificationIdentifier = identifier
-//                Notifications.shared.scheduleNotificationAtDate(title: "?????????", body: "알림을 확인해주세요", date: combinedDate, identifier: identifier, soundEnabled: true, vibrationEnabled: true)
-//                delegate?.didCompleteDateSetting(date: combinedDate)
-//            }
-//        }
-        let formattedDate = "\(selectedYear)년 \(selectedMonth)월 \(selectedDay)일"
-        showToast(message: "\(formattedDate) 설정이 완료됐습니다.")
-
-        dismiss(animated: true, completion: nil)
     }
 
     // 설정초기화 버튼 동작
@@ -215,7 +200,7 @@ extension DateSettingPageViewController {
         delegate?.didResetDateSetting()
         // 초기화 후 현재 날짜로 datePickerView를 설정
         setPickerToCurrentDate()
-        showToast(message: "날짜 설정이 초기화 됐습니다.")
+        // showToast(message: "날짜 설정이 초기화 됐습니다.")
     }
 
     private func setUpDateToPicker(date: Date) {
@@ -234,37 +219,10 @@ extension DateSettingPageViewController {
         datePickerView.selectRow(days.firstIndex(of: day) ?? 0, inComponent: 2, animated: true)
     }
 
-//    @objc func didTapDateTooltip() {
-//        let alertController = UIAlertController(title: "알림 설정", message: "날짜알림만 설정시 오전 9시에 알림이 옵니다.", preferredStyle: .alert)
-//        alertController.addAction(UIAlertAction(title: "확인", style: .default))
-//        present(alertController, animated: true)
-//    }
-
-    func showToast(message: String, duration: TimeInterval = 2.0) {
-        let toastLabel = UILabel()
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center
-        toastLabel.font = UIFont.systemFont(ofSize: 14)
-        toastLabel.text = message
-        toastLabel.alpha = 0.5
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        // 화면 최상단에 표시하기위함
-        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-        window?.addSubview(toastLabel)
-        // 위치와 크기 지정
-        toastLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.width.equalTo(Constant.screenWidth * 0.7)
-            make.height.equalTo(Constant.screenHeight * 0.04)
-            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
-        }
-        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: { _ in
-            toastLabel.removeFromSuperview()
-        })
+    @objc func didTapDateTooltip() {
+        let alertController = UIAlertController(title: "알림 설정", message: "현재 날짜보다 이전 날짜를 예약할 수 없습니다.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alertController, animated: true)
     }
 }
 
@@ -297,3 +255,46 @@ extension DateSettingPageViewController: UIPickerViewDelegate {
         }
     }
 }
+
+//        let button = UIButton(type: .custom)
+//        button.setTitle("설정완료", for: .normal)
+//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+//        return button
+
+//        let button = UIButton(type: .custom)
+//        button.setTitle("설정초기화", for: .normal)
+//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
+//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
+//        return button
+
+//    func showToast(message: String, duration: TimeInterval = 2.0) {
+//        let toastLabel = UILabel()
+//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        toastLabel.textColor = UIColor.white
+//        toastLabel.textAlignment = .center
+//        toastLabel.font = UIFont.systemFont(ofSize: 14)
+//        toastLabel.text = message
+//        toastLabel.alpha = 0.5
+//        toastLabel.layer.cornerRadius = 10
+//        toastLabel.clipsToBounds = true
+//        // 화면 최상단에 표시하기위함
+//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+//        window?.addSubview(toastLabel)
+//        // 위치와 크기 지정
+//        toastLabel.snp.makeConstraints { make in
+//            make.centerX.equalToSuperview()
+//            make.width.equalTo(Constant.screenWidth * 0.7)
+//            make.height.equalTo(Constant.screenHeight * 0.04)
+//            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
+//        }
+//        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
+//            toastLabel.alpha = 0.0
+//        }, completion: { _ in
+//            toastLabel.removeFromSuperview()
+//        })
+//    }

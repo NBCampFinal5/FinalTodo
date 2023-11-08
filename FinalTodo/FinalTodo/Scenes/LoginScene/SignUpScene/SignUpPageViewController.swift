@@ -23,12 +23,35 @@ class SignUpPageViewController: UIViewController, ButtonTappedViewDelegate, Comm
         label.font = UIFont.boldSystemFont(ofSize: 30)
         return label
     }()
-
+    
     let emailTextField = CommandLabelView(title: "이메일", placeholder: "이메일을 입력해 주세요.", isSecureTextEntry: false)
     let nicknameTextField = CommandLabelView(title: "닉네임", placeholder: "닉네임을 입력해 주세요.", isSecureTextEntry: false)
     let passwordTextField = CommandLabelView(title: "비밀번호", placeholder: "패스워드를 입력해 주세요.", isSecureTextEntry: true)
     let checkPasswordTextField = CommandLabelView(title: "비밀번호 확인", placeholder: "패스워드를 재입력해 주세요.", isSecureTextEntry: true)
     let registerButton = ButtonTappedView(title: "가입하기")
+    
+    lazy var privacyPolicyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("개인정보 처리방침에 동의합니다. ", for: .normal)
+        let checkboxImage = UIImage(systemName: "square")
+        button.setImage(checkboxImage, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        
+        button.addTarget(self, action: #selector(checkboxTapped), for: .touchUpInside)
+        button.setTitleColor(.secondaryLabel, for: .normal)
+        button.tintColor = .secondaryLabel
+        button.backgroundColor = .systemBackground
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
+        
+        return button
+    }()
+    let linkButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("[보기]", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
     
     let viewModel = SignUpPageViewModel()
     
@@ -60,6 +83,7 @@ private extension SignUpPageViewController {
         setUpUserName()
         setUpPasswordName()
         setUpButton()
+        setupNavigationBar()
     }
     
     func setUpUserName() {
@@ -101,8 +125,23 @@ private extension SignUpPageViewController {
             make.top.equalTo(passwordTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
+        
+        
+        view.addSubview(privacyPolicyButton)
+        privacyPolicyButton.snp.makeConstraints { make in
+            make.top.equalTo(checkPasswordTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
+            make.left.equalTo(checkPasswordTextField.snp.left).inset(Constant.defaultPadding)
+        }
+        
+        
+        view.addSubview(linkButton)
+        linkButton.snp.makeConstraints { make in
+            make.centerY.equalTo(privacyPolicyButton.snp.centerY)
+            make.left.equalTo(privacyPolicyButton.snp.right).offset(Constant.defaultPadding / 2)
+        }
+        linkButton.addTarget(self, action: #selector(openLink), for: .touchUpInside)
     }
-
+    
     func setUpButton() {
         // 버튼
         view.addSubview(registerButton)
@@ -111,10 +150,40 @@ private extension SignUpPageViewController {
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
+
+    private func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "뒤로", style: .plain, target: self, action: #selector(didTapBackButton))
+        navigationItem.leftBarButtonItem?.tintColor = .label
+    }
+
+    @objc private func didTapBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension SignUpPageViewController {
     // MARK: - Method
+    
+    
+    @objc func checkboxTapped(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        
+        if sender.isSelected {
+            let checkboxImage = UIImage(systemName: "checkmark.square")
+            sender.setImage(checkboxImage, for: .normal)
+        } else {
+            let checkboxImage = UIImage(systemName: "square")
+            sender.setImage(checkboxImage, for: .normal)
+            
+        }
+        isPossibleSingUp()
+    }
+    
+    @objc func openLink() {
+        let privacyPolicyVC = PrivacyPolicyViewController()
+        navigationController?.pushViewController(privacyPolicyVC, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
     
     func bind() {
         viewModel.email.bind { [weak self] email in
@@ -242,12 +311,12 @@ extension SignUpPageViewController {
     func isSignUpAble(state: Bool) {
         UIView.animate(withDuration: 0.3) {
             if state {
-                self.registerButton.changeTitleColor(color: .systemGray4)
-                self.registerButton.changeButtonColor(color: .secondaryLabel)
+                self.registerButton.changeTitleColor(color: .white)
+                self.registerButton.changeButtonColor(color: .black)
                 self.registerButton.setButtonEnabled(true)
             } else {
                 self.registerButton.changeTitleColor(color: .label)
-                self.registerButton.changeButtonColor(color: .secondarySystemBackground)
+                self.registerButton.changeButtonColor(color: .systemGray4)
                 self.registerButton.setButtonEnabled(false)
             }
         }
@@ -258,18 +327,20 @@ extension SignUpPageViewController {
               let nickNameText = nicknameTextField.infoCommandLabel.text,
               let passwordText = passwordTextField.infoCommandLabel.text,
               let checkPasswordText = checkPasswordTextField.infoCommandLabel.text else { return }
-
+        let isPrivacyPolicySelected = privacyPolicyButton.isSelected
+        
         if emailText == "사용가능한 이메일 입니다.",
            nickNameText == "사용가능한 닉네임 입니다.",
            passwordText == "사용가능한 비밀번호 입니다.",
-           checkPasswordText == "비밀번호가 일치합니다."
+           checkPasswordText == "비밀번호가 일치합니다.",
+           isPrivacyPolicySelected
         {
             isSignUpAble(state: true)
         } else {
             isSignUpAble(state: false)
         }
     }
-
+    
     // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -296,8 +367,8 @@ extension SignUpPageViewController {
                 self.present(alert, animated: true)
             }
         }
-
-//        self.navigationController?.popViewController(animated: true)
+        
+        //        self.navigationController?.popViewController(animated: true)
     }
     
     // 회원가입 버튼 색갈 바뀌는 함수
@@ -338,7 +409,7 @@ extension SignUpPageViewController {
             }
         }
     }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
         // 키보드가 사라질 때 뷰를 원래 위치로 되돌림
         if view.frame.origin.y != 0 {

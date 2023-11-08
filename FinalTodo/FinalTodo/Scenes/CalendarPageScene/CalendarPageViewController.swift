@@ -11,7 +11,7 @@ class CalendarPageViewController: UIViewController {
     var selectedDdays: [Date] = []
     var calendarView: CalendarPageView!
 
-    var isModalDismissed: Bool = false { 
+    var isModalDismissed: Bool = false {
         didSet { self.calendarView.calendar.reloadData()
         }
     }
@@ -20,29 +20,31 @@ class CalendarPageViewController: UIViewController {
         super.viewDidLoad()
         calendarView = CalendarPageView(frame: view.bounds)
         view.addSubview(calendarView)
-
+        view.backgroundColor = .secondarySystemBackground
+        calendarView.backgroundColor = .secondarySystemBackground
         calendarView.calendar.delegate = self
         calendarView.calendar.dataSource = self
 
         calendarView.todayButton.addTarget(self, action: #selector(didTapTodayButton), for: .touchUpInside)
 
         setupNavigationBar()
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         calendarView.calendar.reloadData()
+        setCalendarUI()
+        navigationController?.configureBar()
+        tabBarController?.configureBar()
     }
 
     // 네비게이션 바 설정
     private func setupNavigationBar() {
         navigationItem.title = "캘린더"
-        let ddayButton = UIBarButtonItem(title: "D-day", style: .plain, target: self, action: #selector(didTapDdayButton))
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
-        navigationItem.rightBarButtonItem = ddayButton
-        navigationController?.navigationBar.tintColor = .label
-        navigationController?.navigationBar.barTintColor = .systemBackground
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondarySystemBackground]
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
 
     // D-day 버튼 터치 시 호출
@@ -77,7 +79,7 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
         navController.modalPresentationStyle = .custom
         navController.transitioningDelegate = self
         present(navController, animated: true)
-        
+
         calendarView.calendar.deselect(date)
     }
 
@@ -136,24 +138,51 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     // 오늘 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         if date == Date().startOfDay {
-            return .label // 오늘 날짜 배경색
+            return .systemGray3 // 오늘 날짜 배경색
         }
         return nil
     }
 
     // 선택 날짜 배경색 설정
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-        return .tertiaryLabel // 선택된 날짜 배경색
+        return .systemGray3
+        // return .tertiaryLabel // 선택된 날짜 배경색
     }
 
-    // 서브타이틀 컬러 설정
+    // 서브타이틀 컬러 설정 - ●
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, subtitleDefaultColorFor date: Date) -> UIColor? {
         return .myPointColor
+    }
+
+    // ● 의 위치 조정
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, subtitleOffsetFor date: Date) -> CGPoint {
+        return CGPoint(x: 0, y: 30)
+    }
+
+    // 날짜색깔 다크모드 대응
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        return .label
+//        let defaultColor = appearance.titleDefaultColor
+//
+//        if #available(iOS 12.0, *) {
+//            if self.traitCollection.userInterfaceStyle == .dark {
+//                return .white
+//            } else {
+//                return defaultColor
+//            }
+//        } else {
+//            return defaultColor
+//        }
+    }
+
+    func setCalendarUI() {
+        calendarView.calendar.appearance.headerTitleColor = .myPointColor
+        calendarView.calendar.appearance.weekdayTextColor = .label
     }
 }
 
 extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.5)
+        return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }
