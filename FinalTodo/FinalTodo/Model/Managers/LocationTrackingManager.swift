@@ -68,12 +68,12 @@ class LocationTrackingManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-            if let location = locations.last {
-                print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
-//                locationManager.stopUpdatingLocation()
-            }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
+            //                locationManager.stopUpdatingLocation()
         }
+    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error: \(error)")
@@ -91,20 +91,22 @@ class LocationTrackingManager: NSObject, CLLocationManagerDelegate {
     }
     
     func changeLocationPermission() {
-        let alertController = UIAlertController(title: "위치 권한 필요", message: "앱의 기능을 완전히 활용하려면 '항상 허용' 권한이 필요합니다. 설정으로 이동하시겠습니까?", preferredStyle: .alert)
-        let settingsAction = UIAlertAction(title: "설정으로 이동", style: .default) { (_) in
-            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+        if locationManager.authorizationStatus != .authorizedAlways {
+            let alertController = UIAlertController(
+                title: "위치 권한 제한됨",
+                message: "앱의 온전한 기능을 사용하려면 위치 서비스 권한이 필요합니다. '항상 허용'으로 설정하면 앱의 기능을 최대한 활용할 수 있습니다.",
+                preferredStyle: .alert
+            )
+            
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            
+            if let topController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+                topController.present(alertController, animated: true, completion: nil)
             }
         }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alertController.addAction(settingsAction)
-        alertController.addAction(cancelAction)
-        
-        if let topController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
-            topController.present(alertController, animated: true, completion: nil)
-        }
     }
+    
     
     private func sendNotification(title: String, body: String) {
         let content = UNMutableNotificationContent()
