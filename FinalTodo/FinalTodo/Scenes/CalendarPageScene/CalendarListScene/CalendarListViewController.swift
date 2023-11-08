@@ -60,7 +60,6 @@ private extension CalendarListViewController {
     func setUp() {
         tableView.dataSource = self
         tableView.delegate = self
-//        tableView.separatorStyle = .none
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
 
         view.addSubview(topView)
@@ -81,8 +80,6 @@ private extension CalendarListViewController {
 
     func fetchMemoList(date: String) {
         memos = manager.getMemos().filter { $0.date.prefix(10) == date } // 날짜에 해당하는 메모 불러와서 앞에 10글자 비교
-        print("@@ 선택 일자 메모: \(memos), 선택 일자: \(date)")
-        print("@@", manager.getMemos().first!.date)
     }
 
     @objc func didTapBackButton() {
