@@ -181,11 +181,20 @@ extension MainPageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if editingStyle == .delete {
-                let targetId = viewModel.coredataManager.getFolders()[indexPath.row].id
-                viewModel.coredataManager.deleteFolder(targetId: targetId) {
-                    print("deleteFolderID:", targetId)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                }
+                // 성준 - 삭제 확인을 위한 경고 알럿
+                let alert = UIAlertController(title: "주의", message: "삭제 시 메모도 함께 삭제됩니다.\n삭제하시겠습니까?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
+                    guard let self = self else { return }
+                    // 폴더 삭제 로직
+                    let targetId = self.viewModel.coredataManager.getFolders()[indexPath.row].id
+                    self.viewModel.coredataManager.deleteFolder(targetId: targetId) {
+                        print("deleteFolderID:", targetId)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
+                }))
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+
+                present(alert, animated: true)
             }
         }
     }

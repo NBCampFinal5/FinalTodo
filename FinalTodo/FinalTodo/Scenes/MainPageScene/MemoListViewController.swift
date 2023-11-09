@@ -43,9 +43,9 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
         }
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // 날짜 형식을 문자열과 동일하게 설정합니다.
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // 날짜 형식을 문자열과 동일하게 설정
 
-        // 문자열로 된 날짜를 Date로 변환하고, 변환된 Date 객체를 기준으로 내림차순 정렬합니다.
+        // 문자열로 된 날짜를 Date로 변환하고, 변환된 Date 객체를 기준으로 내림차순 정렬
         memos.sort {
             guard let date1 = dateFormatter.date(from: $0.date),
                   let date2 = dateFormatter.date(from: $1.date) else { return false }

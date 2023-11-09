@@ -175,6 +175,7 @@ extension DateSettingPageViewController {
             print("설정된 날짜: \(selectedDate)")
             let formattedDate = "\(selectedYear)년 \(selectedMonth)월 \(selectedDay)일"
             // showToast(message: "\(formattedDate) 설정이 완료됐습니다.")
+            delegate?.didCompleteDateSetting(date: selectedDate) 
             dismiss(animated: true, completion: nil)
         } else {
             // 선택한 날짜가 오늘 이전인 경우
@@ -255,22 +256,6 @@ extension DateSettingPageViewController: UIPickerViewDelegate {
         }
     }
 }
-
-//        let button = UIButton(type: .custom)
-//        button.setTitle("설정완료", for: .normal)
-//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-//        button.layer.cornerRadius = 10
-//        button.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
-//        return button
-
-//        let button = UIButton(type: .custom)
-//        button.setTitle("설정초기화", for: .normal)
-//        button.backgroundColor = ColorManager.themeArray[0].pointColor02
-//        button.setTitleColor(ColorManager.themeArray[0].pointColor01, for: .normal)
-//        button.layer.cornerRadius = 10
-//        button.addTarget(self, action: #selector(didTapResetButton), for: .touchUpInside)
-//        return button
 
 //    func showToast(message: String, duration: TimeInterval = 2.0) {
 //        let toastLabel = UILabel()

@@ -14,6 +14,7 @@ protocol SettingCellDelegate: AnyObject {
 protocol NotifySettingDelegate: AnyObject {
     func didCompleteNotifySetting() // 알림 설정 완료시 호출될 메서드
     func didResetNotifySetting() // 알림 설정 초기화시 호출될 메서드
+    func didCompleteTimeSetting(time: Date) // 시간 설정 완료 시 호출될 메서드
 }
 
 protocol LocationSettingDelegate: AnyObject {

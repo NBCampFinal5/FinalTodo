@@ -445,6 +445,10 @@ extension MemoViewController: DateSettingDelegate {
 }
 
 extension MemoViewController: NotifySettingDelegate {
+    func didCompleteTimeSetting(time: Date) {
+        //
+    }
+    
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
         changeCellBackground(at: 1, to: .secondarySystemBackground)
