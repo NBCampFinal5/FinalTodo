@@ -175,7 +175,7 @@ extension DateSettingPageViewController {
             print("설정된 날짜: \(selectedDate)")
             let formattedDate = "\(selectedYear)년 \(selectedMonth)월 \(selectedDay)일"
             // showToast(message: "\(formattedDate) 설정이 완료됐습니다.")
-            delegate?.didCompleteDateSetting(date: selectedDate) 
+            delegate?.didCompleteDateSetting(date: selectedDate)
             dismiss(animated: true, completion: nil)
         } else {
             // 선택한 날짜가 오늘 이전인 경우
@@ -184,6 +184,7 @@ extension DateSettingPageViewController {
             print("오류: 현재 날짜보다 이전 날짜는 예약할 수 없습니다.")
             present(alertController, animated: true)
         }
+        showToast(message: "설정이 완료되었습니다.")
     }
 
     // 설정초기화 버튼 동작
@@ -201,7 +202,7 @@ extension DateSettingPageViewController {
         delegate?.didResetDateSetting()
         // 초기화 후 현재 날짜로 datePickerView를 설정
         setPickerToCurrentDate()
-        // showToast(message: "날짜 설정이 초기화 됐습니다.")
+        dismiss(animated: true)
     }
 
     private func setUpDateToPicker(date: Date) {
@@ -224,6 +225,33 @@ extension DateSettingPageViewController {
         let alertController = UIAlertController(title: "알림 설정", message: "현재 날짜보다 이전 날짜를 예약할 수 없습니다.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "확인", style: .default))
         present(alertController, animated: true)
+    }
+
+    func showToast(message: String, duration: TimeInterval = 2.0) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14)
+        toastLabel.text = message
+        toastLabel.alpha = 0.5
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        // 화면 최상단에 표시하기위함
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        window?.addSubview(toastLabel)
+        // 위치와 크기 지정
+        toastLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constant.screenWidth * 0.7)
+            make.height.equalTo(Constant.screenHeight * 0.04)
+            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
+        }
+        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
     }
 }
 
@@ -256,30 +284,3 @@ extension DateSettingPageViewController: UIPickerViewDelegate {
         }
     }
 }
-
-//    func showToast(message: String, duration: TimeInterval = 2.0) {
-//        let toastLabel = UILabel()
-//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-//        toastLabel.textColor = UIColor.white
-//        toastLabel.textAlignment = .center
-//        toastLabel.font = UIFont.systemFont(ofSize: 14)
-//        toastLabel.text = message
-//        toastLabel.alpha = 0.5
-//        toastLabel.layer.cornerRadius = 10
-//        toastLabel.clipsToBounds = true
-//        // 화면 최상단에 표시하기위함
-//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-//        window?.addSubview(toastLabel)
-//        // 위치와 크기 지정
-//        toastLabel.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.width.equalTo(Constant.screenWidth * 0.7)
-//            make.height.equalTo(Constant.screenHeight * 0.04)
-//            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
-//        }
-//        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
-//            toastLabel.alpha = 0.0
-//        }, completion: { _ in
-//            toastLabel.removeFromSuperview()
-//        })
-//    }

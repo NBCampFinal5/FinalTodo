@@ -445,6 +445,10 @@ extension MemoViewController: DateSettingDelegate {
 }
 
 extension MemoViewController: NotifySettingDelegate {
+    func didResetTimeSetting() {
+        //
+    }
+    
     func didCompleteTimeSetting(time: Date) {
         //
     }

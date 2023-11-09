@@ -204,7 +204,7 @@ extension TimeSettingPageViewController {
         if let selectedTime = calendar.date(from: components) {
             viewModel.selectedTime = selectedTime
             print("설정된 시간: \(selectedTime)")
-            delegate?.didCompleteTimeSetting(time: selectedTime) 
+            delegate?.didCompleteTimeSetting(time: selectedTime)
         } else {
             print("시간 설정에 실패했습니다.")
         }
@@ -214,6 +214,7 @@ extension TimeSettingPageViewController {
         let minuteText = minutes[timePickerView.selectedRow(inComponent: 2)]
         let formattedTime = "\(amPmText) \(hourText)시 \(minuteText)분"
         // showToast(message: "\(formattedTime) 설정이 완료되었습니다.")
+        showToast(message: "설정이 완료되었습니다.")
 
         dismiss(animated: true, completion: nil)
     }
@@ -232,7 +233,34 @@ extension TimeSettingPageViewController {
         // 델리게이트 메서드 호출하여 알림 설정 초기화 알림
         delegate?.didResetNotifySetting()
         setPickerToSelectedTime()
-        // showToast(message: "시간 설정이 초기화 됐습니다.")
+        dismiss(animated: true)
+    }
+
+    func showToast(message: String, duration: TimeInterval = 2.0) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = .systemBackground
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14)
+        toastLabel.text = message
+        toastLabel.alpha = 0.5
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        // 화면 최상단에 표시하기위함
+        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
+        window?.addSubview(toastLabel)
+        // 위치와 크기 지정
+        toastLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constant.screenWidth * 0.7)
+            make.height.equalTo(Constant.screenHeight * 0.04)
+            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
+        }
+        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
     }
 }
 
@@ -269,30 +297,3 @@ extension TimeSettingPageViewController: UNUserNotificationCenterDelegate {
         completionHandler([.banner, .sound]) // 알림을 표시하고 소리를 재생합니다.
     }
 }
-
-//    func showToast(message: String, duration: TimeInterval = 2.0) {
-//        let toastLabel = UILabel()
-//        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-//        toastLabel.textColor = .systemBackground
-//        toastLabel.textAlignment = .center
-//        toastLabel.font = UIFont.systemFont(ofSize: 14)
-//        toastLabel.text = message
-//        toastLabel.alpha = 0.5
-//        toastLabel.layer.cornerRadius = 10
-//        toastLabel.clipsToBounds = true
-//        // 화면 최상단에 표시하기위함
-//        let window = UIApplication.shared.windows.first { $0.isKeyWindow }
-//        window?.addSubview(toastLabel)
-//        // 위치와 크기 지정
-//        toastLabel.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.width.equalTo(Constant.screenWidth * 0.7)
-//            make.height.equalTo(Constant.screenHeight * 0.04)
-//            make.bottom.equalToSuperview().offset(-Constant.screenHeight * 0.20)
-//        }
-//        UIView.animate(withDuration: duration, delay: 0.1, options: .curveEaseInOut, animations: {
-//            toastLabel.alpha = 0.0
-//        }, completion: { _ in
-//            toastLabel.removeFromSuperview()
-//        })
-//    }
