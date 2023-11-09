@@ -10,8 +10,6 @@ import UIKit
 class CalendarListViewController: UIViewController {
     let manager = CoreDataManager.shared
 
-    let dateFormatter = DateFormatter()
-
     let topView = ModalTopView(title: "메모 목록")
 
     var date: String
@@ -93,8 +91,6 @@ private extension CalendarListViewController {
             }
             return false
         }
-
-//        memos = manager.getMemos().filter { $0.date.prefix(10) == date } // 날짜에 해당하는 메모 불러와서 앞에 10글자 비교
     }
 
     @objc func didTapBackButton() {
