@@ -43,6 +43,8 @@ class CalendarListViewController: ModalPossibleGestureController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        fetchMemoList(date: date)
+        tableView.reloadData()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -79,7 +81,16 @@ private extension CalendarListViewController {
     }
 
     func fetchMemoList(date: String) {
-        memos = manager.getMemos().filter { $0.date.prefix(10) == date } // 날짜에 해당하는 메모 불러와서 앞에 10글자 비교
+        // 해당 날짜 알림 설정 메모 배열
+        memos = manager.getMemos().filter {
+            if let notifyDate = $0.timeNotifySetting {
+                if String(notifyDate).prefix(10) == date {
+                    return true
+                }
+                return false
+            }
+            return false
+        }
     }
 
     @objc func didTapBackButton() {
