@@ -72,7 +72,6 @@ private extension CalendarListViewController {
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(Constant.screenHeight * 0.07)
         }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
@@ -94,7 +93,7 @@ private extension CalendarListViewController {
     }
 
     @objc func didTapBackButton() {
-        navigationController?.dismiss(animated: true, completion: onDismiss)
+        self.dismiss(animated: true)
     }
 }
 
