@@ -26,7 +26,7 @@ final class MemoView: UIView {
         let view = UITextView()
         view.font = UIFont.preferredFont(forTextStyle: .body)
         view.text = "메모를 입력해 주세요."
-        view.textColor = .systemGray
+        view.textColor = .label
         view.backgroundColor = .clear
         view.textContainerInset = .init(top: 0, left: Constant.defaultPadding, bottom: 0, right: Constant.defaultPadding)
         return view

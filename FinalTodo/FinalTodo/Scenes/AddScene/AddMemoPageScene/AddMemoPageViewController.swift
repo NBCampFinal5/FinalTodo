@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class AddMemoPageViewController: UIViewController {
+class AddMemoPageViewController: ModalPossibleGestureController {
     // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
     weak var delegate: AddMemoDelegate?
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
@@ -25,10 +25,13 @@ class AddMemoPageViewController: UIViewController {
 
 extension AddMemoPageViewController {
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         if selectedFolderId! != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
             viewModel.optionImageAry[2] = folders.filter { $0.id == selectedFolderId! }.first!.title
         }
+        // 시간 알림 설정을 확인하고 적용
         if let timeNotifySetting = viewModel.timeNotifySetting, !timeNotifySetting.isEmpty {
             viewModel.optionImageAry[0] = timeNotifySetting
         } else if let memoId = currentMemoId {
@@ -39,10 +42,12 @@ extension AddMemoPageViewController {
                 print("알림설정 시간: \(timeNotifySetting)")
             }
         }
-        
+        // 위치 알림 설정을 확인하고 적용
         if let locationSetting = viewModel.locationNotifySetting, !locationSetting.isEmpty {
             viewModel.optionImageAry[1] = locationSetting
         }
+        // 셀의 배경색을 업데이트
+        memoView.optionCollectionView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -95,10 +100,6 @@ private extension AddMemoPageViewController {
 extension AddMemoPageViewController {
     @objc func didTappedBackButton() {
         dismiss(animated: true)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
     
     @objc func didTapSaveButton() {
@@ -190,7 +191,7 @@ extension AddMemoPageViewController: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
-            textView.textColor = .black
+            textView.textColor = .label
         }
         return true
     }
@@ -365,6 +366,14 @@ extension AddMemoPageViewController: LocationSettingDelegate {
 }
 
 extension AddMemoPageViewController: NotifySettingDelegate {
+    func didResetTimeSetting() {
+        //
+    }
+    
+    func didCompleteTimeSetting(time: Date) {
+        //
+    }
+    
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
         changeCellBackground(at: 1, to: .secondarySystemBackground)

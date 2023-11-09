@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CalendarListViewController: UIViewController {
+class CalendarListViewController: ModalPossibleGestureController {
     let manager = CoreDataManager.shared
 
     let topView = ModalTopView(title: "메모 목록")
@@ -26,7 +26,7 @@ class CalendarListViewController: UIViewController {
 
     init(date: String) {
         self.date = date
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     @available(*, unavailable)
@@ -43,6 +43,8 @@ class CalendarListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        fetchMemoList(date: date)
+        tableView.reloadData()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -60,7 +62,6 @@ private extension CalendarListViewController {
     func setUp() {
         tableView.dataSource = self
         tableView.delegate = self
-//        tableView.separatorStyle = .none
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
 
         view.addSubview(topView)
@@ -71,7 +72,6 @@ private extension CalendarListViewController {
 
         topView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(Constant.screenHeight * 0.07)
         }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
@@ -80,13 +80,20 @@ private extension CalendarListViewController {
     }
 
     func fetchMemoList(date: String) {
-        memos = manager.getMemos().filter { $0.date.prefix(10) == date } // 날짜에 해당하는 메모 불러와서 앞에 10글자 비교
-        print("@@ 선택 일자 메모: \(memos), 선택 일자: \(date)")
-        print("@@", manager.getMemos().first!.date)
+        // 해당 날짜 알림 설정 메모 배열
+        memos = manager.getMemos().filter {
+            if let notifyDate = $0.timeNotifySetting {
+                if String(notifyDate).prefix(10) == date {
+                    return true
+                }
+                return false
+            }
+            return false
+        }
     }
 
     @objc func didTapBackButton() {
-        navigationController?.dismiss(animated: true, completion: onDismiss)
+        self.dismiss(animated: true)
     }
 }
 

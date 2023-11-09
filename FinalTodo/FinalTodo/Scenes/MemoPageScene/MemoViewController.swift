@@ -77,7 +77,7 @@ private extension MemoViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.right.bottom.equalToSuperview()
         }
-        
+        memoView.contentTextView.textColor = .label
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
@@ -261,7 +261,7 @@ extension MemoViewController: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
-            textView.textColor = .black
+            textView.textColor = .label
         }
         return true
     }
@@ -445,6 +445,14 @@ extension MemoViewController: DateSettingDelegate {
 }
 
 extension MemoViewController: NotifySettingDelegate {
+    func didResetTimeSetting() {
+        //
+    }
+    
+    func didCompleteTimeSetting(time: Date) {
+        //
+    }
+    
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
         changeCellBackground(at: 1, to: .secondarySystemBackground)

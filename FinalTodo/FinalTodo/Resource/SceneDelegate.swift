@@ -27,55 +27,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidBecomeActive(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
+        let coredataMnager = CoreDataManager.shared
+        UIColor.myPointColor = UIColor(hex: coredataMnager.getUser().themeColor)
+        guard let rootVC = window?.rootViewController else { return }
+        window?.rootViewController = rootVC
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
-        let manager = UserDefaultsManager()
-        let loginManager = LoginManager()
-        let coredataMnager = CoreDataManager.shared
-
-        if coredataMnager.getUser().id == "error" {
-            loginManager.signOut()
-        }
         
-        if loginManager.isLogin() {
-            if manager.getLockIsOn() {
-                window?.rootViewController = LockScreenViewController(rootViewController: TabBarController())
-            } else {
-                window?.rootViewController = TabBarController()
-            }
-        } else {
-            window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
-        }
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
-        let manager = UserDefaultsManager()
-        let loginManager = LoginManager()
-        let coredataMnager = CoreDataManager.shared
-
-        if coredataMnager.getUser().id == "error" {
-            loginManager.signOut()
-        }
-        
-        if loginManager.isLogin() {
-            if manager.getLockIsOn() {
-                window?.rootViewController = LockScreenViewController(rootViewController: TabBarController())
-            } else {
-                window?.rootViewController = TabBarController()
-            }
-        } else {
-            window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
-        }
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
         let manager = UserDefaultsManager()
         let loginManager = LoginManager()
-
+        let coredataMnager = CoreDataManager.shared
+        
         FirebaseDBManager.shared.updateFirebaseWithCoredata { error in
             if let error = error {
                 print("Firebase update error: \(error.localizedDescription)")
@@ -83,8 +55,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 print("Firebase update success")
             }
         }
+        guard let rootVC = window?.rootViewController else { return }
+        
+        if coredataMnager.getUser().id == "error" {
+            loginManager.signOut()
+        }
+        
+        if loginManager.isLogin() {
+            if manager.getLockIsOn() {
+                window?.rootViewController = LockScreenViewController(rootViewController: rootVC)
+            } else {
+                window?.rootViewController = rootVC
+            }
+        } else {
+            window?.rootViewController = UINavigationController(rootViewController: SignInPageViewController())
+        }
+        
     }
 }
+
 
 extension SceneDelegate {
     // MARK: - RootViewChangeMethod
