@@ -416,6 +416,10 @@ extension CoreDataManager {
         
         if let context = context {
             let request = NSFetchRequest<MemoModel>(entityName: memoModelName)
+            // 성준 - 수정 날짜를 기준으로 내림차순 정렬 
+            let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+            request.sortDescriptors = [sortDescriptor]
+            
             do {
                 memoList = try context.fetch(request)
             } catch {

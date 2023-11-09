@@ -204,6 +204,7 @@ extension TimeSettingPageViewController {
         if let selectedTime = calendar.date(from: components) {
             viewModel.selectedTime = selectedTime
             print("설정된 시간: \(selectedTime)")
+            delegate?.didCompleteTimeSetting(time: selectedTime) 
         } else {
             print("시간 설정에 실패했습니다.")
         }

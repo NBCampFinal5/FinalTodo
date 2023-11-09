@@ -20,54 +20,61 @@ class SearchViewController: UIViewController {
     }()
 
     let viewModel = SearchViewModel()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         setupNavigationBar()
         bind()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        viewModel.filterData.value = viewModel.getMemosSortedByDateDescending()
+        tableView.reloadData()
+    }
+
     // MARK: - UI Setup
-    
+
     private func setupUI() {
         view.backgroundColor = .white
-        
+
         setupTableView()
         setupSearchBar()
     }
-    
+
     private func bind() {
         viewModel.filterData.bind { [weak self] _ in
             self?.tableView.reloadData()
         }
     }
-    
+
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(MemoCell.self, forCellReuseIdentifier: "memoCell")
         tableView.rowHeight = 90
         view.addSubview(tableView)
-        
+
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
-    
+
     private func setupSearchBar() {
         searchBar.delegate = self
         searchBar.placeholder = "메모 검색"
         navigationItem.titleView = searchBar
     }
-    
+
     private func setupNavigationBar() {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         let closeButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
         navigationItem.rightBarButtonItem = closeButton
     }
-    
+
 //    private func filterMemos(with searchText: String) {
 //        if searchText.isEmpty {
     ////            filteredMemos = allMemos
@@ -76,27 +83,19 @@ class SearchViewController: UIViewController {
     ////            filteredMemos = allMemos.filter { $0.title.range(of: searchText, options: .caseInsensitive) != nil }
 //        }
 //    }
-    
+
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
 
     func getMemosSortedByDateDescending(memos: [MemoData]) -> [MemoData] {
-        return memos.sorted { memo1, memo2 in
-            guard let date1 = self.dateFormatter.date(from: memo1.date),
-                  let date2 = self.dateFormatter.date(from: memo2.date)
-            else {
-                return false
-            }
-            return date1 > date2
-        }
+        return viewModel.getMemosSortedByDateDescending()
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let allMemos = viewModel.coredataManager.getMemos()
-        let sortedMemos = getMemosSortedByDateDescending(memos: allMemos)
+        let sortedMemos = viewModel.getMemosSortedByDateDescending()
         if searchText.isEmpty {
             viewModel.filterData.value = sortedMemos
         } else {
@@ -109,7 +108,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.filterData.value.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "memoCell", for: indexPath) as! MemoCell
         let memo = viewModel.filterData.value[indexPath.row]
@@ -121,7 +120,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchBar.resignFirstResponder()
     }
-    
+
     // 성준
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if searchBar.isFirstResponder {

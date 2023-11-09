@@ -25,10 +25,13 @@ class AddMemoPageViewController: UIViewController {
 
 extension AddMemoPageViewController {
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         if selectedFolderId! != "allNote" {
             let folders = viewModel.coredataManager.getFolders()
             viewModel.optionImageAry[2] = folders.filter { $0.id == selectedFolderId! }.first!.title
         }
+        // 시간 알림 설정을 확인하고 적용
         if let timeNotifySetting = viewModel.timeNotifySetting, !timeNotifySetting.isEmpty {
             viewModel.optionImageAry[0] = timeNotifySetting
         } else if let memoId = currentMemoId {
@@ -39,10 +42,12 @@ extension AddMemoPageViewController {
                 print("알림설정 시간: \(timeNotifySetting)")
             }
         }
-        
+        // 위치 알림 설정을 확인하고 적용
         if let locationSetting = viewModel.locationNotifySetting, !locationSetting.isEmpty {
             viewModel.optionImageAry[1] = locationSetting
         }
+        // 셀의 배경색을 업데이트
+        memoView.optionCollectionView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -365,6 +370,10 @@ extension AddMemoPageViewController: LocationSettingDelegate {
 }
 
 extension AddMemoPageViewController: NotifySettingDelegate {
+    func didCompleteTimeSetting(time: Date) {
+        //
+    }
+    
     func didCompleteNotifySetting() {
         // 두 번째 셀(시간 설정)에 대한 배경색을 변경
         changeCellBackground(at: 1, to: .secondarySystemBackground)

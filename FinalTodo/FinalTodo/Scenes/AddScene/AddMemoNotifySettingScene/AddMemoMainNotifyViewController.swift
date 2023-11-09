@@ -161,7 +161,9 @@ extension AddMemoMainNotifyViewController {
                 print("예약된 알림 시간: \(combinedDate)")
                 // 토스트 메시지로 예약된 날짜와 시간 보여줌
                 let formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm"
+                formatter.dateFormat = "yyyy.MM.dd a hh:mm"
+                formatter.locale = Locale(identifier: "ko_KR")
+
                 showToast(message: "알림이 \(formatter.string(from: combinedDate))에 예약되었습니다.", duration: 2.0)
 
                 // ViewModel에 예약된 알림 시간을 설정
@@ -189,12 +191,13 @@ extension AddMemoMainNotifyViewController {
         viewModel.timeNotifySetting = nil
         viewModel.selectedTime = nil
         viewModel.selectedDate = nil
-        //viewModel.optionImageAry[0] = "알림 없음"
+        viewModel.optionImageAry[0] = "알림 설정"
 
         // Delegate에게 알림 취소를 알림
         delegate?.didCancelNotification()
         // 토스트 메시지로 알림 취소를 사용자에게 알림
         showToast(message: "알림이 취소되었습니다.", duration: 2.0)
+        dismiss(animated: true, completion: nil)
     }
 
     func showToast(message: String, duration: TimeInterval = 3.0) {
@@ -250,9 +253,13 @@ extension AddMemoMainNotifyViewController: UITableViewDelegate, UITableViewDataS
 
         var vc: UIViewController!
         if indexPath.row == 0 {
-            vc = DateSettingPageViewController(viewModel: viewModel, initialDate: viewModel.selectedDate) // "날짜" 셀 선택 시
+            let dateSettingVC = DateSettingPageViewController(viewModel: viewModel, initialDate: viewModel.selectedDate) // "날짜" 셀 선택 시
+            dateSettingVC.delegate = self // 이 부분을 추가합니다.
+            vc = dateSettingVC // "날짜" 셀 선택 시
         } else {
-            vc = TimeSettingPageViewController(viewModel: viewModel, initialTime: viewModel.selectedTime) // "시간" 셀 선택 시
+            let timeSettingVC = TimeSettingPageViewController(viewModel: viewModel)
+            timeSettingVC.delegate = self
+            vc = timeSettingVC // "시간" 셀 선택 시
         }
         vc.modalPresentationStyle = .custom
         vc.transitioningDelegate = self
@@ -263,6 +270,41 @@ extension AddMemoMainNotifyViewController: UITableViewDelegate, UITableViewDataS
 extension AddMemoMainNotifyViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         PresentationController(presentedViewController: presented, presenting: presenting, size: 0.6)
+    }
+}
+
+extension AddMemoMainNotifyViewController: DateSettingDelegate {
+    func didCompleteDateSetting(date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        let dateString = dateFormatter.string(from: date)
+        // settingOptionData 배열의 날짜 셀을 업데이트
+        settingOptionData[0][0].title = dateString
+        tableView.reloadData()
+    }
+
+    func didResetDateSetting() {
+        // 날짜 설정 초기화 로직 아직
+    }
+}
+
+extension AddMemoMainNotifyViewController: NotifySettingDelegate {
+    func didCompleteNotifySetting() {
+        //
+    }
+
+    func didResetNotifySetting() {
+        //
+    }
+
+    func didCompleteTimeSetting(time: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "a hh:mm"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        let timeString = dateFormatter.string(from: time)
+        // settingOptionData 배열의 시간 셀을 업데이트
+        settingOptionData[0][1].title = "\(timeString)"
+        tableView.reloadData()
     }
 }
 
