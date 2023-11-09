@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>사용자 위치 접근 허용 시, 현재 위치 기준으로 - 메모에 설정한 위치에 대한 체크인 기능 - 설정한 위치에 접근 시 알림 기능</string>
 	<key>NSLocationAlwaysUsageDescription</key>
