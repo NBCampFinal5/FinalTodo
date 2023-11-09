@@ -307,7 +307,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
         
-        cell.contentView.layer.borderWidth = 0.4 // 테두리 굵기 넣어줘야함
+        cell.contentView.layer.borderWidth = 0.8 // 테두리 굵기 여기서 넣어줘야함
         cell.contentView.backgroundColor = .systemBackground
         cell.contentView.layer.borderColor = UIColor.label.cgColor
         cell.categoryLabel.textColor = .label
