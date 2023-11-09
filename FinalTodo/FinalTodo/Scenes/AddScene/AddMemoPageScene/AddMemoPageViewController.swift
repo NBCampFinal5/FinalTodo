@@ -191,7 +191,7 @@ extension AddMemoPageViewController: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
-            textView.textColor = .black
+            textView.textColor = .label
         }
         return true
     }
