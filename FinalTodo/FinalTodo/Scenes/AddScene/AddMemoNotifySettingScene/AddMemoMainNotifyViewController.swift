@@ -284,7 +284,9 @@ extension AddMemoMainNotifyViewController: DateSettingDelegate {
     }
 
     func didResetDateSetting() {
-        // 날짜 설정 초기화 로직 아직
+        // 날짜 설정 초기화 로직
+        settingOptionData[0][0].title = "날짜" // 셀을 "날짜"로 재설정
+        tableView.reloadData()
     }
 }
 
@@ -294,7 +296,9 @@ extension AddMemoMainNotifyViewController: NotifySettingDelegate {
     }
 
     func didResetNotifySetting() {
-        //
+        // 시간 설정 초기화 로직
+        settingOptionData[0][1].title = "시간" // 셀을 "시간"으로 재설정
+        tableView.reloadData()
     }
 
     func didCompleteTimeSetting(time: Date) {
@@ -304,6 +308,12 @@ extension AddMemoMainNotifyViewController: NotifySettingDelegate {
         let timeString = dateFormatter.string(from: time)
         // settingOptionData 배열의 시간 셀을 업데이트
         settingOptionData[0][1].title = "\(timeString)"
+        tableView.reloadData()
+    }
+
+    func didResetTimeSetting() {
+        // 시간 설정 초기화 로직
+        settingOptionData[0][1].title = "시간" // 셀을 "시간"으로 재설정
         tableView.reloadData()
     }
 }

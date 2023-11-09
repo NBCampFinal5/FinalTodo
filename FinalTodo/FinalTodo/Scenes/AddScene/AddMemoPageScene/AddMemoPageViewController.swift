@@ -366,6 +366,10 @@ extension AddMemoPageViewController: LocationSettingDelegate {
 }
 
 extension AddMemoPageViewController: NotifySettingDelegate {
+    func didResetTimeSetting() {
+        //
+    }
+    
     func didCompleteTimeSetting(time: Date) {
         //
     }
