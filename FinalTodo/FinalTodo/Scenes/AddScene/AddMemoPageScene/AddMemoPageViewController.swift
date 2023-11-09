@@ -11,6 +11,7 @@ class AddMemoPageViewController: ModalPossibleGestureController {
     let topView = ModalTopView(title: "메모 추가하기")
     let memoView = MemoView()
     let viewModel = AddMemoPageViewModel()
+    var onDismiss: () -> Void = {}
     
     lazy var savebutton: UIButton = {
         let button = UIButton(type: .system)
@@ -58,6 +59,10 @@ extension AddMemoPageViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         setUp()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        onDismiss()
     }
 }
 

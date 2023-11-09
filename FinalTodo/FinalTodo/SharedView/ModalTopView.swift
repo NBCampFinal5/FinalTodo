@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 class ModalTopView: UIView {
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .title2)
         return label
