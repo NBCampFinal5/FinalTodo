@@ -220,15 +220,28 @@ extension SignInPageViewController {
 
     func isLoginAble(state: Bool) {
         UIView.animate(withDuration: 0.3) {
-            if state {
-                self.loginButton.changeTitleColor(color: .white)
-                self.loginButton.changeButtonColor(color: .lightGray)
-                self.loginButton.setButtonEnabled(true)
+            if UITraitCollection.current.userInterfaceStyle == .light {
+                if state {
+                    self.loginButton.changeTitleColor(color: .white)
+                    self.loginButton.changeButtonColor(color: .black)
+                    self.loginButton.setButtonEnabled(true)
+                } else {
+                    self.loginButton.changeTitleColor(color: .white)
+                    self.loginButton.changeButtonColor(color: .systemGray3)
+                    self.loginButton.setButtonEnabled(false)
+                }
             } else {
-                self.loginButton.changeTitleColor(color: .white)
-                self.loginButton.changeButtonColor(color: .systemGray3)
-                self.loginButton.setButtonEnabled(false)
+                if state {
+                    self.loginButton.changeTitleColor(color: .black)
+                    self.loginButton.changeButtonColor(color: .white)
+                    self.loginButton.setButtonEnabled(true)
+                } else {
+                    self.loginButton.changeTitleColor(color: .white)
+                    self.loginButton.changeButtonColor(color: .systemGray3)
+                    self.loginButton.setButtonEnabled(false)
+                }
             }
+
         }
     }
 

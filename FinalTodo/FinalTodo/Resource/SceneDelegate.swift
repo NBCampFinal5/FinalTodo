@@ -27,6 +27,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneDidBecomeActive(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
+        let coredataMnager = CoreDataManager.shared
+        UIColor.myPointColor = UIColor(hex: coredataMnager.getUser().themeColor)
+        guard let rootVC = window?.rootViewController else { return }
+        window?.rootViewController = rootVC
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
@@ -36,7 +40,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func sceneWillEnterForeground(_ scene: UIScene) {
         print("[SceneDelegate]:", #function)
-        
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
