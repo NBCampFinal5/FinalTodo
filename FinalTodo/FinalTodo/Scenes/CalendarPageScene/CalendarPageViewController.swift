@@ -120,7 +120,19 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
 //            return "오늘"
 //        }
 
-        if !manager.getMemos().filter({ $0.date.prefix(10) == calendarView.dateFormatter.string(from: date) }).isEmpty {
+        // 해당 날짜 알림 설정 메모 배열
+        var notifyMemos = manager.getMemos().filter {
+            if let notifyDate = $0.timeNotifySetting {
+                if String(notifyDate).prefix(10) == calendarView.dateFormatter.string(from: date) {
+                    return true
+                }
+                return false
+            }
+            return false
+        }
+
+        // 해당 날짜 알림 설정 메모가 있다면 -> "●"
+        if !notifyMemos.isEmpty {
             return "●"
         }
 
