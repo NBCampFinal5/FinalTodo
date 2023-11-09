@@ -77,7 +77,7 @@ private extension MemoViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
             make.left.right.bottom.equalToSuperview()
         }
-        
+        memoView.contentTextView.textColor = .label
         memoView.contentTextView.delegate = self
         memoView.optionCollectionView.delegate = self
         memoView.optionCollectionView.dataSource = self
@@ -261,7 +261,7 @@ extension MemoViewController: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if textView.text == "메모를 입력해 주세요." {
             textView.text = ""
-            textView.textColor = .black
+            textView.textColor = .label
         }
         return true
     }

@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 import UserNotifications
 
-class DateSettingPageViewController: UIViewController {
+class DateSettingPageViewController: ModalPossibleGestureController {
     // 날짜 설정이 완료될 때 알림을 받기 위한 delegate
     weak var delegate: DateSettingDelegate?
     // 이전에 선택된 날짜 (있는 경우)를 저장하기 위한 변수
@@ -14,7 +14,7 @@ class DateSettingPageViewController: UIViewController {
     init(viewModel: AddMemoPageViewModel, initialDate: Date? = nil) {
         self.viewModel = viewModel
         self.initialDate = initialDate
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     @available(*, unavailable)

@@ -8,7 +8,7 @@
 import MapKit
 import UIKit
 
-class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
+class LocationSettingPageViewController: ModalPossibleGestureController, UISearchBarDelegate {
     
     weak var delegate: LocationSettingDelegate?
     private let topView = ModalTopView(title: "알림 설정")
@@ -25,7 +25,7 @@ class LocationSettingPageViewController: UIViewController, UISearchBarDelegate {
     
     init(viewModel: AddMemoPageViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

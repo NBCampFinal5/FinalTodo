@@ -69,8 +69,12 @@ extension UIColor {
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat = 1.0) {
         if hex == "error" {
+            if UITraitCollection.current.userInterfaceStyle == .light{
             self.init(red: 0, green: 0, blue: 0, alpha: 1)
         } else {
+            self.init(red: 255, green: 255, blue: 255, alpha: alpha)
+        }
+    } else {
             var hexFormatted: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
 
             if hexFormatted.hasPrefix("#") {

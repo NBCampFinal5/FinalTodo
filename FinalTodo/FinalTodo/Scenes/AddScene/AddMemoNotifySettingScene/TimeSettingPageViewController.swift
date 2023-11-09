@@ -3,7 +3,7 @@ import SnapKit
 import UIKit
 import UserNotifications
 
-class TimeSettingPageViewController: UIViewController {
+class TimeSettingPageViewController: ModalPossibleGestureController {
     weak var delegate: NotifySettingDelegate?
     var initialTime: Date? // 초기 설정된 시간 또는 사용자가 마지막으로 설정한 시간을 저장하기 위한 변수
 
@@ -23,7 +23,7 @@ class TimeSettingPageViewController: UIViewController {
         self.viewModel = viewModel
         self.initialTime = initialTime ?? viewModel.selectedTime
 
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     @available(*, unavailable)

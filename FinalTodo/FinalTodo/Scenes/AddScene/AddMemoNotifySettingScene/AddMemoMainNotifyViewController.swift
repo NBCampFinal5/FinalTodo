@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class AddMemoMainNotifyViewController: UIViewController {
+class AddMemoMainNotifyViewController: ModalPossibleGestureController {
     weak var delegate: AddNotifyDelegate?
     let viewModel: AddMemoPageViewModel
     let topView = ModalTopView(title: "알림 설정")
@@ -52,7 +52,7 @@ class AddMemoMainNotifyViewController: UIViewController {
 
     init(viewModel: AddMemoPageViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
 
     @available(*, unavailable)

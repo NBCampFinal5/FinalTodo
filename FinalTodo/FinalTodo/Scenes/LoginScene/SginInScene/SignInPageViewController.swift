@@ -108,6 +108,8 @@ extension SignInPageViewController {
         bind()
         print("@@, \(CoreDataManager.shared.getUser().themeColor)")
     }
+    
+
 }
 
 private extension SignInPageViewController {
@@ -220,11 +222,11 @@ extension SignInPageViewController {
         UIView.animate(withDuration: 0.3) {
             if state {
                 self.loginButton.changeTitleColor(color: .white)
-                self.loginButton.changeButtonColor(color: .black)
+                self.loginButton.changeButtonColor(color: .lightGray)
                 self.loginButton.setButtonEnabled(true)
             } else {
-                self.loginButton.changeTitleColor(color: .label)
-                self.loginButton.changeButtonColor(color: .systemGray4)
+                self.loginButton.changeTitleColor(color: .white)
+                self.loginButton.changeButtonColor(color: .systemGray3)
                 self.loginButton.setButtonEnabled(false)
             }
         }

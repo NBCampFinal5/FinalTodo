@@ -24,6 +24,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .secondarySystemBackground
         setupUI()
         setupNavigationBar()
         bind()
@@ -39,8 +40,9 @@ class SearchViewController: UIViewController {
     // MARK: - UI Setup
 
     private func setupUI() {
-        view.backgroundColor = .white
 
+        view.backgroundColor = .secondarySystemGroupedBackground
+        
         setupTableView()
         setupSearchBar()
     }
@@ -142,6 +144,6 @@ extension MemoCell {
         titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)" : memo.content
         dateLabel.text = memo.date
         // folderNameLabel.text = memo.folderId
-//        folderColorView.backgroundColor = memo.co
+        //folderColorView.backgroundColor = .secondarySystemBackground
     }
 }
