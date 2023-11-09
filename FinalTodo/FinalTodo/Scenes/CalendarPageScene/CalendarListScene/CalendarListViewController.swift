@@ -81,15 +81,8 @@ private extension CalendarListViewController {
 
     func fetchMemoList(date: String) {
         // 해당 날짜 알림 설정 메모 배열
-        memos = manager.getMemos().filter {
-            if let notifyDate = $0.timeNotifySetting {
-                if String(notifyDate).prefix(10) == date {
-                    return true
-                }
-                return false
-            }
-            return false
-        }
+        let safeData = manager.getMemos().filter({$0.timeNotifySetting != nil})
+        memos = safeData.filter({$0.timeNotifySetting!.prefix(10) == date})
     }
 
     @objc func didTapBackButton() {
@@ -114,9 +107,19 @@ extension CalendarListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedMemo = memos[indexPath.row]
-        let editMemoVC = MemoViewController()
+        let editMemoVC = AddMemoPageViewController()
+        editMemoVC.onDismiss = { [weak self] in
+            guard let self = self else {return}
+            fetchMemoList(date: date)
+            self.tableView.reloadData()
+        }
+        editMemoVC.topView.titleLabel.text = ""
+        editMemoVC.currentMemoId = selectedMemo.id
+        editMemoVC.viewModel.selectedTime = Date().startOfDay
         editMemoVC.loadMemoData(memo: selectedMemo)
-        navigationController?.pushViewController(editMemoVC, animated: true)
+        editMemoVC.transitioningDelegate = self
+        editMemoVC.modalPresentationStyle = .custom
+        self.present(editMemoVC, animated: true)
     }
 }
 
@@ -137,5 +140,11 @@ extension CalendarListViewController: UITableViewDataSource {
         cell.backgroundColor = .systemBackground
 
         return cell
+    }
+}
+
+extension CalendarListViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }

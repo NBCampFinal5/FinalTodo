@@ -13,11 +13,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         print("[SceneDelegate]:", #function)
+        let loginManager = LoginManager()
+        let userDefaultManager = UserDefaultsManager()
         let signInVC = UINavigationController(rootViewController: SignInPageViewController())
-        // let tabBar = TabBarController()
+        let tabBarVC = TabBarController()
         window = UIWindow(windowScene: windowScene)
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = signInVC // tabBar
+        
+        if loginManager.isLogin() {
+            if userDefaultManager.getIsAutoLogin() {
+                if userDefaultManager.getLockIsOn() {
+                    window?.rootViewController = LockScreenViewController(rootViewController: tabBarVC)
+                } else {
+                    window?.rootViewController = tabBarVC
+                }
+            } else {
+                window?.rootViewController = signInVC
+            }
+        } else {
+            window?.rootViewController = signInVC
+        }
         window?.makeKeyAndVisible()
     }
     
