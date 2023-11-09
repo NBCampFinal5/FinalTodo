@@ -1,7 +1,7 @@
 import SnapKit
 import UIKit
 
-class AddMemoPageViewController: UIViewController {
+class AddMemoPageViewController: ModalPossibleGestureController {
     // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
     weak var delegate: AddMemoDelegate?
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
@@ -100,10 +100,6 @@ private extension AddMemoPageViewController {
 extension AddMemoPageViewController {
     @objc func didTappedBackButton() {
         dismiss(animated: true)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
     
     @objc func didTapSaveButton() {

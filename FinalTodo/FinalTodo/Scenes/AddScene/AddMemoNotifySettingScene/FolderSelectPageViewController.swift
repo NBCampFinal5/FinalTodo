@@ -6,7 +6,7 @@ protocol FolderSelectDelegate: AnyObject {
     func didSelectFolder(folderId: String)
 }
 
-class FolderSelectPageViewController: UIViewController {
+class FolderSelectPageViewController: ModalPossibleGestureController {
     weak var delegate: FolderSelectDelegate?
     let topView = ModalTopView(title: "폴더 선택")
     let tableView = UITableView() // 폴더 목록을 보여줄 테이블뷰
@@ -17,7 +17,7 @@ class FolderSelectPageViewController: UIViewController {
     
     init(viewModel: AddMemoPageViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init()
     }
     
     required init?(coder: NSCoder) {

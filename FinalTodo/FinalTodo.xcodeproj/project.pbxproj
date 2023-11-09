@@ -46,6 +46,7 @@
 		08487F952AE558BA009AE6CB /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */; };
 		084EA3042AEA7FFB003031C0 /* MainPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084EA3032AEA7FFB003031C0 /* MainPageViewModel.swift */; };
 		085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085A52BD2ADEADD20041918D /* LoginManager.swift */; };
+		086D54A72AFBB7470011BC5E /* ModalPossibleGestureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D54A62AFBB7470011BC5E /* ModalPossibleGestureController.swift */; };
 		0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */; };
 		0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */; };
 		0898E1472AF62CF300300FFB /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898E1462AF62CF300300FFB /* CircularProgressView.swift */; };
@@ -173,6 +174,7 @@
 		08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		084EA3032AEA7FFB003031C0 /* MainPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewModel.swift; sourceTree = "<group>"; };
 		085A52BD2ADEADD20041918D /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		086D54A62AFBB7470011BC5E /* ModalPossibleGestureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPossibleGestureController.swift; sourceTree = "<group>"; };
 		0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewModel.swift; sourceTree = "<group>"; };
 		0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenPasswordCollectionViewCell.swift; sourceTree = "<group>"; };
 		0898E1462AF62CF300300FFB /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				08487F942AE558BA009AE6CB /* UserDefaultsManager.swift */,
 				083976012AE659650042517E /* LockController.swift */,
 				6988279A2AF51F1600CA3E08 /* Print.swift */,
+				086D54A62AFBB7470011BC5E /* ModalPossibleGestureController.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				301B39E22AE93B9E00B19313 /* UserModel+CoreDataClass.swift in Sources */,
 				30445E942ADF0958000D26A4 /* CoreDataManager.swift in Sources */,
 				30F521A72AF0867F00DA1DD8 /* CalendarListViewController.swift in Sources */,
+				086D54A72AFBB7470011BC5E /* ModalPossibleGestureController.swift in Sources */,
 				083976042AE661C40042517E /* LockPasswordSettingViewModel.swift in Sources */,
 				085A52BE2ADEADD20041918D /* LoginManager.swift in Sources */,
 				037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */,
