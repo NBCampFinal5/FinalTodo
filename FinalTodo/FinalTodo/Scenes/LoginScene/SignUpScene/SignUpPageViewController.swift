@@ -10,14 +10,12 @@ import UIKit
 
 final class SignUpPageViewController: UIViewController {
     // MARK: - Property
-
     private let viewModel = SignUpPageViewModel()
     private let signUpPageView = SignUpPageView()
 }
 
 extension SignUpPageViewController {
     // MARK: - LifeCycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -27,12 +25,11 @@ extension SignUpPageViewController {
 
 private extension SignUpPageViewController {
     // MARK: - SetUp
-    
     func setUp() {
         view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.tintColor = .label
         setUpSignUpPageView()
         setUpDelegate()
-        setupNavigationBar()
         setUpKeyBoardNotify()
     }
     
@@ -52,10 +49,6 @@ private extension SignUpPageViewController {
         signUpPageView.passwordTextField.delegate = self
         signUpPageView.checkPasswordTextField.delegate = self
     }
-
-    func setupNavigationBar() {
-        self.navigationController?.navigationBar.tintColor = .label
-    }
     
     func setUpKeyBoardNotify() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -66,95 +59,140 @@ private extension SignUpPageViewController {
 
 private extension SignUpPageViewController {
     // MARK: - Bind
+    
     func bind() {
+        bindEmail()
+        bindNickName()
+        bindPassword()
+        bindCheckPassword()
+        bindIsSignUpAble()
+        bindIsPrivacyAgree()
+    }
+    
+    func bindEmail() {
+        viewModel.emailState.bind { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+            case .empty:
+                signUpPageView.emailTextField.infoCommandLabel.text = ""
+            case .alreadyInUse:
+                signUpPageView.emailTextField.infoCommandLabel.text = "이미 사용중인 이메일 입니다."
+                signUpPageView.emailTextField.infoCommandLabel.textColor = .systemRed
+            case .available:
+                signUpPageView.emailTextField.infoCommandLabel.text = "사용가능한 이메일 입니다."
+                signUpPageView.emailTextField.infoCommandLabel.textColor = .systemBlue
+            case .unavailableFormat:
+                signUpPageView.emailTextField.infoCommandLabel.text = "이메일 주소를 정확히 입력해주세요."
+                signUpPageView.emailTextField.infoCommandLabel.textColor = .systemRed
+            case .checking:
+                signUpPageView.emailTextField.infoCommandLabel.text = "사용 가능여부 조회중"
+                signUpPageView.emailTextField.infoCommandLabel.textColor = .systemGray
+            }
+            viewModel.isPossibleSingUp()
+        }
+        
         viewModel.email.bind { [weak self] email in
             guard let self = self else { return }
-            if email == "" {
-                signUpPageView.emailTextField.infoCommandLabel.text = ""
-            } else {
-                if isValidEmail(email: email) {
-                    signUpPageView.emailTextField.infoCommandLabel.text = "사용 가능여부 조회중"
-                    signUpPageView.emailTextField.infoCommandLabel.textColor = .systemGray
-                    viewModel.loginManager.isAvailableEmail(email: email) { result in
-                        if result {
-                            self.signUpPageView.emailTextField.infoCommandLabel.text = "사용가능한 이메일 입니다."
-                            self.signUpPageView.emailTextField.infoCommandLabel.textColor = .systemBlue
-                        } else {
-                            self.signUpPageView.emailTextField.infoCommandLabel.text = "이미 사용중인 이메일 입니다."
-                            self.signUpPageView.emailTextField.infoCommandLabel.textColor = .systemRed
-                        }
-                        self.isPossibleSingUp()
-                    }
-                    
-                } else {
-                    signUpPageView.emailTextField.infoCommandLabel.text = "이메일 주소를 정확히 입력해주세요."
-                    signUpPageView.emailTextField.infoCommandLabel.textColor = .systemRed
-                }
+            viewModel.isValidEmail(email: email)
+        }
+    }
+    
+    func bindNickName() {
+        viewModel.nickNameState.bind { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+            case .empty:
+                signUpPageView.nicknameTextField.infoCommandLabel.text = ""
+            case .length:
+                signUpPageView.nicknameTextField.infoCommandLabel.text = "2글자에서 8글자 사이의 닉네임을 입력해주세요."
+                signUpPageView.nicknameTextField.infoCommandLabel.textColor = .systemRed
+            case .available:
+                signUpPageView.nicknameTextField.infoCommandLabel.text = "사용가능한 닉네임 입니다."
+                signUpPageView.nicknameTextField.infoCommandLabel.textColor = .systemBlue
             }
-            isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
         viewModel.nickName.bind { [weak self] nickName in
             guard let self = self else { return }
-            if nickName == "" {
-                signUpPageView.nicknameTextField.infoCommandLabel.text = ""
-            } else {
-                if isValidNickName(nickName: nickName) {
-                    signUpPageView.nicknameTextField.infoCommandLabel.text = "사용가능한 닉네임 입니다."
-                    signUpPageView.nicknameTextField.infoCommandLabel.textColor = .systemBlue
-                } else {
-                    signUpPageView.nicknameTextField.infoCommandLabel.text = "2글자에서 8글자 사이의 닉네임을 입력해주세요."
-                    signUpPageView.nicknameTextField.infoCommandLabel.textColor = .systemRed
-                }
+            viewModel.isValidNickName(nickName: nickName)
+        }
+    }
+    
+    func bindPassword() {
+        viewModel.passwordState.bind { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+            case .empty:
+                signUpPageView.passwordTextField.infoCommandLabel.text = ""
+            case .length:
+                signUpPageView.passwordTextField.infoCommandLabel.text = "8글자에서 20자 사이의 비밀번호를 입력해주세요."
+                signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemRed
+            case .combination:
+                signUpPageView.passwordTextField.infoCommandLabel.text = "비밀번호는 숫자, 영문, 특수문자를 조합하여야 합니다."
+                signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemRed
+            case .special:
+                signUpPageView.passwordTextField.infoCommandLabel.text = "비밀번호는 특수문자를 포함되어야 합니다."
+                signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemRed
+            case .available:
+                signUpPageView.passwordTextField.infoCommandLabel.text = "사용가능한 비밀번호 입니다."
+                signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemBlue
             }
-            isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
         viewModel.password.bind { [weak self] password in
             guard let self = self else { return }
-            if password == "" {
-                signUpPageView.passwordTextField.infoCommandLabel.text = ""
-            } else {
-                switch isValidPassword(password: password) {
-                case .length:
-                    signUpPageView.passwordTextField.infoCommandLabel.text = "8글자에서 20자 사이의 비밀번호를 입력해주세요."
-                    signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemRed
-                case .combination:
-                    signUpPageView.passwordTextField.infoCommandLabel.text = "비밀번호는 숫자, 영문, 특수문자를 조합하여야 합니다."
-                    signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemRed
-                case .special:
-                    signUpPageView.passwordTextField.infoCommandLabel.text = "비밀번호는 특수문자를 포함되어야 합니다."
-                    signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemRed
-                case .right:
-                    signUpPageView.passwordTextField.infoCommandLabel.text = "사용가능한 비밀번호 입니다."
-                    signUpPageView.passwordTextField.infoCommandLabel.textColor = .systemBlue
-                }
+            viewModel.isValidPassword(password: password)
+            guard let checkPassword = signUpPageView.checkPasswordTextField.inputTextField.text else { return }
+            viewModel.isCheckPassword(password: checkPassword)
+        }
+    }
+    
+    func bindCheckPassword() {
+        viewModel.checkPasswordState.bind { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+            case .empty:
+                signUpPageView.checkPasswordTextField.infoCommandLabel.text = ""
+            case .available:
+                signUpPageView.checkPasswordTextField.infoCommandLabel.text = "비밀번호가 일치합니다."
+                signUpPageView.checkPasswordTextField.infoCommandLabel.textColor = .systemBlue
+            case .unconformity:
+                signUpPageView.checkPasswordTextField.infoCommandLabel.text = "비밀번호가 일치하지 않습니다."
+                signUpPageView.checkPasswordTextField.infoCommandLabel.textColor = .systemRed
             }
-            viewModel.checkPassword.value = viewModel.checkPassword.value
-            isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
         viewModel.checkPassword.bind { [weak self] password in
             guard let self = self else { return }
-            if password == "" {
-                signUpPageView.checkPasswordTextField.infoCommandLabel.text = ""
+            viewModel.isCheckPassword(password: password)
+        }
+    }
+    
+    func bindIsSignUpAble() {
+        viewModel.isSignUpAble.bind { [weak self] state in
+            guard let self = self else { return }
+            isSignUpAble(state: state)
+        }
+    }
+    
+    func bindIsPrivacyAgree() {
+        viewModel.isPrivacyAgree.bind { [weak self] state in
+            guard let self = self else { return }
+            if state {
+                signUpPageView.privacyPolicyButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             } else {
-                if password == viewModel.password.value {
-                    signUpPageView.checkPasswordTextField.infoCommandLabel.text = "비밀번호가 일치합니다."
-                    signUpPageView.checkPasswordTextField.infoCommandLabel.textColor = .systemBlue
-                } else {
-                    signUpPageView.checkPasswordTextField.infoCommandLabel.text = "비밀번호가 일치하지 않습니다."
-                    signUpPageView.checkPasswordTextField.infoCommandLabel.textColor = .systemRed
-                }
+                signUpPageView.privacyPolicyButton.setImage(UIImage(systemName: "square"), for: .normal)
             }
-            isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
     }
 }
 
 extension SignUpPageViewController {
     // MARK: - Method
-    
     @objc func didTapLinkButton() {
         let privacyPolicyVC = PrivacyPolicyViewController()
         navigationController?.pushViewController(privacyPolicyVC, animated: true)
@@ -162,15 +200,7 @@ extension SignUpPageViewController {
     }
     
     @objc func didTapPrivacyButton(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        if sender.isSelected {
-            let checkboxImage = UIImage(systemName: "checkmark.square")
-            sender.setImage(checkboxImage, for: .normal)
-        } else {
-            let checkboxImage = UIImage(systemName: "square")
-            sender.setImage(checkboxImage, for: .normal)
-        }
-        isPossibleSingUp()
+        viewModel.isPrivacyAgree.value.toggle()
     }
     
     @objc func didTapRegisterButton() {
@@ -190,50 +220,17 @@ extension SignUpPageViewController {
             self.present(alert, animated: true)
         }
     }
-    
-    enum PasswordResult {
-        case length
-        case combination
-        case special
-        case right
-    }
-    
-    // email 유효성 검사
-    func isValidEmail(email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: email)
-    }
-    
-    // nickName 유효성 검사
-    func isValidNickName(nickName: String) -> Bool {
-        return (2 ... 8).contains(nickName.count)
-    }
-    
-    func isValidPassword(password: String) -> PasswordResult {
-        let lengthreg = ".{8,20}"
-        let lengthtesting = NSPredicate(format: "SELF MATCHES %@", lengthreg)
-        if lengthtesting.evaluate(with: password) == false {
-            return .length
-        }
-        let combinationreg = "^(?=.*[A-Za-z])(?=.*[0-9]).{8,20}"
-        let combinationtesting = NSPredicate(format: "SELF MATCHES %@", combinationreg)
-        if combinationtesting.evaluate(with: password) == false {
-            return .combination
-        }
-        let specialreg = "^(?=.*[!@#$%^&*()_+=-]).{8,20}"
-        let specialtesting = NSPredicate(format: "SELF MATCHES %@", specialreg)
-        if specialtesting.evaluate(with: password) == false {
-            return .special
-        }
-        return .right
-    }
-    
+
     func isSignUpAble(state: Bool) {
         UIView.animate(withDuration: 0.3) {
             if state {
-                self.signUpPageView.registerButton.changeTitleColor(color: .white)
-                self.signUpPageView.registerButton.changeButtonColor(color: .black)
+                if UITraitCollection.current.userInterfaceStyle == .light {
+                    self.signUpPageView.registerButton.changeButtonColor(color: .black)
+                    self.signUpPageView.registerButton.changeTitleColor(color: .white)
+                } else {
+                    self.signUpPageView.registerButton.changeButtonColor(color: .white)
+                    self.signUpPageView.registerButton.changeTitleColor(color: .black)
+                }
                 self.signUpPageView.registerButton.setButtonEnabled(true)
             } else {
                 self.signUpPageView.registerButton.changeTitleColor(color: .label)
@@ -243,26 +240,6 @@ extension SignUpPageViewController {
         }
     }
     
-    func isPossibleSingUp() {
-        guard let emailText = signUpPageView.emailTextField.infoCommandLabel.text,
-              let nickNameText = signUpPageView.nicknameTextField.infoCommandLabel.text,
-              let passwordText = signUpPageView.passwordTextField.infoCommandLabel.text,
-              let checkPasswordText = signUpPageView.checkPasswordTextField.infoCommandLabel.text else { return }
-        let isPrivacyPolicySelected = signUpPageView.privacyPolicyButton.isSelected
-        
-        if emailText == "사용가능한 이메일 입니다.",
-           nickNameText == "사용가능한 닉네임 입니다.",
-           passwordText == "사용가능한 비밀번호 입니다.",
-           checkPasswordText == "비밀번호가 일치합니다.",
-           isPrivacyPolicySelected
-        {
-            isSignUpAble(state: true)
-        } else {
-            isSignUpAble(state: false)
-        }
-    }
-    
-    // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
