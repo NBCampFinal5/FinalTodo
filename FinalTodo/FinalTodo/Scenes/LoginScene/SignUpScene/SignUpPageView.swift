@@ -69,6 +69,9 @@ private extension SignUpPageView {
         setUpPrivacyPolicyButton()
         setUpLinkButton()
         setUpRegisterButton()
+        registerButton.changeTitleColor(color: .label)
+        registerButton.changeButtonColor(color: .secondarySystemBackground)
+        registerButton.setButtonEnabled(false)
     }
     
     func setUpRegisterLabel() {
@@ -132,7 +135,6 @@ private extension SignUpPageView {
     }
     
     func setUpRegisterButton() {
-        // 버튼
         self.addSubview(registerButton)
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(checkPasswordTextField.snp.bottom).offset(Constant.screenHeight * 0.07)
