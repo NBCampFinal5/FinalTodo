@@ -33,6 +33,7 @@ private extension SignUpPageViewController {
         setUpSignUpPageView()
         setUpDelegate()
         setupNavigationBar()
+        setUpKeyBoardNotify()
     }
     
     func setUpSignUpPageView() {
@@ -40,8 +41,9 @@ private extension SignUpPageViewController {
         signUpPageView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        signUpPageView.linkButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
-        signUpPageView.privacyPolicyButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+        signUpPageView.linkButton.addTarget(self, action: #selector(didTapLinkButton), for: .touchUpInside)
+        signUpPageView.privacyPolicyButton.addTarget(self, action: #selector(didTapPrivacyButton(_:)), for: .touchUpInside)
+        signUpPageView.registerButton.anyButton.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
     }
     
     func setUpDelegate() {
@@ -153,27 +155,40 @@ private extension SignUpPageViewController {
 extension SignUpPageViewController {
     // MARK: - Method
     
-    @objc func didTapButton(_ sender: UIButton) {
-        
-        switch sender {
-        case signUpPageView.linkButton:
-            let privacyPolicyVC = PrivacyPolicyViewController()
-            navigationController?.pushViewController(privacyPolicyVC, animated: true)
-            tabBarController?.tabBar.isHidden = true
-        case signUpPageView.privacyPolicyButton:
-            sender.isSelected.toggle()
-            if sender.isSelected {
-                let checkboxImage = UIImage(systemName: "checkmark.square")
-                sender.setImage(checkboxImage, for: .normal)
-            } else {
-                let checkboxImage = UIImage(systemName: "square")
-                sender.setImage(checkboxImage, for: .normal)
-            }
-            isPossibleSingUp()
-        default:
-            print("[SignUpPageViewController]:\(#function):This button is not registered.")
+    @objc func didTapLinkButton() {
+        let privacyPolicyVC = PrivacyPolicyViewController()
+        navigationController?.pushViewController(privacyPolicyVC, animated: true)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    @objc func didTapPrivacyButton(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            let checkboxImage = UIImage(systemName: "checkmark.square")
+            sender.setImage(checkboxImage, for: .normal)
+        } else {
+            let checkboxImage = UIImage(systemName: "square")
+            sender.setImage(checkboxImage, for: .normal)
         }
-        
+        isPossibleSingUp()
+    }
+    
+    @objc func didTapRegisterButton() {
+        viewModel.loginManager.trySignUp(email: viewModel.email.value, password: viewModel.password.value, nickName: viewModel.nickName.value
+        ) { [weak self] result in
+            guard let self = self else { return }
+            let alert: UIAlertController
+            if result.isSuccess {
+                alert = UIAlertController(title: "회원가입 완료", message: "확인을 누르면 로그인 화면으로 돌아 갑니다.", preferredStyle: .alert)
+            } else {
+                alert = UIAlertController(title: "회원가입 실패", message: result.errorMessage, preferredStyle: .alert)
+            }
+            let yes = UIAlertAction(title: "확인", style: .default) { _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+            alert.addAction(yes)
+            self.present(alert, animated: true)
+        }
     }
     
     enum PasswordResult {
@@ -250,31 +265,6 @@ extension SignUpPageViewController {
     // 빈곳 누르면 키보드 내려가는 함수
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
-    }
-    
-    // 가입버튼 누르면 다음화면으로 넘어가는 것 구현
-    func didTapButton(button: UIButton) {
-        viewModel.loginManager.trySignUp(email: viewModel.email.value, password: viewModel.password.value, nickName: viewModel.nickName.value) { [weak self] result in
-            guard let self = self else { return }
-            if result.isSuccess {
-                print("Create User")
-                let alert = UIAlertController(title: "회원가입 완료", message: "확인을 누르면 로그인 화면으로 돌아 갑니다.", preferredStyle: .alert)
-                let yes = UIAlertAction(title: "확인", style: .default) { _ in
-                    self.navigationController?.popViewController(animated: true)
-                }
-                alert.addAction(yes)
-                self.present(alert, animated: true)
-            } else {
-                let alert = UIAlertController(title: "회원가입 실패", message: result.errorMessage, preferredStyle: .alert)
-                let yes = UIAlertAction(title: "확인", style: .default) { _ in
-                    self.navigationController?.popViewController(animated: true)
-                }
-                alert.addAction(yes)
-                self.present(alert, animated: true)
-            }
-        }
-        
-        //        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
