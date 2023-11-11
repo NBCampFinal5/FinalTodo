@@ -103,10 +103,9 @@
 		30445E862ADF0809000D26A4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445E852ADF0809000D26A4 /* User.swift */; };
 		30445E942ADF0958000D26A4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30445E932ADF0958000D26A4 /* CoreDataManager.swift */; };
 		30E798452AD60DEB00903272 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798442AD60DEB00903272 /* SettingCell.swift */; };
-		30E798472AD61E0B00903272 /* SettingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798462AD61E0B00903272 /* SettingOption.swift */; };
 		30E798492AD6362D00903272 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E798482AD6362D00903272 /* Extensions.swift */; };
 		30E7984D2AD7E5A800903272 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */; };
-		30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7987E2ADC074900903272 /* SettingOptionManager.swift */; };
+		30E7987F2ADC074900903272 /* SettingPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7987E2ADC074900903272 /* SettingPageViewModel.swift */; };
 		30F521862AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */; };
 		30F521A72AF0867F00DA1DD8 /* CalendarListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */; };
 		6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */; };
@@ -125,7 +124,7 @@
 		C735C0462AD8E16D00AA7663 /* AddNotifyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */; };
 		C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */; };
 		C73BC4362AE14F8100E0302A /* DateSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */; };
-		C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* DdayPageModel.swift */; };
+		C747DE272ADBBCE90044499E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* Models.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
 		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
 		C761283A2AF9467A00E64B82 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */; };
@@ -200,10 +199,9 @@
 		30445E852ADF0809000D26A4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		30445E932ADF0958000D26A4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		30E798442AD60DEB00903272 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
-		30E798462AD61E0B00903272 /* SettingOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOption.swift; sourceTree = "<group>"; };
 		30E798482AD6362D00903272 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
-		30E7987E2ADC074900903272 /* SettingOptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingOptionManager.swift; sourceTree = "<group>"; };
+		30E7987E2ADC074900903272 /* SettingPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPageViewModel.swift; sourceTree = "<group>"; };
 		30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountPageViewController.swift; sourceTree = "<group>"; };
 		30F521A62AF0867F00DA1DD8 /* CalendarListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarListViewController.swift; sourceTree = "<group>"; };
 		6906BA9C2AD695760088FE6E /* FolderDialogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderDialogViewController.swift; sourceTree = "<group>"; };
@@ -222,7 +220,7 @@
 		C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNotifyPageViewController.swift; sourceTree = "<group>"; };
 		C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
 		C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSettingPageViewController.swift; sourceTree = "<group>"; };
-		C747DE262ADBBCE90044499E /* DdayPageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageModel.swift; sourceTree = "<group>"; };
+		C747DE262ADBBCE90044499E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -459,8 +457,7 @@
 		084412222AD56BB8005F2FA9 /* SettingPageScene */ = {
 			isa = PBXGroup;
 			children = (
-				30E798462AD61E0B00903272 /* SettingOption.swift */,
-				30E7987E2ADC074900903272 /* SettingOptionManager.swift */,
+				30E7987E2ADC074900903272 /* SettingPageViewModel.swift */,
 				084412142AD569CD005F2FA9 /* SettingPageViewController.swift */,
 			);
 			path = SettingPageScene;
@@ -606,7 +603,7 @@
 				301B39DA2AE93B9E00B19313 /* FolderModel+CoreDataClass.swift */,
 				301B39DB2AE93B9E00B19313 /* FolderModel+CoreDataProperties.swift */,
 				30445E852ADF0809000D26A4 /* User.swift */,
-				C747DE262ADBBCE90044499E /* DdayPageModel.swift */,
+				C747DE262ADBBCE90044499E /* Models.swift */,
 				08F8AE7F2AE2897700F79FD0 /* Managers */,
 			);
 			path = Model;
@@ -805,8 +802,7 @@
 				6906BAA32ADD06860088FE6E /* MemoListView.swift in Sources */,
 				083C98622AD8D88E006895D2 /* MemoViewModel.swift in Sources */,
 				30E798452AD60DEB00903272 /* SettingCell.swift in Sources */,
-				C747DE272ADBBCE90044499E /* DdayPageModel.swift in Sources */,
-				30E798472AD61E0B00903272 /* SettingOption.swift in Sources */,
+				C747DE272ADBBCE90044499E /* Models.swift in Sources */,
 				30F521862AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift in Sources */,
 				08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */,
 				C735C05F2AD9466C00AA7663 /* CalendarPageView.swift in Sources */,
@@ -861,7 +857,7 @@
 				083C98672AD8DC08006895D2 /* PresentationController.swift in Sources */,
 				083976062AE6BE6E0042517E /* LockPasswordChangeViewModel.swift in Sources */,
 				082860D12AF50E3500DAC63C /* RewardPageViewModel.swift in Sources */,
-				30E7987F2ADC074900903272 /* SettingOptionManager.swift in Sources */,
+				30E7987F2ADC074900903272 /* SettingPageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

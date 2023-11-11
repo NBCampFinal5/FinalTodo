@@ -8,3 +8,10 @@ struct DdayDateModel {
     let days: [Int] = Array(1...31)
 }
 
+struct SettingOption {
+    let icon: String
+    var title: String
+    let showSwitch: Bool
+    var isOn: Bool
+    var detailText: String? // 선택된 날짜 또는 시간 정보를 저장
+}
