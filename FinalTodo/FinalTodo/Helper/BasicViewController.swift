@@ -11,7 +11,7 @@ import SnapKit
 //제네릭 사용 버전
 class BasicViewController<T,V>: UIViewController {
     
-    var viewModel: T?
+    var viewModel: T!
     
     var customView: V!
     
@@ -31,28 +31,3 @@ extension BasicViewController: ViewInjectable {
         self.customView = viewType
     }
 }
-
-//class BasicViewController: UIViewController {
-//    
-//    var viewModel: AnyObject.Type?
-//    
-//    var customView: AnyObject.Type!
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//    }
-//}
-//
-//extension BasicViewController: ViewModelInjectable {
-//    func injectViewModel(_ viewModelType: AnyObject.Type) {
-//        self.viewModel = viewModel as? ViewModelType
-//        self.viewModel = viewModelType
-//    }
-//}
-//
-//extension BasicViewController: ViewInjectable {
-//    func injectView(_ viewType: AnyObject.Type) {
-//        self.customView = customView as? ViewType
-//        self.customView = viewType
-//    }
-//}

@@ -10,8 +10,6 @@ import UIKit
 
 final class SignUpPageViewController: BasicViewController<SignUpPageViewModel, SignUpPageView> {
     // MARK: - Property
-//    var viewModel: SignUpPageViewModel?
-//    private let signUpPageView = SignUpPageView()
 }
 
 extension SignUpPageViewController {
@@ -70,7 +68,7 @@ private extension SignUpPageViewController {
     }
     
     func bindEmail() {
-        viewModel?.emailState.bind { [weak self] state in
+        viewModel.emailState.bind { [weak self] state in
             guard let self = self else { return }
             switch state {
             case .empty:
@@ -88,17 +86,17 @@ private extension SignUpPageViewController {
                 customView.emailTextField.infoCommandLabel.text = "사용 가능여부 조회중"
                 customView.emailTextField.infoCommandLabel.textColor = .systemGray
             }
-            viewModel?.isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
-        viewModel?.email.bind { [weak self] email in
+        viewModel.email.bind { [weak self] email in
             guard let self = self else { return }
-            viewModel?.isValidEmail(email: email)
+            viewModel.isValidEmail(email: email)
         }
     }
     
     func bindNickName() {
-        viewModel?.nickNameState.bind { [weak self] state in
+        viewModel.nickNameState.bind { [weak self] state in
             guard let self = self else { return }
             switch state {
             case .empty:
@@ -110,17 +108,17 @@ private extension SignUpPageViewController {
                 customView.nicknameTextField.infoCommandLabel.text = "사용가능한 닉네임 입니다."
                 customView.nicknameTextField.infoCommandLabel.textColor = .systemBlue
             }
-            viewModel?.isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
-        viewModel?.nickName.bind { [weak self] nickName in
+        viewModel.nickName.bind { [weak self] nickName in
             guard let self = self else { return }
-            viewModel?.isValidNickName(nickName: nickName)
+            viewModel.isValidNickName(nickName: nickName)
         }
     }
     
     func bindPassword() {
-        viewModel?.passwordState.bind { [weak self] state in
+        viewModel.passwordState.bind { [weak self] state in
             guard let self = self else { return }
             switch state {
             case .empty:
@@ -138,19 +136,19 @@ private extension SignUpPageViewController {
                 customView.passwordTextField.infoCommandLabel.text = "사용가능한 비밀번호 입니다."
                 customView.passwordTextField.infoCommandLabel.textColor = .systemBlue
             }
-            viewModel?.isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
-        viewModel?.password.bind { [weak self] password in
+        viewModel.password.bind { [weak self] password in
             guard let self = self else { return }
-            viewModel?.isValidPassword(password: password)
+            viewModel.isValidPassword(password: password)
             guard let checkPassword = customView.checkPasswordTextField.inputTextField.text else { return }
-            viewModel?.isCheckPassword(password: checkPassword)
+            viewModel.isCheckPassword(password: checkPassword)
         }
     }
     
     func bindCheckPassword() {
-        viewModel?.checkPasswordState.bind { [weak self] state in
+        viewModel.checkPasswordState.bind { [weak self] state in
             guard let self = self else { return }
             switch state {
             case .empty:
@@ -162,31 +160,31 @@ private extension SignUpPageViewController {
                 customView.checkPasswordTextField.infoCommandLabel.text = "비밀번호가 일치하지 않습니다."
                 customView.checkPasswordTextField.infoCommandLabel.textColor = .systemRed
             }
-            viewModel?.isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
         
-        viewModel?.checkPassword.bind { [weak self] password in
+        viewModel.checkPassword.bind { [weak self] password in
             guard let self = self else { return }
-            viewModel?.isCheckPassword(password: password)
+            viewModel.isCheckPassword(password: password)
         }
     }
     
     func bindIsSignUpAble() {
-        viewModel?.isSignUpAble.bind { [weak self] state in
+        viewModel.isSignUpAble.bind { [weak self] state in
             guard let self = self else { return }
             isSignUpAble(state: state)
         }
     }
     
     func bindIsPrivacyAgree() {
-        viewModel?.isPrivacyAgree.bind { [weak self] state in
+        viewModel.isPrivacyAgree.bind { [weak self] state in
             guard let self = self else { return }
             if state {
                 customView.privacyPolicyButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             } else {
                 customView.privacyPolicyButton.setImage(UIImage(systemName: "square"), for: .normal)
             }
-            viewModel?.isPossibleSingUp()
+            viewModel.isPossibleSingUp()
         }
     }
 }
@@ -200,11 +198,10 @@ extension SignUpPageViewController {
     }
     
     @objc func didTapPrivacyButton(_ sender: UIButton) {
-        viewModel?.isPrivacyAgree.value.toggle()
+        viewModel.isPrivacyAgree.value.toggle()
     }
     
     @objc func didTapRegisterButton() {
-        guard let viewModel = viewModel else { return }
         viewModel.loginManager.trySignUp(email: viewModel.email.value, password: viewModel.password.value, nickName: viewModel.nickName.value
         ) { [weak self] result in
             guard let self = self else { return }
@@ -276,25 +273,18 @@ extension SignUpPageViewController {
     }
 }
 
-//extension SignUpPageViewController: ViewModelInjectable {
-//    
-//    func injectViewModel(_ viewModelType: SignUpPageViewModel) {
-//        self.viewModel = viewModelType
-//    }
-//}
-
 extension SignUpPageViewController: CommandLabelDelegate {
     func textFieldEditingChanged(_ textField: UITextField) {
         guard let text = textField.text else { return }
         switch textField {
         case customView.emailTextField.inputTextField:
-            viewModel?.email.value = text
+            viewModel.email.value = text
         case customView.nicknameTextField.inputTextField:
-            viewModel?.nickName.value = text
+            viewModel.nickName.value = text
         case customView.passwordTextField.inputTextField:
-            viewModel?.password.value = text
+            viewModel.password.value = text
         case customView.checkPasswordTextField.inputTextField:
-            viewModel?.checkPassword.value = text
+            viewModel.checkPassword.value = text
         default:
             print("등록되지 않은 텍스트 필드")
         }
