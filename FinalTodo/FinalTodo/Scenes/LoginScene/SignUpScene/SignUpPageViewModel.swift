@@ -37,7 +37,7 @@ import Foundation
 
 class SignUpPageViewModel {
     
-    let loginManager = LoginManager()
+    let loginManager: LoginManager
     
     let email: Observable<String> = Observable("")
     let emailState: Observable<EmailValidationResult> = Observable(.empty)
@@ -54,6 +54,9 @@ class SignUpPageViewModel {
     let isPrivacyAgree: Observable<Bool> = Observable(false)
     let isSignUpAble: Observable<Bool> = Observable(false)
     
+    init(loginManager: LoginManager) {
+        self.loginManager = loginManager
+    }
 }
 
 extension SignUpPageViewModel {
