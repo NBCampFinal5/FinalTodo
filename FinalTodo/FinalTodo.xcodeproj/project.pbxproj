@@ -49,6 +49,8 @@
 		086D54A72AFBB7470011BC5E /* ModalPossibleGestureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086D54A62AFBB7470011BC5E /* ModalPossibleGestureController.swift */; };
 		0872CD902AE0B36300ABE980 /* LockScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */; };
 		0872CD942AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */; };
+		087915462B023D5B0000EECE /* Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087915452B023D5B0000EECE /* Injectable.swift */; };
+		0879154A2B0242040000EECE /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 087915492B0242040000EECE /* BasicViewController.swift */; };
 		0898E1472AF62CF300300FFB /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0898E1462AF62CF300300FFB /* CircularProgressView.swift */; };
 		08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F8892AD8216A0092C6EF /* MemoViewController.swift */; };
 		08A4F88C2AD8218E0092C6EF /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A4F88B2AD8218E0092C6EF /* MemoView.swift */; };
@@ -177,6 +179,8 @@
 		086D54A62AFBB7470011BC5E /* ModalPossibleGestureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPossibleGestureController.swift; sourceTree = "<group>"; };
 		0872CD8F2AE0B36300ABE980 /* LockScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewModel.swift; sourceTree = "<group>"; };
 		0872CD932AE0B46100ABE980 /* LockScreenPasswordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenPasswordCollectionViewCell.swift; sourceTree = "<group>"; };
+		087915452B023D5B0000EECE /* Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Injectable.swift; path = ../../../../../../../Documents/Injectable.swift; sourceTree = "<group>"; };
+		087915492B0242040000EECE /* BasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
 		0898E1462AF62CF300300FFB /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		08A4F8892AD8216A0092C6EF /* MemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoViewController.swift; sourceTree = "<group>"; };
 		08A4F88B2AD8218E0092C6EF /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
@@ -541,6 +545,8 @@
 				083976012AE659650042517E /* LockController.swift */,
 				6988279A2AF51F1600CA3E08 /* Print.swift */,
 				086D54A62AFBB7470011BC5E /* ModalPossibleGestureController.swift */,
+				087915452B023D5B0000EECE /* Injectable.swift */,
+				087915492B0242040000EECE /* BasicViewController.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -771,6 +777,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				301B39E12AE93B9E00B19313 /* FolderModel+CoreDataProperties.swift in Sources */,
+				0879154A2B0242040000EECE /* BasicViewController.swift in Sources */,
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
 				039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */,
 				69EBADC22AE0F29C0009CB21 /* LocationSettingViewController.swift in Sources */,
@@ -794,6 +801,7 @@
 				6906BA9D2AD695760088FE6E /* FolderDialogViewController.swift in Sources */,
 				C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */,
 				C7EFD4152AE6E01C0080F266 /* AddMemoMainNotifyViewController.swift in Sources */,
+				087915462B023D5B0000EECE /* Injectable.swift in Sources */,
 				084411F92AD56870005F2FA9 /* AppDelegate.swift in Sources */,
 				084412152AD569CD005F2FA9 /* SettingPageViewController.swift in Sources */,
 				C735C0442AD8E15A00AA7663 /* NotifyPageViewController.swift in Sources */,

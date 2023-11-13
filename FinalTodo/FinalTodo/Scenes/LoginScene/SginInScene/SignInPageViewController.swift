@@ -283,6 +283,7 @@ extension SignInPageViewController {
     @objc func didTapSignUpbutton() {
         let vc = SignUpPageViewController()
         vc.injectViewModel(SignUpPageViewModel(loginManager: LoginManager()))
+        vc.injectView(SignUpPageView())
         navigationController?.pushViewController(vc, animated: true)
     }
 
