@@ -2,35 +2,23 @@ import FSCalendar
 import SnapKit
 import UIKit
 
-// MARK: - view 선언방식 이유가 필요할 듯
-
 class CalendarPageViewController: UIViewController {
-    let manager = CoreDataManager.shared
-
-    // 선택된 D-day 날짜
-    var selectedDdays: [Date] = []
     var calendarView: CalendarPageView!
-    lazy var timesAry: [String] = []
-    
+    var viewModel = CalendarPageViewModel()
+
     var isModalDismissed: Bool = false {
         didSet {
-            makeTimesAry()
+            viewModel.makeTimesAry()
             self.calendarView.calendar.reloadData()
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        calendarView = CalendarPageView(frame: view.bounds)
-        view.addSubview(calendarView)
-        view.backgroundColor = .secondarySystemBackground
-        calendarView.backgroundColor = .secondarySystemBackground
-        calendarView.calendar.delegate = self
-        calendarView.calendar.dataSource = self
-
-        calendarView.todayButton.addTarget(self, action: #selector(didTapTodayButton), for: .touchUpInside)
-
+        setupCalendarView()
         setupNavigationBar()
+        setCalendarUI()
+        viewModel.makeTimesAry()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,39 +27,36 @@ class CalendarPageViewController: UIViewController {
         setCalendarUI()
         navigationController?.configureBar()
         tabBarController?.configureBar()
-        makeTimesAry()
+        viewModel.makeTimesAry()
+        if viewModel.isModalDismissed {
+            calendarView.calendar.reloadData()
+        }
     }
 
     // 네비게이션 바 설정
     private func setupNavigationBar() {
         navigationItem.title = "캘린더"
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.secondarySystemBackground]
         navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
 
-    // D-day 버튼 터치 시 호출
-    @objc func didTapDdayButton() {
-        let vc = DdayPageViewController()
-        vc.completion = { [weak self] date in
-            self?.selectedDdays.append(date)
-            self?.calendarView.calendar.reloadData()
-        }
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .custom
-        navController.transitioningDelegate = self
+    private func setupCalendarView() {
+        calendarView = CalendarPageView(frame: view.bounds)
+        view.addSubview(calendarView)
+        calendarView.calendar.delegate = self
+        calendarView.calendar.dataSource = self
+        calendarView.todayButton.addTarget(self, action: #selector(didTapTodayButton), for: .touchUpInside)
+    }
 
-        present(navController, animated: true, completion: nil)
+    private func setCalendarUI() {
+        calendarView.calendar.appearance.headerTitleColor = .myPointColor
+        calendarView.calendar.appearance.weekdayTextColor = .label
     }
 
     // 오늘 버튼 터치 시 호출
     @objc func didTapTodayButton() {
         calendarView.calendar.setCurrentPage(Date(), animated: true)
-    }
-    
-    func makeTimesAry() {
-        timesAry = manager.getMemos().compactMap({$0.timeNotifySetting}).map{$0.replacingOccurrences(of: ".", with: "-").prefix(10)}.map{String($0)}
     }
 }
 
@@ -87,22 +72,21 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
             DispatchQueue.main.async {
                 self.calendarView.calendar.deselect(date)
             }
-            
         }
         calendarListVC.modalPresentationStyle = .custom
         calendarListVC.transitioningDelegate = self
         present(calendarListVC, animated: true)
     }
-    
+
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let nowDate = calendarView.dateFormatter.string(from: date)
-        if timesAry.contains(nowDate) {
+        if viewModel.timesAry.contains(nowDate) {
             return 1
         } else {
             return 0
         }
     }
-    
+
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
         return [.myPointColor]
     }
@@ -124,11 +108,6 @@ extension CalendarPageViewController: FSCalendarDataSource, FSCalendarDelegate, 
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         return .label
     }
-
-    func setCalendarUI() {
-        calendarView.calendar.appearance.headerTitleColor = .myPointColor
-        calendarView.calendar.appearance.weekdayTextColor = .label
-    }
 }
 
 extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
@@ -136,3 +115,17 @@ extension CalendarPageViewController: UIViewControllerTransitioningDelegate {
         return PresentationController(presentedViewController: presented, presenting: presenting, size: 0.8)
     }
 }
+
+// D-day 버튼 터치 시 호출
+//    @objc func didTapDdayButton() {
+//        let vc = DdayPageViewController()
+//        vc.completion = { [weak self] date in
+//            self?.selectedDdays.append(date)
+//            self?.calendarView.calendar.reloadData()
+//        }
+//        let navController = UINavigationController(rootViewController: vc)
+//        navController.modalPresentationStyle = .custom
+//        navController.transitioningDelegate = self
+//
+//        present(navController, animated: true, completion: nil)
+//    }

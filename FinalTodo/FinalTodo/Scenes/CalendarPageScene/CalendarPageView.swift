@@ -34,7 +34,7 @@ class CalendarPageView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        setup()
+        setUp()
     }
 
     @available(*, unavailable)
@@ -44,21 +44,26 @@ class CalendarPageView: UIView {
 }
 
 extension CalendarPageView {
-    func setup() {
+    func setUp() {
         backgroundColor = .secondarySystemBackground
         addSubview(calendar)
         addSubview(todayButton)
 
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+
         todayButton.snp.makeConstraints { make in
-            make.top.equalTo(calendar.snp.top).offset(22)
-            make.trailing.equalTo(calendar.snp.trailing).offset(-15)
-            make.width.equalTo(snp.width).multipliedBy(0.06)
+            make.top.equalTo(calendar.snp.top).offset(screenHeight * 0.03)
+            make.trailing.equalTo(calendar.snp.trailing).offset(-screenWidth * 0.03)
+            make.width.equalTo(screenWidth * 0.05)
             make.height.equalTo(todayButton.snp.width) // 버튼의 높이를 버튼의 넓이와 동일하게 설정
             // make.size.equalTo(CGSize(width: 30, height: 30))
         }
         calendar.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
-            make.leading.trailing.bottom.equalTo(safeAreaLayoutGuide).inset(Constant.defaultPadding)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(screenHeight * 0.01)
+            make.leading.trailing.equalTo(safeAreaLayoutGuide).inset(screenWidth * 0.04)
+            make.bottom.equalTo(safeAreaLayoutGuide)
+
             // make.edges.equalTo(view.safeAreaLayoutGuide).inset(Constant.defaultPadding)
             // make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-10)
             // make.height.equalTo(Constant.screenHeight)
