@@ -10,8 +10,17 @@ import UIKit
 
 final class SignUpPageViewController: UIViewController {
     // MARK: - Property
-    private let viewModel = SignUpPageViewModel()
+    private let viewModel: SignUpPageViewModel
     private let signUpPageView = SignUpPageView()
+    
+    init(viewModel: SignUpPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 extension SignUpPageViewController {

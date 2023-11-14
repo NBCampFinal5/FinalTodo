@@ -281,7 +281,7 @@ extension SignInPageViewController {
     }
 
     @objc func didTapSignUpbutton() {
-        let vc = SignUpPageViewController()
+        let vc = SignUpPageViewController(viewModel: SignUpPageViewModel())
         navigationController?.pushViewController(vc, animated: true)
     }
 
