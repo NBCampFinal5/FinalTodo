@@ -56,7 +56,6 @@ class RewardPageViewController: UIViewController {
     private let verticalStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
-//        view.spacing = Constant.defaultPadding / 2
         view.alignment = .leading
         return view
     }()
@@ -85,7 +84,6 @@ extension RewardPageViewController {
     // MARK: - LifeCycle
 
     override func viewWillAppear(_ animated: Bool) {
-        print(#function)
         navigationController?.configureBar()
         tabBarController?.configureBar()
         viewModel = RewardPageViewModel()
@@ -99,7 +97,6 @@ extension RewardPageViewController {
         setUp()
         setUpText()
         setUpImage()
-        print(#function)
     }
 }
 
@@ -164,8 +161,8 @@ private extension RewardPageViewController {
     
     func setUpHorizontalStackView() {
         view.addSubview(horizontalStackView)
-        horizontalStackView.addArrangedSubview(progressContainerLabel)
         horizontalStackView.addArrangedSubview(verticalStackView)
+        horizontalStackView.addArrangedSubview(progressContainerLabel)
         horizontalStackView.snp.makeConstraints { make in
             make.top.equalTo(giniImageView.snp.bottom).offset(Constant.screenHeight * 0.08)
             make.centerX.equalToSuperview()
@@ -184,7 +181,7 @@ private extension RewardPageViewController {
     }
     
     func setUpText() {
-        titleTextView.text = viewModel.titleText
+        titleTextView.setLineAndLetterSpacing(text: viewModel.titleText, lineSpacing: 5, font: .title1)
         infoTextView.text = viewModel.infoText
         nameLabel.text = viewModel.coredataManager.getUser().rewardName
         progressContainerLabel.text = viewModel.scoreText
