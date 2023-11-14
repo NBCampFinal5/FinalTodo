@@ -42,7 +42,7 @@ final class SignUpPageView: UIView {
         let button = UIButton()
         button.setTitle("[보기]", for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.secondaryLabel, for: .normal)
         return button
     }()
     
