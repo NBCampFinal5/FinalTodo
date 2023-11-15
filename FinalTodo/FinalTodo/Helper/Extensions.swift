@@ -121,3 +121,14 @@ extension DateFormatter {
         return formatter
     }()
 }
+
+extension UITextView {
+    func setLineAndLetterSpacing(text: String, lineSpacing: CGFloat, font: UIFont.TextStyle){
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = lineSpacing
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedString.length))
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.preferredFont(forTextStyle: font), range: NSRange(location: 0, length: attributedString.length))
+        self.attributedText = attributedString
+    }
+}

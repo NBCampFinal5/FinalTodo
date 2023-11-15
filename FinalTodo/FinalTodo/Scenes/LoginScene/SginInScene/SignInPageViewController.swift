@@ -77,7 +77,7 @@ class SignInPageViewController: UIViewController, CommandLabelDelegate {
 
     lazy var autoLoginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("자동 로그인", for: .normal)
+        button.setTitle(" 자동 로그인", for: .normal)
         if viewModel.userDefaultManager.getIsAutoLogin() {
             button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         } else {
@@ -108,8 +108,6 @@ extension SignInPageViewController {
         bind()
         print("@@, \(CoreDataManager.shared.getUser().themeColor)")
     }
-    
-
 }
 
 private extension SignInPageViewController {
@@ -148,6 +146,7 @@ private extension SignInPageViewController {
         setUpPasswordName()
         setUpLoginInfoLabel()
         setUpButton()
+        setUpButtonActions()
         view.addSubview(activityIndicator)
     }
 
@@ -213,6 +212,32 @@ private extension SignInPageViewController {
             make.left.equalTo(loginButton.snp.left).inset(Constant.defaultPadding)
         }
     }
+
+    func setUpButtonActions() {
+        // 회원가입 버튼에 눌림 효과 추가
+        haveAccountButton.addTarget(self, action: #selector(didPressButton), for: .touchDown)
+        haveAccountButton.addTarget(self, action: #selector(didReleaseButton), for: .touchUpInside)
+
+        // 비밀번호 찾기 버튼에 눌림 효과 추가
+        passwordFindButton.addTarget(self, action: #selector(didPressButton), for: .touchDown)
+        passwordFindButton.addTarget(self, action: #selector(didReleaseButton), for: .touchUpInside)
+
+        // 자동 로그인 버튼에 눌림 효과 추가
+        autoLoginButton.addTarget(self, action: #selector(didPressButton), for: .touchDown)
+        autoLoginButton.addTarget(self, action: #selector(didReleaseButton), for: .touchUpInside)
+    }
+
+    @objc func didPressButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1) {
+            sender.alpha = 0.7
+        }
+    }
+
+    @objc func didReleaseButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1) {
+            sender.alpha = 1.0
+        }
+    }
 }
 
 extension SignInPageViewController {
@@ -241,7 +266,6 @@ extension SignInPageViewController {
                     self.loginButton.setButtonEnabled(false)
                 }
             }
-
         }
     }
 
@@ -281,7 +305,7 @@ extension SignInPageViewController {
     }
 
     @objc func didTapSignUpbutton() {
-        let vc = SignUpPageViewController()
+        let vc = SignUpPageViewController(viewModel: SignUpPageViewModel())
         navigationController?.pushViewController(vc, animated: true)
     }
 

@@ -7,8 +7,7 @@ class SettingPageViewController: UIViewController {
         return table
     }()
 
-    var settingOptionData: [[SettingOption]] = []
-    let settingOptionManager = SettingOptionManager()
+    let viewModel = SettingPageViewModel()
 }
 
 extension SettingPageViewController {
@@ -34,8 +33,6 @@ private extension SettingPageViewController {
         navigationItem.title = "설정"
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
-        settingOptionManager.makeSettingOptions()
-        settingOptionData = settingOptionManager.getSettingOptions()
 
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.tintColor = .label
@@ -53,14 +50,14 @@ private extension SettingPageViewController {
 
 extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return settingOptionData.count
+        return viewModel.settingOtions.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return settingOptionData[0].count
+            return viewModel.settingOtions[0].count
         } else if section == 1 {
-            return settingOptionData[1].count
+            return viewModel.settingOtions[1].count
         }
         return 0
     }
@@ -68,10 +65,10 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingCell.identifier, for: indexPath) as! SettingCell
         if indexPath.section == 0 {
-            let model = settingOptionData[0][indexPath.row]
+            let model = viewModel.settingOtions[0][indexPath.row]
             cell.configure(with: model)
         } else if indexPath.section == 1 {
-            let model = settingOptionData[1][indexPath.row]
+            let model = viewModel.settingOtions[1][indexPath.row]
             cell.configure(with: model)
         }
 
@@ -86,32 +83,32 @@ extension SettingPageViewController: UITableViewDelegate, UITableViewDataSource 
         let themeColorVC = ColorUIViewController()
         let profileVC = ProfilePageViewController()
 
-        if indexPath.section == 0 && indexPath.row == 0 {
-            navigationController?.pushViewController(notifyVC, animated: true)
-            tabBarController?.tabBar.isHidden = true
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                navigationController?.pushViewController(notifyVC, animated: true)
+                tabBarController?.tabBar.isHidden = true
+            } else if indexPath.row == 1 {
+                navigationController?.pushViewController(themeColorVC, animated: true)
+                tabBarController?.tabBar.isHidden = true
+            } else if indexPath.row == 2 {
+                let lockVC = LockSettingViewController()
+                navigationController?.pushViewController(lockVC, animated: true)
+                tabBarController?.tabBar.isHidden = true
+            }
 
-        } else if indexPath.section == 0 && indexPath.row == 1 {
-            navigationController?.pushViewController(themeColorVC, animated: true)
-            tabBarController?.tabBar.isHidden = true
-
-        } else if indexPath.section == 0 && indexPath.row == 2 {
-            let lockVC = LockSettingViewController()
-            navigationController?.pushViewController(lockVC, animated: true)
-            tabBarController?.tabBar.isHidden = true
-
-        } else if indexPath.section == 1 && indexPath.row == 0 {
-            navigationController?.pushViewController(profileVC, animated: true)
-            tabBarController?.tabBar.isHidden = true
-
-        } else if indexPath.section == 1 && indexPath.row == 1 {
-            let vc = AppInfoViewController()
-            navigationController?.pushViewController(vc, animated: true)
-            tabBarController?.tabBar.isHidden = true
-
-        } else if indexPath.section == 1 && indexPath.row == 2 {
-            let privacyPolicyVC = PrivacyPolicyViewController()
-            navigationController?.pushViewController(privacyPolicyVC, animated: true)
-            tabBarController?.tabBar.isHidden = true
+        } else if indexPath.section == 1 {
+            if indexPath.row == 0 {
+                navigationController?.pushViewController(profileVC, animated: true)
+                tabBarController?.tabBar.isHidden = true
+            } else if indexPath.row == 1 {
+                let vc = AppInfoViewController()
+                navigationController?.pushViewController(vc, animated: true)
+                tabBarController?.tabBar.isHidden = true
+            } else if indexPath.row == 2 {
+                let privacyPolicyVC = PrivacyPolicyViewController()
+                navigationController?.pushViewController(privacyPolicyVC, animated: true)
+                tabBarController?.tabBar.isHidden = true
+            }
         }
     }
 }

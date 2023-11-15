@@ -55,7 +55,7 @@ extension MemoViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .secondarySystemBackground
         setUp()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -308,7 +308,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemoOptionCollectionViewCell.identifier, for: indexPath) as! MemoOptionCollectionViewCell
         
         cell.contentView.layer.borderWidth = 0.8 // 테두리 굵기 여기서 넣어줘야함
-        cell.contentView.backgroundColor = .systemBackground
+        cell.contentView.backgroundColor = .secondarySystemBackground
         cell.contentView.layer.borderColor = UIColor.label.cgColor
         cell.categoryLabel.textColor = .label
         
@@ -316,23 +316,23 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case 0:
             if viewModel.timeNotifySetting != nil {
                 cell.contentView.backgroundColor = .myPointColor
-                cell.categoryLabel.textColor = .systemBackground
+                cell.categoryLabel.textColor = .secondarySystemBackground
                 cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             }
         case 1:
             if viewModel.locationNotifySetting != nil {
                 cell.contentView.backgroundColor = .myPointColor
-                cell.categoryLabel.textColor = .systemBackground
+                cell.categoryLabel.textColor = .secondarySystemBackground
                 cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             }
         case 2:
             if selectedFolderId! != "allNote" {
                 cell.contentView.backgroundColor = .myPointColor
-                cell.categoryLabel.textColor = .systemBackground
+                cell.categoryLabel.textColor = .secondarySystemBackground
                 cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
             }
         default:
-            cell.contentView.backgroundColor = .systemBackground
+            cell.contentView.backgroundColor = .secondarySystemBackground
             cell.contentView.layer.borderColor = UIColor.label.cgColor
             cell.categoryLabel.textColor = .label
             cell.contentView.layer.borderWidth = 0 // 배경색이 변경될 때 테두리 제거
@@ -356,7 +356,7 @@ extension MemoViewController: UICollectionViewDelegate, UICollectionViewDataSour
             vc.transitioningDelegate = self
             present(vc, animated: true, completion: nil)
         case 1: // 위치설정 컬렉션뷰
-            let vc = LocationSettingPageViewController(viewModel: self.viewModel)
+            let vc = LocationSettingPageViewController(viewModel: viewModel)
             vc.delegate = self
             vc.handler = { [weak self] in
                 self?.memoView.optionCollectionView.reloadData()

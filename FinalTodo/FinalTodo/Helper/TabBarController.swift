@@ -31,7 +31,7 @@ private extension TabBarController {
             image: UIImage(systemName: "calendar"),
             selectedImage: UIImage(systemName: "calendar")
         )
-        let rewardVC = UINavigationController(rootViewController: RewardPageViewController())
+        let rewardVC = UINavigationController(rootViewController: RewardPageViewController(viewModel: RewardPageViewModel()))
         rewardVC.tabBarItem = UITabBarItem(
             title: nil,
             image: UIImage(systemName: "pawprint"),

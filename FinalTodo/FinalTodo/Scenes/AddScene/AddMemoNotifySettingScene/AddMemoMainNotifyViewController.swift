@@ -104,7 +104,7 @@ extension AddMemoMainNotifyViewController {
         topView.backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
 
         infoButton.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
+            make.top.right.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
 
