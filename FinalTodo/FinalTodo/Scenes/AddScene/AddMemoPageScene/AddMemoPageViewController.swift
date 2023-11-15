@@ -80,11 +80,10 @@ private extension AddMemoPageViewController {
             make.top.left.right.equalToSuperview()
         }
         topView.backButton.addTarget(self, action: #selector(didTappedBackButton), for: .touchUpInside)
-        // 성준 - 완료 버튼 추가
         view.addSubview(savebutton)
         savebutton.snp.makeConstraints { make in
             make.centerY.equalTo(topView.snp.centerY)
-            make.left.equalTo(topView.snp.left).offset(15)
+            make.right.equalTo(topView.snp.right).offset(-15)
         }
     }
     

@@ -451,7 +451,6 @@
 			children = (
 				083218BD2B03972700DB5009 /* RewardPageView.swift */,
 				084412122AD569C0005F2FA9 /* RewardPageViewController.swift */,
-				039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */,
 				082860D02AF50E3500DAC63C /* RewardPageViewModel.swift */,
 			);
 			path = RewardPageScene;
@@ -577,6 +576,8 @@
 			children = (
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
+				039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */,
+				30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */,
 				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
 				08487F8D2AE54A15009AE6CB /* LockSettingPageScene */,
 				08D1BF852AF13FD900FE896A /* AppInfoPageScene */,
@@ -617,7 +618,6 @@
 			children = (
 				30E7984C2AD7E5A800903272 /* ProfilePageViewController.swift */,
 				301B39892AE7B60800B19313 /* ProfilePageViewModel.swift */,
-				30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */,
 			);
 			path = ProfilePageScene;
 			sourceTree = "<group>";
@@ -929,6 +929,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "뭐할기니";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -983,6 +984,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "뭐할기니";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

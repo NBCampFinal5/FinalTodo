@@ -72,7 +72,7 @@ class MemoListViewController: UIViewController, AddMemoDelegate {
 
             let borderBottom = CALayer()
             borderBottom.backgroundColor = UIColor.gray.cgColor
-            borderBottom.frame = CGRect(x: 0, y: navigationBar.frame.size.height, width: navigationBar.frame.size.width, height: 0.5)
+            borderBottom.frame = CGRect(x: 0, y: navigationBar.frame.size.height, width: navigationBar.frame.size.width, height: 0.2)
             navigationBar.layer.addSublayer(borderBottom)
         }
     }
@@ -119,7 +119,7 @@ extension MemoListViewController: UITableViewDataSource {
         let trimmedContent = String(memo.content.prefix(maxLength))
         cell.titleLabel.text = memo.content.count > maxLength ? "\(trimmedContent)..." : memo.content
         cell.dateLabel.text = memo.date
-        cell.backgroundColor = .systemBackground
+        cell.backgroundColor = .secondarySystemBackground
 
 //        cell.titleLabel.textColor = UIColor.appropriateTextColor(forBackgroundColor: cell.backgroundColor ?? .white)
 //        cell.dateLabel.textColor = UIColor.appropriateTextColor(forBackgroundColor: cell.backgroundColor ?? .white)
@@ -161,10 +161,3 @@ extension MemoListViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-struct Memo {
-    var title: String
-    var date: Date
-    var folderName: String
-    var folderColor: UIColor
-    var content: String
-}
