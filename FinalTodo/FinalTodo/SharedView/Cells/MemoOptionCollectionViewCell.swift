@@ -36,7 +36,7 @@ final class MemoOptionCollectionViewCell: UICollectionViewCell {
 
 extension MemoOptionCollectionViewCell {
     func setUp() {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .secondarySystemBackground
         contentView.layer.borderColor = UIColor.label.cgColor
         contentView.layer.borderWidth = 0.4
         contentView.layer.cornerRadius = 9

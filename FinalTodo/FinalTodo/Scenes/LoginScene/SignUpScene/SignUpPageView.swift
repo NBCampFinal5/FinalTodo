@@ -5,11 +5,12 @@
 //  Created by SeoJunYoung on 11/10/23.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class SignUpPageView: UIView {
     // MARK: - Property
+
     private let registerLabel: UILabel = {
         let label = UILabel()
         label.text = "가입하기"
@@ -26,7 +27,7 @@ final class SignUpPageView: UIView {
     
     let privacyPolicyButton: UIButton = {
         let button = UIButton()
-        button.setTitle("개인정보 처리방침에 동의합니다. ", for: .normal)
+        button.setTitle(" 개인정보 처리방침에 동의합니다.", for: .normal)
         let checkboxImage = UIImage(systemName: "square")
         button.setImage(checkboxImage, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
@@ -34,7 +35,8 @@ final class SignUpPageView: UIView {
         button.tintColor = .secondaryLabel
         button.backgroundColor = .systemBackground
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
-        
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
         return button
     }()
     
@@ -43,15 +45,21 @@ final class SignUpPageView: UIView {
         button.setTitle("[보기]", for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .caption1)
         button.setTitleColor(.secondaryLabel, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 1, right: 0)
+
         return button
     }()
     
     // MARK: - 생성자
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUp()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -75,7 +83,7 @@ private extension SignUpPageView {
     }
     
     func setUpRegisterLabel() {
-        self.addSubview(registerLabel)
+        addSubview(registerLabel)
         registerLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(Constant.screenHeight * 0.05)
             make.leading.equalTo(Constant.defaultPadding)
@@ -83,7 +91,7 @@ private extension SignUpPageView {
     }
     
     func setUpEmailTextField() {
-        self.addSubview(emailTextField)
+        addSubview(emailTextField)
         emailTextField.addInfoLabel()
         emailTextField.snp.makeConstraints { make in
             make.top.equalTo(registerLabel.snp.bottom).offset(Constant.screenHeight * 0.02)
@@ -92,7 +100,7 @@ private extension SignUpPageView {
     }
     
     func setUpNickNameTextField() {
-        self.addSubview(nicknameTextField)
+        addSubview(nicknameTextField)
         nicknameTextField.addInfoLabel()
         nicknameTextField.snp.makeConstraints { make in
             make.top.equalTo(emailTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
@@ -101,7 +109,7 @@ private extension SignUpPageView {
     }
     
     func setUpPasswordTextField() {
-        self.addSubview(passwordTextField)
+        addSubview(passwordTextField)
         passwordTextField.addInfoLabel()
         passwordTextField.snp.makeConstraints { make in
             make.top.equalTo(nicknameTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
@@ -110,7 +118,7 @@ private extension SignUpPageView {
     }
     
     func setUpCheckPasswordTextField() {
-        self.addSubview(checkPasswordTextField)
+        addSubview(checkPasswordTextField)
         checkPasswordTextField.addInfoLabel()
         checkPasswordTextField.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
@@ -119,7 +127,7 @@ private extension SignUpPageView {
     }
     
     func setUpPrivacyPolicyButton() {
-        self.addSubview(privacyPolicyButton)
+        addSubview(privacyPolicyButton)
         privacyPolicyButton.snp.makeConstraints { make in
             make.top.equalTo(checkPasswordTextField.snp.bottom).offset(Constant.screenHeight * 0.02)
             make.left.equalTo(checkPasswordTextField.snp.left).inset(Constant.defaultPadding)
@@ -127,7 +135,7 @@ private extension SignUpPageView {
     }
     
     func setUpLinkButton() {
-        self.addSubview(linkButton)
+        addSubview(linkButton)
         linkButton.snp.makeConstraints { make in
             make.centerY.equalTo(privacyPolicyButton.snp.centerY)
             make.left.equalTo(privacyPolicyButton.snp.right).offset(Constant.defaultPadding / 2)
@@ -135,11 +143,10 @@ private extension SignUpPageView {
     }
     
     func setUpRegisterButton() {
-        self.addSubview(registerButton)
+        addSubview(registerButton)
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(checkPasswordTextField.snp.bottom).offset(Constant.screenHeight * 0.07)
             make.leading.trailing.equalToSuperview().inset(Constant.defaultPadding)
         }
     }
-
 }

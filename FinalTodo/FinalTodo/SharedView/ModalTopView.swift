@@ -52,7 +52,8 @@ private extension ModalTopView {
     func setUpBackButton() {
         addSubview(backButton)
         backButton.snp.makeConstraints { make in
-            make.top.right.equalToSuperview().inset(Constant.defaultPadding)
+            make.top.left.equalToSuperview().inset(Constant.defaultPadding)
+            make.centerY.equalToSuperview()
         }
     }
     

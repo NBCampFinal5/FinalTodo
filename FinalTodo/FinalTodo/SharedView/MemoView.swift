@@ -5,8 +5,8 @@
 //  Created by SeoJunYoung on 2023/10/12.
 //
 
-import UIKit
 import SnapKit
+import UIKit
 
 final class MemoView: UIView {
     // MARK: - Property
@@ -26,7 +26,7 @@ final class MemoView: UIView {
         let view = UITextView()
         view.font = UIFont.preferredFont(forTextStyle: .body)
         view.text = "메모를 입력해 주세요."
-        view.textColor = .label
+        view.textColor = .systemGray
         view.backgroundColor = .clear
         view.textContainerInset = .init(top: 0, left: Constant.defaultPadding, bottom: 0, right: Constant.defaultPadding)
         return view
@@ -39,10 +39,10 @@ final class MemoView: UIView {
         setUp()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 private extension MemoView {
@@ -54,7 +54,7 @@ private extension MemoView {
     }
     
     func setUpOptionCollectionView() {
-        self.addSubview(optionCollectionView)
+        addSubview(optionCollectionView)
         optionCollectionView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview().inset(Constant.defaultPadding)
@@ -64,7 +64,7 @@ private extension MemoView {
     }
     
     func setUpContentTextView() {
-        self.addSubview(contentTextView)
+        addSubview(contentTextView)
         contentTextView.snp.makeConstraints { make in
             make.top.equalTo(optionCollectionView.snp.bottom).offset(Constant.defaultPadding)
             make.left.right.bottom.equalToSuperview()

@@ -23,9 +23,9 @@ class MemoListView: UIView {
     }
     
     private func setupUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = .secondarySystemBackground
         tableView = UITableView()
-        tableView.backgroundColor = .systemBackground
+        tableView.backgroundColor = .secondarySystemBackground
 //        tableView.separatorStyle = .none
 //        tableView.rowHeight = Constant.screenHeight * 0.1
         tableView.register(MemoCell.self, forCellReuseIdentifier: "MemoCell")
