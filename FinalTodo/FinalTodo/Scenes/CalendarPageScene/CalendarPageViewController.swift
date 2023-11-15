@@ -52,18 +52,18 @@ class CalendarPageViewController: UIViewController {
     }
 
     // D-day 버튼 터치 시 호출
-    @objc func didTapDdayButton() {
-        let vc = DdayPageViewController()
-        vc.completion = { [weak self] date in
-            self?.selectedDdays.append(date)
-            self?.calendarView.calendar.reloadData()
-        }
-        let navController = UINavigationController(rootViewController: vc)
-        navController.modalPresentationStyle = .custom
-        navController.transitioningDelegate = self
-
-        present(navController, animated: true, completion: nil)
-    }
+//    @objc func didTapDdayButton() {
+//        let vc = DdayPageViewController()
+//        vc.completion = { [weak self] date in
+//            self?.selectedDdays.append(date)
+//            self?.calendarView.calendar.reloadData()
+//        }
+//        let navController = UINavigationController(rootViewController: vc)
+//        navController.modalPresentationStyle = .custom
+//        navController.transitioningDelegate = self
+//
+//        present(navController, animated: true, completion: nil)
+//    }
 
     // 오늘 버튼 터치 시 호출
     @objc func didTapTodayButton() {

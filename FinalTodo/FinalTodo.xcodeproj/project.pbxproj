@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		037668B32ADE56CB008BED0A /* ButtonTappedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B22ADE56CB008BED0A /* ButtonTappedView.swift */; };
 		037668B52ADE5CEA008BED0A /* CommandLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668B42ADE5CEA008BED0A /* CommandLabelView.swift */; };
-		039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */; };
 		039B82E02AEA860300D3A73C /* ColorUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */; };
 		081383912AE004620055FDA2 /* LockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383902AE004620055FDA2 /* LockScreenViewController.swift */; };
 		081383952AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081383942AE008810055FDA2 /* LockScreenNumCollectionViewCell.swift */; };
@@ -127,7 +126,6 @@
 		C73BC4362AE14F8100E0302A /* DateSettingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */; };
 		C747DE272ADBBCE90044499E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C747DE262ADBBCE90044499E /* Models.swift */; };
 		C75C10772AD8272600F70A7D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = C75C10762AD8272600F70A7D /* FSCalendar */; };
-		C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75C10782AD8274200F70A7D /* DdayPageViewController.swift */; };
 		C761283A2AF9467A00E64B82 /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */; };
 		C77CC48C2ADD2C060085C048 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77CC48B2ADD2C060085C048 /* Notifications.swift */; };
 		C78DB7212AED05DD003C02C9 /* FolderSelectPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */; };
@@ -135,7 +133,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwFindPageViewController.swift; sourceTree = "<group>"; };
 		037668B22ADE56CB008BED0A /* ButtonTappedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTappedView.swift; sourceTree = "<group>"; };
 		037668B42ADE5CEA008BED0A /* CommandLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLabelView.swift; sourceTree = "<group>"; };
 		039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUIViewController.swift; sourceTree = "<group>"; };
@@ -223,7 +220,6 @@
 		C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPageView.swift; sourceTree = "<group>"; };
 		C73BC4352AE14F8100E0302A /* DateSettingPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSettingPageViewController.swift; sourceTree = "<group>"; };
 		C747DE262ADBBCE90044499E /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		C75C10782AD8274200F70A7D /* DdayPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DdayPageViewController.swift; sourceTree = "<group>"; };
 		C76128392AF9467A00E64B82 /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		C77CC48B2ADD2C060085C048 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		C78DB7202AED05DC003C02C9 /* FolderSelectPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FolderSelectPageViewController.swift; sourceTree = "<group>"; };
@@ -275,14 +271,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		037668AB2ADD0DED008BED0A /* PwFindScene */ = {
-			isa = PBXGroup;
-			children = (
-				037668AE2ADD101A008BED0A /* PwFindPageViewController.swift */,
-			);
-			path = PwFindScene;
-			sourceTree = "<group>";
-		};
 		0813838F2AE0043A0055FDA2 /* LockScreenScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,7 +429,6 @@
 				0844120E2AD5699F005F2FA9 /* CalendarPageViewController.swift */,
 				C735C05E2AD9466C00AA7663 /* CalendarPageView.swift */,
 				30F521A52AF0867200DA1DD8 /* CalendarListScene */,
-				C747DE282ADBBE9C0044499E /* DdayPageScene */,
 			);
 			path = CalendarPageScene;
 			sourceTree = "<group>";
@@ -481,8 +468,8 @@
 			children = (
 				084412032AD56871005F2FA9 /* LaunchScreen.storyboard */,
 				08A4F88B2AD8218E0092C6EF /* MemoView.swift */,
-				083C986A2AD8E9EE006895D2 /* ModalTopView.swift */,
 				037668B22ADE56CB008BED0A /* ButtonTappedView.swift */,
+				083C986A2AD8E9EE006895D2 /* ModalTopView.swift */,
 				037668B42ADE5CEA008BED0A /* CommandLabelView.swift */,
 				083975F52AE647540042517E /* LockScreenView.swift */,
 				0898E1462AF62CF300300FFB /* CircularProgressView.swift */,
@@ -566,7 +553,6 @@
 			children = (
 				0844121D2AD56B4D005F2FA9 /* SginInScene */,
 				0844121E2AD56B61005F2FA9 /* SignUpScene */,
-				037668AB2ADD0DED008BED0A /* PwFindScene */,
 			);
 			path = LoginScene;
 			sourceTree = "<group>";
@@ -576,9 +562,9 @@
 			children = (
 				084412222AD56BB8005F2FA9 /* SettingPageScene */,
 				30E798532AD7F54C00903272 /* ProfilePageScene */,
+				C735C0422AD8E0EA00AA7663 /* NotifyPageScene */,
 				039B82DF2AEA860300D3A73C /* ColorUIViewController.swift */,
 				30F521852AEA776F00DA1DD8 /* DeleteAccountPageViewController.swift */,
-				C735C0422AD8E0EA00AA7663 /* NotifyScene */,
 				08487F8D2AE54A15009AE6CB /* LockSettingPageScene */,
 				08D1BF852AF13FD900FE896A /* AppInfoPageScene */,
 				C76128382AF9460100E64B82 /* privacyPolicyScene */,
@@ -630,12 +616,12 @@
 			path = CalendarListScene;
 			sourceTree = "<group>";
 		};
-		C735C0422AD8E0EA00AA7663 /* NotifyScene */ = {
+		C735C0422AD8E0EA00AA7663 /* NotifyPageScene */ = {
 			isa = PBXGroup;
 			children = (
 				C735C0432AD8E15A00AA7663 /* NotifyPageViewController.swift */,
 			);
-			path = NotifyScene;
+			path = NotifyPageScene;
 			sourceTree = "<group>";
 		};
 		C747DE252ADBB7630044499E /* AddNotifyScene */ = {
@@ -644,14 +630,6 @@
 				C735C0452AD8E16D00AA7663 /* AddNotifyPageViewController.swift */,
 			);
 			path = AddNotifyScene;
-			sourceTree = "<group>";
-		};
-		C747DE282ADBBE9C0044499E /* DdayPageScene */ = {
-			isa = PBXGroup;
-			children = (
-				C75C10782AD8274200F70A7D /* DdayPageViewController.swift */,
-			);
-			path = DdayPageScene;
 			sourceTree = "<group>";
 		};
 		C76128382AF9460100E64B82 /* privacyPolicyScene */ = {
@@ -775,7 +753,6 @@
 			files = (
 				301B39E12AE93B9E00B19313 /* FolderModel+CoreDataProperties.swift in Sources */,
 				0844120D2AD5692E005F2FA9 /* TabBarController.swift in Sources */,
-				039B82BB2ADFDEAC00D3A73C /* PwFindPageViewController.swift in Sources */,
 				69EBADC22AE0F29C0009CB21 /* LocationSettingViewController.swift in Sources */,
 				69EBADC02AE0EF920009CB21 /* MapKitManager.swift in Sources */,
 				039B82E02AEA860300D3A73C /* ColorUIViewController.swift in Sources */,
@@ -824,7 +801,6 @@
 				083C985F2AD8D7AC006895D2 /* Observable.swift in Sources */,
 				69EBADCA2AE912680009CB21 /* SearchViewController.swift in Sources */,
 				08A4F88E2AD821A80092C6EF /* MemoOptionCollectionViewCell.swift in Sources */,
-				C75C10792AD8274200F70A7D /* DdayPageViewController.swift in Sources */,
 				69EBADD42AEA4E320009CB21 /* FirebaseDBManager.swift in Sources */,
 				08D1BF7A2AF0D40E00FE896A /* SignUpPageViewModel.swift in Sources */,
 				08A4F88A2AD8216A0092C6EF /* MemoViewController.swift in Sources */,
