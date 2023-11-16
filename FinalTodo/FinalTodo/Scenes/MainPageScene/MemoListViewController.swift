@@ -161,3 +161,10 @@ extension MemoListViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+struct Memo {
+    var title: String
+    var date: Date
+    var folderName: String
+    var folderColor: UIColor
+    var content: String
+}
