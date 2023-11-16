@@ -10,11 +10,9 @@ class MemoViewController: UIViewController {
     // 델리게이트 프로퍼티. 메모 추가/편집 후 이를 호출함으로써 델리게이트 객체에게 알림.
     weak var delegate: AddMemoDelegate?
     var currentMemoId: String? // 현재 편집중인 메모의 ID (nil이면 새 메모)
-    
     var selectedFolderId: String? // 사용자가 선택한 폴더의 ID
     var selectedDate: Date?
     var selectedTime: Date?
-    
     var keyboardHeight: CGFloat = 0
     var memoNotificationIdentifier: String?
     
@@ -520,13 +518,12 @@ extension MemoViewController: AddNotifyDelegate {
     func didReserveNotification(timeNotifySetting: String) {
         // viewModel.timeNotifySetting = timeNotifySetting
         viewModel.optionImageAry[0] = timeNotifySetting
-        // DateFormatter를 설정합니다.
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
         formatter.timeZone = TimeZone.current
         formatter.locale = Locale.current
         
-        // String을 Date로 변환합니다.
+        // String을 Date로 변환
         if let date = formatter.date(from: timeNotifySetting) {
             selectedDate = date
             selectedTime = date
